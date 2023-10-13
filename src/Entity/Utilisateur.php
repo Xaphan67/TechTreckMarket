@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -35,6 +37,30 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $pseudo = null;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Avis::class)]
+    private Collection $avis;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: ConfigurationPC::class, orphanRemoval: true)]
+    private Collection $configurations;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: AdresseFacturation::class, orphanRemoval: true)]
+    private Collection $adressesFacturation;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: AdresseLivraison::class, orphanRemoval: true)]
+    private Collection $adressesLivraison;
+
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Commande::class)]
+    private Collection $commandes;
+
+    public function __construct()
+    {
+        $this->avis = new ArrayCollection();
+        $this->configurations = new ArrayCollection();
+        $this->adressesFacturation = new ArrayCollection();
+        $this->adressesLivraison = new ArrayCollection();
+        $this->commandes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -138,6 +164,156 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(?string $pseudo): static
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): static
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): static
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getUtilisateur() === $this) {
+                $avi->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ConfigurationPC>
+     */
+    public function getConfigurations(): Collection
+    {
+        return $this->configurations;
+    }
+
+    public function addConfiguration(ConfigurationPC $configuration): static
+    {
+        if (!$this->configurations->contains($configuration)) {
+            $this->configurations->add($configuration);
+            $configuration->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConfiguration(ConfigurationPC $configuration): static
+    {
+        if ($this->configurations->removeElement($configuration)) {
+            // set the owning side to null (unless already changed)
+            if ($configuration->getUtilisateur() === $this) {
+                $configuration->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdresseFacturation>
+     */
+    public function getAdressesFacturation(): Collection
+    {
+        return $this->adressesFacturation;
+    }
+
+    public function addAdressesFacturation(AdresseFacturation $adressesFacturation): static
+    {
+        if (!$this->adressesFacturation->contains($adressesFacturation)) {
+            $this->adressesFacturation->add($adressesFacturation);
+            $adressesFacturation->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdressesFacturation(AdresseFacturation $adressesFacturation): static
+    {
+        if ($this->adressesFacturation->removeElement($adressesFacturation)) {
+            // set the owning side to null (unless already changed)
+            if ($adressesFacturation->getUtilisateur() === $this) {
+                $adressesFacturation->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdresseLivraison>
+     */
+    public function getAdressesLivraison(): Collection
+    {
+        return $this->adressesLivraison;
+    }
+
+    public function addAdressesLivraison(AdresseLivraison $adressesLivraison): static
+    {
+        if (!$this->adressesLivraison->contains($adressesLivraison)) {
+            $this->adressesLivraison->add($adressesLivraison);
+            $adressesLivraison->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdressesLivraison(AdresseLivraison $adressesLivraison): static
+    {
+        if ($this->adressesLivraison->removeElement($adressesLivraison)) {
+            // set the owning side to null (unless already changed)
+            if ($adressesLivraison->getUtilisateur() === $this) {
+                $adressesLivraison->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commande>
+     */
+    public function getCommandes(): Collection
+    {
+        return $this->commandes;
+    }
+
+    public function addCommande(Commande $commande): static
+    {
+        if (!$this->commandes->contains($commande)) {
+            $this->commandes->add($commande);
+            $commande->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommande(Commande $commande): static
+    {
+        if ($this->commandes->removeElement($commande)) {
+            // set the owning side to null (unless already changed)
+            if ($commande->getUtilisateur() === $this) {
+                $commande->setUtilisateur(null);
+            }
+        }
 
         return $this;
     }

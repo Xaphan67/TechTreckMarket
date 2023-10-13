@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -46,6 +48,26 @@ class Produit
 
     #[ORM\Column]
     private array $caracteristiquesTechniques = [];
+
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Marque $marque = null;
+
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categorie = null;
+
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Avis::class, orphanRemoval: true)]
+    private Collection $avis;
+    
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    private Collection $produitsCompatibles;
+
+    public function __construct()
+    {
+        $this->avis = new ArrayCollection();
+        $this->produitsCompatibles = new ArrayCollection();   
+    }
 
     public function getId(): ?int
     {
@@ -180,6 +202,84 @@ class Produit
     public function setCaracteristiquesTechniques(array $caracteristiquesTechniques): static
     {
         $this->caracteristiquesTechniques = $caracteristiquesTechniques;
+
+        return $this;
+    }
+
+    public function getMarque(): ?Marque
+    {
+        return $this->marque;
+    }
+
+    public function setMarque(?Marque $marque): static
+    {
+        $this->marque = $marque;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?Categorie
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(?Categorie $categorie): static
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Avis>
+     */
+    public function getAvis(): Collection
+    {
+        return $this->avis;
+    }
+
+    public function addAvi(Avis $avi): static
+    {
+        if (!$this->avis->contains($avi)) {
+            $this->avis->add($avi);
+            $avi->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvi(Avis $avi): static
+    {
+        if ($this->avis->removeElement($avi)) {
+            // set the owning side to null (unless already changed)
+            if ($avi->getProduit() === $this) {
+                $avi->setProduit(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getProduitsCompatibles(): Collection
+    {
+        return $this->produitsCompatibles;
+    }
+
+    public function addProduitsCompatible(self $produitsCompatible): static
+    {
+        if (!$this->produitsCompatibles->contains($produitsCompatible)) {
+            $this->produitsCompatibles->add($produitsCompatible);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitsCompatible(self $produitsCompatible): static
+    {
+        $this->produitsCompatibles->removeElement($produitsCompatible);
 
         return $this;
     }
