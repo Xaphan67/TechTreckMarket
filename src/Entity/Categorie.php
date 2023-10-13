@@ -26,11 +26,14 @@ class Categorie
     private Collection $produits;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'sousCategories')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?self $categorieParent = null;
 
     #[ORM\OneToMany(mappedBy: 'categorieParent', targetEntity: self::class, orphanRemoval: true)]
     private Collection $sousCategories;
+
+    #[ORM\Column(length: 150)]
+    private ?string $image = null;
 
     public function __construct()
     {
@@ -135,6 +138,23 @@ class Categorie
                 $sousCategory->setCategorieParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

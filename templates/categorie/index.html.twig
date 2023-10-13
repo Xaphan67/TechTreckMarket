@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Achats de {{ categorie }} au meilleur prix !{% endblock %}
+
+{% block body %}
+
+<div class="ariane">
+    <a href="">Accueil</a>
+    {% for categorieParent in categoriesParent %}
+        <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.875 7.5L18.125 15L10.875 22.5M10.875 15H10.8871" stroke="#4B4343" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        {{ categorieParent }}
+    {% endfor %}
+    <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.875 7.5L18.125 15L10.875 22.5M10.875 15H10.8871" stroke="#4B4343" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    {{ categorie }}
+</div>
+
+<h1>{{ categorie }}</h1>
+
+<p>{{ categorie.description }}</p>
+
+{% if categorie.sousCategories |length > 0 %}
+    <div class="categories">
+        {% for sousCategorie in categorie.sousCategories %}
+            <div class="sous-categorie">
+                <img src="{{ asset('img/categories/' ~ sousCategorie.image) }}">
+                <a href="{{ path('afficher_categorie', {'id':sousCategorie.id }) }}">{{ sousCategorie }}</a>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    
+{% endif %}
+
+{% endblock %}
