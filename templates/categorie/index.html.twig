@@ -19,17 +19,19 @@
 </div>
 
 <h1>{{ categorie }}</h1>
-
+<hr>
 <p>{{ categorie.description }}</p>
-
 {% if categorie.sousCategories |length > 0 %}
     <div class="categories">
-        {% for sousCategorie in categorie.sousCategories %}
-            <div class="sous-categorie">
-                <img src="{{ asset('img/categories/' ~ sousCategorie.image) }}">
-                <a href="{{ path('afficher_categorie', {'id':sousCategorie.id }) }}">{{ sousCategorie }}</a>
-            </div>
-        {% endfor %}
+        <h2>Catégories {{ categorie }}</h2>
+        <div class="liste-categories">
+            {% for sousCategorie in categorie.sousCategories %}
+                <div class="sous-categorie">
+                    <img src="{{ asset('img/categories/' ~ sousCategorie.image) }}">
+                    <a href="{{ path('afficher_categorie', {'id':sousCategorie.id }) }}">{{ sousCategorie }}</a>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 {% else %}
     
