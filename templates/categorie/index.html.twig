@@ -5,17 +5,40 @@
 {% block body %}
 
 <div class="ariane">
-    <a href="">Accueil</a>
-    {% for categorieParent in categoriesParent %}
+    <div class="section-ariane section-ariane-accueil">
+        <div class="mobile-invisible">
+            <a href="">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24.6 14.7C24.4051 14.7009 24.2154 14.6376 24.06 14.52L15 7.72801L5.94 14.52C5.74904 14.6632 5.50902 14.7247 5.27273 14.691C5.03642 14.6572 4.82322 14.5309 4.68 14.34C4.53679 14.1491 4.47529 13.909 4.50905 13.6727C4.5428 13.4364 4.66904 13.2232 4.86 13.08L14.46 5.88001C14.6158 5.76317 14.8052 5.70001 15 5.70001C15.1948 5.70001 15.3842 5.76317 15.54 5.88001L25.14 13.08C25.3142 13.2215 25.4293 13.4231 25.4627 13.6451C25.4959 13.8671 25.445 14.0935 25.32 14.28C25.2436 14.4036 25.1378 14.5066 25.0123 14.5798C24.8868 14.653 24.7452 14.6943 24.6 14.7Z" fill="black"/>
+                    <path d="M22.2 24.3H7.79996C7.56223 24.2969 7.33512 24.2011 7.167 24.033C6.99889 23.8649 6.90307 23.6377 6.89996 23.4V12C6.89996 11.7613 6.99479 11.5324 7.16357 11.3636C7.33235 11.1948 7.56127 11.1 7.79996 11.1C8.03866 11.1 8.26758 11.1948 8.43636 11.3636C8.60514 11.5324 8.69996 11.7613 8.69996 12V22.5H21.3V12C21.3 11.7613 21.3948 11.5324 21.5636 11.3636C21.7323 11.1948 21.9613 11.1 22.2 11.1C22.4386 11.1 22.6676 11.1948 22.8363 11.3636C23.0052 11.5324 23.1 11.7613 23.1 12V23.4C23.0968 23.6377 23.0011 23.8649 22.833 24.033C22.6648 24.2011 22.4377 24.2969 22.2 24.3Z" fill="black"/>
+                    <path d="M17.4 24.3C17.1622 24.2969 16.9351 24.2011 16.767 24.033C16.5988 23.8649 16.5031 23.6377 16.5 23.4V15.9H13.5V23.4C13.5 23.6387 13.4052 23.8676 13.2363 24.0364C13.0676 24.2052 12.8386 24.3 12.6 24.3C12.3613 24.3 12.1323 24.2052 11.9636 24.0364C11.7948 23.8676 11.7 23.6387 11.7 23.4V15C11.7031 14.7623 11.7989 14.5351 11.967 14.367C12.1351 14.1989 12.3622 14.1031 12.6 14.1H17.4C17.6377 14.1031 17.8648 14.1989 18.033 14.367C18.2011 14.5351 18.2968 14.7623 18.3 15V23.4C18.2968 23.6377 18.2011 23.8649 18.033 24.033C17.8648 24.2011 17.6377 24.2969 17.4 24.3Z" fill="black"/>
+                </svg>
+            </a>
+        </div>
+        <div class="mobile-uniquement">
+            {% if categorie.categorieParent != null %}
+                <a href="{{ path('afficher_categorie',{ 'id':categorie.categorieParent.id }) }}">Retour</a>
+            {% else %}
+                <a href="">Retour</a>
+            {% endif %}
+        </div> 
+    </div>
+    <div class="mobile-invisible">
+        {% for categorieParent in categoriesParent %}
         <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10.875 7.5L18.125 15L10.875 22.5M10.875 15H10.8871" stroke="#4B4343" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <a href="{{ path('afficher_categorie', { 'id':categorieParent.id }) }}">{{ categorieParent }}</a>
+        <div class="section-ariane">
+            <a href="{{ path('afficher_categorie', { 'id':categorieParent.id }) }}">{{ categorieParent }}</a>
+        </div>
     {% endfor %}
+    </div>
     <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10.875 7.5L18.125 15L10.875 22.5M10.875 15H10.8871" stroke="#4B4343" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    {{ categorie }}
+    <div class="section-ariane">
+        {{ categorie }}
+    </div>
 </div>
 
 <h1>{{ categorie }}</h1>

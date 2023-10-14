@@ -6,7 +6,15 @@
     box-sizing: border-box;
     margin: 0px;
     padding: 0px;
-    font-family: sans-serif;
+    font-family: 'Inter', sans-serif;
+}
+
+.mobile-invisible {
+    display: none;
+}
+
+.mobile-uniquement {
+    display: contents;
 }
 
 /* Couleurs */
@@ -17,6 +25,7 @@
     --lightText: #5B5656;
     --mainBg: #F3F3F3;
     --sectionBg: white;
+    --arianeBg: #D9D9D9;
     --mainDark: #820F0F;
 }
 
@@ -60,6 +69,24 @@ a {
     text-decoration: none;
 }
 
+/* Fil d'ariane */
+
+.ariane {
+    display: flex;
+    margin: 10px 0px;
+}
+
+.section-ariane {
+    text-transform: uppercase;
+    line-height: 30px;
+    padding-inline: 10px;
+    border-radius: 5px;
+    color: var(--links);
+    background-color: var(--arianeBg);
+}
+
+/* Catégories */
+
 .categories {
     display: flex;
     flex-direction: column;
@@ -76,7 +103,7 @@ a {
     display: flex;
     align-items: center;
     width: 350px;
-    height:130px;
+    height: 130px;
     background-color: var(--sectionBg);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
 }
@@ -88,4 +115,25 @@ a {
 .sous-categorie a {
     padding-left: 130px;
     margin-inline: auto;
+}
+
+/* tablettes et ordinateurs */
+@media only screen and (min-width: 768px) {
+
+    .mobile-invisible {
+        display: contents;
+    }
+
+    .mobile-uniquement {
+        display: none;
+    }
+
+    .section-ariane-accueil {
+        max-height: 30px;
+        padding: 0px;
+        text-transform: uppercase;
+        border-radius: 5px;
+        color: var(--links);
+        background-color: var(--arianeBg);
+    }
 }
