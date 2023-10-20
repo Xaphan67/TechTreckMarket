@@ -89,12 +89,17 @@
                     </div>
                 </div>
                 <h3>Disponibilité</h3>
-                <div>           
+                <div class="formulaire-coche">           
                     <input type="checkbox" id="stock" name="stock" />
                     <label for ="stock">Uniquement les produits en stock</label>
                 </div>
                 <h3>Marque</h3>
-                {# To do #}
+                {% for marque, quantite in marques %}
+                <div class="formulaire-coche">  
+                    <input type="checkbox" id="{{ marque | lower }}" name="{{ marque | lower }}" />
+                    <label for ="{{ marque | lower }}">{{ marque }} ({{ quantite }})</label>
+                </div>
+                {% endfor %}
                 <h3>Prix</h3>
                 <div class="formulaire-double-texte">
                     <input type="text" id="prixMin" name="prixMin" placeholder="Minimum" />
