@@ -24,9 +24,12 @@
     --text: #2F2E2E;
     --lightText: #5B5656;
     --mainBg: #F3F3F3;
-    --sectionBg: white;
+    --sectionBg: #FFFFFF;
     --arianeBg: #D9D9D9;
     --mainDark: #820F0F;
+    --border: #D3D3D3;
+    --bouton:#F8894B;
+    --boutonText: #FFFFFF;
 }
 
 /* Contenu principal */
@@ -45,6 +48,14 @@ hr {
     background-color: var(--mainDark);
 }
 
+.conteneur hr {
+    width: 150px;
+    margin-bottom: 20px;
+    background-color: var(--border);
+    margin-top: 0px;
+    margin-inline: auto;
+}
+
 h1 {
     color: var(--text);
     font-size: 25px;
@@ -59,6 +70,29 @@ h2 {
     margin: 15px 0px;
 }
 
+.conteneur h2 {
+    line-height: 50px;
+    text-transform: initial;
+    font-size: 20px;
+    text-align: center;
+    margin: 0px;
+}
+
+h3 {
+    display: flex;
+    justify-content: center;
+    margin-inline: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 280px;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: var(--lightText);
+    background-color: var(--border);
+}
+
 p {
     color: var(--text);
     font-size: 12px;
@@ -67,6 +101,90 @@ p {
 a {
     color: var(--links);
     text-decoration: none;
+}
+
+.conteneur {
+    position: relative;
+    background-color: var(--sectionBg);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    padding-bottom: 20px;
+}
+
+.chevron {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* Formulaires */
+
+.formulaire-groupe-centre {
+    width: 240px;
+    margin-inline: auto;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+input {
+    border: 1px solid var(--text);
+    padding-left: 10px;
+}
+
+input::placeholder {
+    color: var(--lightText);
+    font-style: italic;
+}
+
+form input[type="text"] {
+    height: 35px;
+}
+
+form input[type="checkbox"] {
+    width: 15px;
+    height: 15px;
+    border-radius: 5px;
+}
+
+button {
+    height: 35px;
+    border-radius: 5px;
+    border: 0px;
+    background-color: var(--bouton);
+    color: var(--boutonText);
+}
+
+form .boutton-icone {
+    width: 35px;
+}
+
+.formulaire-texte-bouton {
+    display: flex;
+    gap: 15px;
+}
+
+.formulaire-texte-bouton input[type="text"] {
+    width: 190px;
+}
+
+.bouton-centre {
+    width: 100%;
+    padding-top: 12px;
+    text-align: center;
+}
+
+.bouton-petit {
+    width: 150px;
+}
+
+.formulaire-double-texte {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.formulaire-double-texte input[type="text"] {
+    width: 110px;
 }
 
 /* Fil d'ariane */
@@ -104,12 +222,11 @@ a {
     align-items: center;
     width: 350px;
     height: 130px;
-    background-color: var(--sectionBg);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    padding-bottom: 0px;
 }
 
 .sous-categorie img {
-    position: fixed;
+    position: absolute;
 }
 
 .sous-categorie a {
@@ -117,6 +234,13 @@ a {
     margin-inline: auto;
 }
 
+/* Filtres */
+
+.filtres {
+    margin-top: 10px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
 /* tablettes et ordinateurs */
 @media only screen and (min-width: 768px) {
 
