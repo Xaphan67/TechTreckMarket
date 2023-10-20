@@ -30,6 +30,10 @@
     --border: #D3D3D3;
     --bouton:#F8894B;
     --boutonText: #FFFFFF;
+    --lightTextB: #919191;
+    --textGreen: #00B22E;
+    --textRed: #D71010;
+    --boutonBuy: #73B43E;
 }
 
 /* Contenu principal */
@@ -37,6 +41,12 @@
 main {
     background-color: var(--mainBg);
     padding: 10px 20px;
+}
+
+.conteneur-principal {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 hr {
@@ -67,7 +77,7 @@ h2 {
     text-transform: uppercase;
     font-size: 16px;
     font-weight: normal;
-    margin: 15px 0px;
+    margin-bottom: 15px;
 }
 
 .conteneur h2 {
@@ -107,7 +117,6 @@ a {
     position: relative;
     background-color: var(--sectionBg);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
-    padding-bottom: 20px;
 }
 
 .chevron {
@@ -156,6 +165,11 @@ button {
 
 form .boutton-icone {
     width: 35px;
+}
+
+label {
+    font-size: 14px;
+    color: var(--lightText);
 }
 
 .formulaire-texte-bouton {
@@ -222,7 +236,6 @@ form .boutton-icone {
     align-items: center;
     width: 350px;
     height: 130px;
-    padding-bottom: 0px;
 }
 
 .sous-categorie img {
@@ -237,10 +250,89 @@ form .boutton-icone {
 /* Filtres */
 
 .filtres {
-    margin-top: 10px;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding: 0px 35px 20px 35px;
 }
+
+/* Produits */
+
+.produit {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.produit-image {
+    width: 80px;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.produit-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.produit-infos {
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 80px);
+}
+
+.produit-designation {
+    text-transform: uppercase;
+    font-size: 16px;
+    padding-bottom: 5px;
+}
+
+.produit-resume {
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--lightTextB);
+    max-height: 32px;
+}
+
+.produit-prix {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    padding-top: 11px;
+}
+
+.stock-oui {
+    font-size: 13px;
+    color: var(--textGreen);
+}
+
+.stock-non {
+    font-size: 13px;
+    color: var(--textRed);
+}
+
+.produit-achat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 13px;
+}
+
+.prix {
+    font-size: 18px;
+    color: var(--textRed);
+}
+
+.bouton-achat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: var(--boutonBuy);
+}
+
 /* tablettes et ordinateurs */
 @media only screen and (min-width: 768px) {
 

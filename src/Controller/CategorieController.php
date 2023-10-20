@@ -13,6 +13,9 @@ class CategorieController extends AbstractController
     #[Route('/categorie/{id}', name: 'afficher_categorie')]
     public function show(Categorie $categorie, ProduitRepository $produitRepository): Response
     {
+        // Aucun produit par défaut
+        $produits = null;
+
         // Si la catégorie n'a pas de sous catégories, on récupère
         // la liste des produits appartenant à la catégorie
         if (count($categorie->getSousCategories()) == 0)
