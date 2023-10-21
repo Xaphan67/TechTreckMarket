@@ -64,7 +64,8 @@
             </div>
         </div>
     {% else %} {# Si non, on affiche les produits de la catégorie #}
-        {# Affiche les options de filtre des rrésultats #}
+
+        {# Affiche les options de filtre des résultats #}
         <div class="conteneur filtres">
             <h2>Filtrez votre recherche</h2>
             <div class="chevron">
@@ -110,7 +111,7 @@
             </form>
         </div>
 
-        {# Affiche les produits #}
+        {# Affiche la pagination et le tri #}
         {% if produits.pageCount > 1 %}
             <div class="conteneur pagination-haut">
                 {{ knp_pagination_render(produits) }}
@@ -123,6 +124,8 @@
                 </select>
             </div>
         {% endif %}
+
+        {# Affiche les produits #}
         <div class="conteneur">
             {% for produit in produits %}
                 <div class="produit">
@@ -156,6 +159,7 @@
             {% endfor %}
         </div>
 
+        {# Affiche la pagination #}
         {% if produits.pageCount > 1 %}
             <div class="conteneur">
                 {{ knp_pagination_render(produits) }}
