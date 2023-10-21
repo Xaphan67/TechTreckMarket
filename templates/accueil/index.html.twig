@@ -4,4 +4,18 @@
 
 {% block body %}
     Page d'accueil...
+
+    {# Nouveautés #}
+    {% for ordinateur in ordinateurs %}
+        {{ ordinateur }}
+    {% endfor %}
+
+    {% for composant in composants %}
+        {{ composant }}
+    {% endfor %}
+
+    {% for peripherique in peripheriques %}
+        {{ peripherique }}
+    {% endfor %}
+
 {% endblock %}

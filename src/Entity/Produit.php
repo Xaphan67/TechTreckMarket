@@ -63,6 +63,10 @@ class Produit
     #[ORM\ManyToMany(targetEntity: self::class)]
     private Collection $produitsCompatibles;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Categorie $categoriePrincipale = null;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
@@ -280,6 +284,23 @@ class Produit
     public function removeProduitsCompatible(self $produitsCompatible): static
     {
         $this->produitsCompatibles->removeElement($produitsCompatible);
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->designation;
+    }
+
+    public function getCategoriePrincipale(): ?Categorie
+    {
+        return $this->categoriePrincipale;
+    }
+
+    public function setCategoriePrincipale(?Categorie $categoriePrincipale): static
+    {
+        $this->categoriePrincipale = $categoriePrincipale;
 
         return $this;
     }
