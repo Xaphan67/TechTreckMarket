@@ -43,6 +43,7 @@ class CategorieController extends AbstractController
                     10 // Limite par page
                 );
             }
+            $produits = $produitsPagination;
         }
 
         // Récupère les catégories parentes à la catégorie actuelle pour
@@ -66,7 +67,7 @@ class CategorieController extends AbstractController
         return $this->render('categorie/index.html.twig', [
             'categoriesParent' => $categoriesParent,
             'categorie' => $categorie,
-            'produits' => $produitsPagination,
+            'produits' => $produits,
             'marques' => $marques
         ]);
     }
