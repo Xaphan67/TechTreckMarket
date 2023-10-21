@@ -34,6 +34,7 @@
     --textGreen: #00B22E;
     --textRed: #D71010;
     --boutonBuy: #73B43E;
+    --boutonCurrent: #490D0D;
 }
 
 /* Contenu principal */
@@ -135,24 +136,31 @@ a {
     color: var(--text);
 }
 
-input {
+input,
+select {
     border: 1px solid var(--text);
     padding-left: 10px;
 }
 
-input::placeholder {
+input::placeholder,
+select {
     color: var(--lightText);
     font-style: italic;
 }
 
-form input[type="text"] {
+input[type="text"],
+select {
     height: 35px;
 }
 
-form input[type="checkbox"] {
+input[type="checkbox"] {
     width: 15px;
     height: 15px;
     border-radius: 5px;
+}
+
+select {
+    width: 190px;
 }
 
 .formulaire-coche {
@@ -167,6 +175,7 @@ button {
     border: 0px;
     background-color: var(--bouton);
     color: var(--boutonText);
+    cursor: pointer;
 }
 
 form .boutton-icone {
@@ -205,6 +214,47 @@ label {
 
 .formulaire-double-texte input[type="text"] {
     width: 110px;
+}
+
+/* Pagination */
+
+.pagination {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    padding: 7px 0px;
+    color: var(--boutonText);
+}
+
+.pagination a {
+    color: var(--boutonText);
+}
+
+.pagination .page-actuelle {
+    display: flex;
+    width: 35px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--boutonCurrent);
+    border-radius: 5px;;
+}
+
+.pagination .premiere-page,
+.pagination .page,
+.pagination .derniere-page {
+    display: flex;
+    width: 35px;
+    height: 35px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bouton);
+    border-radius: 5px;;
+}
+
+.pagination-haut {
+    text-align: center;
+    padding-bottom: 7px;
 }
 
 /* Fil d'ariane */
@@ -283,7 +333,7 @@ label {
 .produit-infos {
     display: flex;
     flex-direction: column;
-    max-width: calc(100% - 80px);
+    width: calc(100% - 80px);
 }
 
 .produit-designation {

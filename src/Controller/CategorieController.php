@@ -4,15 +4,17 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Repository\ProduitRepository;
+use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\CssSelector\Parser\Shortcut\ElementParser;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategorieController extends AbstractController
 {
     #[Route('/categorie/{id}', name: 'afficher_categorie')]
-    public function show(Categorie $categorie, ProduitRepository $produitRepository): Response
+    public function show(Categorie $categorie, ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Aucun produit ou marque par défaut
         $produits = null;
@@ -33,6 +35,13 @@ class CategorieController extends AbstractController
                 {
                     $marques[$produit->getMarque()->getNom()] = 1;
                 }
+
+                // Crée la pagination pour la liste des produits
+                $produitsPagination = $paginator->paginate(
+                    $produits, // Contenu à paginer
+                    $request->query->getInt('page', 1), // Page à afficher
+                    10 // Limite par page
+                );
             }
         }
 
@@ -57,7 +66,7 @@ class CategorieController extends AbstractController
         return $this->render('categorie/index.html.twig', [
             'categoriesParent' => $categoriesParent,
             'categorie' => $categorie,
-            'produits' => $produits,
+            'produits' => $produitsPagination,
             'marques' => $marques
         ]);
     }

@@ -1,0 +1,44 @@
+{# default Sliding pagination control implementation #}
+{% if pageCount > 1 %}
+    <div class="pagination">
+        {% if first is defined and current != first %}
+            <a href="{{ path(route, query|merge({(pageParameterName): first})) }}">
+                <span class="premiere-page">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M17.7084 16.6666L13.5417 12.4999L17.7084 8.33325M11.4584 16.6666L7.29169 12.4999L11.4584 8.33325" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+            </a>
+        {% endif %}
+
+        {# {% if previous is defined %}
+            <span class="previous">
+                <a rel="prev" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&lt;</a>
+            </span>
+        {% endif %} #}
+
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <a href="{{ path(route, query|merge({(pageParameterName): page})) }}"><span class="page">{{ page }}</span></a>
+            {% else %}
+                <span class="page-actuelle">{{ page }}</span>
+            {% endif %}
+        {% endfor %}
+
+        {# {% if next is defined %}
+            <span class="next">
+                <a rel="next" href="{{ path(route, query|merge({(pageParameterName): next})) }}">&gt;</a>
+            </span>
+        {% endif %} #}
+
+        {% if last is defined and current != last %}
+            <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">
+                <span class="derniere-page">
+                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.29165 8.33342L11.4583 12.5001L7.29165 16.6667M13.5416 8.33342L17.7083 12.5001L13.5416 16.6667" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+            </a>
+        {% endif %}
+    </div>
+{% endif %}

@@ -50,7 +50,6 @@
         <p>{{ categorie.description }}</p>
     </div>
 
-
     {# Vérifie si la catégorie à des sous-catégories ou non #}
     {% if categorie.sousCategories |length > 0 %} {# Si oui, on affiche les sous-catégories #}
         <div class="categories">
@@ -110,7 +109,20 @@
                 </div>
             </form>
         </div>
+
         {# Affiche les produits #}
+        {% if produits.pageCount > 1 %}
+            <div class="conteneur pagination-haut">
+                {{ knp_pagination_render(produits) }}
+                <select class="" name="tri" id="tri">
+                    <option value="">Trier les produits</option>
+                    <option value="nom">Nom</option>
+                    <option value="marque">Marque</option>
+                    <option value="prixASC">Du - cher au + cher</option>
+                    <option value="prixDESC">Du + cher au - cher</option>
+                </select>
+            </div>
+        {% endif %}
         <div class="conteneur">
             {% for produit in produits %}
                 <div class="produit">
@@ -143,6 +155,12 @@
                 </div>
             {% endfor %}
         </div>
+
+        {% if produits.pageCount > 1 %}
+            <div class="conteneur">
+                {{ knp_pagination_render(produits) }}
+            </div>
+        {% endif %}
 
     {% endif %}
 </div>
