@@ -88,14 +88,17 @@ li {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
+}
+
+.menuOption {
     height: 50px;
     width: 250px;
     padding-left: 10px;
     background-color: var(--mainBg);
-    cursor: pointer;
 }
 
-li:hover {
+.menuOption:hover {
     background-color: var(--lightTextB);
 }
 
@@ -341,6 +344,42 @@ label {
     background-color: var(--arianeBg);
 }
 
+/* Accueil */
+
+.accueil-conteneur {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    padding-inline: 20px;
+}
+
+.accueil-conteneur-image {
+    position: absolute;
+    top: -50px;
+    left: 22px;
+}
+
+.accueil-nom-categorie {
+    text-align: end;
+    font-size: 20px;
+    color: var(--lightText);
+    margin: 15px 12px 26px 0px;
+}
+
+.menu-categorie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    font-size: 18px;
+}
+
+.menu-categorie:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
 /* Catégories */
 
 .categories {
@@ -381,6 +420,7 @@ label {
 
 .nouveautes {
     padding: 20px;
+    margin-bottom: 20px;
 }
 
 .nouveau-produit {
