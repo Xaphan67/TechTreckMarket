@@ -40,6 +40,65 @@
     --boutonCurrent: #490D0D;
 }
 
+/* Header */
+
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: var(--mainDark);
+    height: 125px;
+}
+
+.headerHaut {
+    display: flex;
+    column-gap: 20px;
+    align-items: center;
+    height: 60px;
+}
+
+.headerMenu {
+    position: relative;
+    cursor: pointer;
+}
+
+.headerLogo {
+    max-height: 50px;
+}
+
+.recherchePrincipale {
+    height: 50px !important;
+    width: 290px;
+}
+
+.headerNavigation {
+    display: none;
+    position: absolute;
+    border: 1px solid var(--footerBgLight);
+    top: 62px;
+}
+
+ul {
+    list-style: none;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 50px;
+    width: 250px;
+    padding-left: 10px;
+    background-color: var(--mainBg);
+    cursor: pointer;
+}
+
+li:hover {
+    background-color: var(--lightTextB);
+}
+
 /* Contenu principal */
 
 main {
