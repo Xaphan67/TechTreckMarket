@@ -34,14 +34,15 @@ class CategorieController extends AbstractController
                 {
                     $marques[$produit->getMarque()->getNom()] = 1;
                 }
-
-                // Crée la pagination pour la liste des produits
-                $produitsPagination = $paginator->paginate(
-                    $produits, // Contenu à paginer
-                    $request->query->getInt('page', 1), // Page à afficher
-                    10 // Limite par page
-                );
             }
+
+            // Crée la pagination pour la liste des produits
+            $produitsPagination = $paginator->paginate(
+            $produits, // Contenu à paginer
+            $request->query->getInt('page', 1), // Page à afficher
+            10 // Limite par page
+            );
+            
             $produits = $produitsPagination;
         }
 

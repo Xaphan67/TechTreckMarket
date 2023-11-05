@@ -171,6 +171,11 @@ p {
     font-size: 12px;
 }
 
+.aucunProduit {
+    padding: 10px;
+    font-size: 16px;
+}
+
 a {
     color: var(--links);
     text-decoration: none;
