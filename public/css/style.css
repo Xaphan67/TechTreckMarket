@@ -78,6 +78,7 @@ header {
     position: absolute;
     border: 1px solid var(--footerBgLight);
     top: 62px;
+    z-index: 1;
 }
 
 ul {
