@@ -83,4 +83,19 @@
         </div>  
     </div>
 
+    {# Marques #}
+    <div class="categories">
+        <h2>Nos Marques</h2>
+        <div class="conteneur marques">
+            {% for marque in marques %}
+                <div class="marque">
+                    <div class="marque-image">
+                        <img src="{{ asset('img/marques/' ~ marque.logo) }}" alt="{{ marque }}">
+                    </div>
+                    {{ marque }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
 {% endblock %}
