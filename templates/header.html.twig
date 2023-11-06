@@ -1,6 +1,6 @@
 <div class="headerHaut">
     <div class="headerMenu">
-        <img onclick="interactMenu()" src="{{ asset('svg/header/hamburger-menu.svg') }}" alt="menu">
+        <img class="headerHautMenu" onclick="interactMenu()" src="{{ asset('svg/header/hamburger-menu.svg') }}" alt="menu">
         <div id="headerNavigation" class="headerNavigation">
             <ul>
                 <li class="menuOption"><a href="">Configurateur PC</a></li>
@@ -10,9 +10,9 @@
             </ul>
         </div>    
     </div>
-    <img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo">
-    <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
-    <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
+    <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
+    <a href=""><img src="{{ asset('svg/header/compte.svg') }}" alt="compte"></a>
+    <a href=""><img src="{{ asset('svg/header/panier.svg') }}" alt="panier"></a>
 </div>
 <form action="" method="post" class="">
     <input class="recherchePrincipale" type="text" id="recherchePrincipale" name="recherchePrincipale" placeholder="Rechercher un produit, une marque..." />

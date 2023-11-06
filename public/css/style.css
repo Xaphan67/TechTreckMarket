@@ -64,8 +64,13 @@ header {
     cursor: pointer;
 }
 
+.headerHautMenu, .headerHaut a {
+    padding-top: 5px;
+}
+
 .headerLogo {
     max-height: 50px;
+    max-width: 140px;
 }
 
 .recherchePrincipale {
@@ -493,6 +498,7 @@ label {
 .produit-infos {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .produit-designation {
