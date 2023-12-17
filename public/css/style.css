@@ -116,7 +116,8 @@ main {
     padding: 10px 20px;
 }
 
-.conteneur-principal {
+.conteneur-principal,
+.sub-conteneur {
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -256,6 +257,7 @@ button, .bouton-lien {
     background-color: var(--bouton);
     color: var(--boutonText);
     cursor: pointer;
+    font-size: 14px;
 }
 
 .bouton-lien {
@@ -607,6 +609,7 @@ label {
 .profil-categories {
     margin-top: 4px;
     width: 100%;
+    cursor: pointer;
 }
 
 .profil-categorie {
