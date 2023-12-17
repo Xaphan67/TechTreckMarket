@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Votre profil{% endblock %}
+
+{% block body %}
+
+<div class="conteneur-principal">
+    <div class="categories">
+        <h2>Votre compte</h2>
+        {% set categorie = "infos" %}
+        {% include "utilisateur/menu.html.twig" with {'categorie': categorie} %}
+        {{ utilisateur.email }}
+    </div>
+</div>
+
+{% endblock %}

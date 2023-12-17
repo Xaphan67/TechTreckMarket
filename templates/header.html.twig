@@ -8,10 +8,16 @@
                 <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':2 }) }}">Composants</a></li>
                 <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':3 }) }}">Périphériques</a></li> 
             </ul>
-        </div>    
+        </div>
     </div>
     <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
-    <a href=""><img src="{{ asset('svg/header/compte.svg') }}" alt="compte"></a>
+        {% if app.user %}
+            <a href="{{ path('profil_utilisateur',{'id':app.user.id}) }}">
+        {% else %}
+            <a href="{{ path('app_login') }}">
+        {% endif %}
+        <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
+    </a>
     <a href=""><img src="{{ asset('svg/header/panier.svg') }}" alt="panier"></a>
 </div>
 <form action="" method="post" class="">

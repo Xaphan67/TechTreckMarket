@@ -27,6 +27,7 @@
     --mainBg: #F3F3F3;
     --footerBgLight: #500202;
     --footerBgDark: #360000;
+    --tabBg: #ECECEC;
     --sectionBg: #FFFFFF;
     --arianeBg: #D9D9D9;
     --mainDark: #820F0F;
@@ -246,13 +247,23 @@ select {
     gap: 5px;
 }
 
-button {
+button, .bouton-lien {
     height: 35px;
     border-radius: 5px;
     border: 0px;
     background-color: var(--bouton);
     color: var(--boutonText);
     cursor: pointer;
+}
+
+.bouton-lien {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bouton-lien-centre {
+    align-self: center;
 }
 
 form .boutton-icone {
@@ -281,6 +292,10 @@ label {
 
 .bouton-petit {
     width: 150px;
+}
+
+.bouton-normal {
+    width: 200px;
 }
 
 .formulaire-double-texte {
@@ -552,6 +567,35 @@ label {
     width: 40px;
     height: 40px;
     background-color: var(--boutonBuy);
+}
+
+/* Profil utilisateur */
+
+.profil {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.profil-categories {
+    margin-top: 4px;
+    width: 100%;
+}
+
+.profil-categorie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    border-top: 1px solid var(--border);
+    font-weight: bold;
+}
+
+.pc-actif {
+    background-color: var(--tabBg);
+    color: var(--mainDark);
 }
 
 /* Footer */

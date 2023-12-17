@@ -58,6 +58,9 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $nom = null;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
@@ -331,6 +334,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }

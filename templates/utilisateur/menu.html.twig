@@ -1,0 +1,27 @@
+<div class="conteneur">
+    <div class="profil">
+        <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
+        {% if utilisateur.nom and utilisateur.prenom %}
+            <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+        {% endif %}
+        <a class="bouton-lien bouton-lien-centre bouton-normal" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
+        <div class="profil-categories">
+            <a href="">
+
+                <div class="profil-categorie {{categorie == "infos" ? "pc-actif" : "" }}">
+                    Mes informations
+                </div>
+            </a>
+            <a href="">
+                <div class="profil-categorie {{categorie == "commandes" ? "pc-actif" : "" }}">
+                    Mes commandes
+                </div>
+            </a>
+            <a href="">
+                <div class="profil-categorie {{categorie == "adresses" ? "pc-actif" : "" }}">
+                    Mes adresses
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
