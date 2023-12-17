@@ -9,7 +9,58 @@
         <h2>Votre compte</h2>
         {% set categorie = "infos" %}
         {% include "utilisateur/menu.html.twig" with {'categorie': categorie} %}
-        {{ utilisateur.email }}
+    </div>
+    <div class="conteneur">
+        <h2>Vos informations personelles</h2>
+        <div class="formulaire">
+            {{ form_start(infosUtilisateur) }}
+            <div class="formulaire-centre">
+                <div class="formulaire-champ">
+                    {{ form_row(infosUtilisateur.civilite) }}
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div class="formulaire-champ">
+                        {{ form_row(infosUtilisateur.nom) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(infosUtilisateur.prenom) }}
+                    </div>
+                </div>
+                <div>
+                    <div class="formulaire-champ">
+                        {{ form_row(infosUtilisateur.email) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(infosUtilisateur.pseudo) }}
+                    </div>
+                </div>
+            </div>
+            <div class="bouton-centre">
+                {{ form_row(infosUtilisateur.Valider) }}
+            </div>
+            {{ form_end(infosUtilisateur) }}
+        </div>
+    </div>
+    <div class="conteneur">
+        <h2>Changer le mot de passe</h2>
+        <div class="formulaire">
+            {{ form_start(mdpUtilisateur) }}
+            <div class="formulaire-champ">
+                {{ form_row(mdpUtilisateur.password) }}
+            </div>
+            <div class="bouton-centre">
+                {{ form_row(mdpUtilisateur.Valider) }}
+            </div>
+            {{ form_end(mdpUtilisateur) }}
+        </div>
+    </div>
+    <div class="conteneur">
+        <h2>Supprimer le compte</h2>
+        <div class="profil-supprimer">
+            <a class="bouton-lien bouton-lien-centre bouton-200" href="">Supprimer le compte</a>
+        </div>
     </div>
 </div>
 

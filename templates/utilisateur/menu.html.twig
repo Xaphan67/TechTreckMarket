@@ -4,24 +4,41 @@
         {% if utilisateur.nom and utilisateur.prenom %}
             <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
         {% endif %}
-        <a class="bouton-lien bouton-lien-centre bouton-normal" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
+        <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
         <div class="profil-categories">
+            {% if categorie == "infos" %}
+                <div class="profil-categorie pc-actif">
+                    Mes informations
+                </div>
+            {% else %}
             <a href="">
-
-                <div class="profil-categorie {{categorie == "infos" ? "pc-actif" : "" }}">
+                <div class="profil-categorie">
                     Mes informations
                 </div>
             </a>
-            <a href="">
-                <div class="profil-categorie {{categorie == "commandes" ? "pc-actif" : "" }}">
+            {% endif %}
+            {% if categorie == "commandes" %}
+                <div class="profil-categorie pc-actif">
                     Mes commandes
                 </div>
-            </a>
-            <a href="">
-                <div class="profil-categorie {{categorie == "adresses" ? "pc-actif" : "" }}">
+            {% else %}
+                <a href="">
+                    <div class="profil-categorie">
+                        Mes commandes
+                    </div>
+                </a>
+            {% endif %}
+            {% if categorie == "adresses" %}
+                <div class="profil-categorie pc-actif">
                     Mes adresses
                 </div>
-            </a>
+            {% else %}
+                <a href="">
+                    <div class="profil-categorie">
+                        Mes adresses
+                    </div>
+                </a>
+            {% endif %}
         </div>
     </div>
 </div>
