@@ -116,9 +116,20 @@ main {
     padding: 10px 20px;
 }
 
+.sub-conteneur-visible {
+    display: flex;
+}
+
+.sub-conteneur-invisible {
+    display: none;
+}
+
+.conteneur-principal {
+    display: flex;
+}
+
 .conteneur-principal,
 .sub-conteneur {
-    display: flex;
     flex-direction: column;
     gap: 20px;
 }

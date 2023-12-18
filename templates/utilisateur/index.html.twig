@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <div id="infos" class="sub-conteneur">
+    <div id="infos" class="sub-conteneur sub-conteneur-visible">
         <div class="conteneur">
             <h2>Vos informations personelles</h2>
             <div class="formulaire">
@@ -82,7 +82,7 @@
             </div>
         </div>
     </div>
-    <div id="commandes" class="sub-conteneur">
+    <div id="commandes" class="sub-conteneur sub-conteneur-invisible">
         <div class="conteneur">
             <h2>Vos commandes en cours</h2>
         </div>
@@ -90,7 +90,7 @@
             <h2>Historique des commandes</h2>
         </div>
     </div>
-    <div id="adresses" class="sub-conteneur">
+    <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
         <div class="conteneur">
             <h2>Carnet d'adresses</h2>
         </div>
@@ -105,39 +105,48 @@
     const menuCommandes = document.getElementById("menuCommandes");
     const adresses = document.getElementById("adresses");
     const menuAdresses = document.getElementById("menuAdresses");
-    const classToChange = "pc-actif"
+    const classMenu = "pc-actif"
 
     /* Action lorsqu'on clique sur "Mes informations" */
     menuInfos.addEventListener("click", function()
     {
-        menuInfos.classList.add(classToChange)
-        infos.style.display = "flex";
-        menuCommandes.classList.remove(classToChange)
-        commandes.style.display = "none";
-        menuAdresses.classList.remove(classToChange)
-        adresses.style.display = "none";
+        menuInfos.classList.add(classMenu)
+        infos.classList.remove("sub-conteneur-invisible")
+        infos.classList.add("sub-conteneur-visible")
+        menuCommandes.classList.remove(classMenu)
+        commandes.classList.remove("sub-conteneur-visible")
+        commandes.classList.add("sub-conteneur-invisible")
+        menuAdresses.classList.remove(classMenu)
+        adresses.classList.remove("sub-conteneur-visible")
+        adresses.classList.add("sub-conteneur-invisible")
     })
 
     /* Action lorsqu'on clique sur "Mes commandes" */
     menuCommandes.addEventListener("click", function()
     {
-        menuInfos.classList.remove(classToChange)
-        infos.style.display = "none";
-        menuCommandes.classList.add(classToChange)
-        commandes.style.display = "flex";
-        menuAdresses.classList.remove(classToChange)
-        adresses.style.display = "none";
+        menuInfos.classList.remove(classMenu)
+        infos.classList.remove("sub-conteneur-visible")
+        infos.classList.add("sub-conteneur-invisible")
+        menuCommandes.classList.add(classMenu)
+        commandes.classList.remove("sub-conteneur-invisible")
+        commandes.classList.add("sub-conteneur-visible")
+        menuAdresses.classList.remove(classMenu)
+        adresses.classList.remove("sub-conteneur-visible")
+        adresses.classList.add("sub-conteneur-invisible")
     })
 
     /* Action lorsqu'on clique sur "Mes adresses" */
     menuAdresses.addEventListener("click", function()
     {
-        menuInfos.classList.remove(classToChange)
-        infos.style.display = "none";
-        menuCommandes.classList.remove(classToChange)
-        commandes.style.display = "none";
-        menuAdresses.classList.add(classToChange)
-        adresses.style.display = "flex";
+        menuInfos.classList.remove(classMenu)
+        infos.classList.remove("sub-conteneur-visible")
+        infos.classList.add("sub-conteneur-invisible")
+        menuCommandes.classList.remove(classMenu)
+        commandes.classList.remove("sub-conteneur-visible")
+        commandes.classList.add("sub-conteneur-invisible")
+        menuAdresses.classList.add(classMenu)
+        adresses.classList.remove("sub-conteneur-invisible")
+        adresses.classList.add("sub-conteneur-visible")
     })
 </script>
 
