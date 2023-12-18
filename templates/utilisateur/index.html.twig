@@ -7,92 +7,90 @@
 <div class="conteneur-principal">
     <div class="categories">
         <h2>Votre compte</h2>
-        <div class="conteneur">
-            <div class="profil">
-                <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
-                {% if utilisateur.nom and utilisateur.prenom %}
-                    <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
-                {% endif %}
-                <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
-                <div class="profil-categories">
-                    <div id="menuInfos" class="profil-categorie pc-actif">
-                        Mes informations
-                    </div>
-                    <div id="menuCommandes" class="profil-categorie">
-                        Mes commandes
-                    </div>
-                    <div id="menuAdresses" class="profil-categorie">
-                        Mes adresses
+        <div class="conteneur-categories">
+            <div class="conteneur">
+                <div class="profil">
+                    <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
+                    {% if utilisateur.nom and utilisateur.prenom %}
+                        <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+                    {% endif %}
+                    <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
+                    <div class="profil-categories">
+                        <div id="menuInfos" class="profil-categorie pc-actif">
+                            Mes informations
+                        </div>
+                        <div id="menuCommandes" class="profil-categorie">
+                            Mes commandes
+                        </div>
+                        <div id="menuAdresses" class="profil-categorie">
+                            Mes adresses
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div id="infos" class="sub-conteneur sub-conteneur-visible">
-        <div class="conteneur">
-            <h2>Vos informations personelles</h2>
-            <div class="formulaire">
-                {{ form_start(infosUtilisateur) }}
-                <div class="formulaire-centre">
+            <div id="infos" class="sub-conteneur sub-conteneur-visible">
+                <div class="conteneur conteneur-padding">
+                    <h2>Vos informations personelles</h2>
+                    {{ form_start(infosUtilisateur) }}
+                    <div class="formulaire-centre">
+                        <div class="formulaire-champ">
+                            {{ form_row(infosUtilisateur.civilite) }}
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <div class="formulaire-champ">
+                                {{ form_row(infosUtilisateur.nom) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(infosUtilisateur.prenom) }}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="formulaire-champ">
+                                {{ form_row(infosUtilisateur.email) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(infosUtilisateur.pseudo) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bouton-centre">
+                        {{ form_row(infosUtilisateur.Valider) }}
+                    </div>
+                    {{ form_end(infosUtilisateur) }}
+                </div>
+                <div class="conteneur conteneur-padding">
+                    <h2>Changer le mot de passe</h2>
+                    {{ form_start(mdpUtilisateur) }}
                     <div class="formulaire-champ">
-                        {{ form_row(infosUtilisateur.civilite) }}
+                        {{ form_row(mdpUtilisateur.password) }}
+                    </div>
+                    <div class="bouton-centre">
+                        {{ form_row(mdpUtilisateur.Valider) }}
+                    </div>
+                    {{ form_end(mdpUtilisateur) }}
+                </div>
+                <div class="conteneur">
+                    <h2>Supprimer le compte</h2>
+                    <div class="profil-supprimer">
+                        <a class="bouton-lien bouton-lien-centre bouton-200" href="">Supprimer le compte</a>
                     </div>
                 </div>
-                <div>
-                    <div>
-                        <div class="formulaire-champ">
-                            {{ form_row(infosUtilisateur.nom) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(infosUtilisateur.prenom) }}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="formulaire-champ">
-                            {{ form_row(infosUtilisateur.email) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(infosUtilisateur.pseudo) }}
-                        </div>
-                    </div>
-                </div>
-                <div class="bouton-centre">
-                    {{ form_row(infosUtilisateur.Valider) }}
-                </div>
-                {{ form_end(infosUtilisateur) }}
             </div>
-        </div>
-        <div class="conteneur">
-            <h2>Changer le mot de passe</h2>
-            <div class="formulaire">
-                {{ form_start(mdpUtilisateur) }}
-                <div class="formulaire-champ">
-                    {{ form_row(mdpUtilisateur.password) }}
+            <div id="commandes" class="sub-conteneur sub-conteneur-invisible">
+                <div class="conteneur">
+                    <h2>Vos commandes en cours</h2>
                 </div>
-                <div class="bouton-centre">
-                    {{ form_row(mdpUtilisateur.Valider) }}
+                <div class="conteneur">
+                    <h2>Historique des commandes</h2>
                 </div>
-                {{ form_end(mdpUtilisateur) }}
             </div>
-        </div>
-        <div class="conteneur">
-            <h2>Supprimer le compte</h2>
-            <div class="profil-supprimer">
-                <a class="bouton-lien bouton-lien-centre bouton-200" href="">Supprimer le compte</a>
+            <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
+                <div class="conteneur">
+                    <h2>Carnet d'adresses</h2>
+                </div>
             </div>
-        </div>
-    </div>
-    <div id="commandes" class="sub-conteneur sub-conteneur-invisible">
-        <div class="conteneur">
-            <h2>Vos commandes en cours</h2>
-        </div>
-        <div class="conteneur">
-            <h2>Historique des commandes</h2>
-        </div>
-    </div>
-    <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
-        <div class="conteneur">
-            <h2>Carnet d'adresses</h2>
         </div>
     </div>
 </div>

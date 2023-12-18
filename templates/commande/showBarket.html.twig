@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Votre panier{% endblock %}
+
+{% block body %}
+
+<div class="conteneur-principal">
+    <div class="categories">
+        <h2>Votre panier</h2>
+        <div class="conteneur-categories">
+            <div class="conteneur conteneur-padding">
+                <h2>Votre panier contient {{ commande | length }} produit{{ commande | length != 1 ? "s" : "" }}</h2>
+                <div class="panier-liste">
+                    {% for cmd_ligne in commande %}
+                        <div class="panier-produit">
+                            <div class="produit-image">
+                                <img src="{{ asset('img/produits/' ~ cmd_ligne.produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ cmd_ligne.produit.photo) }}" alt="{{ cmd_ligne.produit.designation }}">
+                            </div>
+                            <div class="produit-infos">
+                                <span class="produit-designation"><a href="">{{ cmd_ligne.produit.designation }}</a></span>
+                                <span>
+                                    Disponibilité :
+                                    {% if cmd_ligne.produit.disponible %}
+                                        <span class="stock-oui">EN STOCK</span>
+                                    {% else %}
+                                        <span class="stock-non">RUPTURE</span>
+                                    {% endif %}
+                                </span>
+                                <div class="panier-actions">
+                                    <span>Quantité : {{ cmd_ligne.quantite }}</span>
+                                    <span class="prix">{{ cmd_ligne.produit.prix }} €</span>
+                                    <a href="{{ path('supprimer_produit_commande', { 'id': cmd_ligne.produit.id }) }}"><img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit"></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="conteneur conteneur-padding">
+                <div class="panier-total">
+                    <h2>Montant total de vos produits</h2>
+                    <span class="panier-prix">{{ total }} €</span>
+                </div>    
+                <a class="bouton-commander bouton-lien-centre" href="">Passer commande</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

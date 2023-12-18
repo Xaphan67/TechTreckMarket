@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use App\Repository\CommandeRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -41,6 +42,18 @@ class Commande
     #[ORM\ManyToOne(inversedBy: 'commandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
+
+    public function __construct(Utilisateur $utilisateur)
+    {
+        $this->setCivilite($utilisateur->getCivilite() && "");
+        $this->setNom($utilisateur->getNom() && "");
+        $this->setPrenom($utilisateur->getPrenom() && "");
+        $this->setAdresseFacturation($utilisateur->getAdressesFacturation() && "");
+        $this->setAdresseLivraison($utilisateur->getAdressesLivraison() && "");
+        $this->setDateCommande(new \DateTime('now'));
+        $this->setUtilisateur($utilisateur);
+        $this->setEtat("panier");
+    }
 
     public function getId(): ?int
     {
