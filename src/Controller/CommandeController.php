@@ -52,7 +52,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/add/{id}', name: 'ajout_produit_commande')]
-    public function addProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager): Response
+    public function addProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if($this->getUser())
@@ -96,7 +96,7 @@ class CommandeController extends AbstractController
             $entityManager->flush($produitsCommande);
 
             // Redirige vers le panier
-            return $this->redirectToRoute('afficher_panier');
+            return $this->redirectToRoute('afficher_categorie', ['id' => $produit->getCategorie()->getId()]);
         }
         
         // Redirige vers la page d'accueil
