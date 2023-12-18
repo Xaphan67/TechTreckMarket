@@ -104,8 +104,34 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/delete/{id}', name:'supprimer_produit_commande')]
-    public function removeProduct()
+    public function removeProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager)
     {
+        // Vérifie qu'un utilisateur est connecté
+        if($this->getUser())
+        {
+            // Récupère la commande active de l'utilisateur.
+            $utilisateur = $this->getUser();
+            $commande = $commandeRepository->findOneBy([
+                'id' => $utilisateur->getId(),
+                'etat' => "panier"
+            ]);
+
+            // Vérifie si le produit existe déjà dans la commande
+            $produitExiste = $produitCommandeRepository->findOneBy([
+                'commande' => $commande,
+                'produit' => $produit
+            ]);
+
+            if ($produitExiste) // Supprime le produit s'il existe
+            {
+                $entityManager->remove($produitExiste);
+                $entityManager->flush();
+            }
+
+            // Redirige vers le panier
+            return $this->redirectToRoute('afficher_panier');
+        }
+
         // Redirige vers la page d'accueil
         return $this->redirectToRoute('app_accueil');
     }
