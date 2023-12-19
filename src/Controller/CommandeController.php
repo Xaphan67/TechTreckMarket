@@ -28,17 +28,25 @@ class CommandeController extends AbstractController
                 'etat' => "panier"
             ]);
 
-            // Récupère les produits associés à cette commande
-            $lignesCommande = $produitCommandeRepository->findBy(['commande' => $commande->getId()
-            ]);
-
-            // Récupère le prix total de la commande
+            // Par défaut, la commande ne contient rien
+            $lignesCommande = [];
             $total = 0;
-            foreach ($lignesCommande as $ligneCommande)
+
+            // Si la commande existe...
+            if ($commande)
             {
-                $prixLigne = $ligneCommande->getQuantite() * $ligneCommande->getProduit()->getPrix();
-                $total += $prixLigne;
-            }
+                // Récupère les produits associés à cette commande
+                $lignesCommande = $produitCommandeRepository->findBy(['commande' => $commande->getId()
+                ]);
+
+                // Récupère le prix total de la commande
+                if ($lignesCommande)
+                foreach ($lignesCommande as $ligneCommande)
+                {
+                    $prixLigne = $ligneCommande->getQuantite() * $ligneCommande->getProduit()->getPrix();
+                    $total += $prixLigne;
+                }     
+            }   
 
             // Appel à la vue
             return $this->render('commande/showBarket.html.twig', [

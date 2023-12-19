@@ -702,6 +702,12 @@ label {
     margin-top: 30px;
 }
 
+.panier-vide {
+    width: 250px;
+    display: block;
+    margin: auto;
+}
+
 /* Footer */
 
 .footerHaut {
