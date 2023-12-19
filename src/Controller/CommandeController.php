@@ -29,20 +29,21 @@ class CommandeController extends AbstractController
             ]);
 
             // Récupère les produits associés à cette commande
-            $commande = $produitCommandeRepository->findBy(['commande' => $commande->getId()
+            $lignesCommande = $produitCommandeRepository->findBy(['commande' => $commande->getId()
             ]);
 
             // Récupère le prix total de la commande
             $total = 0;
-            foreach ($commande as $cmd_ligne)
+            foreach ($lignesCommande as $ligneCommande)
             {
-                $prixLigne = $cmd_ligne->getQuantite() * $cmd_ligne->getProduit()->getPrix();
+                $prixLigne = $ligneCommande->getQuantite() * $ligneCommande->getProduit()->getPrix();
                 $total += $prixLigne;
             }
 
             // Appel à la vue
             return $this->render('commande/showBarket.html.twig', [
                 'commande' => $commande,
+                'lignesCommande' => $lignesCommande,
                 'total' => $total
             ]);
         }
@@ -130,6 +131,29 @@ class CommandeController extends AbstractController
 
             // Redirige vers le panier
             return $this->redirectToRoute('afficher_panier');
+        }
+
+        // Redirige vers la page d'accueil
+        return $this->redirectToRoute('app_accueil');
+    }
+
+    #[Route('/commande/validate/{id}', name:'valider_commande')]
+    public function validateCommand(Commande $commande, CommandeRepository $commandeRepository, EntityManagerInterface $entityManager)
+    {
+        // Vérifie qu'un utilisateur est connecté
+        if($this->getUser())
+        {
+            // Récupère la commande active de l'utilisateur.
+            $utilisateur = $this->getUser();
+            $commande = $commandeRepository->findOneBy([
+                'id' => $utilisateur->getId(),
+                'etat' => "panier"
+            ]);
+
+            // Change l'état de la commande
+            $commande->setEtat("préparation");
+            $entityManager->persist($commande);
+            $entityManager->flush($commande);
         }
 
         // Redirige vers la page d'accueil
