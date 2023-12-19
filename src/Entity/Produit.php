@@ -59,7 +59,7 @@ class Produit
 
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Avis::class, orphanRemoval: true)]
     private Collection $avis;
-    
+
     #[ORM\ManyToMany(targetEntity: self::class)]
     private Collection $produitsCompatibles;
 
@@ -70,7 +70,7 @@ class Produit
     public function __construct()
     {
         $this->avis = new ArrayCollection();
-        $this->produitsCompatibles = new ArrayCollection();   
+        $this->produitsCompatibles = new ArrayCollection();
     }
 
     public function getId(): ?int

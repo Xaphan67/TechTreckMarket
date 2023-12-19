@@ -15,23 +15,26 @@ class MotDePasseUtilisateurType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-        ->add('password', RepeatedType::class, [
-            'type' => PasswordType::class,
-            'invalid_message' => 'Les deux champs Nouveau Mot de passe doivent être identiques.',
-            'options' => ['attr' => ['class' => 'password-field']],
-            'required' => true,
-            'first_options' => ['label' => 'Nouveau mot de passe'],
-            'second_options' => ['label' => 'Répétez le nouveau mot de passe'],
-            'attr' => [
-                'autocomplete' => 'off'
-            ],
-        ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les deux champs Nouveau Mot de passe doivent être identiques.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options' => [
+                    'label' => 'Nouveau mot de passe'
+                ],
+                'second_options' => [
+                    'label' => 'Répétez le nouveau mot de passe'
+                ],
+                'attr' => [
+                    'autocomplete' => 'off'
+                ],
+            ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [
                     'class' => 'bouton-100'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

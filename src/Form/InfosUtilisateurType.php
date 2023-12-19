@@ -53,8 +53,7 @@ class InfosUtilisateurType extends AbstractType
                 'attr' => [
                     'class' => 'bouton-100'
                 ]
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

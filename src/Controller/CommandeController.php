@@ -15,11 +15,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommandeController extends AbstractController
 {
     #[Route('/commande/panier', name: 'afficher_panier')]
-    public function showBarket(CommandeRepository $commandeRepository) : Response
+    public function showBarket(CommandeRepository $commandeRepository): Response
     {
         // Vérifie qu'un utilisateur est connecté
-        if($this->getUser())
-        {
+        if ($this->getUser()) {
             // Récupère la commande active de l'utilisateur
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
@@ -29,9 +28,8 @@ class CommandeController extends AbstractController
 
             // Récupère le prix total de la commande
             $total = 0;
-            if ($commande)
-            {
-                foreach($commande->getProduitCommandes() as $produitCommande) {
+            if ($commande) {
+                foreach ($commande->getProduitCommandes() as $produitCommande) {
                     $total += $produitCommande->getProduit()->getPrix() * $produitCommande->getQuantite();
                 }
             }
@@ -51,8 +49,7 @@ class CommandeController extends AbstractController
     public function addProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager): Response
     {
         // Vérifie qu'un utilisateur est connecté
-        if($this->getUser())
-        {
+        if ($this->getUser()) {
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
@@ -73,15 +70,13 @@ class CommandeController extends AbstractController
             ]);
 
             // Ajoute le produit à la commande s'il n'existe pas déjà
-            if (!$produitActuel)
-            {
+            if (!$produitActuel) {
                 $commande->addProduitCommande(new ProduitCommande($commande, $produit));
 
                 // Stocke la commande dans la base de données
                 $entityManager->persist($commande);
                 $entityManager->flush($commande);
-            }
-            else // Augmente la quantité s'il existe déjà
+            } else // Augmente la quantité s'il existe déjà
             {
                 $produitActuel->setQuantite($produitActuel->getQuantite() + 1);
                 $entityManager->persist($produitActuel);
@@ -91,17 +86,16 @@ class CommandeController extends AbstractController
             // Redirige vers le panier
             return $this->redirectToRoute('afficher_categorie', ['id' => $produit->getCategorie()->getId()]);
         }
-        
+
         // Redirige vers la page d'accueil
         return $this->redirectToRoute('app_accueil');
     }
 
-    #[Route('/commande/delete/{id}', name:'supprimer_produit_commande')]
+    #[Route('/commande/delete/{id}', name: 'supprimer_produit_commande')]
     public function removeProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager)
     {
         // Vérifie qu'un utilisateur est connecté
-        if($this->getUser())
-        {
+        if ($this->getUser()) {
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
@@ -129,12 +123,11 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('app_accueil');
     }
 
-    #[Route('/commande/validate/{id}', name:'valider_commande')]
+    #[Route('/commande/validate/{id}', name: 'valider_commande')]
     public function validateCommand(Commande $commande, CommandeRepository $commandeRepository, EntityManagerInterface $entityManager)
     {
         // Vérifie qu'un utilisateur est connecté
-        if($this->getUser())
-        {
+        if ($this->getUser()) {
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([

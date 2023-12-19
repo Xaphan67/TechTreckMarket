@@ -21,28 +21,23 @@ class CategorieController extends AbstractController
 
         // Si la catégorie n'a pas de sous catégories, on récupère
         // la liste des produits appartenant à la catégorie
-        if (count($categorie->getSousCategories()) == 0)
-        {
+        if (count($categorie->getSousCategories()) == 0) {
             $produits = $produitRepository->findBy(['categorie' => $categorie], ["designation" => "ASC"]);
-            foreach ($produits as $produit)
-            {
-                if (array_key_exists($produit->getMarque()->getNom(), $marques))
-                {
+            foreach ($produits as $produit) {
+                if (array_key_exists($produit->getMarque()->getNom(), $marques)) {
                     $marques[$produit->getMarque()->getNom()]++;
-                }
-                else
-                {
+                } else {
                     $marques[$produit->getMarque()->getNom()] = 1;
                 }
             }
 
             // Crée la pagination pour la liste des produits
             $produitsPagination = $paginator->paginate(
-            $produits, // Contenu à paginer
-            $request->query->getInt('page', 1), // Page à afficher
-            10 // Limite par page
+                $produits, // Contenu à paginer
+                $request->query->getInt('page', 1), // Page à afficher
+                10 // Limite par page
             );
-            
+
             $produits = $produitsPagination;
         }
 
@@ -58,8 +53,7 @@ class CategorieController extends AbstractController
 
         // Si la catégorie parente n'est pas nulle, on l'ajoute au tableau et
         // on récupère la valeur de la catégorie parente à cette catégorie
-        while ($parent != null)
-        {
+        while ($parent != null) {
             $categoriesParent[] = $parent;
             $parent = $parent->getCategorieParent();
         }
