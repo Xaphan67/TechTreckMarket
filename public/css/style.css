@@ -39,6 +39,8 @@
     --textRed: #D71010;
     --boutonBuy: #73B43E;
     --boutonCurrent: #490D0D;
+    --listBg: #F7F7F7;
+    --textOrange: #B25500;
 }
 
 /* Header */
@@ -649,6 +651,55 @@ label {
 .pc-actif {
     background-color: var(--tabBg);
     color: var(--mainDark);
+}
+
+.commande {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.commande-infos {
+    background-color: var(--listBg);
+}
+
+.commande-produit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    height: 100px;
+    padding-right: 20px;
+}
+
+.etat-en-cours {
+    color: var(--textOrange);
+}
+
+.etat-expediee {
+    color: var(--textGreen);
+}
+
+.commande-details-action {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--textRed);
+}
+
+.commande-details-text {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.commande-details {
+    display: none;
+}
+
+.rotation-chevron {
+    transform: rotate(180deg);
 }
 
 /* Panier */

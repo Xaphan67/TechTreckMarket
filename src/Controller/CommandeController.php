@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Produit;
 use App\Entity\Commande;
 use App\Entity\ProduitCommande;
-use App\Repository\ProduitRepository;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ProduitCommandeRepository;
@@ -16,7 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommandeController extends AbstractController
 {
     #[Route('/commande/panier', name: 'afficher_panier')]
-    public function showBarket(CommandeRepository $commandeRepository, ProduitRepository $produitRepository, ProduitCommandeRepository $produitCommandeRepository) : Response
+    public function showBarket(CommandeRepository $commandeRepository) : Response
     {
         // Vérifie qu'un utilisateur est connecté
         if($this->getUser())
@@ -24,34 +23,22 @@ class CommandeController extends AbstractController
             // Récupère la commande active de l'utilisateur
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
-                'id' => $utilisateur->getId(),
+                'utilisateur' => $utilisateur->getId(),
                 'etat' => "panier"
             ]);
 
-            // Par défaut, la commande ne contient rien
-            $lignesCommande = [];
+            // Récupère le prix total de la commande
             $total = 0;
-
-            // Si la commande existe...
             if ($commande)
             {
-                // Récupère les produits associés à cette commande
-                $lignesCommande = $produitCommandeRepository->findBy(['commande' => $commande->getId()
-                ]);
-
-                // Récupère le prix total de la commande
-                if ($lignesCommande)
-                foreach ($lignesCommande as $ligneCommande)
-                {
-                    $prixLigne = $ligneCommande->getQuantite() * $ligneCommande->getProduit()->getPrix();
-                    $total += $prixLigne;
-                }     
-            }   
+                foreach($commande->getProduitCommandes() as $produitCommande) {
+                    $total += $produitCommande->getProduit()->getPrix() * $produitCommande->getQuantite();
+                }
+            }
 
             // Appel à la vue
             return $this->render('commande/showBarket.html.twig', [
                 'commande' => $commande,
-                'lignesCommande' => $lignesCommande,
                 'total' => $total
             ]);
         }
@@ -61,7 +48,7 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/add/{id}', name: 'ajout_produit_commande')]
-    public function addProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager, Request $request): Response
+    public function addProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if($this->getUser())
@@ -69,40 +56,37 @@ class CommandeController extends AbstractController
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
-                'id' => $utilisateur->getId(),
+                'utilisateur' => $utilisateur->getId(),
                 'etat' => "panier"
             ]);
 
             // Crée une nouvelle commande si l'utilisateur n'en à aucune à l'était "panier"
             if (!$commande) {
                 $commande = new Commande($utilisateur);
+                $utilisateur->addCommande($commande);
             }
 
             // Vérifie si le produit existe déjà dans la commande
-            $produitExiste = $produitCommandeRepository->findOneBy([
+            $produitActuel = $produitCommandeRepository->findOneBy([
                 'commande' => $commande,
                 'produit' => $produit
             ]);
 
             // Ajoute le produit à la commande s'il n'existe pas déjà
-            if (!$produitExiste)
+            if (!$produitActuel)
             {
-                $produitsCommande = new ProduitCommande();
-                $produitsCommande->setCommande($commande);
-                $produitsCommande->setProduit($produit);
-                $produitsCommande->setQuantite(1);
+                $commande->addProduitCommande(new ProduitCommande($commande, $produit));
+
+                // Stocke la commande dans la base de données
+                $entityManager->persist($commande);
+                $entityManager->flush($commande);
             }
             else // Augmente la quantité s'il existe déjà
             {
-                $produitExiste->setQuantite($produitExiste->getQuantite() + 1);
-                $produitsCommande = $produitExiste;
+                $produitActuel->setQuantite($produitActuel->getQuantite() + 1);
+                $entityManager->persist($produitActuel);
+                $entityManager->flush($produitActuel);
             }
-            
-            // Stocke la commande dans la base de données
-            $entityManager->persist($commande);
-            $entityManager->flush($commande);
-            $entityManager->persist($produitsCommande);
-            $entityManager->flush($produitsCommande);
 
             // Redirige vers le panier
             return $this->redirectToRoute('afficher_categorie', ['id' => $produit->getCategorie()->getId()]);
@@ -121,7 +105,7 @@ class CommandeController extends AbstractController
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
-                'id' => $utilisateur->getId(),
+                'utilisateur' => $utilisateur->getId(),
                 'etat' => "panier"
             ]);
 
@@ -154,12 +138,12 @@ class CommandeController extends AbstractController
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
             $commande = $commandeRepository->findOneBy([
-                'id' => $utilisateur->getId(),
+                'utilisateur' => $utilisateur->getId(),
                 'etat' => "panier"
             ]);
 
             // Change l'état de la commande
-            $commande->setEtat("préparation");
+            $commande->setEtat("en cours de préparation");
             $entityManager->persist($commande);
             $entityManager->flush($commande);
         }

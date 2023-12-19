@@ -3,9 +3,12 @@
 namespace App\Entity;
 
 use DateTime;
-use App\Repository\CommandeRepository;
 use Doctrine\DBAL\Types\Types;
+use App\Entity\ProduitCommande;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CommandeRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -43,8 +46,12 @@ class Commande
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
+    #[ORM\OneToMany(mappedBy: 'commande', targetEntity: ProduitCommande::class, cascade:["persist"])]
+    private Collection $produitCommandes;
+
     public function __construct(Utilisateur $utilisateur)
     {
+        $this->produitCommandes = new ArrayCollection();
         $this->setCivilite($utilisateur->getCivilite() && "");
         $this->setNom($utilisateur->getNom() && "");
         $this->setPrenom($utilisateur->getPrenom() && "");
@@ -164,6 +171,36 @@ class Commande
     public function setUtilisateur(?Utilisateur $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProduitCommande>
+     */
+    public function getProduitCommandes(): Collection
+    {
+        return $this->produitCommandes;
+    }
+
+    public function addProduitCommande(ProduitCommande $produitCommande): static
+    {
+        if (!$this->produitCommandes->contains($produitCommande)) {
+            $this->produitCommandes->add($produitCommande);
+            $produitCommande->setCommande($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduitCommande(ProduitCommande $produitCommande): static
+    {
+        if ($this->produitCommandes->removeElement($produitCommande)) {
+            // set the owning side to null (unless already changed)
+            if ($produitCommande->getCommande() === $this) {
+                $produitCommande->setCommande(null);
+            }
+        }
 
         return $this;
     }
