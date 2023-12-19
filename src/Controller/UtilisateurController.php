@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Utilisateur;
 use App\Form\InfosUtilisateurType;
 use App\Repository\CommandeRepository;
 use App\Form\MotDePasseUtilisateurType;
@@ -13,12 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UtilisateurController extends AbstractController
 {
-    #[Route('/utilisateur/{id}', name: 'profil_utilisateur')]
-    public function index(Utilisateur $utilisateur, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository): Response
+    #[Route('/utilisateur', name: 'profil_utilisateur')]
+    public function index(CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if($this->getUser())
         {
+            // Récupère l'utilisateur actuellement connecté
+            $utilisateur = $this->getUser();
+            
             // Génération des formulaires pour modifier les informations personelles de l'utilisateur
             $infosForm = $this->createForm(InfosUtilisateurType::class, $utilisateur);
             $mdpForm = $this->createForm(MotDePasseUtilisateurType::class, $utilisateur);

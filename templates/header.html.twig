@@ -12,7 +12,7 @@
     </div>
     <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
         {% if app.user %}
-            <a href="{{ path('profil_utilisateur',{'id':app.user.id}) }}">
+            <a href="{{ path('profil_utilisateur') }}">
         {% else %}
             <a href="{{ path('app_login') }}">
         {% endif %}
