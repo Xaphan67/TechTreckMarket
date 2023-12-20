@@ -13,8 +13,8 @@ class AdresseFacturation
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $numero = null;
+    #[ORM\Column(length: 50)]
+    private ?string $numero = null;
 
     #[ORM\Column(length: 50)]
     private ?string $typeRue = null;
@@ -47,12 +47,12 @@ class AdresseFacturation
         return $this->id;
     }
 
-    public function getNumero(): ?int
+    public function getNumero(): ?string
     {
         return $this->numero;
     }
 
-    public function setNumero(int $numero): static
+    public function setNumero(string $numero): static
     {
         $this->numero = $numero;
 
