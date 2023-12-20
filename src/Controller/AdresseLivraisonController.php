@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdresseLivraisonController extends AbstractController
 {
     #[Route('/adresseLivraison/ajout', name: 'ajout_adresse_livraison')]
-    #[Route('/adresseLivraison/modifier/{id}')]
+    #[Route('/adresseLivraison/modifier/{id}', name:'modifier_adresse_livraison')]
     public function new_edit(AdresseLivraison $adresseLivraison = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Vérifie qu'un utilisateur est connecté
@@ -26,10 +26,13 @@ class AdresseLivraisonController extends AbstractController
                 $token = $request->request->get('token');
             }
 
+            // Vérifie que le formulaire est soumis et est valide
             if ($form->isSubmitted() && ((!$adresseLivraison && $form->isValid()) || ($adresseLivraison && $this->isCsrfTokenValid('update-adresse-livraison', $token)) )) {
+                // Récupère les informations du formulaire
                 $formData = $form->getData();
                 $formData["utilisateur"] = $this->getUser();
 
+                // Crée une nouvelle adresse de livraison, ou modifie celle existante
                 if (!$adresseLivraison) {
                     $adresseLivraison = new AdresseLivraison($formData);
                 } else {
@@ -40,6 +43,7 @@ class AdresseLivraisonController extends AbstractController
                     $adresseLivraison->setVille($formData["ville"]);
                 }
 
+                // Envoie en base de données
                 $entityManager->persist($adresseLivraison);
                 $entityManager->flush();
 

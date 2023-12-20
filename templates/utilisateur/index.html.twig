@@ -81,7 +81,7 @@
                     <div class="conteneur conteneur-padding">
                         <h2>Vos commandes en cours</h2>
                         {% if commandesEnCours | length > 0 %}
-                            <div class="panier-liste">
+                            <div class="liste">
                                 {% for commande in commandesEnCours %}
                                 <div class="commande">
                                     <div class="commande-infos">
@@ -116,7 +116,7 @@
                     <div class="conteneur conteneur-padding">
                         <h2>Historique des commandes</h2>
                         {% if commandesPassees | length > 0 %}
-                            <div class="panier-liste">
+                            <div class="liste">
                                 {% for commande in commandesPassees %}
                                 <div class="commande">
                                     <div class="commande-infos">
@@ -172,9 +172,14 @@
                                             {% endif %}
                                             {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                             {{ adresse.codePostal }} {{ adresse.ville }}
-                                            <a class="bouton-lien boutton-icone" href="">
-                                                <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
-                                            </a>
+                                            <div class="adresse-actions">
+                                                <a class="bouton-lien boutton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')">
+                                                    <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
+                                                </a>
+                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}">
+                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                                                </a>
+                                            </div>
                                         </div>
                                     {% endfor %}
                                 </div>
@@ -213,6 +218,100 @@
     </div>
 
     <div id="modal" class="modal">
+        {% for adresse in adressesFacturation %}
+            <div id="formulaire-edition-facturation-{{ adresse.id }}" class="conteneur-modal">
+                <div class="fermer-modal" onclick="closeModale('formulaire-edition-facturation-{{ adresse.id }}')">
+                    <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+                </div>
+                <h3>Modifier une adresse de Facturation</h3>
+                <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
+                <form name="adresse" method="post" action="{{ path('modifier_adresse_facturation', {'id': adresse.id}) }}">
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_numero" class="required">Numero</label>
+                            <input type="text" id="adresse_numero-{{ adresse.id }}" name="adresse[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_typeRue" class="required">Type de rue</label>
+                            <input type="text" id="adresse_typeRue-{{ adresse.id }}" name="adresse[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_rue" class="required">Rue</label>
+                            <input type="text" id="adresse_rue-{{ adresse.id }}" name="adresse[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_codePostal" class="required">Code postal</label>
+                            <input type="text" id="adresse_codePostal-{{ adresse.id }}" name="adresse[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_ville" class="required">Ville</label>
+                            <input type="text" id="adresse_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
+                        </div>
+                    </div>
+                    <div class="bouton-centre">
+                        <div>
+                            <button type="submit" id="adresse_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="token" value="{{ csrf_token('update-adresse-facturation') }}">
+                </form>
+            </div>
+        {% endfor %}
+        {% for adresse in adressesLivraison %}
+            <div id="formulaire-edition-livraison-{{ adresse.id }}" class="conteneur-modal">
+                <div class="fermer-modal" onclick="closeModale('formulaire-edition-livraison-{{ adresse.id }}')">
+                    <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+                </div>
+                <h3>Modifier une adresse de livraison</h3>
+                <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
+                <form name="adresse" method="post" action="{{ path('modifier_adresse_livraison', {'id': adresse.id}) }}">
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_numero" class="required">Numero</label>
+                            <input type="text" id="adresse_numero-{{ adresse.id }}" name="adresse[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_typeRue" class="required">Type de rue</label>
+                            <input type="text" id="adresse_typeRue-{{ adresse.id }}" name="adresse[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_rue" class="required">Rue</label>
+                            <input type="text" id="adresse_rue-{{ adresse.id }}" name="adresse[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_codePostal" class="required">Code postal</label>
+                            <input type="text" id="adresse_codePostal-{{ adresse.id }}" name="adresse[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                        </div>
+                    </div>
+                    <div class="formulaire-champ">
+                        <div>
+                            <label for="adresse_ville" class="required">Ville</label>
+                            <input type="text" id="adresse_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
+                        </div>
+                    </div>
+                    <div class="bouton-centre">
+                        <div>
+                            <button type="submit" id="adresse_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
+                        </div>
+                    </div>
+                    <input type="hidden" name="token" value="{{ csrf_token('update-adresse-livraison') }}">
+                </form>
+            </div>
+        {% endfor %}
         <div id="formulaires-adresses" class="conteneur-modal">
             <div class="fermer-modal" onclick="closeModale('formulaires-adresses')">
                 <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
@@ -275,53 +374,6 @@
                 {{ form_end(adresseLivraisonFormulaire) }}
             </div>
         </div>
-        {% for adresse in adressesLivraison %}
-            <div id="formulaires-edition-livraison-{{ adresse.id }}" class="conteneur-modal">
-                <div class="fermer-modal" onclick="closeModale('formulaires-edition-livraison-{{ adresse.id }}')">
-                    <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
-                </div>
-                <h3>Modifier une adresse de livraison</h3>
-                <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
-                <form name="adresse" method="post" action="/adresseLivraison/modifier/{{ adresse.id }}">
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_numero" class="required">Numero</label>
-                            <input type="text" id="adresse_numero-{{ adresse.id }}" name="adresse[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
-                        </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_typeRue" class="required">Type de rue</label>
-                            <input type="text" id="adresse_typeRue-{{ adresse.id }}" name="adresse[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
-                        </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_rue" class="required">Rue</label>
-                            <input type="text" id="adresse_rue-{{ adresse.id }}" name="adresse[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
-                        </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_codePostal" class="required">Code postal</label>
-                            <input type="text" id="adresse_codePostal-{{ adresse.id }}" name="adresse[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
-                        </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_ville" class="required">Ville</label>
-                            <input type="text" id="adresse_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
-                        </div>
-                    </div>
-                    <div class="bouton-centre">
-                        <div>
-                            <button type="submit" id="adresse_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
-                        </div>
-                    </div>
-                    <input type="hidden" name="token" value="{{ csrf_token('update-adresse-livraison') }}">
-                </form>
-            </div>
-        {% endfor %}
     </div>
 
     <script>
@@ -366,6 +418,18 @@
             formulaireLivraison.classList.add("formulaire-invisible")
         }
 
+        // Affiche le formulaire d'édidtion d'adresse de facturation
+        function displayEditFacturationForm(id)
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("formulaire-edition-facturation-" + id)
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
+
         // Affiche le formulaire d'ajout d'adresse de livraison
         function displayLivraisonForm()
         {
@@ -384,7 +448,7 @@
         function displayEditLivraisonForm(id)
         {
             const modal = document.getElementById("modal")
-            const element = document.getElementById("formulaires-edition-livraison-" + id)
+            const element = document.getElementById("formulaire-edition-livraison-" + id)
             const stylesModal = window.getComputedStyle(modal)
             if (stylesModal.getPropertyValue("display") == "none") {
                 element.style.display = "block";
