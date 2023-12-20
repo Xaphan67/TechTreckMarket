@@ -32,6 +32,16 @@ class AdresseLivraison
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
+    public function __construct($adresse)
+    {
+        $this->setUtilisateur($adresse["utilisateur"]);
+        $this->setNumero($adresse["numero"]);
+        $this->setTypeRue($adresse["typeRue"]);
+        $this->setRue($adresse["rue"]);
+        $this->setCodePostal($adresse["codePostal"]);
+        $this->setVille($adresse["ville"]);
+    }
+
     public function getId(): ?int
     {
         return $this->id;

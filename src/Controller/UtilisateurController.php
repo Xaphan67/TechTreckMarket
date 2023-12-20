@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\AdresseType;
 use App\Form\InfosUtilisateurType;
 use App\Form\MotDePasseUtilisateurType;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,8 @@ class UtilisateurController extends AbstractController
             // Génération des formulaires pour modifier les informations personelles de l'utilisateur
             $infosForm = $this->createForm(InfosUtilisateurType::class, $utilisateur);
             $mdpForm = $this->createForm(MotDePasseUtilisateurType::class, $utilisateur);
+            $adresseFacturationForm = $this->createForm(AdresseType::class);
+            $adresseLivraisonForm = $this->createForm(AdresseType::class);
 
             // Récupération des commandes de l'utilisateur
             $commandes = $utilisateur->getCommandes();
@@ -49,8 +52,10 @@ class UtilisateurController extends AbstractController
                 'utilisateur' => $utilisateur,
                 'infosUtilisateur' => $infosForm,
                 'mdpUtilisateur' => $mdpForm,
+                'adresseFacturationFormulaire' => $adresseFacturationForm,
+                'adresseLivraisonFormulaire' => $adresseLivraisonForm,
                 'commandesEnCours' => $commandesEnCours,
-                'commandesPassees' => $commandesPassees
+                'commandesPassees' => $commandesPassees,
             ]);
         }
 

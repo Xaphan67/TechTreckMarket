@@ -298,7 +298,8 @@ form .boutton-icone {
     width: 35px;
 }
 
-label {
+label,
+.type-label {
     font-size: 14px;
     color: var(--lightText);
 }
@@ -700,6 +701,42 @@ label {
 
 .rotation-chevron {
     transform: rotate(180deg);
+}
+
+.profil-bouton-centre {
+    display: flex;
+    justify-content: center;
+}
+
+.formulaires-adresses {
+    display: none;
+}
+
+.types-facture {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0px 10px 0px;
+}
+
+.type-facture {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    height: 35px;
+    padding-inline: 5px;
+    cursor: pointer;
+    background: var(--mainBg);
+}
+
+.type-facture-selected {
+    background: var(--arianeBg);
+    cursor: default;
+}
+
+.formulaire-invisible {
+    display: none;
 }
 
 /* Panier */
