@@ -117,6 +117,7 @@ li {
 main {
     background-color: var(--mainBg);
     padding: 10px 20px;
+    min-height: calc(100vh - 461px);
 }
 
 .sub-conteneur-visible {
