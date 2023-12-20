@@ -744,14 +744,6 @@ label,
     gap: 10px;
 }
 
-.formulaires-adresses {
-    width: 350px;
-    padding: 15px;
-    border-radius: 15px;
-    border: 1px solid var(--border);
-    background-color: var(--sectionBg);
-}
-
 .types-facture {
     display: flex;
     align-items: center;
@@ -892,6 +884,12 @@ label,
 
 .conteneur-modal {
     position: relative;
+    width: 350px;
+    padding: 15px 35px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background-color: var(--sectionBg);
+    display: none;
 }
 
 .fermer-modal {
@@ -903,6 +901,7 @@ label,
     top: 5px;
     width: 35px;
     height: 35px;
+    cursor: pointer;
 }
 
 .modal-fermer {
