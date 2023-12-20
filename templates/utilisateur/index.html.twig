@@ -205,65 +205,75 @@
                             <div class="profil-bouton-centre">
                                 <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
                             </div>
-                            <div id="formulaires-adresses" class="formulaires-adresses">
-                                <div class="types-facture">
-                                    <div class="type-label">
-                                        Type :
-                                    </div>
-                                    <div id="type-facturation" class="type-facture type-facture-selected" onclick="displayFacturationForm()">
-                                        Facturation
-                                    </div>
-                                    <div id="type-livraison" class="type-facture" onclick="displayLivraisonForm()">
-                                        Livraison
-                                    </div>
-                                </div>
-                                <div id="formulaire-facturation">
-                                    {{ form_start(adresseFacturationFormulaire, {'action': path('ajout_adresse_facturation'), 'method': 'POST'}) }}
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseFacturationFormulaire.numero) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseFacturationFormulaire.typeRue) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseFacturationFormulaire.rue) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseFacturationFormulaire.codePostal) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseFacturationFormulaire.ville) }}
-                                    </div>
-                                    <div class="bouton-centre">
-                                        {{ form_row(adresseFacturationFormulaire.Valider) }}
-                                    </div>
-                                    {{ form_end(adresseFacturationFormulaire) }}
-                                </div>
-                                <div id="formulaire-livraison" class="formulaire-invisible">
-                                    {{ form_start(adresseLivraisonFormulaire, {'action': path('ajout_adresse_livraison'), 'method': 'POST'}) }}
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseLivraisonFormulaire.numero) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseLivraisonFormulaire.typeRue) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseLivraisonFormulaire.rue) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseLivraisonFormulaire.codePostal) }}
-                                    </div>
-                                    <div class="formulaire-champ">
-                                        {{ form_row(adresseLivraisonFormulaire.ville) }}
-                                    </div>
-                                    <div class="bouton-centre">
-                                        {{ form_row(adresseLivraisonFormulaire.Valider) }}
-                                    </div>
-                                    {{ form_end(adresseLivraisonFormulaire) }}
-                                </div>
-                            </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="conteneur-modal">
+            <div class="fermer-modal" onclick="closeModales()">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <div id="formulaires-adresses" class="formulaires-adresses">
+                <h3>Ajouter une adresse</h3>
+                <p>Remplissez les champs çi-dessous pour ajouter une adresse</p>
+                <div class="types-facture">
+                    <div class="type-label">
+                        Type :
+                    </div>
+                    <div id="type-facturation" class="type-facture type-facture-selected" onclick="displayFacturationForm()">
+                        Facturation
+                    </div>
+                    <div id="type-livraison" class="type-facture" onclick="displayLivraisonForm()">
+                        Livraison
+                    </div>
+                </div>
+                <div id="formulaire-facturation">
+                    {{ form_start(adresseFacturationFormulaire, {'action': path('ajout_adresse_facturation'), 'method': 'POST'}) }}
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.numero) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.typeRue) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.rue) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.codePostal) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.ville) }}
+                    </div>
+                    <div class="bouton-centre">
+                        {{ form_row(adresseFacturationFormulaire.Valider) }}
+                    </div>
+                    {{ form_end(adresseFacturationFormulaire) }}
+                </div>
+                <div id="formulaire-livraison" class="formulaire-invisible">
+                    {{ form_start(adresseLivraisonFormulaire, {'action': path('ajout_adresse_livraison'), 'method': 'POST'}) }}
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.numero) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.typeRue) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.rue) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.codePostal) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.ville) }}
+                    </div>
+                    <div class="bouton-centre">
+                        {{ form_row(adresseLivraisonFormulaire.Valider) }}
+                    </div>
+                    {{ form_end(adresseLivraisonFormulaire) }}
                 </div>
             </div>
         </div>
@@ -288,12 +298,12 @@
         // Affiche les formulaire d'ajout d'adresses
         function displayForms()
         {
+            const modal = document.getElementById("modal")
             const element = document.getElementById("formulaires-adresses")
-            const styles = window.getComputedStyle(element)
-            if (styles.getPropertyValue("display") == "none") {
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
                 element.style.display = "block";
-            } else {
-                element.style.display = "none";
+                modal.style.display = "flex";
             }
         }
 
@@ -323,6 +333,16 @@
             typeLivraison.classList.add("type-facture-selected")
             formulaireFacturation.classList.add("formulaire-invisible")
             formulaireLivraison.classList.remove("formulaire-invisible")
+        }
+
+        // ferme les modales
+        function closeModales()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("formulaires-adresses")
+            const stylesModal = window.getComputedStyle(modal)
+            element.style.display = "none";
+            modal.style.display = "none";
         }
 
         // Récupère les éléments du DOM dont l'état devra changer

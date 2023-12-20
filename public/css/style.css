@@ -20,6 +20,7 @@
 /* Couleurs */
 
 :root {
+    --modal: rgba(0, 0, 0, 0.25);
     --links: #000000;
     --linksFooter: #FFFFFF;
     --text: #2F2E2E;
@@ -744,7 +745,11 @@ label,
 }
 
 .formulaires-adresses {
-    display: none;
+    width: 350px;
+    padding: 15px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background-color: var(--sectionBg);
 }
 
 .types-facture {
@@ -762,11 +767,13 @@ label,
     height: 35px;
     padding-inline: 5px;
     cursor: pointer;
+    font-size: 14px;
     background: var(--mainBg);
 }
 
 .type-facture-selected {
-    background: var(--arianeBg);
+    background: var(--bouton);
+    color: var(--boutonText);
     cursor: default;
 }
 
@@ -867,6 +874,40 @@ label,
     flex-wrap: wrap;
     gap: 20px;
     width: 190px;
+}
+
+/* Modales */
+
+.modal {
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--modal);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.conteneur-modal {
+    position: relative;
+}
+
+.fermer-modal {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    right: 5px;
+    top: 5px;
+    width: 35px;
+    height: 35px;
+}
+
+.modal-fermer {
+    width: 15px;
+    height: 15px;
 }
 
 /* tablettes et ordinateurs */ 
