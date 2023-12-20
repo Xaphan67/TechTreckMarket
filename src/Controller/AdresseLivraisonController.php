@@ -36,4 +36,22 @@ class AdresseLivraisonController extends AbstractController
         // Redirige vers la page d'accueil
         return $this->redirectToRoute('app_accueil');
     }
+
+    #[Route('/adresseLivraison/supprimer/{id}', name: 'supprimer_adresse_livraison')]
+    public function delete(AdresseLivraison $adresse, EntityManagerInterface $entityManager) : Response
+    {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            // Vérifie que l'adresse appartient à l'utilisateur connecté
+                if ($adresse->getUtilisateur() == $this->getUser()) {
+                $entityManager->remove($adresse);
+                $entityManager->flush();
+
+                return $this->redirectToRoute('profil_utilisateur');
+            }
+        }
+
+        // Redirige vers la page d'accueil
+        return $this->redirectToRoute('app_accueil');
+    }
 }

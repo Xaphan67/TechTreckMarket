@@ -194,7 +194,7 @@
                                                 <a class="bouton-lien boutton-icone" href="">
                                                     <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
                                                 </a>
-                                                <a class="bouton-lien boutton-icone" href="">
+                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}">
                                                     <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                                                 </a>
                                             </div>
