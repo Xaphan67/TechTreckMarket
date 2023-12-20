@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\AdresseType;
 use App\Entity\AdresseLivraison;
+use App\Repository\AdresseLivraisonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,7 +15,7 @@ class AdresseLivraisonController extends AbstractController
 {
     #[Route('/adresseLivraison/ajout', name: 'ajout_adresse_livraison')]
     #[Route('/adresseLivraison/modifier/{id}', name:'modifier_adresse_livraison')]
-    public function new_edit(AdresseLivraison $adresseLivraison = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function new_edit(AdresseLivraison $adresseLivraison = null, Request $request, AdresseLivraisonRepository $adresseLivraisonRepository, EntityManagerInterface $entityManager): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
@@ -41,11 +42,17 @@ class AdresseLivraisonController extends AbstractController
                     $adresseLivraison->setRue($formData["rue"]);
                     $adresseLivraison->setCodePostal($formData["codePostal"]);
                     $adresseLivraison->setVille($formData["ville"]);
+                    $adresseLivraison->setPreferee($formData["preferee"]);
                 }
 
                 // Envoie en base de données
                 $entityManager->persist($adresseLivraison);
                 $entityManager->flush();
+
+                // Marque les autres adresses comme non préférées si celle-çi est marquée comme préférée
+                if ($adresseLivraison->isPreferee()) {
+                    $adresseLivraisonRepository->setAllOtherAdressesAsNotFavorite($adresseLivraison);
+                }
 
                 return $this->redirectToRoute('profil_utilisateur');
             }

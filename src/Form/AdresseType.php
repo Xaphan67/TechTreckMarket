@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class AdresseType extends AbstractType
 {
@@ -38,6 +39,11 @@ class AdresseType extends AbstractType
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ]
+            ])
+            ->add('preferee', CheckboxType::class, [
+                'label' => 'Définir comme adresse préférée',
+                'row_attr' => ['class' => 'formulaire-champ-horizontal'],
+                'required' => false,
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [

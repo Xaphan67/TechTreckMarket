@@ -2,19 +2,20 @@
 
 namespace App\Controller;
 
-use App\Entity\AdresseFacturation;
 use App\Form\AdresseType;
+use App\Entity\AdresseFacturation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\AdresseFacturationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdresseFacturationController extends AbstractController
 {
     #[Route('/adresseFacturation/ajout', name: 'ajout_adresse_facturation')]
     #[Route('/adresseFacturation/modifier/{id}', name:'modifier_adresse_facturation')]
-    public function new_edit(AdresseFacturation $adresseFacturation = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function new_edit(AdresseFacturation $adresseFacturation = null, Request $request, AdresseFacturationRepository $adresseFacturationonRepository, EntityManagerInterface $entityManager): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
@@ -41,11 +42,17 @@ class AdresseFacturationController extends AbstractController
                     $adresseFacturation->setRue($formData["rue"]);
                     $adresseFacturation->setCodePostal($formData["codePostal"]);
                     $adresseFacturation->setVille($formData["ville"]);
+                    $adresseFacturation->setPreferee($formData["preferee"]);
                 }
 
                 // Envoie en base de données
                 $entityManager->persist($adresseFacturation);
                 $entityManager->flush();
+
+                // Marque les autres adresses comme non préférées si celle-çi est marquée comme préférée
+                if ($adresseFacturation->isPreferee()) {
+                    $adresseFacturationonRepository->setAllOtherAdressesAsNotFavorite($adresseFacturation);
+                }
 
                 return $this->redirectToRoute('profil_utilisateur');
             }

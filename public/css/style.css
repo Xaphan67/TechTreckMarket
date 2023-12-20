@@ -42,6 +42,8 @@
     --boutonCurrent: #490D0D;
     --listBg: #F7F7F7;
     --textOrange: #B25500;
+    --favoriteAdress: rgba(40, 167, 69, 0.15);
+    --borderFavoriteAdress: rgba(40, 167, 69, 0.35);
 }
 
 /* Header */
@@ -356,6 +358,12 @@ label,
     display: flex;
     width: 100%;
     flex-direction: column;
+}
+
+.formulaire-champ-horizontal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* Pagination */
@@ -722,7 +730,7 @@ label,
     padding-inline: 10px;
     align-items: center;
     gap: 10px;
-    background: var(--listBg);
+    background-color: var(--listBg);
     height: 50px;
 }
 
@@ -736,8 +744,13 @@ label,
     align-items: center;
     justify-content: space-between;
     padding-left: 15px;
-    padding-right: 20px;
+    padding-right: 15px;
     height: 77px;
+}
+
+.adresse-preferee {
+background-color: var(--favoriteAdress);
+border: 1px solid var(--borderFavoriteAdress);
 }
 
 .adresse-actions {

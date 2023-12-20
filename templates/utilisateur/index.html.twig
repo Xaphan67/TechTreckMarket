@@ -166,7 +166,7 @@
                                         Adresse de Facturation
                                     </div>
                                     {% for adresse in adressesFacturation %}
-                                        <div class="adresse-info">
+                                        <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
                                             {% if adresse.utilisateur.civilite and adresse.utilisateur.nom and adresse.utilisateur.prenom %}
                                                 {{ adresse.utilisateur.civilite }} {{ adresse.utilisateur.nom }} {{ adresse.utilisateur.prenom }}<br>
                                             {% endif %}
@@ -189,7 +189,7 @@
                                         Adresse de Livraison
                                     </div>
                                     {% for adresse in adressesLivraison %}
-                                        <div class="adresse-info">
+                                        <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
                                             {% if adresse.utilisateur.civilite and adresse.utilisateur.nom and adresse.utilisateur.prenom %}
                                                 {{ adresse.utilisateur.civilite }} {{ adresse.utilisateur.nom }} {{ adresse.utilisateur.prenom }}<br>
                                             {% endif %}
@@ -256,6 +256,16 @@
                             <input type="text" id="adresse_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
                         </div>
                     </div>
+                    <div class="formulaire-champ">
+                        <div class="formulaire-champ-horizontal">
+                            <label for="adresse_preferee">Définir comme adresse préférée</label>
+                            {% if adresse.preferee %}
+                                <input type="checkbox" id="adresse_preferee-{{ adresse.id }}" name="adresse[preferee]" checked>
+                            {% else %}
+                                <input type="checkbox" id="adresse_preferee-{{ adresse.id }}" name="adresse[preferee]">
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="bouton-centre">
                         <div>
                             <button type="submit" id="adresse_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
@@ -303,6 +313,16 @@
                             <input type="text" id="adresse_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
                         </div>
                     </div>
+                    <div class="formulaire-champ">
+                        <div class="formulaire-champ-horizontal">
+                            <label for="adresse_preferee">Définir comme adresse préférée</label>
+                            {% if adresse.preferee %}
+                                <input type="checkbox" id="adresse_preferee-{{ adresse.id }}" name="adresse[preferee]" checked>
+                            {% else %}
+                                <input type="checkbox" id="adresse_preferee-{{ adresse.id }}" name="adresse[preferee]">
+                            {% endif %}
+                        </div>
+                    </div>
                     <div class="bouton-centre">
                         <div>
                             <button type="submit" id="adresse_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
@@ -346,6 +366,9 @@
                 <div class="formulaire-champ">
                     {{ form_row(adresseFacturationFormulaire.ville) }}
                 </div>
+                <div class="formulaire-champ">
+                    {{ form_row(adresseFacturationFormulaire.preferee) }}
+                </div>
                 <div class="bouton-centre">
                     {{ form_row(adresseFacturationFormulaire.Valider) }}
                 </div>
@@ -367,6 +390,9 @@
                 </div>
                 <div class="formulaire-champ">
                     {{ form_row(adresseLivraisonFormulaire.ville) }}
+                </div>
+                <div class="formulaire-champ">
+                    {{ form_row(adresseLivraisonFormulaire.preferee) }}
                 </div>
                 <div class="bouton-centre">
                     {{ form_row(adresseLivraisonFormulaire.Valider) }}

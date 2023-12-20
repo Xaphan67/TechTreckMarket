@@ -20,4 +20,16 @@ class AdresseLivraisonRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, AdresseLivraison::class);
     }
+
+    public function setAllOtherAdressesAsNotFavorite($currentId): int
+    {
+       return $this->createQueryBuilder('al')
+            ->update()
+            ->set('al.preferee', '0')
+            ->where('al.id != :currentId')
+            ->setParameter('currentId', $currentId)
+            ->getQuery()
+            ->execute();
+       ;
+    }
 }

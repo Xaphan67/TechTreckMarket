@@ -32,6 +32,9 @@ class AdresseLivraison
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
+    #[ORM\Column]
+    private ?bool $preferee = null;
+
     public function __construct($adresse)
     {
         $this->setUtilisateur($adresse["utilisateur"]);
@@ -40,6 +43,7 @@ class AdresseLivraison
         $this->setRue($adresse["rue"]);
         $this->setCodePostal($adresse["codePostal"]);
         $this->setVille($adresse["ville"]);
+        $this->setPreferee($adresse["preferee"]);
     }
 
     public function getId(): ?int
@@ -115,6 +119,18 @@ class AdresseLivraison
     public function setUtilisateur(?Utilisateur $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
+
+        return $this;
+    }
+
+    public function isPreferee(): ?bool
+    {
+        return $this->preferee;
+    }
+
+    public function setPreferee(bool $preferee): static
+    {
+        $this->preferee = $preferee;
 
         return $this;
     }
