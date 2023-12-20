@@ -41,8 +41,8 @@
                     <div class="panier-total">
                         <h2>Montant total de vos produits</h2>
                         <span class="panier-prix">{{ total | number_format(2, '.')}} €</span>
-                    </div>    
-                    <a class="bouton-commander bouton-lien-centre" href="{{ path('valider_commande', {'id': commande.id }) }}">Passer commande</a>
+                    </div>
+                    <a class="bouton-commander bouton-lien-centre" href="{{ path('valider_commande') }}">Passer commande</a>
                 </div>
             {% else %}
             <div class="conteneur conteneur-padding">
@@ -50,7 +50,6 @@
                 <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="votre panier est vide">
             </div>
             {% endif %}
-            
         </div>
     </div>
 </div>

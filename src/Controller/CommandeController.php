@@ -123,8 +123,8 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('app_accueil');
     }
 
-    #[Route('/commande/validate/{id}', name: 'valider_commande')]
-    public function validateCommand(Commande $commande, CommandeRepository $commandeRepository, EntityManagerInterface $entityManager)
+    #[Route('/commande/validate', name: 'valider_commande')]
+    public function validateCommand(CommandeRepository $commandeRepository, EntityManagerInterface $entityManager)
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
