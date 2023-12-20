@@ -135,6 +135,17 @@ class CommandeController extends AbstractController
                 'etat' => "panier"
             ]);
 
+            // Récupère l'id et le prix des produits au moment de la commande et les stocke dans un JSON dans la commande
+            $prixProduits = [];
+            foreach ($commande->getProduitCommandes() as $produitCommande) {
+                $produit = [
+                    'idProduit' => $produitCommande->getProduit()->getId(),
+                    'prix' => $produitCommande->getProduit()->getPrix()
+                ];
+                $prixProduits[] = $produit;
+            }
+            $commande->setPrixProduits($prixProduits);
+
             // Change l'état de la commande
             $commande->setEtat("en cours de préparation");
             $entityManager->persist($commande);
