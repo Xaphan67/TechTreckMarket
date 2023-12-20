@@ -159,6 +159,49 @@
                 <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
                     <div class="conteneur conteneur-padding">
                         <h2>Carnet d'adresses</h2>
+                            <div class="adresses">
+                                <div class="liste">
+                                    <div class="adresse-haut">
+                                        <img class="adresse-image" src="{{ asset('svg/utilisateurs/adresse-facturation.svg') }}" alt="Adresse de facturation">
+                                        Adresse de Facturation
+                                    </div>
+                                    {% for adresse in adressesFacturation %}
+                                        <div class="adresse-info">
+                                            {% if adresse.utilisateur.civilite and adresse.utilisateur.nom and adresse.utilisateur.prenom %}
+                                                {{ adresse.utilisateur.civilite }} {{ adresse.utilisateur.nom }} {{ adresse.utilisateur.prenom }}<br>
+                                            {% endif %}
+                                            {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
+                                            {{ adresse.codePostal }} {{ adresse.ville }}
+                                            <a class="bouton-lien boutton-icone" href="">
+                                                <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
+                                            </a>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="liste">
+                                    <div class="adresse-haut">
+                                        <img src="{{ asset('svg/utilisateurs/adresse-livraison.svg') }}" alt="Adresse de facturation">
+                                        Adresse de Livraison
+                                    </div>
+                                    {% for adresse in adressesLivraison %}
+                                        <div class="adresse-info">
+                                            {% if adresse.utilisateur.civilite and adresse.utilisateur.nom and adresse.utilisateur.prenom %}
+                                                {{ adresse.utilisateur.civilite }} {{ adresse.utilisateur.nom }} {{ adresse.utilisateur.prenom }}<br>
+                                            {% endif %}
+                                            {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
+                                            {{ adresse.codePostal }} {{ adresse.ville }}
+                                            <div class="adresse-actions">
+                                                <a class="bouton-lien boutton-icone" href="">
+                                                    <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
+                                                </a>
+                                                <a class="bouton-lien boutton-icone" href="">
+                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
                             <div class="profil-bouton-centre">
                                 <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
                             </div>

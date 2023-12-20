@@ -48,6 +48,10 @@ class UtilisateurController extends AbstractController
                 }
             }
 
+            // Récupération des adresses de l'utilisateur
+            $adressesFacturation = $utilisateur->getAdressesFacturation();
+            $adressesLivraison = $utilisateur->getAdressesLivraison();
+
             return $this->render('utilisateur/index.html.twig', [
                 'utilisateur' => $utilisateur,
                 'infosUtilisateur' => $infosForm,
@@ -56,6 +60,8 @@ class UtilisateurController extends AbstractController
                 'adresseLivraisonFormulaire' => $adresseLivraisonForm,
                 'commandesEnCours' => $commandesEnCours,
                 'commandesPassees' => $commandesPassees,
+                'adressesFacturation' => $adressesFacturation,
+                'adressesLivraison' => $adressesLivraison
             ]);
         }
 

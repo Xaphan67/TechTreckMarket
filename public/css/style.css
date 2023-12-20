@@ -294,7 +294,7 @@ button, .bouton-lien {
     align-self: center;
 }
 
-form .boutton-icone {
+.boutton-icone {
     width: 35px;
 }
 
@@ -708,6 +708,41 @@ label,
     justify-content: center;
 }
 
+.adresses {
+    display: flex;
+    flex-direction: column;
+    gap: 23px;
+    margin-bottom: 20px;
+}
+
+.adresse-haut {
+    display: flex;
+    padding-inline: 10px;
+    align-items: center;
+    gap: 10px;
+    background: var(--listBg);
+    height: 50px;
+}
+
+.adresse-image {
+    width: 35px;
+    height: 35px;
+}
+
+.adresse-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 15px;
+    padding-right: 20px;
+    height: 77px;
+}
+
+.adresse-actions {
+    display: flex;
+    gap: 10px;
+}
+
 .formulaires-adresses {
     display: none;
 }
@@ -741,7 +776,7 @@ label,
 
 /* Panier */
 
-.panier-liste {
+.liste {
     border: 1px solid var(--border)
 }
 

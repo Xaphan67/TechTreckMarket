@@ -11,7 +11,7 @@
             {% if commande %}
                 <div class="conteneur conteneur-padding">
                     <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" : "" }}</h2>
-                    <div class="panier-liste">
+                    <div class="liste">
                        {% for produitCommande in commande.produitCommandes %}
                             <div class="panier-produit">
                                 <div class="produit-image">
