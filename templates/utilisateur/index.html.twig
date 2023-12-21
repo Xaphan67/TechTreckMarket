@@ -61,7 +61,10 @@
                     </div>
                     <div class="conteneur conteneur-padding">
                         <h2>Changer le mot de passe</h2>
-                        {{ form_start(mdpUtilisateur) }}
+                        {{ form_start(mdpUtilisateur, {'action': path('modifier_mdp_utilisateur'), 'method': 'POST'}) }}
+                        <div class="formulaire-champ">
+                            {{ form_row(mdpUtilisateur.oldPassword) }}
+                        </div>
                         <div class="formulaire-champ">
                             {{ form_row(mdpUtilisateur.password) }}
                         </div>
