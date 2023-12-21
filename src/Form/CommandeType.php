@@ -38,31 +38,26 @@ class CommandeType extends AbstractType
                     'Femme' => 'femme'
                 ],
                 'expanded' => true,
-                'required' => true,
             ])
             ->add('nom', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
-                'required' => true,
             ])
             ->add('prenom', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
-                'required' => true,
             ])
             ->add('adresseFacturation', EntityType::class, [
                 'mapped' => false,
                 'class' => AdresseFacturation::class,
                 'choices' => $this->adresseFacturationRepository->findAllOrdered("preferee"),
-                'required' => true,
             ])
             ->add('adresseLivraison', EntityType::class, [
                 'mapped' => false,
                 'class' => AdresseLivraison::class,
                 'choices' => $this->adresseLivraisonRepository->findAllOrdered("preferee"),
-                'required' => true,
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [

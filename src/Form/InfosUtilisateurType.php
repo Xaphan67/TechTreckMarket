@@ -24,19 +24,21 @@ class InfosUtilisateurType extends AbstractType
                     'Homme' => 'homme',
                     'Femme' => 'femme'
                 ],
-                'expanded' => true
+                'expanded' => true,
+                'placeholder' => false,
+                'required' => false
             ])
             ->add('nom', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
-                'required' => false,
+                'required' => false
             ])
             ->add('prenom', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
-                'required' => false,
+                'required' => false
             ])
             ->add('email', EmailType::class, [
                 'attr' => [
@@ -47,7 +49,7 @@ class InfosUtilisateurType extends AbstractType
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
-                'required' => false,
+                'required' => false
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [

@@ -235,6 +235,10 @@ a {
 
 /* Formulaires */
 
+:not(.formulaire-radio) > label.required:after {
+    content: " *";
+}
+
 .formulaire-groupe-centre {
     width: 240px;
     margin-inline: auto;

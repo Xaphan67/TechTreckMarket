@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Form\AdresseType;
 use App\Form\InfosUtilisateurType;
 use App\Form\MotDePasseUtilisateurType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -67,5 +69,32 @@ class UtilisateurController extends AbstractController
 
         // Redirige vers la page d'accueil
         return $this->redirectToRoute('app_accueil');
+    }
+
+    #[Route('utilisateur/modifier', name:'modifier_donnees_utilisateur')]
+    public function edit(Request $request, EntityManagerInterface $entityManager)
+    {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            // Récupère l'utilisateur actuellement connecté
+            $utilisateur = $this->getUser();
+
+            // Génère et récupère les informations envoyés via le formulaire
+            $form = $this->createForm(InfosUtilisateurType::class, $utilisateur);
+            $form->handleRequest($request);
+
+            // Vérifie que le formulaire est soumis et est valide
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Récupère les informations du formulaire
+                $formData = $form->getData();
+
+                // Met à jour l'utilisateur en base de donnée
+                $entityManager->persist($formData);
+                $entityManager->flush();
+            }
+        }
+
+        // Redirige vers le profil de l'utilisateur
+        return $this->redirectToRoute('profil_utilisateur');
     }
 }

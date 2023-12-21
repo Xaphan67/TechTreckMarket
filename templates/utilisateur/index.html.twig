@@ -30,7 +30,7 @@
                 <div id="infos" class="sub-conteneur sub-conteneur-visible">
                     <div class="conteneur conteneur-padding">
                         <h2>Vos informations personelles</h2>
-                        {{ form_start(infosUtilisateur) }}
+                        {{ form_start(infosUtilisateur, {'action': path('modifier_donnees_utilisateur'), 'method': 'POST'}) }}
                         <div class="formulaire-centre">
                             <div class="formulaire-champ">
                                 {{ form_row(infosUtilisateur.civilite) }}
