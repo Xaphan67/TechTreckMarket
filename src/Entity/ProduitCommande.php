@@ -20,7 +20,7 @@ class ProduitCommande
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'produitCommandes')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Commande $commande = null;
 
