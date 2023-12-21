@@ -235,6 +235,10 @@ a {
 
 /* Formulaires */
 
+form {
+    margin-top: 10px;
+}
+
 :not(.formulaire-radio) > label.required:after {
     content: " *";
 }
@@ -271,6 +275,15 @@ input[type="checkbox"] {
     width: 15px;
     height: 15px;
     border-radius: 5px;
+}
+
+input[type="radio"] {
+    width: auto;
+    margin-right: 5px;
+}
+
+input[type="radio"] + label {
+    margin-right: 20px;
 }
 
 .select-190 {
@@ -767,7 +780,7 @@ border: 1px solid var(--borderFavoriteAdress);
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 20px 0px 10px 0px;
+    margin-top: 20px;
 }
 
 .type-facture {
