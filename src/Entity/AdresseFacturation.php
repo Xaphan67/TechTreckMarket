@@ -134,4 +134,9 @@ class AdresseFacturation
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->getNumero() . ", " . $this->getTypeRue() . " " . $this->getRue() . " - " . $this->getCodePostal() . " " . $this->getVille();
+    }
 }

@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Produit;
 use App\Entity\Commande;
+use App\Form\CommandeType;
 use App\Entity\ProduitCommande;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ProduitCommandeRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,10 +36,14 @@ class CommandeController extends AbstractController
                 }
             }
 
+            // Génération du formulaire pour valider la commande
+            $form = $this->createForm(CommandeType::class, $utilisateur);
+
             // Appel à la vue
             return $this->render('commande/showBarket.html.twig', [
                 'commande' => $commande,
-                'total' => $total
+                'total' => $total,
+                'formulaire' => $form,
             ]);
         }
 
@@ -124,32 +130,52 @@ class CommandeController extends AbstractController
     }
 
     #[Route('/commande/validate', name: 'valider_commande')]
-    public function validateCommand(CommandeRepository $commandeRepository, EntityManagerInterface $entityManager)
+    public function validateCommand(Request $request, CommandeRepository $commandeRepository, EntityManagerInterface $entityManager): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
-            // Récupère la commande active de l'utilisateur.
-            $utilisateur = $this->getUser();
-            $commande = $commandeRepository->findOneBy([
-                'utilisateur' => $utilisateur->getId(),
-                'etat' => "panier"
-            ]);
+            $form = $this->createForm(CommandeType::class);
+            $form->handleRequest($request);
 
-            // Récupère l'id et le prix des produits au moment de la commande et les stocke dans un JSON dans la commande
-            $prixProduits = [];
-            foreach ($commande->getProduitCommandes() as $produitCommande) {
-                $produit = [
-                    'idProduit' => $produitCommande->getProduit()->getId(),
-                    'prix' => $produitCommande->getProduit()->getPrix()
-                ];
-                $prixProduits[] = $produit;
+            // Vérifie que le formulaire est soumis et est valide
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Récupère les informations du formulaire
+                $formData = $form->getData();
+                $adresseFacturation = $form->get('adresseFacturation')->getData();
+                $adresseLivraison = $form->get('adresseLivraison')->getData();
+
+                // Récupère la commande active de l'utilisateur.
+                $utilisateur = $this->getUser();
+                $commande = $commandeRepository->findOneBy([
+                    'utilisateur' => $utilisateur->getId(),
+                    'etat' => "panier"
+                ]);
+
+                // Récupère l'id et le prix des produits au moment de la commande et les stocke dans un JSON dans la commande
+                $prixProduits = [];
+                foreach ($commande->getProduitCommandes() as $produitCommande) {
+                    $produit = [
+                        'idProduit' => $produitCommande->getProduit()->getId(),
+                        'prix' => $produitCommande->getProduit()->getPrix()
+                    ];
+                    $prixProduits[] = $produit;
+                }
+                $commande->setPrixProduits($prixProduits);
+
+                // Ajoute les informations personelles de l'utilisateur à la commande
+                $commande->setCivilite($formData->getCivilite());
+                $commande->setNom($formData->getNom());
+                $commande->setPrenom($formData->getPrenom());
+                $commande->setAdresseFacturation($adresseFacturation);
+                $commande->setAdresseLivraison($adresseLivraison);
+
+                // Change l'état de la commande
+                $commande->setEtat("en cours de préparation");
+
+                // Ajoute la commande en base de données
+                $entityManager->persist($commande);
+                $entityManager->flush($commande);
             }
-            $commande->setPrixProduits($prixProduits);
-
-            // Change l'état de la commande
-            $commande->setEtat("en cours de préparation");
-            $entityManager->persist($commande);
-            $entityManager->flush($commande);
         }
 
         // Redirige vers la page d'accueil

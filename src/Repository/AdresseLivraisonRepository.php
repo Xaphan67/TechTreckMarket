@@ -32,4 +32,9 @@ class AdresseLivraisonRepository extends ServiceEntityRepository
             ->execute();
        ;
     }
+
+    public function findAllOrdered($value)
+    {
+        return $this->findBy(array(), array($value => 'DESC'));
+    }
 }
