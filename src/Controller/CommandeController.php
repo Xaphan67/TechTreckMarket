@@ -154,11 +154,7 @@ class CommandeController extends AbstractController
                 // Récupère l'id et le prix des produits au moment de la commande et les stocke dans un JSON dans la commande
                 $prixProduits = [];
                 foreach ($commande->getProduitCommandes() as $produitCommande) {
-                    $produit = [
-                        'idProduit' => $produitCommande->getProduit()->getId(),
-                        'prix' => $produitCommande->getProduit()->getPrix()
-                    ];
-                    $prixProduits[] = $produit;
+                    $prixProduits[$produitCommande->getProduit()->getId()] = $produitCommande->getProduit()->getPrix();
                 }
                 $commande->setPrixProduits($prixProduits);
 

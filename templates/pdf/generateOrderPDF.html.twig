@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>E-Commerce - Facture n° {{ numeroFacture }}</title>
+        <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css')}}">
+    </head>
+    <body>
+        <div>
+            Numéro de commande / facture : {{ numeroFacture }}<br>
+            Numéro client : {{ numeroClient }}<br>
+            Civilité : {{ civilite }}<br>
+            Prenom : {{ prenom }}<br>
+            Nom : {{ nom }}<br>
+            Date de la commande : {{ dateCommande | date("d/m/Y") }}<br>
+            <br>
+            Adresse de facturation :<br>
+            {{ adresseFacturation | split('-')[0] }}<br>
+            {{ adresseFacturation | split('-')[1] }}<br>
+            <br>
+            Adresse de livraison :<br>
+            {{ adresseLivraison | split('-')[0] }}<br>
+            {{ adresseLivraison | split('-')[1] }}<br>
+            <br>
+            <table>
+                <tr>
+                    <td>Référence</td>
+                    <td>Quantité</td>
+                    <td>Désignation</td>
+                    <td>Prix unitaire HT</td>
+                    <td>Total HT</td>
+                </tr>
+                {% for ref, produit in produits %}
+                    <tr>
+                        <td>{{ ref }}</td>
+                        <td>{{ produit.quantite }}</td>
+                        <td>{{ produit.designation }}</td>
+                        <td>{{ produit.prixHT }}</td>
+                        <td>{{ produit.prixHT * produit.quantite }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <br>
+            Total HT : {{ totalHT | number_format(2, '.') }}<br>
+            Total : {{ total | number_format(2, '.') }}
+        </div>
+    </body>
+</html>

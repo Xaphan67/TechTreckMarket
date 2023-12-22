@@ -84,34 +84,37 @@
                     <div class="conteneur conteneur-padding">
                         <h2>Vos commandes en cours</h2>
                         {% if commandesEnCours | length > 0 %}
-                            <div class="liste">
-                                {% for commande in commandesEnCours %}
-                                <div class="commande">
-                                    <div class="commande-infos">
-                                        N° {{ commande.commande.id}} <br>
-                                        {{ commande.total }} € TTC<br>
-                                        {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
-                                        <span class="etat-en-cours">{{ commande.commande.etat |capitalize }}</span>
-                                    </div>
-                                    <div>
-                                        {% for produitCommande in commande.commande.produitCommandes %}
-                                            <div class="commande-produit">
-                                                <div class="produit-image">
-                                                    <img src="{{ asset('img/produits/' ~ produitCommande.produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
-                                                </div>
-                                                <div class="produit-infos">
-                                                    <span class="produit-designation"><a href="">{{ produitCommande.produit.designation }}</a></span>
-                                                    <div class="panier-actions">
-                                                        <span>X {{ produitCommande.quantite }}</span>
-                                                        <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                            {% for commande in commandesEnCours %}
+                                <div class="liste liste-separateur">
+                                    <div class="commande">
+                                        <div class="commande-infos">
+                                            N° {{ commande.commande.id}} <br>
+                                            {{ commande.total }} € TTC<br>
+                                            {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
+                                            <span class="etat-en-cours">{{ commande.commande.etat |capitalize }}</span>
+                                        </div>
+                                        <div>
+                                            {% for produitCommande in commande.commande.produitCommandes %}
+                                                <div class="commande-produit">
+                                                    <div class="produit-image">
+                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                                    </div>
+                                                    <div class="produit-infos">
+                                                        <span class="produit-designation"><a href="">{{ produitCommande.produit.designation }}</a></span>
+                                                        <div class="panier-actions">
+                                                            <span>X {{ produitCommande.quantite }}</span>
+                                                            <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            {% endfor %}
+                                            <div class="profil-bouton-centre-facture">
+                                                <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
                                             </div>
-                                        {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
-                                {% endfor %}
-                            </div>
+                            {% endfor %}
                         {% else %}
                             <p>Vous n'avez aucune commande en cours</p>
                         {% endif %}
@@ -119,41 +122,44 @@
                     <div class="conteneur conteneur-padding">
                         <h2>Historique des commandes</h2>
                         {% if commandesPassees | length > 0 %}
-                            <div class="liste">
-                                {% for commande in commandesPassees %}
-                                <div class="commande">
-                                    <div class="commande-infos">
-                                        <div>N° {{ commande.commande.id}} <br>
-                                            {{ commande.total }} € TTC<br>
-                                            {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
-                                            <span class="etat-expediee">{{ commande.commande.etat |capitalize }}</span>
-                                        </div>
-                                        <div class="commande-details-action" onclick="toggleDetails('{{ commande.commande.id }}')">
-                                            <span class="commande-details-text">
-                                                Détails
-                                                <img id="details-commande-chevron-{{ commande.commande.id }}" src="{{ asset('svg/utilisateurs/chevron-bas.svg') }}" alt="Voir les détails">
-                                            </span>
+                            {% for commande in commandesPassees %}
+                                <div class="liste">
+                                    <div class="commande">
+                                        <div class="commande-infos">
+                                            <div>N° {{ commande.commande.id}} <br>
+                                                {{ commande.total }} € TTC<br>
+                                                {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
+                                                <span class="etat-expediee">{{ commande.commande.etat |capitalize }}</span>
                                             </div>
-                                    </div>
-                                    <div id="details-commande-{{ commande.commande.id }}" class="commande-details">
-                                        {% for produitCommande in commande.commande.produitCommandes %}
-                                            <div class="commande-produit">
-                                                <div class="produit-image">
-                                                    <img src="{{ asset('img/produits/' ~ produitCommande.produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                            <div class="commande-details-action" onclick="toggleDetails('{{ commande.commande.id }}')">
+                                                <span class="commande-details-text">
+                                                    Détails
+                                                    <img id="details-commande-chevron-{{ commande.commande.id }}" src="{{ asset('svg/utilisateurs/chevron-bas.svg') }}" alt="Voir les détails">
+                                                </span>
                                                 </div>
-                                                <div class="produit-infos">
-                                                    <span class="produit-designation"><a href="">{{ produitCommande.produit.designation }}</a></span>
-                                                    <div class="panier-actions">
-                                                        <span>X {{ produitCommande.quantite }}</span>
-                                                        <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                        </div>
+                                        <div id="details-commande-{{ commande.commande.id }}" class="commande-details">
+                                            {% for produitCommande in commande.commande.produitCommandes %}
+                                                <div class="commande-produit">
+                                                    <div class="produit-image">
+                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                                    </div>
+                                                    <div class="produit-infos">
+                                                        <span class="produit-designation"><a href="">{{ produitCommande.produit.designation }}</a></span>
+                                                        <div class="panier-actions">
+                                                            <span>X {{ produitCommande.quantite }}</span>
+                                                            <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            {% endfor %}
+                                            <div class="profil-bouton-centre-facture">
+                                                <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
                                             </div>
-                                        {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
-                                {% endfor %}
-                            </div>
+                            {% endfor %}
                         {% else %}
                             <p>Vous n'avez passé aucune commande</p>
                         {% endif %}

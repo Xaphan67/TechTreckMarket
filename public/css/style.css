@@ -701,6 +701,10 @@ label,
     padding-right: 20px;
 }
 
+.liste-separateur:not(:last-child) {
+    margin-bottom: 15px;
+}
+
 .etat-en-cours {
     color: var(--textOrange);
 }
@@ -734,6 +738,12 @@ label,
 .profil-bouton-centre {
     display: flex;
     justify-content: center;
+}
+
+.profil-bouton-centre-facture {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0px;
 }
 
 .adresses {
@@ -899,6 +909,12 @@ border: 1px solid var(--borderFavoriteAdress);
     flex-wrap: wrap;
     gap: 20px;
     width: 190px;
+}
+
+/* Factures */
+
+.facture-table {
+    border: 1px solid black;
 }
 
 /* Modales */
