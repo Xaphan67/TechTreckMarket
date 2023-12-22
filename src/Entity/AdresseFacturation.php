@@ -35,15 +35,17 @@ class AdresseFacturation
     #[ORM\Column]
     private ?bool $preferee = null;
 
-    public function __construct($adresse)
+    public function __construct($adresse = null)
     {
-        $this->setUtilisateur($adresse["utilisateur"]);
-        $this->setNumero($adresse["numero"]);
-        $this->setTypeRue($adresse["typeRue"]);
-        $this->setRue($adresse["rue"]);
-        $this->setCodePostal($adresse["codePostal"]);
-        $this->setVille($adresse["ville"]);
-        $this->setPreferee($adresse["preferee"]);
+        if ($adresse) {
+            $this->setUtilisateur($adresse["utilisateur"]);
+            $this->setNumero($adresse["numero"]);
+            $this->setTypeRue($adresse["typeRue"]);
+            $this->setRue($adresse["rue"]);
+            $this->setCodePostal($adresse["codePostal"]);
+            $this->setVille($adresse["ville"]);
+            $this->setPreferee($adresse["preferee"]);
+        }
     }
 
     public function getId(): ?int

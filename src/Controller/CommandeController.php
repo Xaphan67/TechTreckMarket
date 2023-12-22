@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\AdresseFacturation;
+use App\Entity\AdresseLivraison;
 use App\Entity\Produit;
 use App\Entity\Commande;
 use App\Form\CommandeType;
@@ -141,8 +143,30 @@ class CommandeController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 // Récupère les informations du formulaire
                 $formData = $form->getData();
+
                 $adresseFacturation = $form->get('adresseFacturation')->getData();
+                if ($form->get('numeroFacturation')->getData() && $form->get('typeRueFacturation')->getData() && $form->get('rueFacturation')->getData() && $form->get('codePostalFacturation')->getData() && $form->get('villeFacturation')->getData()) {
+                    $adresseFacturation = new AdresseFacturation();
+                    $adresseFacturation->setUtilisateur($this->getUser());
+                    $adresseFacturation->setNumero($form->get('numeroFacturation')->getData());
+                    $adresseFacturation->setTypeRue($form->get('typeRueFacturation')->getData());
+                    $adresseFacturation->setRue($form->get('rueFacturation')->getData());
+                    $adresseFacturation->setCodePostal($form->get('codePostalFacturation')->getData());
+                    $adresseFacturation->setVille($form->get('villeFacturation')->getData());
+                    $adresseFacturation->setPreferee(0);
+                }
+
                 $adresseLivraison = $form->get('adresseLivraison')->getData();
+                if ($form->get('numeroLivraison')->getData() && $form->get('typeRueLivraison')->getData() && $form->get('rueLivraison')->getData() && $form->get('codePostalLivraison')->getData() && $form->get('villeLivraison')->getData()) {
+                    $adresseLivraison = new AdresseLivraison();
+                    $adresseLivraison->setUtilisateur($this->getUser());
+                    $adresseLivraison->setNumero($form->get('numeroLivraison')->getData());
+                    $adresseLivraison->setTypeRue($form->get('typeRueLivraison')->getData());
+                    $adresseLivraison->setRue($form->get('rueLivraison')->getData());
+                    $adresseLivraison->setCodePostal($form->get('codePostalLivraison')->getData());
+                    $adresseLivraison->setVille($form->get('villeLivraison')->getData());
+                    $adresseLivraison->setPreferee(0);
+                }
 
                 // Récupère la commande active de l'utilisateur.
                 $utilisateur = $this->getUser();
@@ -171,6 +195,16 @@ class CommandeController extends AbstractController
                 // Ajoute la commande en base de données
                 $entityManager->persist($commande);
                 $entityManager->flush($commande);
+
+                // Ajoute la nouvelle adresse de facturation et/ou de livraison si l'utilisateur l'a demandé
+                if ($form->get('enregistrerFacturation')->getData()) {
+                    $entityManager->persist($adresseFacturation);
+                    $entityManager->flush($adresseFacturation);
+                }
+                if ($form->get('enregistrerLivraison')->getData()) {
+                    $entityManager->persist($adresseLivraison);
+                    $entityManager->flush($adresseLivraison);
+                }
             }
         }
 

@@ -176,9 +176,6 @@
                                     </div>
                                     {% for adresse in adressesFacturation %}
                                         <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
-                                            {% if adresse.utilisateur.civilite and adresse.utilisateur.nom and adresse.utilisateur.prenom %}
-                                                {{ adresse.utilisateur.civilite }} {{ adresse.utilisateur.nom }} {{ adresse.utilisateur.prenom }}<br>
-                                            {% endif %}
                                             {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                             {{ adresse.codePostal }} {{ adresse.ville }}
                                             <div class="adresse-actions">
@@ -199,9 +196,6 @@
                                     </div>
                                     {% for adresse in adressesLivraison %}
                                         <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
-                                            {% if adresse.utilisateur.civilite and adresse.utilisateur.nom and adresse.utilisateur.prenom %}
-                                                {{ adresse.utilisateur.civilite }} {{ adresse.utilisateur.nom }} {{ adresse.utilisateur.prenom }}<br>
-                                            {% endif %}
                                             {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                             {{ adresse.codePostal }} {{ adresse.ville }}
                                             <div class="adresse-actions">

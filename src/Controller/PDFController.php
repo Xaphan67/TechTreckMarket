@@ -28,7 +28,7 @@ class PDFController extends AbstractController
             $data = [
                 'numeroFacture' => $commande->getId(),
                 'numeroClient' => $commande->getUtilisateur()->getId(),
-                'civilite' => $commande->getCivilite() == "homme" ? "Monsieur" : "Madame",
+                'civilite' => $commande->getCivilite(),
                 'prenom' => $commande->getPrenom(),
                 'nom' => $commande->getNom(),
                 'dateCommande' => $commande->getDateCommande(),

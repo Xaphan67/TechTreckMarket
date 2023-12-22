@@ -21,8 +21,8 @@ class InfosUtilisateurType extends AbstractType
                     'class' => 'formulaire-radio'
                 ],
                 'choices' => [
-                    'Homme' => 'homme',
-                    'Femme' => 'femme'
+                    'Monsieur' => 'monsieur',
+                    'Madame' => 'madame'
                 ],
                 'expanded' => true,
                 'placeholder' => false,

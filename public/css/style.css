@@ -243,6 +243,18 @@ form {
     content: " *";
 }
 
+.formulaire-sections {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 35px;
+}
+
+.formulaire-sections-haut {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .formulaire-groupe-centre {
     width: 240px;
     margin-inline: auto;
@@ -320,6 +332,10 @@ button, .bouton-lien {
     width: 35px;
 }
 
+.bouton-valider-commande {
+    background-color: var(--boutonBuy);
+}
+
 label,
 .type-label {
     font-size: 14px;
@@ -367,6 +383,13 @@ label,
     margin-bottom: 10px;
 }
 
+.formulaire-champ-bouton {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: end;
+}
+
 .formulaire-radio {
     display: flex;
 }
@@ -382,6 +405,18 @@ label,
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.bouton-ajout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 35px;
+    height: 35px;
+    background-color: var(--bouton);
+    color: var(--boutonText);
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* Pagination */
@@ -815,6 +850,13 @@ border: 1px solid var(--borderFavoriteAdress);
     display: none;
 }
 
+.commande-suivant {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0px 10px 0px;
+}
+
 /* Panier */
 
 .liste {
@@ -871,6 +913,14 @@ border: 1px solid var(--borderFavoriteAdress);
     width: 250px;
     display: block;
     margin: auto;
+}
+
+.commande-resume {
+    margin-top: 15px;
+}
+
+.commande-resume p {
+    margin-bottom: 10px;
 }
 
 /* Footer */

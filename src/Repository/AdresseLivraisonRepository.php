@@ -21,7 +21,7 @@ class AdresseLivraisonRepository extends ServiceEntityRepository
         parent::__construct($registry, AdresseLivraison::class);
     }
 
-    public function setAllOtherAdressesAsNotFavorite($currentId): int
+    public function setOthersAsNotFavorite($currentId): int
     {
        return $this->createQueryBuilder('al')
             ->update()
@@ -33,8 +33,8 @@ class AdresseLivraisonRepository extends ServiceEntityRepository
        ;
     }
 
-    public function findAllOrdered($value)
+    public function findAllOrdered($user, $value)
     {
-        return $this->findBy(array(), array($value => 'DESC'));
+        return $this->findBy(['utilisateur' => $user], [$value => 'DESC']);
     }
 }
