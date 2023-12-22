@@ -39,13 +39,13 @@ class UtilisateurController extends AbstractController
                     if ($commande->getEtat() != "expédiée") {
                         $total = 0;
                         foreach ($commande->getProduitCommandes() as $produitCommande) {
-                            $total += $produitCommande->getProduit()->getPrix() * $produitCommande->getQuantite();
+                            $total += $commande->getPrixProduits()[$produitCommande->getProduit()->getId()] * $produitCommande->getQuantite();
                         }
                         $commandesEnCours[] = ['commande' => $commande, 'total' => $total];
                     } else {
                         $total = 0;
                         foreach ($commande->getProduitCommandes() as $produitCommande) {
-                            $total += $produitCommande->getProduit()->getPrix() * $produitCommande->getQuantite();
+                            $total += $commande->getPrixProduits()[$produitCommande->getProduit()->getId()] * $produitCommande->getQuantite();
                         }
                         $commandesPassees[] = ['commande' => $commande, 'total' => $total];
                     }
