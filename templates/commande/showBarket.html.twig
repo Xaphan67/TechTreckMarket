@@ -78,7 +78,7 @@
                     </div>
                 </div>
                 <div id="commander-page-2" class="commander-page-2">
-                    {% if formulaire.adresseFacturation.vars.value != "" %}
+                    {% if formulaire.adresseFacturation.vars.choices | length > 0 %}
                         <div id="choix-ajout-facturation">
                             <p>Séléctionnez votre adresse de facturation, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
                             <span class="formulaire-sections">Adresse de facturation</span>
@@ -88,11 +88,11 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.value != "" ? "formulaire-invisible" : "" }}">
+                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-invisible" : "" }}">
                         <p>Remplissez les champs pour créer une nouvelle adresse de facturation, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de facturation</span>
-                            <a class="bouton-ajout {{ formulaire.adresseFacturation.vars.value != "" ? "" : "formulaire-invisible" }}" onclick="hideFormFacturation()">
+                            <a class="bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-invisible" }}" onclick="hideFormFacturation()">
                                 <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
                             </a>
                         </div>
@@ -121,7 +121,7 @@
                     </div>
                 </div>
                 <div id="commander-page-3" class="commander-page-3">
-                    {% if formulaire.adresseLivraison.vars.value != "" %}
+                    {% if formulaire.adresseLivraison.vars.choices | length > 0 %}
                         <div id="choix-ajout-livraison">
                             <p>Séléctionnez votre adresse de livraison, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
                             <span class="formulaire-sections">Adresse de livraison</span>
@@ -131,11 +131,11 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.value != "" ? "formulaire-invisible" : "" }}">
+                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-invisible" : "" }}">
                         <p>Remplissez les champs pour créer une nouvelle adresse de livraison, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de livraison</span>
-                            <a class="bouton-ajout {{ formulaire.adresseLivraison.vars.value != "" ? "" : "formulaire-invisible" }}" onclick="hideFormLivraison()">
+                            <a class="bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-invisible" }}" onclick="hideFormLivraison()">
                                 <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
                             </a>
                         </div>
