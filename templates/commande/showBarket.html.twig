@@ -283,7 +283,7 @@
                         if (numeroFacturation.validity.valid && typeRueFacturation.validity.valid && rueFacturation.validity.valid && codePostalFacturation.validity.valid && villeFacturation.validity.valid && enregistrerFacturation.validity.valid) {
                             page2.classList.add("formulaire-invisible");
                             nextPage.classList.remove("formulaire-invisible");
-                            if (!newFacturationOpen && document.getElementById("commande-resume-adresseFacturation-0" != null) && document.getElementById("commande-resume-adresseFacturation-1" != null)) {
+                            if (!newFacturationOpen) {
                                 document.getElementById("commande-resume-adresseFacturation-choix").classList.remove("formulaire-invisible");
                                 document.getElementById("commande-resume-adresseFacturation-nouveau").classList.add("formulaire-invisible");
                                 document.getElementById("commande-resume-adresseFacturation-0").textContent  = `${adresseFacturation.options[adresseFacturation.selectedIndex].innerText.split('-')[0]}`;
@@ -315,7 +315,7 @@
                         if (numeroLivraison.validity.valid && typeRueLivraison.validity.valid && rueLivraison.validity.valid && codePostalLivraison.validity.valid && villeLivraison.validity.valid && enregistrerLivraison.validity.valid) {
                             page3.classList.add("formulaire-invisible");
                             nextPage.classList.remove("formulaire-invisible");
-                            if (!newLivraisonOpen && document.getElementById("commande-resume-adresseLivraison-0" != null) && document.getElementById("commande-resume-adresseLivraison-1" != null)) {
+                            if (!newLivraisonOpen) {
                                 document.getElementById("commande-resume-adresseLivraison-choix").classList.remove("formulaire-invisible");
                                 document.getElementById("commande-resume-adresseLivraison-nouveau").classList.add("formulaire-invisible");
                                 document.getElementById("commande-resume-adresseLivraison-0").textContent  = `${adresseLivraison.options[adresseLivraison.selectedIndex].innerText.split('-')[0]}`;
@@ -400,7 +400,7 @@
             newLivraisonOpen = false;
         }
 
-        // ferme la modale
+        // Ferme la modale
         function closeModale()
         {
             const modal = document.getElementById("modal")
@@ -408,8 +408,12 @@
             element.style.display = "none";
             modal.style.display = "none";
             displayNextPage(0, 1);
-            newFacturationOpen = false;
-            newLivraisonOpen = false;
+            if (newFacturationOpen) {
+                hideFormFacturation();
+            };
+            if (newLivraisonOpen) {
+                hideFormLivraison();
+            };
         }
     </script>
 {% endblock %}
