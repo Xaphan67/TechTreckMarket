@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\AdresseType;
+use App\Form\AdresseFacturationType;
 use App\Entity\AdresseFacturation;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,30 +19,28 @@ class AdresseFacturationController extends AbstractController
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
-            $form = $this->createForm(AdresseType::class);
-            $form->handleRequest($request);
 
-            // Securité CSRF en cas d'édition
-            if ($adresseFacturation) {
+            // Instancie une nouvelle adresse de facturation en cas d'ajout
+            $ajoutAdresse = false;
+            if (!$adresseFacturation) {
+                $adresseFacturation = new AdresseFacturation();
+                $ajoutAdresse = true;
+            } else { // Securité CSRF en cas d'édition
                 $token = $request->request->get('token');
             }
 
-            // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && ((!$adresseFacturation && $form->isValid()) || ($adresseFacturation && $this->isCsrfTokenValid('update-adresse-facturation', $token)) )) {
-                // Récupère les informations du formulaire
-                $formData = $form->getData();
-                $formData["utilisateur"] = $this->getUser();
+            // Instancie un formulaire de type AdresseFacturation
+            $form = $this->createForm(AdresseFacturationType::class, $adresseFacturation);
+            $form->handleRequest($request);
 
-                // Crée une nouvelle adresse de facturration, ou modifie celle existante
-                if (!$adresseFacturation) {
-                    $adresseFacturation = new AdresseFacturation($formData);
-                } else {
-                    $adresseFacturation->setNumero($formData["numero"]);
-                    $adresseFacturation->setTypeRue($formData["typeRue"]);
-                    $adresseFacturation->setRue($formData["rue"]);
-                    $adresseFacturation->setCodePostal($formData["codePostal"]);
-                    $adresseFacturation->setVille($formData["ville"]);
-                    $adresseFacturation->setPreferee($formData["preferee"]);
+            // Vérifie que le formulaire est soumis et est valide
+            if ($form->isSubmitted() && (($ajoutAdresse && $form->isValid()) || (!$ajoutAdresse && $this->isCsrfTokenValid('update-adresse-facturation', $token)) )) {
+                // Récupère les informations du formulaire
+                $adresseFacturation = $form->getData();
+
+                // En cas d'ajout, rattache l'utilisateur à l'adresse
+                if ($ajoutAdresse) {
+                    $adresseFacturation->setUtilisateur($this->getUser());
                 }
 
                 // Envoie en base de données

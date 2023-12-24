@@ -228,50 +228,50 @@
                 </div>
                 <h3>Modifier une adresse de Facturation</h3>
                 <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
-                <form name="adresse" method="post" action="{{ path('modifier_adresse_facturation', {'id': adresse.id}) }}">
+                <form name="adresse_facturation" method="post" action="{{ path('modifier_adresse_facturation', {'id': adresse.id}) }}">
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_numero" class="required">Numero</label>
-                            <input type="text" id="adresse_facturation_numero-{{ adresse.id }}" name="adresse[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                            <label for="adresse_facturation_numero-{{ adresse.id }}" class="required">Numero</label>
+                            <input type="text" id="adresse_facturation_numero-{{ adresse.id }}" name="adresse_facturation[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_typeRue" class="required">Type de rue</label>
-                            <input type="text" id="adresse_facturation_typeRue-{{ adresse.id }}" name="adresse[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                            <label for="adresse_facturation_typeRue-{{ adresse.id }}" class="required">Type de rue</label>
+                            <input type="text" id="adresse_facturation_typeRue-{{ adresse.id }}" name="adresse_facturation[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_rue" class="required">Rue</label>
-                            <input type="text" id="adresse_facturation_rue-{{ adresse.id }}" name="adresse[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
+                            <label for="adresse_facturation_rue-{{ adresse.id }}" class="required">Rue</label>
+                            <input type="text" id="adresse_facturation_rue-{{ adresse.id }}" name="adresse_facturation[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_codePostal" class="required">Code postal</label>
-                            <input type="text" id="adresse_facturation_codePostal-{{ adresse.id }}" name="adresse[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                            <label for="adresse_facturation_codePostal-{{ adresse.id }}" class="required">Code postal</label>
+                            <input type="text" id="adresse_facturation_codePostal-{{ adresse.id }}" name="adresse_facturation[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_ville" class="required">Ville</label>
-                            <input type="text" id="adresse_facturation_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
+                            <label for="adresse_facturation_ville-{{ adresse.id }}" class="required">Ville</label>
+                            <input type="text" id="adresse_facturation_ville-{{ adresse.id }}" name="adresse_facturation[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div class="formulaire-champ-horizontal">
-                            <label for="adresse_preferee">Définir comme adresse préférée</label>
+                            <label for="adresse_facturation_preferee-{{ adresse.id }}">Définir comme adresse préférée</label>
                             {% if adresse.preferee %}
-                                <input type="checkbox" id="adresse_facturation_preferee-{{ adresse.id }}" name="adresse[preferee]" checked>
+                                <input type="checkbox" id="adresse_facturation_preferee-{{ adresse.id }}" name="adresse_facturation[preferee]" checked>
                             {% else %}
-                                <input type="checkbox" id="adresse_facturation_preferee-{{ adresse.id }}" name="adresse[preferee]">
+                                <input type="checkbox" id="adresse_facturation_preferee-{{ adresse.id }}" name="adresse_facturation[preferee]">
                             {% endif %}
                         </div>
                     </div>
                     <div class="bouton-centre">
                         <div>
-                            <button type="submit" id="adresse_facturation_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
+                            <button type="submit" id="adresse_facturation_Valider-{{ adresse.id }}" name="adresse_facturation[Valider]" class="bouton-100">Valider</button>
                         </div>
                     </div>
                     <input type="hidden" name="token" value="{{ csrf_token('update-adresse-facturation') }}">
@@ -285,50 +285,50 @@
                 </div>
                 <h3>Modifier une adresse de livraison</h3>
                 <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
-                <form name="adresse" method="post" action="{{ path('modifier_adresse_livraison', {'id': adresse.id}) }}">
+                <form name="adresse_livraison" method="post" action="{{ path('modifier_adresse_livraison', {'id': adresse.id}) }}">
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_numero" class="required">Numero</label>
-                            <input type="text" id="adresse_livraison_numero-{{ adresse.id }}" name="adresse[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                            <label for="adresse_livraison_numero-{{ adresse.id }}" class="required">Numero</label>
+                            <input type="text" id="adresse_livraison_numero-{{ adresse.id }}" name="adresse_livraison[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_typeRue" class="required">Type de rue</label>
-                            <input type="text" id="adresse_livraison_typeRue-{{ adresse.id }}" name="adresse[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                            <label for="adresse_livraison_typeRue-{{ adresse.id }}" class="required">Type de rue</label>
+                            <input type="text" id="adresse_livraison_typeRue-{{ adresse.id }}" name="adresse_livraison[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_rue" class="required">Rue</label>
-                            <input type="text" id="adresse_livraison_rue-{{ adresse.id }}" name="adresse[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
+                            <label for="adresse_livraison_rue-{{ adresse.id }}" class="required">Rue</label>
+                            <input type="text" id="adresse_livraison_rue-{{ adresse.id }}" name="adresse_livraison[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_codePostal" class="required">Code postal</label>
-                            <input type="text" id="adresse_livraison_codePostal-{{ adresse.id }}" name="adresse[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                            <label for="adresse_livraison_codePostal-{{ adresse.id }}" class="required">Code postal</label>
+                            <input type="text" id="adresse_livraison_codePostal-{{ adresse.id }}" name="adresse_livraison[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div>
-                            <label for="adresse_ville" class="required">Ville</label>
-                            <input type="text" id="adresse_livraison_ville-{{ adresse.id }}" name="adresse[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
+                            <label for="adresse_livraison_ville-{{ adresse.id }}" class="required">Ville</label>
+                            <input type="text" id="adresse_livraison_ville-{{ adresse.id }}" name="adresse_livraison[ville]" required="required" class="formulaire-texte" value="{{ adresse.ville }}">
                         </div>
                     </div>
                     <div class="formulaire-champ">
                         <div class="formulaire-champ-horizontal">
-                            <label for="adresse_preferee">Définir comme adresse préférée</label>
+                            <label for="adresse_livraison_preferee-{{ adresse.id }}">Définir comme adresse préférée</label>
                             {% if adresse.preferee %}
-                                <input type="checkbox" id="adresse_livraison_preferee-{{ adresse.id }}" name="adresse[preferee]" checked>
+                                <input type="checkbox" id="adresse_livraison_preferee-{{ adresse.id }}" name="adresse_livraison[preferee]" checked>
                             {% else %}
-                                <input type="checkbox" id="adresse_livraison_preferee-{{ adresse.id }}" name="adresse[preferee]">
+                                <input type="checkbox" id="adresse_livraison_preferee-{{ adresse.id }}" name="adresse_livraison[preferee]">
                             {% endif %}
                         </div>
                     </div>
                     <div class="bouton-centre">
                         <div>
-                            <button type="submit" id="adresse_livraison_Valider-{{ adresse.id }}" name="adresse[Valider]" class="bouton-100">Valider</button>
+                            <button type="submit" id="adresse_livraison_Valider-{{ adresse.id }}" name="adresse_livraison[Valider]" class="bouton-100">Valider</button>
                         </div>
                     </div>
                     <input type="hidden" name="token" value="{{ csrf_token('update-adresse-livraison') }}">
