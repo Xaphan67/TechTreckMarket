@@ -18,13 +18,12 @@
         {% endif %}
         <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
     </a>
-    <a href="">
-        {% if app.user %}
-            <a href="{{ path('afficher_panier') }}">
-        {% else %}
-            <a href="{{ path('app_login') }}">
-        {% endif %}
-        <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
+    {% if app.user %}
+        <a href="{{ path('afficher_panier') }}">
+    {% else %}
+        <a href="{{ path('app_login') }}">
+    {% endif %}
+    <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
     </a>
 </div>
 <form action="" method="post" class="">

@@ -44,6 +44,7 @@
     --textOrange: #B25500;
     --favoriteAdress: rgba(40, 167, 69, 0.15);
     --borderFavoriteAdress: rgba(40, 167, 69, 0.35);
+    --stockBg: #F1F1F1;
 }
 
 /* Header */
@@ -227,6 +228,10 @@ a {
     padding: 0px 20px 20px 20px;
 }
 
+.conteneur-padding-produits {
+    padding: 10px;
+}
+
 .chevron {
     position: absolute;
     top: 10px;
@@ -279,6 +284,7 @@ select {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="number"],
 select {
     height: 35px;
 }
@@ -296,6 +302,10 @@ input[type="radio"] {
 
 input[type="radio"] + label {
     margin-right: 20px;
+}
+
+.input-quantite {
+    width: 100px;
 }
 
 .select-190 {
@@ -476,6 +486,12 @@ label,
     background-color: var(--arianeBg);
 }
 
+.texte-ellispes {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+}
+
 /* Accueil */
 
 .accueil-conteneur {
@@ -616,7 +632,16 @@ label,
     align-items: center;
 }
 
-.produit-image img {
+.produit-descriptif-image {
+    margin-inline: auto;
+    max-width: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.produit-image img,
+.produit-descriptif-image img {
     max-width: 100%;
     max-height: 100%;
 }
@@ -641,12 +666,33 @@ label,
     max-height: 32px;
 }
 
+.produit-descriptif-achat {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.produit-descriptif {
+    font-size: 16px;
+    color: var(--text);
+}
+
 .produit-prix {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 40px;
     padding-top: 11px;
+}
+
+.stock {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 50px;
+    background-color: var(--stockBg);
 }
 
 .stock-oui {
@@ -666,8 +712,27 @@ label,
     margin-right: 13px;
 }
 
+.produit-achat-fiche {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.produit-achat-infos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
 .prix {
     font-size: 18px;
+    color: var(--textRed);
+}
+
+.fiche-prix {
+    font-size: 25px;
     color: var(--textRed);
 }
 
@@ -679,6 +744,20 @@ label,
     height: 40px;
     background-color: var(--boutonBuy);
     border-radius: 5px;
+}
+
+.bouton-achat-large {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 210px;
+    height: 50px;
+    background-color: var(--boutonBuy);
+    border-radius: 5px;
+}
+
+.bouton-achat-large img {
+    margin-right: 10px;
 }
 
 /* Profil utilisateur */

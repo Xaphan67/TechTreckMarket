@@ -13,7 +13,7 @@
                         <img src="{{ asset('img/produits/' ~ ordinateur.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
                     </div>
                     <div class="nouveau-infos">
-                        <span class="produit-designation"><a href="">{{ ordinateur.designation }}</a></span>
+                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': ordinateur.id}) }}">{{ ordinateur.designation }}</a></span>
                         <span class="prix">{{ ordinateur.prix }} €</span>
                     </div>
                 </div>
@@ -25,7 +25,7 @@
                         <img src="{{ asset('img/produits/' ~ composant.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ composant.photo) }}" alt="{{ composant.designation }}">
                     </div>
                     <div class="nouveau-infos">
-                        <span class="produit-designation"><a href="">{{ composant.designation }}</a></span>
+                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': composant.id}) }}">{{ composant.designation }}</a></span>
                         <span class="prix">{{ composant.prix }} €</span>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                         <img src="{{ asset('img/produits/' ~ peripherique.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
                     </div>
                     <div class="nouveau-infos">
-                        <span class="produit-designation"><a href="">{{ peripherique.designation }}</a></span>
+                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': peripherique.id}) }}">{{ peripherique.designation }}</a></span>
                         <span class="prix">{{ peripherique.prix }} €</span>
                     </div>
                 </div>

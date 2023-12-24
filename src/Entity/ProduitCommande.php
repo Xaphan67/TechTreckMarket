@@ -24,11 +24,11 @@ class ProduitCommande
     #[ORM\JoinColumn(nullable: false)]
     private ?Commande $commande = null;
 
-    public function __construct(Commande $commande, Produit $produit)
+    public function __construct(Commande $commande, Produit $produit, int $quantite)
     {
         $this->setCommande($commande);
         $this->setProduit($produit);
-        $this->setQuantite(1);
+        $this->setQuantite($quantite);
     }
 
     public function getId(): ?int
