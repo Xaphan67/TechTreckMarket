@@ -7,7 +7,7 @@
         <div class="categories">
             <h2>Votre panier</h2>
             <div class="conteneur-categories">
-                {% if commande %}
+                {% if commande and commande.produitCommandes | length > 0 %}
                     <div class="conteneur conteneur-padding">
                         <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" : "" }}</h2>
                         <div class="liste">
@@ -44,10 +44,10 @@
                         <a class="bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</a>
                     </div>
                 {% else %}
-                <div class="conteneur conteneur-padding">
-                    <h2>Votre panier est vide</h2>
-                    <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="votre panier est vide">
-                </div>
+                    <div class="conteneur conteneur-padding">
+                        <h2>Votre panier est vide</h2>
+                        <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="votre panier est vide">
+                    </div>
                 {% endif %}
             </div>
         </div>
