@@ -82,6 +82,9 @@ class CommandeController extends AbstractController
             $form = $this->createForm(ProduitType::class);
             $form->handleRequest($request);
 
+            // Enregistre l'url d'entrée dans une variable en session
+            $request->getSession()->set('urlFrom', $request->headers->get('referer'));
+
             // Ajoute un produit, ou plus si le formulaire est soumis et est valide
             $quantite = 1;
 
@@ -89,31 +92,29 @@ class CommandeController extends AbstractController
             if ($form->isSubmitted() && $form->isValid()) {
                 // Récupère les informations du formulaire
                 $quantite = $form->getData()["quantite"];
-                // Enregistre l'url d'entrée dans une variable en session
-                $request->getSession()->set('urlFrom', $request->headers->get('referer'));
             }
 
-            // Ajoute le produit à la commande s'il n'existe pas déjà
-            if (!$produitActuel) {
-                $commande->addProduitCommande(new ProduitCommande($commande, $produit, $quantite));
+            // Si le formulaire et soumis et est valide, ou qu'on ajoute un produit sans passer par un formulaire
+            if (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()) {
+                // Ajoute le produit à la commande s'il n'existe pas déjà
+                if (!$produitActuel) {
+                    $commande->addProduitCommande(new ProduitCommande($commande, $produit, $quantite));
 
-                // Stocke la commande dans la base de données
-                $entityManager->persist($commande);
-                $entityManager->flush($commande);
-            } else // Augmente la quantité s'il existe déjà
-            {
-                $produitActuel->setQuantite($produitActuel->getQuantite() + $quantite);
-                $entityManager->persist($produitActuel);
-                $entityManager->flush($produitActuel);
+                    // Stocke la commande dans la base de données
+                    $entityManager->persist($commande);
+                    $entityManager->flush($commande);
+                } else // Augmente la quantité s'il existe déjà
+                {
+                    $produitActuel->setQuantite($produitActuel->getQuantite() + $quantite);
+                    $entityManager->persist($produitActuel);
+                    $entityManager->flush($produitActuel);
+                }
             }
 
             // Redirige vers la fiche du produit, ou la catégorie du produit
             $url = $request->getSession()->get('urlFrom');
-            if ($url != null) {
-                $request->getSession()->remove('urlFrom');
-                return $this->redirect($url);
-            }
-            return $this->redirectToRoute('afficher_categorie', ['id' => $produit->getCategorie()->getId()]);
+            $request->getSession()->remove('urlFrom');
+            return $this->redirect($url);
         }
 
         // Redirige vers la page d'accueil

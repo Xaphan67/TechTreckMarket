@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,8 +21,10 @@ class ProduitType extends AbstractType
                     'class' => 'input-quantite',
                     'placeholder' => 1,
                 ],
-                'empty_data' => 1,
-                'required' => false
+                'data' => 1,
+                'constraints' => [
+                    new NotBlank()
+                ]
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [
