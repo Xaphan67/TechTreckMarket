@@ -545,16 +545,12 @@ label,
 .sous-categorie {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 350px;
     height: 130px;
 }
 
-.sous-categorie img {
-    position: absolute;
-}
-
-.sous-categorie a {
-    padding-left: 130px;
+.sous-categorie-nom {
     margin-inline: auto;
 }
 

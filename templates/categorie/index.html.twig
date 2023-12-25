@@ -55,10 +55,12 @@
                 <h2>Catégories {{ categorie }}</h2>
                 <div class="liste-categories">
                     {% for sousCategorie in categorie.sousCategories %}
-                        <div class="conteneur sous-categorie">
+                    <a class="conteneur" href="{{ path('afficher_categorie', { 'id':sousCategorie.id }) }}">
+                        <div class="sous-categorie">
                             <img src="{{ asset('img/categories/' ~ sousCategorie.image) }}" alt="{{ sousCategorie }}">
-                            <a href="{{ path('afficher_categorie', { 'id':sousCategorie.id }) }}">{{ sousCategorie }}</a>
+                            <span class="sous-categorie-nom">{{ sousCategorie }}</span>
                         </div>
+                    </a>
                     {% endfor %}
                 </div>
             </div>
