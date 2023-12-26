@@ -19,7 +19,15 @@
         <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
     </a>
     {% if app.user %}
-        <a href="{{ path('afficher_panier') }}">
+        <a id="panier" href="{{ path('afficher_panier') }}">
+            {% for commande in app.user.commandes %}
+                {% if commande.etat == "panier" %}
+                    {% set nbrProduits = commande.produitCommandes |length %}
+                    <div class="panier-nbr-produits {{ commande.produitCommandes | length > 0 ? "conteneur-principal" : "sub-conteneur-invisible"}}">
+                        {{ nbrProduits }}
+                    </div>
+                {% endif %}
+            {% endfor %}
     {% else %}
         <a href="{{ path('app_login') }}">
     {% endif %}

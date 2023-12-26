@@ -119,6 +119,24 @@ header {
     z-index: 1;
 }
 
+#panier {
+    position: relative;
+}
+
+#panier .panier-nbr-produits {
+    position: absolute;
+
+    align-items: center;
+    justify-content: center;
+    top: 5px;
+    right: 0px;
+    height: 25px;
+    width: 25px;
+    background-color: #FF0000;
+    border-radius: 25px;
+    color: var(--boutonText);
+}
+
 ul {
     list-style: none;
 }
