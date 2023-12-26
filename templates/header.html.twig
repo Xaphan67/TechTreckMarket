@@ -21,9 +21,9 @@
     {% if app.user %}
         <a id="panier" href="{{ path('afficher_panier') }}">
             {% for commande in app.user.commandes %}
-                {% if commande.etat == "panier" %}
+                {% if commande.etat == "panier" and commande.produitCommandes | length > 0 %}
                     {% set nbrProduits = commande.produitCommandes |length %}
-                    <div class="panier-nbr-produits {{ commande.produitCommandes | length > 0 ? "conteneur-principal" : "sub-conteneur-invisible"}}">
+                    <div class="panier-nbr-produits">
                         {{ nbrProduits }}
                     </div>
                 {% endif %}

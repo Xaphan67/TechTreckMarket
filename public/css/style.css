@@ -125,7 +125,7 @@ header {
 
 #panier .panier-nbr-produits {
     position: absolute;
-
+    display: flex;
     align-items: center;
     justify-content: center;
     top: 5px;
