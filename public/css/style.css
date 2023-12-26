@@ -45,6 +45,7 @@
     --favoriteAdress: rgba(40, 167, 69, 0.15);
     --borderFavoriteAdress: rgba(40, 167, 69, 0.35);
     --stockBg: #F1F1F1;
+    --textTab: #585050;
 }
 
 /* Header */
@@ -754,6 +755,41 @@ label,
 
 .bouton-achat-large img {
     margin-right: 10px;
+}
+
+.onglets {
+    display: flex;
+}
+
+.onglet-section-produit {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    font-size: 14px;
+    height: 50px;
+    width: 33.33%;;
+}
+
+.onglet-section-produit:not(.onglet-actif ) {
+    background-color: var(--tabBg);
+}
+
+.onglet-section-produit img {
+    position: absolute;
+    top: 9px;
+    right: 10px;
+}
+
+.onglet-actif {
+    border-top: 5px solid var(--footerBgLight);
+    color: var(--textTab);
+    height: 45px;
+}
+
+.onglet-actif img {
+    transform: rotate(180deg);
 }
 
 /* Profil utilisateur */

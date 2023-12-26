@@ -52,31 +52,75 @@
 
         {# Descriptif et achat du produit #}
         <div class="conteneur conteneur-padding-produits">
-            <div>
-                <div class="produit-descriptif-image">
-                    <img src="{{ asset('img/produits/' ~ produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produit.photo) }}" alt="{{ produit }}">
-                </div>
-                <div class="produit-descriptif-achat">
-                    <p class="produit-descriptif">{{ produit.descriptif }}</p>
-                    <div class="produit-achat-fiche">
-                        <div class="produit-achat-infos">
-                            <div class="stock">
-                                {% if produit.disponible %}
-                                    <span class="stock-oui">EN STOCK</span>
-                                {% else %}
-                                    <span class="stock-non">RUPTURE</span>
-                                {% endif %}
-                            </div>
-                            <span class="fiche-prix">{{ produit.prix }} €</span>
+            <div class="produit-descriptif-image">
+                <img src="{{ asset('img/produits/' ~ produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produit.photo) }}" alt="{{ produit }}">
+            </div>
+            <div class="produit-descriptif-achat">
+                <p class="produit-descriptif">{{ produit.descriptif }}</p>
+                <div class="produit-achat-fiche">
+                    <div class="produit-achat-infos">
+                        <div class="stock">
+                            {% if produit.disponible %}
+                                <span class="stock-oui">EN STOCK</span>
+                            {% else %}
+                                <span class="stock-non">RUPTURE</span>
+                            {% endif %}
                         </div>
-                        {#{{ form_start(formulaire, {'action': path(''), 'method': 'POST'}) }}#}
-                        {{ form_start(formulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
-                        {{ form_row(formulaire.quantite) }}
-                        {{ form_row(formulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
-                        {{ form_end(formulaire) }}
+                        <span class="fiche-prix">{{ produit.prix }} €</span>
                     </div>
+                    {#{{ form_start(formulaire, {'action': path(''), 'method': 'POST'}) }}#}
+                    {{ form_start(formulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
+                    {{ form_row(formulaire.quantite) }}
+                    {{ form_row(formulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
+                    {{ form_end(formulaire) }}
+                </div>
+            </div>
+        </div>
+
+        {# Sections #}
+        <div class="conteneur">
+            <div class="onglets">
+                <div id="sectionDescriptif" class="onglet-section-produit onglet-actif">
+                    Descriptif
+                </div>
+                <div id="sectionFiche" class="onglet-section-produit">
+                    Fiche<span class="mobile-invisible"> technique</span>
+                </div>
+                <div id="sectionAvis" class="onglet-section-produit">
+                    Avis<span class="mobile-invisible">  clients</span> (-)
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const ongletDescriptif = document.getElementById("sectionDescriptif");
+        const ongletFiche = document.getElementById("sectionFiche");
+        const ongletAvis = document.getElementById("sectionAvis");
+        const classMenu = "onglet-actif";
+
+        // Action lorsqu'on clique sur "Descriptif"
+        ongletDescriptif.addEventListener("click", function()
+        {
+            ongletDescriptif.classList.add(classMenu);
+            ongletFiche.classList.remove(classMenu);
+            ongletAvis.classList.remove(classMenu);
+        })
+
+         // Action lorsqu'on clique sur "Fiche technique"
+         ongletFiche.addEventListener("click", function()
+         {
+             ongletDescriptif.classList.remove(classMenu);
+             ongletFiche.classList.add(classMenu);
+             ongletAvis.classList.remove(classMenu);
+         })
+
+         // Action lorsqu'on clique sur "Avis clients"
+         ongletAvis.addEventListener("click", function()
+         {
+             ongletDescriptif.classList.remove(classMenu);
+             ongletFiche.classList.remove(classMenu);
+             ongletAvis.classList.add(classMenu);
+         })
+    </script>
 {% endblock %}
