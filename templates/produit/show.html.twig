@@ -101,7 +101,21 @@
                 </div>
             </div>
             <div id="sectionFiche" class="conteneur-padding-produits sub-conteneur-invisible">
-                Fiche technique
+                <h3 class="section-titre">Caractéristiques techniques :</h3>
+                {% if produit.caracteristiquesTechniques %}
+                    <table>
+                        <tbody>
+                            {% for nomCaracteristique, valeurCaracteristique in produit.caracteristiquesTechniques %}
+                                <tr>
+                                    <td>{{ nomCaracteristique }}</td>
+                                    <td>{{ valeurCaracteristique }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p>Aucune caractéristiques technique n'a été renseignée pour ce produit.</p>
+                {% endif %}
             </div>
             <div id="sectionAvis" class="conteneur-padding-produits sub-conteneur-invisible">
                 Avis

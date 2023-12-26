@@ -17,6 +17,31 @@
     display: contents;
 }
 
+table {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-spacing: 0px;
+}
+
+table tr:nth-child(odd) {
+    background-color: var(--listBg);
+}
+
+table td {
+    height: 50px;
+    padding: 10px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+table td:first-child {
+    width: 132px;
+}
+
+table td:not(:first-child) {
+    border-left: 1px solid var(--border);
+}
+
 /* Couleurs */
 
 :root {
@@ -802,6 +827,24 @@ label,
     gap: 15px;
     margin-top: 20px;
     margin-bottom: 15px;
+}
+
+#sectionDescriptif,
+#sectionFiche,
+#sectionAvis {
+    border-top: 1px solid var(--tabBg);
+}
+
+.section-titre {
+    display: block;
+    margin: 0px;
+    text-transform: none;
+    font-size: 20px;
+    color: var(--links);
+    line-height: normal;
+    background-color: transparent;
+    margin-bottom: 15px;
+    width: auto;
 }
 
 /* Profil utilisateur */
