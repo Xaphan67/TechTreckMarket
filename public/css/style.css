@@ -125,7 +125,7 @@ main {
 }
 
 .sub-conteneur-visible {
-    display: flex;
+    display: flow-root;
 }
 
 .sub-conteneur-invisible {
@@ -378,6 +378,10 @@ label,
 
 .bouton-200 {
     width: 200px;
+}
+
+.bouton-250 {
+    width: 250px;
 }
 
 .formulaire-double-texte {
@@ -790,6 +794,14 @@ label,
 
 .onglet-actif img {
     transform: rotate(180deg);
+}
+
+.produit-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
 /* Profil utilisateur */
