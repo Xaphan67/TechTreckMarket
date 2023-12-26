@@ -86,7 +86,7 @@
                     Fiche<span class="mobile-invisible"> technique</span>
                 </div>
                 <div id="ongletAvis" class="onglet-section-produit">
-                    Avis<span class="mobile-invisible">  clients</span> (-)
+                    Avis<span class="mobile-invisible">  clients</span> ({{ produit.avis | length }})
                 </div>
             </div>
             <div id="sectionDescriptif" class="conteneur-padding-produits">
@@ -118,7 +118,22 @@
                 {% endif %}
             </div>
             <div id="sectionAvis" class="conteneur-padding-produits sub-conteneur-invisible">
-                Avis
+                <h3 class="section-titre">Les avis de nos clients :</h3>
+                {% if produit.avis | length > 0 %}
+                    {% for avis in produit.avis %}
+                        <div class="avis">
+                            <div class="avis-infos">
+                                <span class="avis-pseudo">{{ avis.utilisateur.pseudo ? avis.utilisateur.pseudo : "Client anonyme" }}</span> Publié le {{ avis.datePublication | date("d/m/Y") }}
+                            </div>
+                            <div class="avis-contenu">
+                                <h4 class="avis-titre">{{ avis.titre }}</h4>
+                                {{ avis.texte }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>Aucun avis n'a tété posté pour ce produit.</p>
+                {% endif %}
             </div>
         </div>
     </div>
