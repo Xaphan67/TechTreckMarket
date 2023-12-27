@@ -294,8 +294,14 @@ a {
 
 .chevron {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 10px;
+    transform: rotate(180deg);
+}
+
+.chevron-fermer {
+    top: 10px;
+    transform: rotate(0deg);
 }
 
 /* Formulaires */
@@ -330,12 +336,9 @@ form {
     justify-content: space-between;
 }
 
-.formulaire-groupe-centre {
-    width: 240px;
+.formulaire-filtres {
+    width: 280px;
     margin-inline: auto;
-    margin-bottom: 20px;
-    font-size: 14px;
-    color: var(--text);
 }
 
 input,
@@ -630,8 +633,12 @@ label,
 
 /* Filtres */
 
+.filtres-recherche {
+    padding-bottom: 20px;
+}
+
 .filtres {
-    padding: 0px 35px 20px 35px;
+    padding: 0px 35px 0px 35px;
 }
 
 /* Nouveautés */

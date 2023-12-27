@@ -73,48 +73,41 @@
             {% else %}
                 {# Affiche les options de filtre des résultats #}
                 <div class="conteneur filtres">
-                    <h2>Filtrez votre recherche</h2>
-                    <div class="chevron">
-                        <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                    <div id="filtres-titre">
+                        <h2>Filtrez votre recherche</h2>
+                        <div id="chevron" class="chevron">
+                            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
                     </div>
-                    <hr>
-                    <form action="" method="post" class="">
-                        <div class="formulaire-groupe-centre">
-                            <label for "recherche">Cherchez une référence</label>
-                            <div class="formulaire-texte-bouton">
-                                <input type="text" id="recherche" name="recherche" placeholder="Désignation, modèle,..." />
-                                <button class="boutton-icone" type="submit">
-                                    <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M8.88926 4.81094C7.69301 4.85701 6.61157 5.28394 6.03338 5.86282C5.96951 5.92665 5.89368 5.97727 5.81024 6.0118C5.7268 6.04633 5.63738 6.06408 5.54708 6.06405C5.45677 6.06402 5.36736 6.0462 5.28395 6.01162C5.20053 5.97703 5.12474 5.92635 5.06091 5.86248C4.99708 5.7986 4.94646 5.72278 4.91193 5.63934C4.8774 5.5559 4.85965 5.46647 4.85968 5.37617C4.85971 5.28587 4.87753 5.19646 4.91212 5.11304C4.9467 5.02962 4.99738 4.95384 5.06126 4.89001C5.95294 3.99832 7.40494 3.49232 8.83563 3.43663C10.2759 3.38094 11.8483 3.77488 12.9496 4.87626C13.0785 5.00526 13.1509 5.18019 13.1509 5.36256C13.1508 5.54494 13.0783 5.71981 12.9493 5.84872C12.8203 5.97764 12.6454 6.05002 12.463 6.04996C12.2806 6.04989 12.1057 5.97738 11.9768 5.84838C11.2274 5.09832 10.0766 4.76419 8.88926 4.81026V4.81094Z" fill="white"/>
-                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M15.8935 14.8265C17.2567 13.2156 18.0033 11.1728 18 9.0625C18 4.12625 13.9987 0.125 9.0625 0.125C4.12625 0.125 0.125 4.12625 0.125 9.0625C0.125 13.9987 4.12625 18 9.0625 18C11.2591 18 13.27 17.208 14.8265 15.8935L14.5625 17.4115L19.7284 22.5774L22.5774 19.7284L17.4115 14.5625L15.8935 14.8265ZM9.0625 15.9375C12.8596 15.9375 15.9375 12.8596 15.9375 9.0625C15.9375 5.26544 12.8596 2.1875 9.0625 2.1875C5.26544 2.1875 2.1875 5.26544 2.1875 9.0625C2.1875 12.8596 5.26544 15.9375 9.0625 15.9375Z" fill="white"/>
-                                        <path d="M20.7005 23.5494L23.5495 20.7004L24.4818 21.6327C25.0063 22.1573 25.0063 23.0077 24.4818 23.5316L23.5316 24.4817C23.0071 25.0063 22.1566 25.0063 21.6327 24.4817L20.7005 23.5494Z" fill="white"/>
-                                    </svg>
-                                </button>
+                    <div id="filtres-recherche" class="filtres-recherche formulaire-invisible">
+                        <hr>
+                        <form action="" method="post" class="formulaire-filtres">
+                            <h3>Référence</h3>
+                            <input type="text" id="recherche" name="recherche" placeholder="Désignation, modèle,..." />
+                            <h3>Disponibilité</h3>
+                            <div class="formulaire-coche">
+                                <input type="checkbox" id="stock" name="stock" />
+                                <label for ="stock">Uniquement les produits en stock</label>
                             </div>
-                        </div>
-                        <h3>Disponibilité</h3>
-                        <div class="formulaire-coche">
-                            <input type="checkbox" id="stock" name="stock" />
-                            <label for ="stock">Uniquement les produits en stock</label>
-                        </div>
-                        <h3>Marque</h3>
-                        {% for marque, quantite in marques %}
-                        <div class="formulaire-coche">
-                            <input type="checkbox" id="{{ marque | lower }}" name="{{ marque | lower }}" />
-                            <label for ="{{ marque | lower }}">{{ marque }} ({{ quantite }})</label>
-                        </div>
-                        {% endfor %}
-                        <h3>Prix</h3>
-                        <div class="formulaire-double-texte">
-                            <input type="text" id="prixMin" name="prixMin" placeholder="Minimum" />
-                            <input type="text" id="prixMax" name="prixMax" placeholder="Maximum" />
-                        </div>
-                        <div class="bouton-centre">
-                            <button class="bouton-150" type="submit">Valider</button>
-                        </div>
-                    </form>
+                            <h3>Marque</h3>
+                            {% for marque, quantite in marques %}
+                            <div class="formulaire-coche">
+                                <input type="checkbox" id="{{ marque | lower }}" name="{{ marque | lower }}" />
+                                <label for ="{{ marque | lower }}">{{ marque }} ({{ quantite }})</label>
+                            </div>
+                            {% endfor %}
+                            <h3>Prix</h3>
+                            <div class="formulaire-double-texte">
+                                <input type="text" id="prixMin" name="prixMin" placeholder="Minimum" />
+                                <input type="text" id="prixMax" name="prixMax" placeholder="Maximum" />
+                            </div>
+                            <div class="bouton-centre">
+                                <button class="bouton-150" type="submit">Valider</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 {# Affiche la pagination et le tri #}
@@ -171,4 +164,24 @@
 
         {% endif %}
     </div>
+
+    <script>
+        const filtresTitre = document.getElementById("filtres-titre");
+        const filtresRecherche = document.getElementById("filtres-recherche");
+        const chevron = document.getElementById("chevron");
+        const styles = window.getComputedStyle(filtresRecherche)
+
+        filtresTitre.addEventListener("click", function()
+        {
+            if (styles.getPropertyValue("display") == "none") {
+                filtresRecherche.classList.add("sub-conteneur-visible");
+                chevron.classList.add("chevron-fermer");
+                filtresRecherche.classList.remove("formulaire-invisible");
+            } else {
+                filtresRecherche.classList.remove("sub-conteneur-visible");
+                chevron.classList.remove("chevron-fermer");
+                filtresRecherche.classList.add("formulaire-invisible");
+            }
+        })
+    </script>
 {% endblock %}
