@@ -1,0 +1,4 @@
+{{ form_start(formulaire, { 'attr' : { 'class': 'formulaire-recherche' }, 'action': path('recherche_principale'), 'method': 'POST' }) }}
+    {{ form_row(formulaire.recherche) }}
+    {{ form_row(formulaire.Valider, { 'label': '<img src="/svg/recherche/loupe-principal.svg" alt="Rechercher">', 'label_html' : true }) }}
+{{ form_end(formulaire) }}

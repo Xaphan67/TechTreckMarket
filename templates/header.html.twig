@@ -33,9 +33,7 @@
     <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
     </a>
 </div>
-<form action="" method="post" class="">
-    <input class="recherchePrincipale" type="text" id="recherchePrincipale" name="recherchePrincipale" placeholder="Rechercher un produit, une marque..." />
-</form>
+{{ render(path('recherche_principale')) }}
 
 <script>
     function interactMenu() {

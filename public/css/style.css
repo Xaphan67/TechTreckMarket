@@ -108,7 +108,23 @@ header {
 
 .recherchePrincipale {
     height: 50px !important;
-    width: 290px;
+    width: 246px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+    border-right: none;
+    background-color: var(--mainBg);
+}
+
+.bouton-recherche-principale {
+    height: 50px;
+    width: 44px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: none;
+    border-right: 1px solid black;
+    border-radius: 0px;
+    background-color: var(--mainBg);
 }
 
 .headerNavigation {
@@ -286,6 +302,16 @@ a {
 
 form {
     margin-top: 10px;
+}
+
+.formulaire-recherche {
+    margin-top: 0px;
+    display: flex;
+}
+
+.formulaire-recherche input:hover,
+.formulaire-recherche input:focus {
+    outline: none;
 }
 
 :not(.formulaire-radio) > label.required:after {
