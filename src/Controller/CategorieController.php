@@ -48,7 +48,7 @@ class CategorieController extends AbstractController
                 // Récupère les produits en fonction des filtres spécifiés dans le formulaire
                 $produits = $produitRepository->findByFilters(
                     $categorie->getNom(),
-                    $formData["reference"],
+                    explode(" ", $formData["reference"]),
                     $formData["disponibilite"],
                     $formData["marques"],
                     $formData["prixMinimum"],

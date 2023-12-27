@@ -32,16 +32,18 @@ class ProduitRepository extends ServiceEntityRepository
        ;
     }
 
-    public function findByFilters($category, $name, $avaiable, $trademarks, $priceMin, $priceMax) {
+    public function findByFilters($category, $words, $avaiable, $trademarks, $priceMin, $priceMax) {
         $query =  $this->createQueryBuilder('p')
             ->innerJoin('p.categorie', 'c', 'WITH', 'c.id = p.categorie')
             ->innerJoin('p.marque', 'm', 'WITH', 'm.id = p.marque')
             ->where('c.nom = :category')
             ->setParameter('category', $category);
 
-            if ($name != null) {
-                $query->andWhere('p.designation LIKE :name')
-                ->setParameter('name', '%' . $name . '%');
+            if (count($words) > 0) {
+                foreach ($words as $word) {
+                    $query->andWhere('p.designation LIKE :word')
+                    ->setParameter('word', '%' . $word . '%');
+                }
             }
 
             if ($avaiable) {
