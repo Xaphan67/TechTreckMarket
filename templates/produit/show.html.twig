@@ -96,8 +96,8 @@
                     <p>Aucun descriptif pour ce produit.</p>
                 {% endif %}
                 <div class="produit-actions">
-                    <a class="bouton-lien bouton-lien-centre bouton-250" href="">Voir les produits {{ produit.marque }}</a>
-                    <a class="bouton-lien bouton-lien-centre bouton-250" href="">Voir les {{ produit.categorie }} {{ produit.marque }}</a>
+                    <a class="bouton-lien bouton-lien-centre bouton-250" href="{{ path('recherche_marque', {'marque': produit.marque.id, 'produit': produit.id}) }}">Voir les produits {{ produit.marque }}</a>
+                    <a class="bouton-lien bouton-lien-centre bouton-250" href="{{ path('recherche_categorie_marque', {'marque': produit.marque.id, 'categorie': produit.categorie.id, 'produit': produit.id}) }}">Voir les {{ produit.categorie }} {{ produit.marque }}</a>
                 </div>
             </div>
             <div id="sectionFiche" class="conteneur-padding-produits sub-conteneur-invisible">
