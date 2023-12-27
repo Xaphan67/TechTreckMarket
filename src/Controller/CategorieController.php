@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Categorie;
+use App\Form\FiltresType;
 use App\Repository\ProduitRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,20 +16,47 @@ class CategorieController extends AbstractController
     #[Route('/categorie/{id}', name: 'afficher_categorie')]
     public function show(Categorie $categorie, ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        // Aucun produit ou marque par défaut
+        // Initialisation des variables
         $produits = null;
+        $produitsParMarque = [];
         $marques = [];
+        $form = null;
+        $filtres = false;
 
         // Si la catégorie n'a pas de sous catégories, on récupère
         // la liste des produits appartenant à la catégorie
         if (count($categorie->getSousCategories()) == 0) {
             $produits = $produitRepository->findBy(['categorie' => $categorie], ["designation" => "ASC"]);
             foreach ($produits as $produit) {
-                if (array_key_exists($produit->getMarque()->getNom(), $marques)) {
-                    $marques[$produit->getMarque()->getNom()]++;
+                if (array_key_exists($produit->getMarque()->getNom(), $produitsParMarque)) {
+                    $produitsParMarque[$produit->getMarque()->getNom()]++;
                 } else {
-                    $marques[$produit->getMarque()->getNom()] = 1;
+                    $produitsParMarque[$produit->getMarque()->getNom()] = 1;
+                    $marques[$produit->getMarque()->getNom()] = $produit->getMarque()->getNom();
                 }
+            }
+
+            // Instancie un formulaire de type Filtres
+            $form = $this->createForm(FiltresType::class, null, ['marques' => $marques]);
+            $form->handleRequest($request);
+
+            // Vérifie que le formulaire est soumis et est valide
+            if ($form->isSubmitted() && $form->isValid()) {
+                // Récupère les informations du formulaire
+                $formData = $form->getData();
+
+                // Récupère les produits en fonction des filtres spécifiés dans le formulaire
+                $produits = $produitRepository->findByFilters(
+                    $categorie->getNom(),
+                    $formData["reference"],
+                    $formData["disponibilite"],
+                    $formData["marques"],
+                    $formData["prixMinimum"],
+                    $formData["prixMaximum"],
+                    ["designation" => "ASC"]);
+
+                // Change filtres à vrai pour indiquer qu'un filtrage à été effectué
+                $filtres = true;
             }
 
             // Crée la pagination pour la liste des produits
@@ -62,7 +90,9 @@ class CategorieController extends AbstractController
             'categoriesParent' => $categoriesParent,
             'categorie' => $categorie,
             'produits' => $produits,
-            'marques' => $marques
+            'marques' => $produitsParMarque,
+            'formulaire' => $form,
+            'filtres' => $filtres
         ]);
     }
 }
