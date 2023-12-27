@@ -184,6 +184,10 @@ main {
 }
 
 .sub-conteneur-visible {
+    display: flex;
+}
+
+.sub-conteneur-visible-section-produits {
     display: flow-root;
 }
 
