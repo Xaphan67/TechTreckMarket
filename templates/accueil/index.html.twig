@@ -10,7 +10,7 @@
             {% for ordinateur in ordinateurs | slice(0, 1) %}
                 <div class="nouveau-produit">
                     <div class="produit-image">
-                        <img src="{{ asset('img/produits/' ~ ordinateur.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                        <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
                     </div>
                     <div class="nouveau-infos">
                         <span class="produit-designation"><a href="{{ path('voir_produit', {'id': ordinateur.id}) }}">{{ ordinateur.designation }}</a></span>
@@ -22,7 +22,7 @@
             {% for composant in composants | slice(0, 1) %}
                 <div class="nouveau-produit">
                     <div class="produit-image">
-                        <img src="{{ asset('img/produits/' ~ composant.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                        <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
                     </div>
                     <div class="nouveau-infos">
                         <span class="produit-designation"><a href="{{ path('voir_produit', {'id': composant.id}) }}">{{ composant.designation }}</a></span>
@@ -34,7 +34,7 @@
             {% for peripherique in peripheriques | slice(0, 1) %}
                 <div class="nouveau-produit">
                     <div class="produit-image">
-                        <img src="{{ asset('img/produits/' ~ peripherique.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                        <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
                     </div>
                     <div class="nouveau-infos">
                         <span class="produit-designation"><a href="{{ path('voir_produit', {'id': peripherique.id}) }}">{{ peripherique.designation }}</a></span>

@@ -46,7 +46,7 @@
         <div>
             <h1>{{ categorie }}</h1>
             <hr>
-            <p>{{ categorie.description }}</p>
+            <p>{{ categorie.description | raw }}</p>
         </div>
 
         {# Vérifie si la catégorie à des sous-catégories ou non #}
@@ -108,7 +108,7 @@
                     </div>
                 </div>
 
-                {# Affiche les produits, ou un message si les filtres ne retournent auc produit #}
+                {# Affiche les produits, ou un message si les filtres ne retournent aucun produit #}
                 {% if produits | length == 0 and filtres %}
                     <div class="conteneur">
                         <p class="aucunProduit">Aucun produit ne correspond aux filtres que vous avez spécifié.</p>
@@ -133,7 +133,7 @@
                         {% for produit in produits %}
                             <div class="produit">
                                 <div class="produit-image">
-                                    <img src="{{ asset('img/produits/' ~ categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                                    <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
                                 </div>
                                 <div class="produit-infos">
                                     <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a></span>

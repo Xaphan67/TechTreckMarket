@@ -53,10 +53,10 @@
         {# Descriptif et achat du produit #}
         <div class="conteneur conteneur-padding-produits">
             <div class="produit-descriptif-image">
-                <img src="{{ asset('img/produits/' ~ produit.categorie | lower | replace({ 'á':'a', 'é':'e', 'è':'e', 'í':'i', 'ó':'o', 'ú':'u' }) ~ '/' ~ produit.photo) }}" alt="{{ produit }}">
+                <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit }}">
             </div>
             <div class="produit-descriptif-achat">
-                <p class="produit-descriptif">{{ produit.descriptif }}</p>
+                <p class="produit-descriptif">{{ produit.descriptif | raw }}</p>
                 <div class="produit-achat-fiche">
                     <div class="produit-achat-infos">
                         <div class="stock">
@@ -91,7 +91,7 @@
             </div>
             <div id="sectionDescriptif" class="conteneur-padding-produits">
                 {% if produit.descriptif %}
-                    {{ produit.descriptif }}
+                    {{ produit.descriptif | raw }}
                 {% else %}
                     <p>Aucun descriptif pour ce produit.</p>
                 {% endif %}
