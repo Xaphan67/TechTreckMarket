@@ -20,7 +20,7 @@
                                         <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
                                         <span>
                                             Disponibilité :
-                                            {% if produitCommande.produit.disponible %}
+                                            {% if produitCommande.produit.stock > 0 %}
                                                 <span class="stock-oui">EN STOCK</span>
                                             {% else %}
                                                 <span class="stock-non">RUPTURE</span>

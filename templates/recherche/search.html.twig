@@ -51,7 +51,7 @@
                             <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a></span>
                             <span class="produit-resume">{{ produit.resume }}</span>
                             <div class="produit-prix">
-                                {% if produit.disponible %}
+                                {% if produit.stock > 0 %}
                                     <span class="stock-oui">EN STOCK</span>
                                 {% else %}
                                     <span class="stock-non">RUPTURE</span>

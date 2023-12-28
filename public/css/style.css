@@ -187,6 +187,10 @@ main {
     display: flex;
 }
 
+.sub-conteneur-visible-filtres {
+    display: block;
+}
+
 .sub-conteneur-visible-section-produits {
     display: flow-root;
 }

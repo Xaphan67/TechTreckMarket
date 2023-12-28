@@ -218,6 +218,14 @@ class CommandeController extends AbstractController
                 $entityManager->persist($commande);
                 $entityManager->flush($commande);
 
+                // Décrémente le stock de chaque produit dans la commande d'une unité
+                foreach ($commande->getProduitCommandes() as $produitCommande) {
+                    $produit = $produitCommande->getProduit();
+                    $produit->setStock($produit->getStock() - 1);
+                    $entityManager->persist($produit);
+                    $entityManager->flush($produit);
+                }
+
                 // Ajoute la nouvelle adresse de facturation et/ou de livraison si l'utilisateur l'a demandé
                 if ($form->get('enregistrerFacturation')->getData()) {
                     $entityManager->persist($adresseFacturation);

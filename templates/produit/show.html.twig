@@ -60,7 +60,7 @@
                 <div class="produit-achat-fiche">
                     <div class="produit-achat-infos">
                         <div class="stock">
-                            {% if produit.disponible %}
+                            {% if produit.stock > 0 %}
                                 <span class="stock-oui">EN STOCK</span>
                             {% else %}
                                 <span class="stock-non">RUPTURE</span>

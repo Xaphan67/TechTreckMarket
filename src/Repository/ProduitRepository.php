@@ -47,7 +47,7 @@ class ProduitRepository extends ServiceEntityRepository
             }
 
             if ($avaiable) {
-                $query->andWhere('p.disponible = true');
+                $query->andWhere('p.stock > 0');
             }
 
             if (count($trademarks) > 0) {

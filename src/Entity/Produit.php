@@ -44,7 +44,7 @@ class Produit
     private ?string $nouveauPrix = null;
 
     #[ORM\Column]
-    private ?bool $disponible = null;
+    private ?int $stock = null;
 
     #[ORM\Column]
     private array $caracteristiquesTechniques = [];
@@ -186,14 +186,14 @@ class Produit
         return $this;
     }
 
-    public function isDisponible(): ?bool
+    public function getStock(): ?int
     {
-        return $this->disponible;
+        return $this->stock;
     }
 
-    public function setDisponible(bool $disponible): static
+    public function setStock(int $stock): static
     {
-        $this->disponible = $disponible;
+        $this->stock = $stock;
 
         return $this;
     }

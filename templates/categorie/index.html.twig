@@ -139,7 +139,7 @@
                                     <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a></span>
                                     <span class="produit-resume">{{ produit.resume }}</span>
                                     <div class="produit-prix">
-                                        {% if produit.disponible %}
+                                        {% if produit.stock > 0 %}
                                             <span class="stock-oui">EN STOCK</span>
                                         {% else %}
                                             <span class="stock-non">RUPTURE</span>
@@ -178,11 +178,11 @@
         filtresTitre.addEventListener("click", function()
         {
             if (styles.getPropertyValue("display") == "none") {
-                filtresRecherche.classList.add("sub-conteneur-visible");
+                filtresRecherche.classList.add("sub-conteneur-visible-filtres");
                 chevron.classList.add("chevron-fermer");
                 filtresRecherche.classList.remove("formulaire-invisible");
             } else {
-                filtresRecherche.classList.remove("sub-conteneur-visible");
+                filtresRecherche.classList.remove("sub-conteneur-visible-filtres");
                 chevron.classList.remove("chevron-fermer");
                 filtresRecherche.classList.add("formulaire-invisible");
             }
