@@ -52,33 +52,33 @@
             <img class="accueil-conteneur-image" src="{{ asset('img/accueil/ordinateurs.png') }}" alt="ordinateurs">
             <span class="accueil-nom-categorie" >Ordinateurs</span>
             <ul>
-                <li class="menu-categorie"><a href="">PC sur mesure</a></li>
-                <li class="menu-categorie"><a href="">PC gamer</a></li>
-                <li class="menu-categorie"><a href="">PC portables</a></li>
-                <li class="menu-categorie"><a href="">PC portables Gamer</a></li>
-                <li class="menu-categorie"><a href="">Configurateur PC</a></li>
+                {% for categorie in categories %}
+                    {% if categorie.categorieParent.id == 1 %}
+                        <li class="menu-categorie"><a href="{{ path('afficher_categorie', {'id': categorie.id }) }}">{{ categorie }}</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
         <div class="conteneur accueil-conteneur">
             <img class="accueil-conteneur-image" src="{{ asset('img/accueil/composants.png') }}" alt="composants">
             <span class="accueil-nom-categorie" >Composants</span>
             <ul>
-                <li class="menu-categorie"><a href="">Processeurs</a></li>
-                <li class="menu-categorie"><a href="">Cartes internes</a></li>
-                <li class="menu-categorie"><a href="">Boîtiers</a></li>
-                <li class="menu-categorie"><a href="">Stockage interne</a></li>
-                <li class="menu-categorie"><a href="">Refroidissement</a></li>
+                {% for categorie in categories %}
+                    {% if categorie.categorieParent.id == 2 %}
+                        <li class="menu-categorie"><a href="{{ path('afficher_categorie', {'id': categorie.id }) }}">{{ categorie }}</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
         <div class="conteneur accueil-conteneur">
             <img class="accueil-conteneur-image" src="{{ asset('img/accueil/peripheriques.png') }}" alt="péripheriques">
             <span class="accueil-nom-categorie" >Péripheriques</span>
             <ul>
-                <li class="menu-categorie"><a href="">Ecrans</a></li>
-                <li class="menu-categorie"><a href="">Périphériques Gamer</a></li>
-                <li class="menu-categorie"><a href="">Bureautique</a></li>
-                <li class="menu-categorie"><a href="">Stockage externe</a></li>
-                <li class="menu-categorie"><a href="">Webcams</a></li>
+                {% for categorie in categories %}
+                    {% if categorie.categorieParent.id == 3 %}
+                        <li class="menu-categorie"><a href="{{ path('afficher_categorie', {'id': categorie.id }) }}">{{ categorie }}</a></li>
+                    {% endif %}
+                {% endfor %}
             </ul>
         </div>
     </div>

@@ -24,6 +24,11 @@ class AccueilController extends AbstractController
         $composants = $produitRepository->findBy(['categoriePrincipale' => $categorieComposants], ["dateLancement" => "DESC"], 3);
         $peripheriques = $produitRepository->findBy(['categoriePrincipale' => $categoriePeripheriques], ["dateLancement" => "DESC"], 3);
 
+        // On récupère la liste de toutes les catégories qui doivent s'afficher sur la page d'accueil
+        $categories = $categorieRepository->findBy([
+            'accueil' => true
+        ]);
+
         // On récupère la liste des marques
         $marques = $marqueRepository->findAll();
 
@@ -37,6 +42,7 @@ class AccueilController extends AbstractController
             'ordinateurs' => $ordinateurs,
             'composants' => $composants,
             'peripheriques' => $peripheriques,
+            'categories' => $categories,
             'marques' => $marques
         ]);
     }

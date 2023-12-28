@@ -35,6 +35,9 @@ class Categorie
     #[ORM\Column(length: 150)]
     private ?string $image = null;
 
+    #[ORM\Column]
+    private ?bool $accueil = null;
+
     public function __construct()
     {
         $this->produits = new ArrayCollection();
@@ -142,11 +145,6 @@ class Categorie
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->nom;
-    }
-
     public function getImage(): ?string
     {
         return $this->image;
@@ -157,5 +155,22 @@ class Categorie
         $this->image = $image;
 
         return $this;
+    }
+
+    public function isAccueil(): ?bool
+    {
+        return $this->accueil;
+    }
+
+    public function setAccueil(bool $accueil): static
+    {
+        $this->accueil = $accueil;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nom;
     }
 }
