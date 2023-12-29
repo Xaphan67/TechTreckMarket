@@ -21,8 +21,8 @@ class AdminController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-        // Vérifie qu'un utilisateur est connecté
-        if ($this->getUser()) {
+        // Vérifie qu'un utilisateur est connecté et qu'il ait le rôle admin
+        if ($this->getUser() && $this->IsGranted('ROLE_ADMIN')) {
             // Instancie un adminUrlGenerator
             $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
