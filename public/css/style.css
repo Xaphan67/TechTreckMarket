@@ -20,7 +20,8 @@
 /* Messages flash */
 
 .message {
-    position: absolute;
+    position: fixed;
+    z-index: 999;
     display: flex;
     align-items: center;
     justify-content: end;
