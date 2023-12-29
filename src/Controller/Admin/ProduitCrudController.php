@@ -50,7 +50,10 @@ class ProduitCrudController extends AbstractCrudController
             TextField::new('designation', 'Désignation'),
             TextField::new('resume', 'Résumé')->hideOnIndex(),
             TextEditorField::new('descriptif', 'Déscriptif')->hideOnIndex(),
-            CodeEditorField::new('caracteristiquesTechniques')->setFormType(JsonCodeEditorType::class)->hideOnIndex(),
+            CodeEditorField::new('caracteristiquesTechniques')
+            ->setFormType(JsonCodeEditorType::class)
+            ->hideOnIndex()
+            ->hideOnDetail(),
             ImageField::new('photo')
             ->setBasePath('img/produits/')
             ->setUploadDir('public/img/produits')
