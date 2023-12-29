@@ -76,7 +76,7 @@
                     <div class="conteneur">
                         <h2>Supprimer le compte</h2>
                         <div class="profil-supprimer">
-                            <a class="bouton-lien bouton-lien-centre bouton-200" href="">Supprimer le compte</a>
+                            <a class="bouton-lien bouton-lien-centre bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</a>
                         </div>
                     </div>
                 </div>
@@ -221,6 +221,22 @@
     </div>
 
     <div id="modal" class="modal">
+        <div id="suppression-compte-utilisateur" class="conteneur-modal">
+            <div class="fermer-modal" onclick="closeModale('suppression-compte-utilisateur')">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <h3>Supprimer le compte</h3>
+            <p>
+                Vous êtes sur le point de supprimer votre compte.<br><br>
+                Toutes vos informations personnelles utilisées sur le site seront anonymisées.<br><br>
+                Cette action est irreverssible.<br><br>
+                Êtes-vous sûr de vouloir supprimer votre compte ?
+            </p>
+            <div class="commande-suivant">
+                <a class="bouton-lien bouton-lien-centre bouton-100" onclick="closeModale('suppression-compte-utilisateur')" alt="Annuler">Annuler</a>
+                <a class="bouton-lien bouton-valider-commande bouton-150" href="{{ path('supprimer_compte_utilisateur') }}">Supprimer le compte</a>
+            </div>
+        </div>
         {% for adresse in adressesFacturation %}
             <div id="formulaire-edition-facturation-{{ adresse.id }}" class="conteneur-modal">
                 <div class="fermer-modal" onclick="closeModale('formulaire-edition-facturation-{{ adresse.id }}')">
@@ -406,6 +422,18 @@
     </div>
 
     <script>
+        // Afficher la confirmation de suppresion de compte
+        function displayDeleteAccount()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("suppression-compte-utilisateur")
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
+
         // Affiche ou masque les détails d'une commande
         function toggleDetails(id)
         {

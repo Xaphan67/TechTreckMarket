@@ -29,7 +29,7 @@ class AdresseLivraison
     private ?string $ville = null;
 
     #[ORM\ManyToOne(inversedBy: 'adressesLivraison')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\Column]

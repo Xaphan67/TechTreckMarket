@@ -123,7 +123,11 @@
                     {% for avis in produit.avis %}
                         <div class="avis">
                             <div class="avis-infos">
-                                <span class="avis-pseudo">{{ avis.utilisateur.pseudo ? avis.utilisateur.pseudo : "Client anonyme" }}</span> Publié le {{ avis.datePublication | date("d/m/Y") }}
+                                {% if avis.utilisateur %}
+                                    <span class="avis-pseudo">{{ avis.utilisateur.pseudo ? avis.utilisateur.pseudo : "Utilisateur anonyme" }}</span> Publié le {{ avis.datePublication | date("d/m/Y") }}
+                                {% else %}
+                                    <span class="avis-pseudo">Utilisateur supprimé</span> Publié le {{ avis.datePublication | date("d/m/Y") }}
+                                {% endif %}
                             </div>
                             <div class="avis-contenu">
                                 <h4 class="avis-titre">{{ avis.titre }}</h4>

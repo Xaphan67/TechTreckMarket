@@ -17,7 +17,7 @@ class ConfigurationPC
     private ?string $nom = null;
 
     #[ORM\ManyToOne(inversedBy: 'configurations')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
     public function getId(): ?int

@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Form\AdresseFacturationType;
 use App\Form\AdresseLivraisonType;
 use App\Form\InfosUtilisateurType;
+use App\Form\AdresseFacturationType;
 use App\Form\MotDePasseUtilisateurType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class UtilisateurController extends AbstractController
 {
@@ -133,5 +134,23 @@ class UtilisateurController extends AbstractController
 
         // Redirige vers le profil de l'utilisateur
         return $this->redirectToRoute('profil_utilisateur');
+    }
+
+    #[Route('utilisateur/supprimerCompte', name:'supprimer_compte_utilisateur')]
+    public function delete(EntityManagerInterface $entityManager, TokenStorageInterface $tokenStorage)
+    {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+
+            // Supprime l'utilisateur de la base de données
+            $entityManager->remove($this->getUser());
+            $entityManager->flush();
+
+            // Déconnecte l'utilisateur
+            $tokenStorage->setToken(null);
+        }
+
+        // Redirige vers la page d'accueil
+        return $this->redirectToRoute('app_accueil');
     }
 }
