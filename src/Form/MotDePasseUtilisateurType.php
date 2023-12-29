@@ -6,6 +6,8 @@ use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -18,7 +20,12 @@ class MotDePasseUtilisateurType extends AbstractType
         $builder
             ->add('oldPassword', PasswordType::class, [
                 'label' => 'Ancien mot de passe',
-                'mapped' => false
+                'mapped' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer votre ancien mot de passe.',
+                    ]),
+                ]
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -34,12 +41,21 @@ class MotDePasseUtilisateurType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'off'
                 ],
-                /*'constraints' => [
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un nouveau mot de passe.',
+                    ]),
                     new Regex([
                         'pattern' => '/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{12,}$/',
                         'message' => 'Votre mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et un caractère spécial.'
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Votre mot de passe doit être composé d\'au moins {{ limit }} caractères',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
                     ])
-                ]*/
+                ],
                 'mapped' => false
             ])
             ->add('Valider', SubmitType::class, [

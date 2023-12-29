@@ -3,14 +3,15 @@
 namespace App\Form;
 
 use App\Entity\Utilisateur;
-use App\Entity\AdresseFacturation;
 use App\Entity\AdresseLivraison;
+use App\Entity\AdresseFacturation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\AdresseLivraisonRepository;
 use App\Repository\AdresseFacturationRepository;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,16 +48,31 @@ class CommandeType extends AbstractType
                     'Madame' => 'madame'
                 ],
                 'expanded' => true,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez choisir une civilité.',
+                    ])
+                ]
             ])
             ->add('nom', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un nom.',
+                    ])
+                ]
             ])
             ->add('prenom', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un prénom.',
+                    ])
+                ]
             ])
             ->add('Commander', SubmitType::class, [
                 'attr' => [

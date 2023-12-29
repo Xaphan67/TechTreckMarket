@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\AdresseLivraison;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,27 +19,52 @@ class AdresseLivraisonType extends AbstractType
             ->add('numero', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un numéro.',
+                    ])
                 ]
             ])
             ->add('typeRue', TextType::class, [
                 'label' => "Type de rue",
                 'attr' => [
                     'class' => 'formulaire-texte'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un type de rue.',
+                    ])
                 ]
             ])
             ->add('rue', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer une rue.',
+                    ])
                 ]
             ])
             ->add('codePostal', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer un code postal.',
+                    ])
                 ]
             ])
             ->add('ville', TextType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer une ville.',
+                    ])
                 ]
             ])
             ->add('preferee', CheckboxType::class, [

@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,6 +19,11 @@ class RecherchePrincipaleType extends AbstractType
                 'attr' => [
                     'class' => 'recherchePrincipale',
                     'placeholder' => "Rechercher un produit, une marque..."
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer au moins un terme de recherche.',
+                    ]),
                 ]
             ])
             ->add('Valider', SubmitType::class, [

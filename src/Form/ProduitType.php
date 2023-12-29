@@ -23,7 +23,9 @@ class ProduitType extends AbstractType
                 ],
                 'data' => 1,
                 'constraints' => [
-                    new NotBlank()
+                    new NotBlank([
+                        'message' => 'Veuillez entrer une quantité.',
+                    ]),
                 ]
             ])
             ->add('Valider', SubmitType::class, [

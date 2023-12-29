@@ -5,11 +5,13 @@ namespace App\Form;
 use App\Entity\Utilisateur;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\Email;
 
 class InfosUtilisateurType extends AbstractType
 {
@@ -43,6 +45,14 @@ class InfosUtilisateurType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'formulaire-texte'
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Veuillez entrer une adresse email.',
+                    ]),
+                    new Email([
+                        'message' => 'Veuillez entrer une adresse email valide.',
+                    ])
                 ]
             ])
             ->add('pseudo', TextType::class, [
