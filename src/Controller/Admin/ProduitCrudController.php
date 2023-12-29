@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Produit;
+use App\Form\JsonCodeEditorType;
 use App\Repository\CategorieRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -11,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -48,6 +50,7 @@ class ProduitCrudController extends AbstractCrudController
             TextField::new('designation', 'Désignation'),
             TextField::new('resume', 'Résumé')->hideOnIndex(),
             TextEditorField::new('descriptif', 'Déscriptif')->hideOnIndex(),
+            CodeEditorField::new('caracteristiquesTechniques')->setFormType(JsonCodeEditorType::class)->hideOnIndex(),
             ImageField::new('photo')
             ->setBasePath('img/produits/')
             ->setUploadDir('public/img/produits')
