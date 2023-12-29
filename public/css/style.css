@@ -17,6 +17,38 @@
     display: contents;
 }
 
+/* Messages flash */
+
+.message {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+    top: 0px;
+    Right: 0px;
+    height: 50px;
+    padding: 10px;
+    border-left: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background-color: var(--mainBg);
+    animation-duration: 1s;
+    animation-name: slideout;
+    animation-delay: 3000ms;
+}
+
+@keyframes slideout {
+    from {
+        top: 0px;
+    }
+
+    to {
+        top: -50px;
+    }
+  }
+
+/* Tables */
+
 table {
     width: 100%;
     border: 1px solid var(--border);

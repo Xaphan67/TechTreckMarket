@@ -28,6 +28,9 @@ class AdminController extends AbstractDashboardController
 
             // Génrère une url avec le generator et redirige vers celle çi
             return $this->redirect($adminUrlGenerator->setController(AvisCrudController::class)->generateUrl());
+        } else {
+            // Ajoute un message flash
+            $this->addFlash('danger', 'Accès non autorisé !');
         }
 
         // Redirige vers la page d'accueil

@@ -86,14 +86,23 @@ class UtilisateurController extends AbstractController
             $form = $this->createForm(InfosUtilisateurType::class, $utilisateur);
             $form->handleRequest($request);
 
-            // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && $form->isValid()) {
-                // Récupère les informations du formulaire
-                $formData = $form->getData();
+            // Vérifie que le formulaire est soumis
+            if ($form->isSubmitted()) {
+                //Vérifie que le formulaire est valide
+                if ($form->isValid()) {
+                    // Récupère les informations du formulaire
+                    $formData = $form->getData();
 
-                // Met à jour l'utilisateur en base de donnée
-                $entityManager->persist($formData);
-                $entityManager->flush();
+                    // Met à jour l'utilisateur en base de donnée
+                    $entityManager->persist($formData);
+                    $entityManager->flush();
+
+                    // Ajoute un message flash
+                    $this->addFlash('success', 'Informations personelles mises à jour !');
+                } else {
+                    // Ajoute un message flash
+                    $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
+                }
             }
         }
 
@@ -113,21 +122,33 @@ class UtilisateurController extends AbstractController
             $form = $this->createForm(MotDePasseUtilisateurType::class, $utilisateur);
             $form->handleRequest($request);
 
-            // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && $form->isValid()) {
-                // Récupère les informations du formulaire
-                $ancienMdp = $form->get('oldPassword')->getData();
-                $nouveauMdp = $form->get('password')->getData();
+            // Vérifie que le formulaire est soumis
+            if ($form->isSubmitted()) {
+                //Vérifie que le formulaire est valide
+                if ($form->isValid()) {
+                    // Récupère les informations du formulaire
+                    $ancienMdp = $form->get('oldPassword')->getData();
+                    $nouveauMdp = $form->get('password')->getData();
 
-                // Vérifie si le mot de passe saisi correspond au mot de passe actuel de l'utilisateur
-                if ($passwordHasher->isPasswordValid($utilisateur, $ancienMdp)) {
-                    // Hashe le nouveau mot de passe et modifie le mot de passe actuel de l'utilisateur
-                    $nouveauMdpHash = $passwordHasher->hashPassword($utilisateur, $nouveauMdp);
-                    $utilisateur->setPassword($nouveauMdpHash);
+                    // Vérifie si le mot de passe saisi correspond au mot de passe actuel de l'utilisateur
+                    if ($passwordHasher->isPasswordValid($utilisateur, $ancienMdp)) {
+                        // Hashe le nouveau mot de passe et modifie le mot de passe actuel de l'utilisateur
+                        $nouveauMdpHash = $passwordHasher->hashPassword($utilisateur, $nouveauMdp);
+                        $utilisateur->setPassword($nouveauMdpHash);
 
-                    // Met à jour l'utilisateur en base de donnée
-                    $entityManager->persist($utilisateur);
-                    $entityManager->flush();
+                        // Met à jour l'utilisateur en base de donnée
+                        $entityManager->persist($utilisateur);
+                        $entityManager->flush();
+
+                        // Ajoute un message flash
+                        $this->addFlash('success','Mot de passe mis à jour !');
+                    } else {
+                        // Ajoute un message flash
+                        $this->addFlash('danger', 'Le mot de passe actuel est incorrect !');
+                    }
+                } else {
+                    // Ajoute un message flash
+                    $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
                 }
             }
         }
@@ -148,6 +169,9 @@ class UtilisateurController extends AbstractController
 
             // Déconnecte l'utilisateur
             $tokenStorage->setToken(null);
+
+            // Ajoute un message flash
+            $this->addFlash('success', 'Votre compte à bien été supprimé !');
         }
 
         // Redirige vers la page d'accueil

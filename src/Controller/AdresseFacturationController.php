@@ -34,25 +34,33 @@ class AdresseFacturationController extends AbstractController
             $form->handleRequest($request);
 
             // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && (($ajoutAdresse && $form->isValid()) || (!$ajoutAdresse && $this->isCsrfTokenValid('update-adresse-facturation', $token)) )) {
-                // Récupère les informations du formulaire
-                $adresseFacturation = $form->getData();
+            if ($form->isSubmitted()) {
+                if (($ajoutAdresse && $form->isValid()) || (!$ajoutAdresse && $this->isCsrfTokenValid('update-adresse-facturation', $token))) {
+                    // Récupère les informations du formulaire
+                    $adresseFacturation = $form->getData();
 
-                // En cas d'ajout, rattache l'utilisateur à l'adresse
-                if ($ajoutAdresse) {
-                    $adresseFacturation->setUtilisateur($this->getUser());
+                    // En cas d'ajout, rattache l'utilisateur à l'adresse
+                    if ($ajoutAdresse) {
+                        $adresseFacturation->setUtilisateur($this->getUser());
+                    }
+
+                    // Envoie en base de données
+                    $entityManager->persist($adresseFacturation);
+                    $entityManager->flush();
+
+                    // Marque les autres adresses comme non préférées si celle-çi est marquée comme préférée
+                    if ($adresseFacturation->isPreferee()) {
+                        $adresseFacturationonRepository->setOthersAsNotFavorite($adresseFacturation);
+                    }
+
+                    // Ajoute un message flash
+                    $this->addFlash('success', 'Adresse de facturation ' . ($ajoutAdresse ? 'enregistrée' : 'mise à jour') . ' !');
+
+                    return $this->redirectToRoute('profil_utilisateur');
+                } else {
+                    // Ajoute un message flash
+                    $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
                 }
-
-                // Envoie en base de données
-                $entityManager->persist($adresseFacturation);
-                $entityManager->flush();
-
-                // Marque les autres adresses comme non préférées si celle-çi est marquée comme préférée
-                if ($adresseFacturation->isPreferee()) {
-                    $adresseFacturationonRepository->setOthersAsNotFavorite($adresseFacturation);
-                }
-
-                return $this->redirectToRoute('profil_utilisateur');
             }
         }
 
@@ -66,11 +74,17 @@ class AdresseFacturationController extends AbstractController
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             // Vérifie que l'adresse appartient à l'utilisateur connecté
-                if ($adresse->getUtilisateur() == $this->getUser()) {
+            if ($adresse->getUtilisateur() == $this->getUser()) {
                 $entityManager->remove($adresse);
                 $entityManager->flush();
 
+                // Ajoute un message flash
+                $this->addFlash('success', 'Adresse de facturation supprimée !');
+
                 return $this->redirectToRoute('profil_utilisateur');
+            } else {
+                // Ajoute un message flash
+                $this->addFlash('danger', 'Cette action n\'est pas autorisée !');
             }
         }
 

@@ -16,10 +16,34 @@
             {% include "header.html.twig" %} 
         </header>
         <main>
+            {% for message in app.flashes('success') %}
+                <div class="message">
+                    <img src="{{ asset('svg/flash-succes.svg') }}" alt="réussite">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('danger') %}
+                <div class="message">
+                    <img src="{{ asset('svg/flash-erreur.svg') }}" alt="erreur">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            {% for message in app.flashes('notice') %}
+                <div class="message">
+                    <img src="{{ asset('svg/flash-infos.svg') }}" alt="information">
+                    {{ message }}
+                </div>
+            {% endfor %}
             {% block body %}{% endblock %}
         </main>
         <footer>
             {% include "footer.html.twig" %}
         </footer>
+        {# Masquer les messages après 4 secondes (3 secondes d'attente + 1 seconde d'animation) #}
+        <script>
+            setTimeout(function() {
+                document.querySelector('.message').style.display = 'none';
+            }, 4000);
+        </script>
     </body>
 </html>

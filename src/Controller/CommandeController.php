@@ -103,12 +103,14 @@ class CommandeController extends AbstractController
                     // Stocke la commande dans la base de données
                     $entityManager->persist($commande);
                     $entityManager->flush($commande);
-                } else // Augmente la quantité s'il existe déjà
-                {
+                } else { // Augmente la quantité s'il existe déjà
                     $produitActuel->setQuantite($produitActuel->getQuantite() + $quantite);
                     $entityManager->persist($produitActuel);
                     $entityManager->flush($produitActuel);
                 }
+
+                // Ajoute un message flash
+                $this->addFlash('success', ($quantite > 1 ? $quantite . 'x ' : '') . $produit->getDesignation() .' ' . ($quantite > 1 ? 'ont' : 'à') . ' bien été' . ($quantite > 1 ? 's' : '') . ' ajouté' . ($quantite > 1 ? 's' : '') . ' au panier !');
             }
 
             // Redirige vers la fiche du produit, ou la catégorie du produit
@@ -143,6 +145,12 @@ class CommandeController extends AbstractController
             {
                 $entityManager->remove($produitExiste);
                 $entityManager->flush();
+
+                // Ajoute un message flash
+                $this->addFlash('success', 'Le produit à bien été supprimé de la commande !');
+            } else {
+                // Ajoute un message flash
+                $this->addFlash('danger', 'Le produit n\'a pas pu être supprimé  de la commande !');
             }
 
             // Redirige vers le panier
@@ -161,79 +169,88 @@ class CommandeController extends AbstractController
             $form = $this->createForm(CommandeType::class);
             $form->handleRequest($request);
 
-            // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && $form->isValid()) {
-                // Récupère les informations du formulaire
-                $formData = $form->getData();
+            // Vérifie que le formulaire est soumis
+            if ($form->isSubmitted()) {
+                // Vérifie que le formulaire est valide
+                if ($form->isValid()) {
+                    // Récupère les informations du formulaire
+                    $formData = $form->getData();
 
-                $adresseFacturation = $form->get('adresseFacturation')->getData();
-                if ($form->get('numeroFacturation')->getData() && $form->get('typeRueFacturation')->getData() && $form->get('rueFacturation')->getData() && $form->get('codePostalFacturation')->getData() && $form->get('villeFacturation')->getData()) {
-                    $adresseFacturation = new AdresseFacturation();
-                    $adresseFacturation->setUtilisateur($this->getUser());
-                    $adresseFacturation->setNumero($form->get('numeroFacturation')->getData());
-                    $adresseFacturation->setTypeRue($form->get('typeRueFacturation')->getData());
-                    $adresseFacturation->setRue($form->get('rueFacturation')->getData());
-                    $adresseFacturation->setCodePostal($form->get('codePostalFacturation')->getData());
-                    $adresseFacturation->setVille($form->get('villeFacturation')->getData());
-                    $adresseFacturation->setPreferee(0);
-                }
+                    $adresseFacturation = $form->get('adresseFacturation')->getData();
+                    if ($form->get('numeroFacturation')->getData() && $form->get('typeRueFacturation')->getData() && $form->get('rueFacturation')->getData() && $form->get('codePostalFacturation')->getData() && $form->get('villeFacturation')->getData()) {
+                        $adresseFacturation = new AdresseFacturation();
+                        $adresseFacturation->setUtilisateur($this->getUser());
+                        $adresseFacturation->setNumero($form->get('numeroFacturation')->getData());
+                        $adresseFacturation->setTypeRue($form->get('typeRueFacturation')->getData());
+                        $adresseFacturation->setRue($form->get('rueFacturation')->getData());
+                        $adresseFacturation->setCodePostal($form->get('codePostalFacturation')->getData());
+                        $adresseFacturation->setVille($form->get('villeFacturation')->getData());
+                        $adresseFacturation->setPreferee(0);
+                    }
 
-                $adresseLivraison = $form->get('adresseLivraison')->getData();
-                if ($form->get('numeroLivraison')->getData() && $form->get('typeRueLivraison')->getData() && $form->get('rueLivraison')->getData() && $form->get('codePostalLivraison')->getData() && $form->get('villeLivraison')->getData()) {
-                    $adresseLivraison = new AdresseLivraison();
-                    $adresseLivraison->setUtilisateur($this->getUser());
-                    $adresseLivraison->setNumero($form->get('numeroLivraison')->getData());
-                    $adresseLivraison->setTypeRue($form->get('typeRueLivraison')->getData());
-                    $adresseLivraison->setRue($form->get('rueLivraison')->getData());
-                    $adresseLivraison->setCodePostal($form->get('codePostalLivraison')->getData());
-                    $adresseLivraison->setVille($form->get('villeLivraison')->getData());
-                    $adresseLivraison->setPreferee(0);
-                }
+                    $adresseLivraison = $form->get('adresseLivraison')->getData();
+                    if ($form->get('numeroLivraison')->getData() && $form->get('typeRueLivraison')->getData() && $form->get('rueLivraison')->getData() && $form->get('codePostalLivraison')->getData() && $form->get('villeLivraison')->getData()) {
+                        $adresseLivraison = new AdresseLivraison();
+                        $adresseLivraison->setUtilisateur($this->getUser());
+                        $adresseLivraison->setNumero($form->get('numeroLivraison')->getData());
+                        $adresseLivraison->setTypeRue($form->get('typeRueLivraison')->getData());
+                        $adresseLivraison->setRue($form->get('rueLivraison')->getData());
+                        $adresseLivraison->setCodePostal($form->get('codePostalLivraison')->getData());
+                        $adresseLivraison->setVille($form->get('villeLivraison')->getData());
+                        $adresseLivraison->setPreferee(0);
+                    }
 
-                // Récupère la commande active de l'utilisateur.
-                $utilisateur = $this->getUser();
-                $commande = $commandeRepository->findOneBy([
-                    'utilisateur' => $utilisateur->getId(),
-                    'etat' => "panier"
-                ]);
+                    // Récupère la commande active de l'utilisateur.
+                    $utilisateur = $this->getUser();
+                    $commande = $commandeRepository->findOneBy([
+                        'utilisateur' => $utilisateur->getId(),
+                        'etat' => "panier"
+                    ]);
 
-                // Récupère l'id et le prix des produits au moment de la commande et les stocke dans un JSON dans la commande
-                $prixProduits = [];
-                foreach ($commande->getProduitCommandes() as $produitCommande) {
-                    $prixProduits[$produitCommande->getProduit()->getId()] = $produitCommande->getProduit()->getPrix();
-                }
-                $commande->setPrixProduits($prixProduits);
+                    // Récupère l'id et le prix des produits au moment de la commande et les stocke dans un JSON dans la commande
+                    $prixProduits = [];
+                    foreach ($commande->getProduitCommandes() as $produitCommande) {
+                        $prixProduits[$produitCommande->getProduit()->getId()] = $produitCommande->getProduit()->getPrix();
+                    }
+                    $commande->setPrixProduits($prixProduits);
 
-                // Ajoute les informations personelles de l'utilisateur à la commande
-                $commande->setCivilite($formData->getCivilite());
-                $commande->setNom($formData->getNom());
-                $commande->setPrenom($formData->getPrenom());
-                $commande->setAdresseFacturation($adresseFacturation);
-                $commande->setAdresseLivraison($adresseLivraison);
+                    // Ajoute les informations personelles de l'utilisateur à la commande
+                    $commande->setCivilite($formData->getCivilite());
+                    $commande->setNom($formData->getNom());
+                    $commande->setPrenom($formData->getPrenom());
+                    $commande->setAdresseFacturation($adresseFacturation);
+                    $commande->setAdresseLivraison($adresseLivraison);
 
-                // Change l'état de la commande
-                $commande->setEtat("en cours de préparation");
+                    // Change l'état de la commande
+                    $commande->setEtat("en cours de préparation");
 
-                // Ajoute la commande en base de données
-                $entityManager->persist($commande);
-                $entityManager->flush($commande);
+                    // Ajoute la commande en base de données
+                    $entityManager->persist($commande);
+                    $entityManager->flush($commande);
 
-                // Décrémente le stock de chaque produit dans la commande d'une unité
-                foreach ($commande->getProduitCommandes() as $produitCommande) {
-                    $produit = $produitCommande->getProduit();
-                    $produit->setStock($produit->getStock() - 1);
-                    $entityManager->persist($produit);
-                    $entityManager->flush($produit);
-                }
+                    // Décrémente le stock de chaque produit dans la commande d'une unité
+                    foreach ($commande->getProduitCommandes() as $produitCommande) {
+                        $produit = $produitCommande->getProduit();
+                        $produit->setStock($produit->getStock() - 1);
+                        $entityManager->persist($produit);
+                        $entityManager->flush($produit);
+                    }
 
-                // Ajoute la nouvelle adresse de facturation et/ou de livraison si l'utilisateur l'a demandé
-                if ($form->get('enregistrerFacturation')->getData()) {
-                    $entityManager->persist($adresseFacturation);
-                    $entityManager->flush($adresseFacturation);
-                }
-                if ($form->get('enregistrerLivraison')->getData()) {
-                    $entityManager->persist($adresseLivraison);
-                    $entityManager->flush($adresseLivraison);
+                    // Ajoute la nouvelle adresse de facturation et/ou de livraison si l'utilisateur l'a demandé
+                    if ($form->get('enregistrerFacturation')->getData()) {
+                        $entityManager->persist($adresseFacturation);
+                        $entityManager->flush($adresseFacturation);
+                    }
+                    if ($form->get('enregistrerLivraison')->getData()) {
+                        $entityManager->persist($adresseLivraison);
+                        $entityManager->flush($adresseLivraison);
+                    }
+
+                    // Ajoute un message flash
+                    $this->addFlash('success', 'Votre commande à bien été enregistrée !');
+                } else {
+                    // Ajoute un message flash
+                    $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
                 }
             }
         }
