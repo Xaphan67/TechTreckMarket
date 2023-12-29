@@ -31,7 +31,7 @@ class RechercheController extends AbstractController
             $recherche = $form->getData()["recherche"];
 
             // Récupère tout les produits dont la marque ou la designation contiennent la valeur entrée dans le champ de recherche
-            $produits = $produitRepository->findByTrademarkOrName($recherche);
+            $produits = $produitRepository->findByTrademarkOrName(explode(" ", $recherche));
 
             // Crée la pagination pour la liste des produits
             $produitsPagination = $paginator->paginate(

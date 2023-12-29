@@ -21,14 +21,18 @@ class ProduitRepository extends ServiceEntityRepository
         parent::__construct($registry, Produit::class);
     }
 
-    public function findByTrademarkOrName($search) {
-        return $this->createQueryBuilder('p')
-            ->innerJoin('p.marque', 'm', 'WITH', 'm.id = p.marque')
-            ->where('p.designation LIKE :search')
-            ->orWhere('m.nom LIKE :search')
-            ->setParameter('search', '%' . $search . '%')
-            ->getQuery()
-            ->getResult();
+    public function findByTrademarkOrName($words) {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin('p.marque', 'm', 'WITH', 'm.id = p.marque');
+
+            foreach ($words as $word) {
+                $query->andWhere('p.designation LIKE :word')
+                ->orWhere('m.nom LIKE :word')
+                ->setParameter('word', '%' . $word . '%');
+            };
+
+            $query->getQuery()->getResult();
+            return $query;
        ;
     }
 
