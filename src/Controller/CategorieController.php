@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Categorie;
 use App\Form\FiltresType;
+use App\Form\SortProductsType;
 use App\Repository\ProduitRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,7 +21,7 @@ class CategorieController extends AbstractController
         $produits = null;
         $produitsParMarque = [];
         $marques = [];
-        $form = null;
+        $filtreForm = null;
         $filtres = false;
 
         // Si la catégorie n'a pas de sous catégories, on récupère
@@ -36,14 +37,27 @@ class CategorieController extends AbstractController
                 }
             }
 
-            // Instancie un formulaire de type Filtres
-            $form = $this->createForm(FiltresType::class, null, ['marques' => $marques]);
-            $form->handleRequest($request);
+            // Instancie les formulaires
+            $filtreForm = $this->createForm(FiltresType::class, null, ['marques' => $marques]);
+            $filtreForm->handleRequest($request);
 
             // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && $form->isValid()) {
+            if ($filtreForm->isSubmitted() && $filtreForm->isValid()) {
                 // Récupère les informations du formulaire
-                $formData = $form->getData();
+                $formData = $filtreForm->getData();
+
+                $triColonne = "designation";
+                $triDirection = "ASC";
+
+                if ($formData["tri"] == "marque") {
+                    $triColonne = "marque";
+                    $triDirection = "DESC";
+                } else if ($formData["tri"] == "ASC") {
+                    $triColonne = "prix";
+                } else if ($formData["tri"] == "DESC") {
+                    $triColonne = "prix";
+                    $triDirection = "DESC";
+                }
 
                 // Récupère les produits en fonction des filtres spécifiés dans le formulaire
                 $produits = $produitRepository->findByFilters(
@@ -53,7 +67,8 @@ class CategorieController extends AbstractController
                     $formData["marques"],
                     $formData["prixMinimum"],
                     $formData["prixMaximum"],
-                    ["designation" => "ASC"]);
+                    $triColonne,
+                    $triDirection);
 
                 // Change filtres à vrai pour indiquer qu'un filtrage à été effectué
                 $filtres = true;
@@ -91,7 +106,7 @@ class CategorieController extends AbstractController
             'categorie' => $categorie,
             'produits' => $produits,
             'marques' => $produitsParMarque,
-            'formulaire' => $form,
+            'filtresFormulaire' => $filtreForm,
             'filtres' => $filtres
         ]);
     }

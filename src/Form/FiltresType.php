@@ -21,8 +21,8 @@ class FiltresType extends AbstractType
             'attr' => [
                 'placeholder' => "Désignation, modèle,..."
             ],
-            'required' => false,
-            'empty_data' => ''
+            'empty_data' => '',
+            'required' => false
         ])
         ->add('disponibilite', CheckboxType::class, [
             'label'    => 'Uniquement les produits en stock',
@@ -41,7 +41,7 @@ class FiltresType extends AbstractType
             'attr' => [
                 'placeholder' => 'Minimum',
             ],
-            'required' => false,
+            'required' => false
         ])
         ->add('prixMaximum', NumberType::class, [
             'label' => false,
@@ -49,7 +49,18 @@ class FiltresType extends AbstractType
             'attr' => [
                 'placeholder' => 'Maximum',
             ],
-            'required' => false,
+            'required' => false
+        ])
+        ->add('tri', ChoiceType::class, [
+            'label' => false,
+            'placeholder' => 'Trier les produits',
+            'choices' => [
+                'Nom' => 'nom',
+                'Marque' => 'marque',
+                'Du - cher au + cher' => 'ASC',
+                'Du + cher au - cher' => 'DESC'
+            ],
+            'required' => false
         ])
         ->add('Valider', SubmitType::class, [
             'attr' => [

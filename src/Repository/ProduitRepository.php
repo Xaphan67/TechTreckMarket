@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Produit;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Produit>
@@ -36,7 +37,7 @@ class ProduitRepository extends ServiceEntityRepository
        ;
     }
 
-    public function findByFilters($category, $words, $avaiable, $trademarks, $priceMin, $priceMax) {
+    public function findByFilters($category, $words, $avaiable, $trademarks, $priceMin, $priceMax, $orderCol, $orderDir) {
         $query =  $this->createQueryBuilder('p')
             ->innerJoin('p.categorie', 'c', 'WITH', 'c.id = p.categorie')
             ->innerJoin('p.marque', 'm', 'WITH', 'm.id = p.marque')
@@ -67,6 +68,11 @@ class ProduitRepository extends ServiceEntityRepository
             if ($priceMax != null) {
                 $query->andWhere('p.prix <= :priceMax')
                 ->setParameter('priceMax', $priceMax);
+            }
+
+            if (($orderCol == "designation" || $orderCol == "marque" || $orderCol == "prix") && ($orderDir == "ASC" || $orderDir == "DESC")) {
+                $orderDir = strtoupper($orderDir) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
+                $query->addOrderBy('p.' . $orderCol, $orderDir, 'p');
             }
 
             $query->getQuery()->getResult();

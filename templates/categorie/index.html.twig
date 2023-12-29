@@ -83,28 +83,30 @@
                     </div>
                     <div id="filtres-recherche" class="filtres-recherche formulaire-invisible">
                         <hr>
-                        {{ form_start(formulaire, { 'attr' : { 'class': 'formulaire-filtres' } }) }}
+                        {{ form_start(filtresFormulaire, { 'attr' : { 'class': 'formulaire-filtres' } }) }}
                             <h3>Référence</h3>
-                            {{ form_row(formulaire.reference) }}
+                            {{ form_row(filtresFormulaire.reference) }}
                             <h3>Disponibilité</h3>
                             <div class="formulaire-coche">
-                                {{ form_widget(formulaire.disponibilite) }} {{ form_label(formulaire.disponibilite) }}
+                                {{ form_widget(filtresFormulaire.disponibilite) }} {{ form_label(filtresFormulaire.disponibilite) }}
                             </div>
                             <h3>Marque</h3>
-                            {% for marque in formulaire.marques %}
+                            {% for marque in filtresFormulaire.marques %}
                                 <div class="formulaire-coche">
                                     {{ form_widget(marque) }} {{ form_label(marque, marque.vars.label ~ " (" ~ marques[marque.vars.label] ~ ")") }}
                                 </div>
                             {% endfor %}
                             <h3>Prix</h3>
                             <div class="formulaire-double-texte">
-                                {{ form_row(formulaire.prixMinimum) }}
-                                {{ form_row(formulaire.prixMaximum) }}
+                                {{ form_row(filtresFormulaire.prixMinimum) }}
+                                {{ form_row(filtresFormulaire.prixMaximum) }}
                             </div>
+                            <h3>Tri des résultats</h3>
+                            {{ form_row(filtresFormulaire.tri) }}
                             <div class="bouton-centre">
-                                {{ form_row(formulaire.Valider) }}
+                                {{ form_row(filtresFormulaire.Valider) }}
                             </div>
-                        {{ form_end(formulaire) }}
+                        {{ form_end(filtresFormulaire) }}
                     </div>
                 </div>
 
@@ -118,13 +120,6 @@
                     {% if produits.pageCount > 1 %}
                         <div class="conteneur pagination-haut">
                             {{ knp_pagination_render(produits) }}
-                            <select class="" name="tri" id="tri">
-                                <option value="">Trier les produits</option>
-                                <option value="nom">Nom</option>
-                                <option value="marque">Marque</option>
-                                <option value="prixASC">Du - cher au + cher</option>
-                                <option value="prixDESC">Du + cher au - cher</option>
-                            </select>
                         </div>
                     {% endif %}
 
