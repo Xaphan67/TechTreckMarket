@@ -21,7 +21,7 @@ class AdresseFacturationRepository extends ServiceEntityRepository
         parent::__construct($registry, AdresseFacturation::class);
     }
 
-    public function setOthersAsNotFavorite($currentId): array
+    public function setOthersAsNotFavorite($currentId): int
     {
        return $this->createQueryBuilder('al')
             ->update()
