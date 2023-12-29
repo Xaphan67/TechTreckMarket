@@ -22,31 +22,40 @@ class RechercheController extends AbstractController
         $form = $this->createForm(RecherchePrincipaleType::class);
         $form->handleRequest($request);
 
-        // Vérifie que le formulaire est soumis et est valide
-        if($form->isSubmitted() && $form->isValid()) {
-            // Enregistre l'url d'entrée dans une variable
-            $url = $request->headers->get('referer');
+        // Enregistre l'url d'entrée dans une variable
+        $url = $request->headers->get('referer');
 
-            // Enregistre le contenu de la recherche dans une variable
-            $recherche = $form->getData()["recherche"];
+        // Vérifie que le formulaire est soumis
+        if($form->isSubmitted()) {
+            // Vérifie que le formulaire est valide
+            if ($form->isValid()) {
+                // Enregistre le contenu de la recherche dans une variable
+                $recherche = $form->getData()["recherche"];
 
-            // Récupère tout les produits dont la marque ou la designation contiennent la valeur entrée dans le champ de recherche
-            $produits = $produitRepository->findByTrademarkOrName(explode(" ", $recherche));
+                // Récupère tout les produits dont la marque ou la designation contiennent la valeur entrée dans le champ de recherche
+                $produits = $produitRepository->findByTrademarkOrName(explode(" ", $recherche));
 
-            // Crée la pagination pour la liste des produits
-            $produitsPagination = $paginator->paginate(
-                $produits, // Contenu à paginer
-                $request->query->getInt('page', 1), // Page à afficher
-                10 // Limite par page
-            );
+                // Crée la pagination pour la liste des produits
+                $produitsPagination = $paginator->paginate(
+                    $produits, // Contenu à paginer
+                    $request->query->getInt('page', 1), // Page à afficher
+                    10 // Limite par page
+                );
 
-            $produits = $produitsPagination;
+                $produits = $produitsPagination;
 
-            return $this->render('recherche/search.html.twig', [
-                'recherche' => $recherche,
-                'produits' => $produits,
-                'url' => $url
-            ]);
+                return $this->render('recherche/search.html.twig', [
+                    'recherche' => $recherche,
+                    'produits' => $produits,
+                    'url' => $url
+                ]);
+            } else {
+                // Affiche un message
+                $this->addFlash('danger', 'Veuillez entrer au moins un terme de recherche.');
+
+                // Redirige vers l'url d'entrée
+                return $this->redirect($url);
+            }
         }
 
         return $this->render('recherche/mainSearchForm.html.twig', [
