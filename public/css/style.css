@@ -129,15 +129,12 @@ header {
     column-gap: 20px;
     align-items: center;
     height: 60px;
+    padding-top: 5px;
 }
 
 .headerMenu {
     position: relative;
     cursor: pointer;
-}
-
-.headerHautMenu, .headerHaut a {
-    padding-top: 5px;
 }
 
 .headerLogo {
@@ -1350,6 +1347,7 @@ border: 1px solid var(--borderFavoriteAdress);
     .headerHaut {
         width: 100%;
         justify-content: space-between;
+        padding-top: 0px;
     }
 
     .headerHautMenu,
