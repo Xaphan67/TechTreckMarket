@@ -1391,6 +1391,8 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .menuOption{
         width: 190px;
+        padding-left: 0px;
+        align-items: center;
     }
 
     #panier .panier-nbr-produits {
@@ -1399,6 +1401,10 @@ border: 1px solid var(--borderFavoriteAdress);
     }
 
     /* Contenu principal */
+
+    main {
+        padding-top: 45px;
+    }
 
     /* Formulaires */
 
@@ -1442,13 +1448,39 @@ border: 1px solid var(--borderFavoriteAdress);
     /* Modales */
 }
 
-/* tablettes et ordinateurs */
+/* ordinateurs */
 @media only screen and (min-width: 1024px) {
     /* Header */
+
+    header {
+        padding-inline: calc((100vw - 1024px) / 2);
+    }
+
+    .headerLogo {
+        max-height: 73px;
+        max-width: 200px;
+    }
+
+    .headerNavigation {
+        left: calc((100vw - 959px) / 2);
+    }
+
+    .menuOption{
+        width: 239px;
+    }
 
     /* Contenu principal */
 
     /* Formulaires */
+
+    .formulaire-recherche {
+        left: calc((100vw - 400px) / 2);
+        width: 400px;
+    }
+
+    .formulaire-recherche input {
+        width: 365px;
+    }
 
     /* Pagination */
 
