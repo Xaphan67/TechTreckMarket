@@ -106,6 +106,12 @@ table td:not(:first-child) {
     --textTab: #585050;
 }
 
+/* Factures */
+
+.facture-table {
+    border: 1px solid black;
+}
+
 /* Header */
 
 header {
@@ -137,6 +143,16 @@ header {
 .headerLogo {
     max-height: 50px;
     max-width: 140px;
+}
+
+.headerIcones {
+    display: flex;
+    gap: 20px;
+    height: 50px;
+}
+
+.headerIcone-texte {
+    display: none;
 }
 
 .recherchePrincipale {
@@ -1262,12 +1278,6 @@ border: 1px solid var(--borderFavoriteAdress);
     width: 190px;
 }
 
-/* Factures */
-
-.facture-table {
-    border: 1px solid black;
-}
-
 /* Modales */
 
 .modal {
@@ -1309,7 +1319,7 @@ border: 1px solid var(--borderFavoriteAdress);
     height: 15px;
 }
 
-/* tablettes et ordinateurs */ 
+/* tablettes et ordinateurs */
 @media only screen and (min-width: 768px) {
 
     .mobile-invisible {
@@ -1329,10 +1339,140 @@ border: 1px solid var(--borderFavoriteAdress);
         background-color: var(--arianeBg);
     }
 
+    /* Header */
+
+    header {
+        height: 158px;
+        padding-bottom: 25px;
+        padding-inline: calc((100vw - 703px) / 2);
+    }
+
+    .headerHaut {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .headerHautMenu,
+    .headerMenu {
+        display: none;
+    }
+
+    .headerLogo {
+        max-height: 55px;
+        max-width: 150px;
+    }
+
+    .headerIcones {
+        align-items: center;
+    }
+
+    .headerIcone {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .headerIcone-texte {
+        display: contents;
+        color: var(--boutonText);
+        text-transform: uppercase;
+    }
+
+    .headerNavigation {
+        display: block;
+        top: 133px;
+        border: none;
+        left: calc((100vw - 763px) / 2);
+    }
+
+    .headerNavigation ul {
+        display: flex;
+        gap: 1px;
+    }
+
+    .menuOption{
+        width: 190px;
+    }
+
+    #panier .panier-nbr-produits {
+        top: -5px;
+        right: 10px;
+    }
+
+    /* Contenu principal */
+
     /* Formulaires */
+
+    .formulaire-recherche {
+        position: absolute;
+        left: calc((100vw - 350px) / 2);
+        width: 250px;
+    }
+
+    .formulaire-recherche input {
+        width: 215px;
+    }
 
     .formulaire-centre {
         display: flex;
         justify-content: center;
     }
+
+    /* Pagination */
+
+    /* Fil d'ariane */
+
+    /* Accueil */
+
+    /* Catégories */
+
+    /* Filtres */
+
+    /* Nouveautés */
+
+    /* Marques */
+
+    /* Produits */
+
+    /* Profil utilisateur */
+
+    /* Panier */
+
+    /* Footer */
+
+    /* Modales */
+}
+
+/* tablettes et ordinateurs */
+@media only screen and (min-width: 1024px) {
+    /* Header */
+
+    /* Contenu principal */
+
+    /* Formulaires */
+
+    /* Pagination */
+
+    /* Fil d'ariane */
+
+    /* Accueil */
+
+    /* Catégories */
+
+    /* Filtres */
+
+    /* Nouveautés */
+
+    /* Marques */
+
+    /* Produits */
+
+    /* Profil utilisateur */
+
+    /* Panier */
+
+    /* Footer */
+
+    /* Modales */
 }

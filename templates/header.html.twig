@@ -1,37 +1,45 @@
 <div class="headerHaut">
+    <div id="headerNavigation" class="headerNavigation">
+        <ul>
+            <li class="menuOption"><a href=""><img src="{{ asset('svg/header/config.svg') }}" alt="configurateur PC">Configurateur PC</a></li>
+            <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':1 }) }}"><img src="{{ asset('svg/header/ordinateurs.svg') }}" alt="ordinateurs">Ordinateurs</a></li>
+            <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':2 }) }}"><img src="{{ asset('svg/header/composants.svg') }}" alt="composants">Composants</a></li>
+            <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':3 }) }}"><img src="{{ asset('svg/header/peripheriques.svg') }}" alt="peripheriques">Périphériques</a></li> 
+        </ul>
+    </div>
     <div class="headerMenu">
         <img class="headerHautMenu" onclick="interactMenu()" src="{{ asset('svg/header/hamburger-menu.svg') }}" alt="menu">
-        <div id="headerNavigation" class="headerNavigation">
-            <ul>
-                <li class="menuOption"><a href=""><img src="{{ asset('svg/header/config.svg') }}" alt="configurateur PC">Configurateur PC</a></li>
-                <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':1 }) }}"><img src="{{ asset('svg/header/ordinateurs.svg') }}" alt="ordinateurs">Ordinateurs</a></li>
-                <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':2 }) }}"><img src="{{ asset('svg/header/composants.svg') }}" alt="composants">Composants</a></li>
-                <li class="menuOption"><a href="{{ path('afficher_categorie',{ 'id':3 }) }}"><img src="{{ asset('svg/header/peripheriques.svg') }}" alt="peripheriques">Périphériques</a></li> 
-            </ul>
-        </div>
     </div>
     <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
+    <div class="headerIcones">
         {% if app.user %}
             <a href="{{ path('profil_utilisateur') }}">
         {% else %}
             <a href="{{ path('app_login') }}">
         {% endif %}
-        <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
-    </a>
-    {% if app.user %}
-        <a id="panier" href="{{ path('afficher_panier') }}">
-            {% for commande in app.user.commandes %}
-                {% if commande.etat == "panier" and commande.produitCommandes | length > 0 %}
-                    <div class="panier-nbr-produits">
-                        {{ commande.produitCommandes |length }}
-                    </div>
-                {% endif %}
-            {% endfor %}
-    {% else %}
-        <a href="{{ path('app_login') }}">
-    {% endif %}
-    <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
-    </a>
+            <div class="headerIcone">
+                <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
+                <span class="headerIcone-texte">Mon compte</span>
+            </div>
+        </a>
+        {% if app.user %}
+            <a id="panier" href="{{ path('afficher_panier') }}">
+                {% for commande in app.user.commandes %}
+                    {% if commande.etat == "panier" and commande.produitCommandes | length > 0 %}
+                        <div class="panier-nbr-produits">
+                            {{ commande.produitCommandes |length }}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+        {% else %}
+            <a href="{{ path('app_login') }}">
+        {% endif %}
+            <div class="headerIcone">
+                <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
+                <span class="headerIcone-texte">Mon panier</span>
+            </div>
+        </a>
+    </div>
 </div>
 {{ render(path('recherche_principale')) }}
 
