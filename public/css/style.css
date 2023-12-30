@@ -1268,6 +1268,14 @@ border: 1px solid var(--borderFavoriteAdress);
     font-size: 16px;
 }
 
+.footerSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    row-gap: 10px;
+}
+
 .social {
     display: flex;
     flex-wrap: wrap;
@@ -1404,6 +1412,7 @@ border: 1px solid var(--borderFavoriteAdress);
 
     main {
         padding-top: 45px;
+        min-height: calc(100vh - 353px);
     }
 
     /* Formulaires */
@@ -1444,6 +1453,23 @@ border: 1px solid var(--borderFavoriteAdress);
     /* Panier */
 
     /* Footer */
+
+    .footerHaut {
+        flex-direction: row;
+        justify-content: space-around;
+        height: 80px;
+        padding-inline: calc((100vw - 703px) / 2);
+    }
+
+    .footerBas {
+        height: 115px;
+    }
+
+    .social {
+        gap: 20px;
+        justify-content: center;
+        width: 100%;
+    }
 
     /* Modales */
 }
@@ -1503,6 +1529,10 @@ border: 1px solid var(--borderFavoriteAdress);
     /* Panier */
 
     /* Footer */
+
+    .footerHaut {
+        padding-inline: calc((100vw - 1024px) / 2);
+    }
 
     /* Modales */
 }
