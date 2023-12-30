@@ -201,11 +201,18 @@ li {
     height: 50px;
     width: 250px;
     padding-left: 10px;
-    background-color: var(--mainBg);
+    background-color: var(--boutonCurrent);
+}
+
+.menuOption a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--boutonText);
 }
 
 .menuOption:hover {
-    background-color: var(--lightTextB);
+    background-color: var(--text);
 }
 
 /* Contenu principal */
