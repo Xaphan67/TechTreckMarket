@@ -6,38 +6,37 @@
     <div class="conteneur-principal">
         <div class="categories">
             <h2>Votre compte</h2>
-            <div class="conteneur-categories">
-                <div class="conteneur">
-                    <div class="profil">
-                        <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
-                        {% if utilisateur.nom and utilisateur.prenom %}
-                            <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
-                        {% endif %}
-                        <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
-                        <div class="profil-categories">
-                            <div id="menuInfos" class="profil-categorie pc-actif">
-                                Mes informations
-                            </div>
-                            <div id="menuCommandes" class="profil-categorie">
-                                Mes commandes
-                            </div>
-                            <div id="menuAdresses" class="profil-categorie">
-                                Mes adresses
-                            </div>
+            <div class="conteneur-conteneurs">
+                {# Menu #}
+                <div class="conteneur profil">
+                    <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
+                    {% if utilisateur.nom and utilisateur.prenom %}
+                        <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+                    {% endif %}
+                    <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
+                    <div class="profil-categories">
+                        <div id="menuInfos" class="profil-categorie pc-actif">
+                            Mes informations
+                        </div>
+                        <div id="menuCommandes" class="profil-categorie">
+                            Mes commandes
+                        </div>
+                        <div id="menuAdresses" class="profil-categorie">
+                            Mes adresses
                         </div>
                     </div>
                 </div>
-                <div id="infos" class="sub-conteneur sub-conteneur-visible">
-                    <div class="conteneur conteneur-padding">
-                        <h2>Vos informations personelles</h2>
-                        {{ form_start(infosUtilisateur, {'action': path('modifier_donnees_utilisateur'), 'method': 'POST'}) }}
-                        <div class="formulaire-centre">
-                            <div class="formulaire-champ">
+
+                <div class="formulaires">
+                    {# Informations #}
+                    <div id="infos" class="sub-conteneur sub-conteneur-visible">
+                        <div class="conteneur conteneur-padding">
+                            <h2>Vos informations personelles</h2>
+                            {{ form_start(infosUtilisateur, {'action': path('modifier_donnees_utilisateur'), 'method': 'POST'}) }}
+                            <div class="formulaire-centre">
                                 {{ form_row(infosUtilisateur.civilite) }}
                             </div>
-                        </div>
-                        <div>
-                            <div>
+                            <div class="formulaire-ligne">
                                 <div class="formulaire-champ">
                                     {{ form_row(infosUtilisateur.nom) }}
                                 </div>
@@ -45,7 +44,7 @@
                                     {{ form_row(infosUtilisateur.prenom) }}
                                 </div>
                             </div>
-                            <div>
+                            <div class="formulaire-ligne">
                                 <div class="formulaire-champ">
                                     {{ form_row(infosUtilisateur.email) }}
                                 </div>
@@ -53,165 +52,213 @@
                                     {{ form_row(infosUtilisateur.pseudo) }}
                                 </div>
                             </div>
+                            <div class="bouton-centre">
+                                {{ form_row(infosUtilisateur.Valider) }}
+                            </div>
+                            {{ form_end(infosUtilisateur) }}
                         </div>
-                        <div class="bouton-centre">
-                            {{ form_row(infosUtilisateur.Valider) }}
-                        </div>
-                        {{ form_end(infosUtilisateur) }}
-                    </div>
-                    <div class="conteneur conteneur-padding">
-                        <h2>Changer le mot de passe</h2>
-                        {{ form_start(mdpUtilisateur, {'action': path('modifier_mdp_utilisateur'), 'method': 'POST'}) }}
-                        <div class="formulaire-champ">
-                            {{ form_row(mdpUtilisateur.oldPassword) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(mdpUtilisateur.password) }}
-                        </div>
-                        <div class="bouton-centre">
-                            {{ form_row(mdpUtilisateur.Valider) }}
-                        </div>
-                        {{ form_end(mdpUtilisateur) }}
-                    </div>
-                    <div class="conteneur">
-                        <h2>Supprimer le compte</h2>
-                        <div class="profil-supprimer">
-                            <a class="bouton-lien bouton-lien-centre bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</a>
-                        </div>
-                    </div>
-                </div>
-                <div id="commandes" class="sub-conteneur sub-conteneur-invisible">
-                    <div class="conteneur conteneur-padding">
-                        <h2>Vos commandes en cours</h2>
-                        {% if commandesEnCours | length > 0 %}
-                            {% for commande in commandesEnCours %}
-                                <div class="liste liste-separateur">
-                                    <div class="commande">
-                                        <div class="commande-infos">
-                                            N° {{ commande.commande.id}} <br>
-                                            {{ commande.total }} € TTC<br>
-                                            {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
-                                            <span class="etat-en-cours">{{ commande.commande.etat |capitalize }}</span>
-                                        </div>
-                                        <div>
-                                            {% for produitCommande in commande.commande.produitCommandes %}
-                                                <div class="commande-produit">
-                                                    <div class="produit-image">
-                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
-                                                    </div>
-                                                    <div class="produit-infos">
-                                                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
-                                                        <div class="panier-actions">
-                                                            <span>X {{ produitCommande.quantite }}</span>
-                                                            <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                            <div class="profil-bouton-centre-facture">
-                                                <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <p>Vous n'avez aucune commande en cours</p>
-                        {% endif %}
-                    </div>
-                    <div class="conteneur conteneur-padding">
-                        <h2>Historique des commandes</h2>
-                        {% if commandesPassees | length > 0 %}
-                            {% for commande in commandesPassees %}
-                                <div class="liste">
-                                    <div class="commande">
-                                        <div class="commande-infos">
-                                            <div>N° {{ commande.commande.id}} <br>
-                                                {{ commande.total }} € TTC<br>
-                                                {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
-                                                <span class="etat-expediee">{{ commande.commande.etat |capitalize }}</span>
-                                            </div>
-                                            <div class="commande-details-action" onclick="toggleDetails('{{ commande.commande.id }}')">
-                                                <span class="commande-details-text">
-                                                    Détails
-                                                    <img id="details-commande-chevron-{{ commande.commande.id }}" src="{{ asset('svg/utilisateurs/chevron-bas.svg') }}" alt="Voir les détails">
-                                                </span>
-                                                </div>
-                                        </div>
-                                        <div id="details-commande-{{ commande.commande.id }}" class="commande-details">
-                                            {% for produitCommande in commande.commande.produitCommandes %}
-                                                <div class="commande-produit">
-                                                    <div class="produit-image">
-                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
-                                                    </div>
-                                                    <div class="produit-infos">
-                                                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
-                                                        <div class="panier-actions">
-                                                            <span>X {{ produitCommande.quantite }}</span>
-                                                            <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            {% endfor %}
-                                            <div class="profil-bouton-centre-facture">
-                                                <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% else %}
-                            <p>Vous n'avez passé aucune commande</p>
-                        {% endif %}
-                    </div>
-                </div>
-                <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
-                    <div class="conteneur conteneur-padding">
-                        <h2>Carnet d'adresses</h2>
-                            <div class="adresses">
-                                <div class="liste">
-                                    <div class="adresse-haut">
-                                        <img class="adresse-image" src="{{ asset('svg/utilisateurs/adresse-facturation.svg') }}" alt="Adresse de facturation">
-                                        Adresse de Facturation
-                                    </div>
-                                    {% for adresse in adressesFacturation %}
-                                        <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
-                                            {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
-                                            {{ adresse.codePostal }} {{ adresse.ville }}
-                                            <div class="adresse-actions">
-                                                <a class="bouton-lien boutton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')">
-                                                    <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
-                                                </a>
-                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}">
-                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </div>
-                                <div class="liste">
-                                    <div class="adresse-haut">
-                                        <img src="{{ asset('svg/utilisateurs/adresse-livraison.svg') }}" alt="Adresse de facturation">
-                                        Adresse de Livraison
-                                    </div>
-                                    {% for adresse in adressesLivraison %}
-                                        <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
-                                            {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
-                                            {{ adresse.codePostal }} {{ adresse.ville }}
-                                            <div class="adresse-actions">
-                                                <a class="bouton-lien boutton-icone" onclick="displayEditLivraisonForm('{{ adresse.id }}')">
-                                                    <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
-                                                </a>
-                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}">
-                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
-                                                </a>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
+                        <div class="conteneur conteneur-padding">
+                            <h2>Changer le mot de passe</h2>
+                            {{ form_start(mdpUtilisateur, {'action': path('modifier_mdp_utilisateur'), 'method': 'POST'}) }}
+                            <div class="formulaire-ligne">
+                                <div class="formulaire-champ">
+                                    {{ form_row(mdpUtilisateur.oldPassword) }}
                                 </div>
                             </div>
-                            <div class="profil-bouton-centre">
-                                <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
+                            <div class="formulaire-ligne">
+                                <div class="formulaire-champ formulaire-champ-mdp">
+                                    {{ form_row(mdpUtilisateur.password) }}
+                                </div>
+                            </div>
+                            <div class="bouton-centre">
+                                {{ form_row(mdpUtilisateur.Valider) }}
+                            </div>
+                            {{ form_end(mdpUtilisateur) }}
+                        </div>
+                        <div class="conteneur">
+                            <h2>Supprimer le compte</h2>
+                            <div class="profil-supprimer">
+                                <a class="bouton-lien bouton-lien-centre bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# Commandes #}
+                    <div id="commandes" class="sub-conteneur sub-conteneur-invisible">
+                        <div class="conteneur conteneur-padding">
+                            <h2>Vos commandes en cours</h2>
+                            {% if commandesEnCours | length > 0 %}
+                                {% for commande in commandesEnCours %}
+                                    <div class="liste liste-separateur">
+                                        <div class="commande">
+                                            <div class="commande-infos">
+                                                <div class="mobile-tablette-uniquement">
+                                                    N° {{ commande.commande.id}} <br>
+                                                    {{ commande.total }} € TTC<br>
+                                                    {{ commande.commande.dateCommande | date("d/m/Y") }}<br>
+                                                    <span class="etat-en-cours">{{ commande.commande.etat | capitalize }}</span>
+                                                </div>
+                                                <div class="ordinateur-uniquement commande-header">
+                                                    <div class="commande-header-info">
+                                                        <span class="commande-header-large">N° commande</span>
+                                                        <span class="commande-header-tres-petit">Articles</span>
+                                                        <span class="commande-header-normal">Prix</span>
+                                                        <span class="commande-header-normal">Date</span>
+                                                        <span class="commande-header-large">Statut</span>
+                                                    </div>
+                                                    <div class="commande-header-valeurs">
+                                                        <span class="commande-header-large">{{ commande.commande.id}}</span>
+                                                        <span class="commande-header-tres-petit">{{ commande.commande.produitCommandes | length }}</span>
+                                                        <span class="commande-header-normal">{{ commande.total }} € TTC</span>
+                                                        <span class="commande-header-normal">{{ commande.commande.dateCommande | date("d/m/Y") }}</span>
+                                                        <span class="commande-header-large etat-en-cours">{{ commande.commande.etat }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% for produitCommande in commande.commande.produitCommandes %}
+                                                <div class="commande-produit">
+                                                    <div class="produit-image produit-image-commande">
+                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                                    </div>
+                                                    <div class="produit-infos">
+                                                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
+                                                        <div class="panier-actions">
+                                                            <span>X {{ produitCommande.quantite }}</span>
+                                                            <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="profil-bouton-droite-facture">
+                                        <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p>Vous n'avez aucune commande en cours</p>
+                            {% endif %}
+                        </div>
+                        <div class="conteneur conteneur-padding">
+                            <h2>Historique des commandes</h2>
+                            {% if commandesPassees | length > 0 %}
+                                <div class="liste">
+                                    <div class="ordinateur-uniquement commande-header">
+                                        <div class="commande-header-info">
+                                            <span class="commande-header-large">N° commande</span>
+                                            <span class="commande-header-tres-petit">Articles</span>
+                                            <span class="commande-header-normal">Prix</span>
+                                            <span class="commande-header-petit">Date</span>
+                                            <span class="commande-header-petit">Statut</span>
+                                            <span class="commande-header-petit"></span>
+                                        </div>
+                                    </div>
+                                    {% for commande in commandesPassees %}
+                                        <div class="commande">
+                                            <div class="commande-infos">
+                                                <div class="mobile-tablette-uniquement">
+                                                    N° {{ commande.commande.id}} <br>
+                                                    {{ commande.total }} € TTC<br>
+                                                    {{ commande.commande.dateCommande |date("d/m/Y") }}<br>
+                                                    <span class="etat-expediee">{{ commande.commande.etat |capitalize }}</span>
+                                                    <div class="commande-details-action" onclick="toggleDetails('{{ commande.commande.id }}')">
+                                                        <span class="commande-details-text">
+                                                            Détails
+                                                            <img id="details-commande-chevron-mobile-{{ commande.commande.id }}" src="{{ asset('svg/utilisateurs/chevron-bas.svg') }}" alt="Voir les détails">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="ordinateur-uniquement commande-header">
+                                                    <div class="commande-header-valeurs">
+                                                        <span class="commande-header-large">{{ commande.commande.id}}</span>
+                                                        <span class="commande-header-tres-petit">{{ commande.commande.produitCommandes | length }}</span>
+                                                        <span class="commande-header-normal">{{ commande.total }} € TTC</span>
+                                                        <span class="commande-header-petit">{{ commande.commande.dateCommande | date("d/m/Y") }}</span>
+                                                        <span class="commande-header-petit etat-expediee">{{ commande.commande.etat }}</span>
+                                                        <span class="commande-header-petit commande-details-text" onclick="toggleDetails('{{ commande.commande.id }}')">
+                                                            Détails
+                                                            <img id="details-commande-chevron-{{ commande.commande.id }}" src="{{ asset('svg/utilisateurs/chevron-bas.svg') }}" alt="Voir les détails">
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="details-commande-{{ commande.commande.id }}" class="commande-details">
+                                                {% for produitCommande in commande.commande.produitCommandes %}
+                                                    <div class="commande-produit">
+                                                        <div class="produit-image produit-image-commande">
+                                                            <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                                        </div>
+                                                        <div class="produit-infos">
+                                                            <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
+                                                            <div class="panier-actions">
+                                                                <span>X {{ produitCommande.quantite }}</span>
+                                                                <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                                <div class="profil-bouton-droite-facture">
+                                                    <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p>Vous n'avez passé aucune commande</p>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {# Adresses #}
+                    <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
+                        <div class="conteneur conteneur-padding">
+                            <h2>Carnet d'adresses</h2>
+                                <div class="adresses">
+                                    <div class="liste">
+                                        <div class="adresse-haut">
+                                            <img class="adresse-image" src="{{ asset('svg/utilisateurs/adresse-facturation.svg') }}" alt="Adresse de facturation">
+                                            Adresse{{ adressesFacturation | length > 1 ? "s" : "" }} de Facturation
+                                        </div>
+                                        {% for adresse in adressesFacturation %}
+                                            <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
+                                                {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
+                                                {{ adresse.codePostal }} {{ adresse.ville }}
+                                                <div class="adresse-actions">
+                                                    <a class="bouton-lien boutton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')">
+                                                        <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
+                                                    </a>
+                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}">
+                                                        <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="liste">
+                                        <div class="adresse-haut">
+                                            <img src="{{ asset('svg/utilisateurs/adresse-livraison.svg') }}" alt="Adresse de facturation">
+                                            Adresse{{ adressesLivraison | length > 1 ? "s" : "" }} de Livraison
+                                        </div>
+                                        {% for adresse in adressesLivraison %}
+                                            <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
+                                                {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
+                                                {{ adresse.codePostal }} {{ adresse.ville }}
+                                                <div class="adresse-actions">
+                                                    <a class="bouton-lien boutton-icone" onclick="displayEditLivraisonForm('{{ adresse.id }}')">
+                                                        <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
+                                                    </a>
+                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}">
+                                                        <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <div class="profil-bouton-centre">
+                                    <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -220,6 +267,7 @@
         </div>
     </div>
 
+    {# Modales #}
     <div id="modal" class="modal">
         <div id="suppression-compte-utilisateur" class="conteneur-modal">
             <div class="fermer-modal" onclick="closeModale('suppression-compte-utilisateur')">
@@ -438,14 +486,17 @@
         function toggleDetails(id)
         {
             const element = document.getElementById("details-commande-" + id)
-            const chevron = document.getElementById("details-commande-chevron-" + id)
+            const chevron = document.getElementById("details-commande-chevron-mobile-" + id)
+            const chevron2 = document.getElementById("details-commande-chevron-" + id)
             const styles = window.getComputedStyle(element)
             if (styles.getPropertyValue("display") == "none") {
                 element.style.display = "block";
                 chevron.classList.add("rotation-chevron")
+                chevron2.classList.add("rotation-chevron")
             } else {
                 element.style.display = "none";
                 chevron.classList.remove("rotation-chevron")
+                chevron2.classList.remove("rotation-chevron")
             }
         }
 

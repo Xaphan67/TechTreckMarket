@@ -10,7 +10,7 @@
             <div class="conteneur nouveautes">
                 {% for ordinateur in ordinateurs | slice(0, 1) %}
                     <div class="nouveau-produit">
-                        <div class="produit-image">
+                        <div class="produit-image-mini">
                             <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
                         </div>
                         <div class="nouveau-infos">
@@ -22,7 +22,7 @@
 
                 {% for composant in composants | slice(0, 1) %}
                     <div class="nouveau-produit">
-                        <div class="produit-image">
+                        <div class="produit-image-mini">
                             <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
                         </div>
                         <div class="nouveau-infos">
@@ -34,7 +34,7 @@
 
                 {% for peripherique in peripheriques | slice(0, 1) %}
                     <div class="nouveau-produit">
-                        <div class="produit-image">
+                        <div class="produit-image-mini">
                             <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
                         </div>
                         <div class="nouveau-infos">
@@ -52,7 +52,7 @@
                     <div class="nouveautes-ligne">
                         {% for ordinateur in ordinateurs | slice(0, 2) %}
                             <div class="nouveau-produit">
-                                <div class="produit-image">
+                                <div class="produit-image-mini">
                                     <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
                                 </div>
                                 <div class="nouveau-infos">
@@ -68,7 +68,7 @@
                     <div class="nouveautes-ligne">
                         {% for composant in composants | slice(0, 2) %}
                             <div class="nouveau-produit">
-                                <div class="produit-image">
+                                <div class="produit-image-mini">
                                     <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
                                 </div>
                                 <div class="nouveau-infos">
@@ -84,7 +84,7 @@
                     <div class="nouveautes-ligne">
                         {% for peripherique in peripheriques | slice(0, 2) %}
                             <div class="nouveau-produit">
-                                <div class="produit-image">
+                                <div class="produit-image-mini">
                                     <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
                                 </div>
                                 <div class="nouveau-infos">
@@ -104,7 +104,7 @@
                         <span class="nouveautes-entete">Les nouveaux ordinateurs</span>
                         {% for ordinateur in ordinateurs %}
                             <div class="nouveau-produit">
-                                <div class="produit-image">
+                                <div class="produit-image-mini">
                                     <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
                                 </div>
                                 <div class="nouveau-infos">
@@ -120,7 +120,7 @@
                         <span class="nouveautes-entete">Les nouveaux composants</span>
                         {% for composant in composants %}
                             <div class="nouveau-produit">
-                                <div class="produit-image">
+                                <div class="produit-image-mini">
                                     <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
                                 </div>
                                 <div class="nouveau-infos">
@@ -136,7 +136,7 @@
                         <span class="nouveautes-entete">Les nouveaux périphériques</span>
                         {% for peripherique in peripheriques %}
                             <div class="nouveau-produit">
-                                <div class="produit-image">
+                                <div class="produit-image-mini">
                                     <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
                                 </div>
                                 <div class="nouveau-infos">
