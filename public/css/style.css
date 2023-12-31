@@ -833,6 +833,7 @@ label,
 .produit-descriptif-achat {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     gap: 15px;
     margin-top: 15px;
 }
@@ -1349,6 +1350,10 @@ border: 1px solid var(--borderFavoriteAdress);
         display: contents;
     }
 
+    img.mobile-invisible {
+        display: block;
+    }
+
     .mobile-uniquement {
         display: none;
     }
@@ -1364,6 +1369,10 @@ border: 1px solid var(--borderFavoriteAdress);
         border-radius: 5px;
         color: var(--links);
         background-color: var(--arianeBg);
+    }
+
+    table td:first-child {
+        width: 200px;
     }
 
     /* Header */
@@ -1531,6 +1540,69 @@ border: 1px solid var(--borderFavoriteAdress);
     }
 
     /* Produits */
+
+    h1.produit-designation {
+        font-size: 25px;
+    }
+
+    .produit-haut {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 113px;
+    }
+
+    .produit-conteneur-descriptif {
+        display: flex;
+        gap: 25px;
+        padding-inline: 20px;
+    }
+
+    .produit-descriptif-image {
+        max-width: 50%;
+    }
+
+    .produit-descriptif-achat {
+        margin-top: 0px;
+        width: 50%;
+    }
+
+    .produit-achat-infos>div:not(:first-child) {
+        margin-left: 20px;
+        width: 100%;
+    }
+
+    .bouton-achat-large {
+        width: 100%;
+    }
+
+    .conteneur-padding-produits-tablette {
+        padding-inline: 51px;
+    }
+
+    .produit-actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .avis {
+        display: flex;
+    }
+
+    .avis-infos {
+        border-bottom: none;
+        border-right: 1px solid var(--border);
+        flex-direction: column;
+        align-items: baseline;
+        padding: 20px;
+        height: auto;
+        width: 250px;
+    }
+
+    .avis-contenu {
+        padding: 20px;
+        width: calc(100% - 250px);
+    }
 
     /* Profil utilisateur */
 

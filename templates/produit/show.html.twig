@@ -43,15 +43,16 @@
 
     <div class="conteneur-principal">
         {# Designation et résumé du produit #}
-        <div class="conteneur conteneur-padding-produits">
+        <div class="conteneur conteneur-padding-produits produit-haut">
             <div>
                 <h1 class="produit-designation">{{ produit }}</h1>
                 <p class="produit-resume">{{ produit.resume }}</p>
             </div>
+            <img class="mobile-invisible" src="{{ asset('img/marques/' ~ produit.marque.logo) }}" alt="{{ produit.marque }}">
         </div>
 
         {# Descriptif et achat du produit #}
-        <div class="conteneur conteneur-padding-produits">
+        <div class="conteneur conteneur-padding-produits produit-conteneur-descriptif">
             <div class="produit-descriptif-image">
                 <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit }}">
             </div>
@@ -100,7 +101,7 @@
                     <a class="bouton-lien bouton-lien-centre bouton-250" href="{{ path('recherche_categorie_marque', {'marque': produit.marque.id, 'categorie': produit.categorie.id, 'produit': produit.id}) }}">Voir les {{ produit.categorie }} {{ produit.marque }}</a>
                 </div>
             </div>
-            <div id="sectionFiche" class="conteneur-padding-produits sub-conteneur-invisible">
+            <div id="sectionFiche" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Caractéristiques techniques :</h3>
                 {% if produit.caracteristiquesTechniques %}
                     <table>
@@ -117,7 +118,7 @@
                     <p>Aucune caractéristiques technique n'a été renseignée pour ce produit.</p>
                 {% endif %}
             </div>
-            <div id="sectionAvis" class="conteneur-padding-produits sub-conteneur-invisible">
+            <div id="sectionAvis" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Les avis de nos clients :</h3>
                 {% if produit.avis | length > 0 %}
                     {% for avis in produit.avis %}
