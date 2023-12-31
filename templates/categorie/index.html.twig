@@ -69,95 +69,99 @@
                     <p class="aucunProduit">Désolé, pour le moment il n'y à aucun produit dans cette catégorie</p>
                 </div>
             {% else %}
-                {# Affiche les options de filtre des résultats #}
-                <div class="conteneur filtres">
-                    <div id="filtres-titre">
-                        <h2>Filtrez votre recherche</h2>
-                        <div id="chevron" class="chevron">
-                            <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div id="filtres-recherche" class="filtres-recherche formulaire-invisible">
-                        <hr>
-                        {{ form_start(filtresFormulaire, { 'attr' : { 'class': 'formulaire-filtres' } }) }}
-                            <h3>Référence</h3>
-                            {{ form_row(filtresFormulaire.reference) }}
-                            <h3>Disponibilité</h3>
-                            <div class="formulaire-coche">
-                                {{ form_widget(filtresFormulaire.disponibilite) }} {{ form_label(filtresFormulaire.disponibilite) }}
+                <div class="conteneur-conteneurs">
+                    {# Affiche les options de filtre des résultats #}
+                    <div class="conteneur filtres">
+                        <div id="filtres-titre">
+                            <h2>Filtrez votre recherche</h2>
+                            <div id="chevron" class="chevron">
+                                <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
                             </div>
-                            <h3>Marque</h3>
-                            {% for marque in filtresFormulaire.marques %}
+                        </div>
+                        <div id="filtres-recherche" class="filtres-recherche formulaire-invisible">
+                            <hr>
+                            {{ form_start(filtresFormulaire, { 'attr' : { 'class': 'formulaire-filtres' } }) }}
+                                <h3>Référence</h3>
+                                {{ form_row(filtresFormulaire.reference) }}
+                                <h3>Disponibilité</h3>
                                 <div class="formulaire-coche">
-                                    {{ form_widget(marque) }} {{ form_label(marque, marque.vars.label ~ " (" ~ marques[marque.vars.label] ~ ")") }}
+                                    {{ form_widget(filtresFormulaire.disponibilite) }} {{ form_label(filtresFormulaire.disponibilite) }}
                                 </div>
-                            {% endfor %}
-                            <h3>Prix</h3>
-                            <div class="formulaire-double-texte">
-                                {{ form_row(filtresFormulaire.prixMinimum) }}
-                                {{ form_row(filtresFormulaire.prixMaximum) }}
-                            </div>
-                            <h3>Tri des résultats</h3>
-                            {{ form_row(filtresFormulaire.tri) }}
-                            <div class="bouton-centre">
-                                {{ form_row(filtresFormulaire.Valider) }}
-                            </div>
-                        {{ form_end(filtresFormulaire) }}
-                    </div>
-                </div>
-
-                {# Affiche les produits, ou un message si les filtres ne retournent aucun produit #}
-                {% if produits | length == 0 and filtres %}
-                    <div class="conteneur">
-                        <p class="aucunProduit">Aucun produit ne correspond aux filtres que vous avez spécifié.</p>
-                    </div>
-                {% else %}
-                    {# Affiche la pagination et le tri #}
-                    {% if produits.pageCount > 1 %}
-                        <div class="conteneur pagination-haut">
-                            {{ knp_pagination_render(produits) }}
+                                <h3>Marque</h3>
+                                {% for marque in filtresFormulaire.marques %}
+                                    <div class="formulaire-coche">
+                                        {{ form_widget(marque) }} {{ form_label(marque, marque.vars.label ~ " (" ~ marques[marque.vars.label] ~ ")") }}
+                                    </div>
+                                {% endfor %}
+                                <h3>Prix</h3>
+                                <div class="formulaire-double-texte">
+                                    {{ form_row(filtresFormulaire.prixMinimum) }}
+                                    {{ form_row(filtresFormulaire.prixMaximum) }}
+                                </div>
+                                <h3>Tri des résultats</h3>
+                                {{ form_row(filtresFormulaire.tri) }}
+                                <div class="bouton-centre">
+                                    {{ form_row(filtresFormulaire.Valider) }}
+                                </div>
+                            {{ form_end(filtresFormulaire) }}
                         </div>
-                    {% endif %}
+                    </div>
 
-                    {# Affiche les produits #}
-                    <div class="conteneur">
-                        {% for produit in produits %}
-                            <div class="produit">
-                                <div class="produit-image">
-                                    <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                    {# Affiche les produits, ou un message si les filtres ne retournent aucun produit #}
+                    {% if produits | length == 0 and filtres %}
+                        <div class="conteneur">
+                            <p class="aucunProduit">Aucun produit ne correspond aux filtres que vous avez spécifié.</p>
+                        </div>
+                    {% else %}
+                        <div class="liste-produits">
+                            {# Affiche la pagination et le tri #}
+                            {% if produits.pageCount > 1 %}
+                                <div class="conteneur pagination-haut">
+                                    {{ knp_pagination_render(produits) }}
                                 </div>
-                                <div class="produit-infos">
-                                    <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a></span>
-                                    <span class="produit-resume">{{ produit.resume }}</span>
-                                    <div class="produit-prix">
-                                        {% if produit.stock > 0 %}
-                                            <span class="stock-oui">EN STOCK</span>
-                                        {% else %}
-                                            <span class="stock-non">RUPTURE</span>
-                                        {% endif %}
-                                        <div class="produit-achat">
-                                            <span class="prix">
-                                                {{ produit.prix }} €
-                                            </span>
-                                            <a class="bouton-achat" href="{{ path('ajout_produit_commande', { 'id': produit.id }) }}">
-                                                <img src="{{ asset('svg/produits/panier.svg')}}" alt="Ajouter au panier">
-                                            </a>
+                            {% endif %}
+
+                            {# Affiche les produits #}
+                            <div class="conteneur">
+                                {% for produit in produits %}
+                                    <div class="produit">
+                                        <div class="produit-image">
+                                            <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                                        </div>
+                                        <div class="produit-infos">
+                                            <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a></span>
+                                            <span class="produit-resume">{{ produit.resume }}</span>
+                                            <div class="produit-prix">
+                                                {% if produit.stock > 0 %}
+                                                    <span class="stock-oui">EN STOCK</span>
+                                                {% else %}
+                                                    <span class="stock-non">RUPTURE</span>
+                                                {% endif %}
+                                                <div class="produit-achat">
+                                                    <span class="prix">
+                                                        {{ produit.prix }} €
+                                                    </span>
+                                                    <a class="bouton-achat" href="{{ path('ajout_produit_commande', { 'id': produit.id }) }}">
+                                                        <img src="{{ asset('svg/produits/panier.svg')}}" alt="Ajouter au panier">
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
-                    </div>
 
-                    {# Affiche la pagination #}
-                    {% if produits.pageCount > 1 %}
-                        <div class="conteneur">
-                            {{ knp_pagination_render(produits) }}
+                            {# Affiche la pagination #}
+                            {% if produits.pageCount > 1 %}
+                                <div class="conteneur">
+                                    {{ knp_pagination_render(produits) }}
+                                </div>
+                            {% endif %}
                         </div>
                     {% endif %}
-                {% endif %}
+                </div>
             {% endif %}
         {% endif %}
     </div>

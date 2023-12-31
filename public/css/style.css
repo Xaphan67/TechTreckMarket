@@ -809,6 +809,7 @@ label,
 .produit-infos {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     width: 100%;
 }
 
@@ -957,6 +958,10 @@ label,
 
 .onglet-actif img {
     transform: rotate(180deg);
+}
+
+.liste-produits {
+    margin-top: 20px;
 }
 
 .produit-actions {
@@ -1451,6 +1456,10 @@ border: 1px solid var(--borderFavoriteAdress);
         gap: 13px;
     }
 
+    .chevron {
+        display: none;
+    }
+
     /* Formulaires */
 
     .formulaire-recherche {
@@ -1466,6 +1475,10 @@ border: 1px solid var(--borderFavoriteAdress);
     .formulaire-centre {
         display: flex;
         justify-content: center;
+    }
+
+    .formulaire-invisible {
+        display: block;
     }
 
     /* Pagination */
@@ -1500,6 +1513,15 @@ border: 1px solid var(--borderFavoriteAdress);
     }
 
     /* Filtres */
+
+    .filtres {
+        width: 280px;
+        padding-inline: 0px;
+    }
+
+    .formulaire-filtres>div {
+        padding-inline: 20px;
+    }
 
     /* Nouveautés */
 
@@ -1572,12 +1594,27 @@ border: 1px solid var(--borderFavoriteAdress);
         width: 100%;
     }
 
+    .produit-image {
+        min-width: 120px;
+        max-width: 120px;
+        min-height: 120px;
+        max-height: 120px;
+    }
+
     .bouton-achat-large {
         width: 100%;
     }
 
     .conteneur-padding-produits-tablette {
         padding-inline: 51px;
+    }
+
+    .liste-produits {
+        margin-top: 0px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
     }
 
     .produit-actions {
@@ -1723,6 +1760,13 @@ border: 1px solid var(--borderFavoriteAdress);
     }
 
     /* Produits */
+
+    .produit-image {
+        min-width: 150px;
+        max-width: 150px;
+        min-height: 150px;
+        max-height: 150px;
+    }
 
     /* Profil utilisateur */
 
