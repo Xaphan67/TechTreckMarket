@@ -55,11 +55,9 @@
                 <h2>Catégories {{ categorie }}</h2>
                 <div class="liste-categories">
                     {% for sousCategorie in categorie.sousCategories %}
-                    <a class="conteneur" href="{{ path('afficher_categorie', { 'id':sousCategorie.id }) }}">
-                        <div class="sous-categorie">
-                            <img src="{{ asset('img/categories/' ~ sousCategorie.image) }}" alt="{{ sousCategorie }}">
-                            <span class="sous-categorie-nom">{{ sousCategorie }}</span>
-                        </div>
+                    <a class="conteneur sous-categorie" href="{{ path('afficher_categorie', { 'id':sousCategorie.id }) }}">
+                        <img src="{{ asset('img/categories/' ~ sousCategorie.image) }}" alt="{{ sousCategorie }}">
+                        <span class="sous-categorie-nom">{{ sousCategorie }}</span>
                     </a>
                     {% endfor %}
                 </div>
