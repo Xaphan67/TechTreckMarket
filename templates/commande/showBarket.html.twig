@@ -6,40 +6,76 @@
     <div class="conteneur-principal">
         <div class="categories">
             <h2>Votre panier</h2>
-            <div class="conteneur-categories">
+            <div class="conteneur-conteneurs">
                 {% if commande and commande.produitCommandes | length > 0 %}
                     <div class="conteneur conteneur-padding">
                         <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" : "" }}</h2>
                         <div class="liste">
-                        {% for produitCommande in commande.produitCommandes %}
+                            <div class="ordinateur-uniquement commande-header">
+                                <div class="commande-header-info">
+                                    <span class="panier-header-image"></span>
+                                    <span class="panier-header-designation">Désignation</span>
+                                    <span class="panier-header-quantite">Quantité</span>
+                                    <span class="panier-header-prix">Prix</span>
+                                    <span class="panier-header-action"></span>
+                                </div>
+                            </div>
+                            {% for produitCommande in commande.produitCommandes %}
                                 <div class="panier-produit">
-                                    <div class="produit-image">
+                                    <div class="produit-image-mini mobile-tablette-uniquement">
                                         <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
                                     </div>
                                     <div class="produit-infos">
-                                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
-                                        <span>
-                                            Disponibilité :
-                                            {% if produitCommande.produit.stock > 0 %}
-                                                <span class="stock-oui">EN STOCK</span>
-                                            {% else %}
-                                                <span class="stock-non">RUPTURE</span>
-                                            {% endif %}
-                                        </span>
-                                        <div class="panier-actions">
-                                            <span>Quantité : {{ produitCommande.quantite }}</span>
-                                            <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
-                                            <a href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}"><img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit"></a>
+                                        <div class="mobile-tablette-uniquement">
+                                            <span class="produit-designation">
+                                                <a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a>
+                                            </span>
+                                            <span>
+                                                Disponibilité :
+                                                {% if produitCommande.produit.stock > 0 %}
+                                                    <span class="stock-oui">EN STOCK</span>
+                                                {% else %}
+                                                    <span class="stock-non">RUPTURE</span>
+                                                {% endif %}
+                                            </span>
+                                            <div class="panier-actions">
+                                                <span>Quantité : {{ produitCommande.quantite }}</span>
+                                                <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                <a href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}"><img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit"></a>
+                                            </div>
+                                        </div>
+                                        <div class="ordinateur-uniquement">
+                                            <div class="produit-image-mini panier-header-image">
+                                                <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                            </div>
+                                            <div class="panier-header-designation">
+                                                <span class="produit-designation">
+                                                    <a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a>
+                                                </span>
+                                                <span>
+                                                    Disponibilité :
+                                                    {% if produitCommande.produit.stock > 0 %}
+                                                        <span class="stock-oui">EN STOCK</span>
+                                                    {% else %}
+                                                        <span class="stock-non">RUPTURE</span>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <span class="panier-header-quantite">{{ produitCommande.quantite }}</span>
+                                            <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                            <span class="panier-header-action">
+                                                <a href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}"><img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit"></a>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             {% endfor %}
-                        </div> 
+                        </div>
                     </div>
-                    <div class="conteneur conteneur-padding">
+                    <div class="conteneur conteneur-padding conteneur-total-panier">
                         <div class="panier-total">
                             <h2>Montant total de vos produits</h2>
-                            <span class="panier-prix">{{ total | number_format(2, '.')}} €</span>
+                            <span class="panier-prix">{{ total | number_format(2, '.') }} €</span>
                         </div>
                         <a class="bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</a>
                     </div>
