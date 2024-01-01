@@ -6,6 +6,7 @@ use App\Form\AdresseLivraisonType;
 use App\Form\InfosUtilisateurType;
 use App\Form\AdresseFacturationType;
 use App\Form\MotDePasseUtilisateurType;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class UtilisateurController extends AbstractController
 {
     #[Route('/utilisateur', name: 'profil_utilisateur')]
-    public function index(): Response
+    public function index(CommandeRepository $commandeRepository): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
@@ -31,7 +32,7 @@ class UtilisateurController extends AbstractController
             $adresseLivraisonForm = $this->createForm(AdresseLivraisonType::class);
 
             // Récupération des commandes de l'utilisateur
-            $commandes = $utilisateur->getCommandes();
+            $commandes = $commandeRepository->findBy(['utilisateur' => $utilisateur], ["id" => "DESC"]);
 
             $commandesEnCours = [];
             $commandesPassees = [];
