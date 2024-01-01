@@ -1201,7 +1201,8 @@ border: 1px solid var(--borderFavoriteAdress);
     cursor: default;
 }
 
-.formulaire-invisible {
+.formulaire-invisible,
+.formulaire-modal-invisible {
     display: none;
 }
 
@@ -1336,6 +1337,7 @@ border: 1px solid var(--borderFavoriteAdress);
     display: none;
     align-items: center;
     justify-content: center;
+    z-index: 10;
 }
 
 .conteneur-modal {
@@ -1703,6 +1705,10 @@ border: 1px solid var(--borderFavoriteAdress);
     }
 
     /* Modales */
+
+    .conteneur-modal {
+        width: 500px;
+    }
 }
 
 /* ordinateurs */
@@ -1769,6 +1775,11 @@ border: 1px solid var(--borderFavoriteAdress);
         display: flex;
         gap: 50px;
         padding-inline: 20px;
+    }
+
+    .formulaire-ligne-modal {
+        display: flex;
+        gap: 50px;
     }
 
     /* Pagination */

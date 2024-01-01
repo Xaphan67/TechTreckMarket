@@ -88,11 +88,11 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-invisible" : "" }}">
+                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-modal-invisible" : "" }}">
                         <p>Remplissez les champs pour créer une nouvelle adresse de facturation, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de facturation</span>
-                            <a class="bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-invisible" }}" onclick="hideFormFacturation()">
+                            <a class="bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormFacturation()">
                                 <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
                             </a>
                         </div>
@@ -131,11 +131,11 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-invisible" : "" }}">
+                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-modal-invisible" : "" }}">
                         <p>Remplissez les champs pour créer une nouvelle adresse de livraison, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de livraison</span>
-                            <a class="bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-invisible" }}" onclick="hideFormLivraison()">
+                            <a class="bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormLivraison()">
                                 <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
                             </a>
                         </div>
@@ -237,9 +237,9 @@
             if (stylesModal.getPropertyValue("display") == "none") {
                 element.style.display = "block";
                 modal.style.display = "flex";
-                page2.classList.add("formulaire-invisible");
-                page3.classList.add("formulaire-invisible");
-                page4.classList.add("formulaire-invisible");
+                page2.classList.add("formulaire-modal-invisible");
+                page3.classList.add("formulaire-modal-invisible");
+                page4.classList.add("formulaire-modal-invisible");
             }
         }
 
@@ -252,10 +252,10 @@
             const nextPage = document.getElementById("commander-page-" + idNext);
 
             if (idCurrent === 0) {
-                page1.classList.remove("formulaire-invisible");
-                page2.classList.remove("formulaire-invisible");
-                page3.classList.remove("formulaire-invisible");
-                page4.classList.remove("formulaire-invisible");
+                page1.classList.remove("formulaire-modal-invisible");
+                page2.classList.remove("formulaire-modal-invisible");
+                page3.classList.remove("formulaire-modal-invisible");
+                page4.classList.remove("formulaire-modal-invisible");
             }
             else if (idCurrent === 1) {
                 const civilite0 = document.getElementById("commande_civilite_0");
@@ -263,8 +263,8 @@
                 const nom = document.getElementById("commande_nom");
                 const prenom = document.getElementById("commande_prenom");
                 if ((civilite0.checked || civilite1.checked) && nom.validity.valid && prenom.validity.valid) {
-                    page1.classList.add("formulaire-invisible");
-                    nextPage.classList.remove("formulaire-invisible");
+                    page1.classList.add("formulaire-modal-invisible");
+                    nextPage.classList.remove("formulaire-modal-invisible");
                     if (idNext > idCurrent) {
                         document.getElementById("commande-resume-civilite").textContent = `${civilite0.checked ? civilite0.value.charAt(0).toUpperCase() + civilite0.value.slice(1) : civilite1.value.charAt(0).toUpperCase() + civilite1.value.slice(1)}`;
                         document.getElementById("commande-resume-prenom").textContent = `${prenom.value}`;
@@ -281,16 +281,16 @@
                     && rueFacturation.value.length != 0 && codePostalFacturation.value.length != 0
                     && villeFacturation.value.length != 0)) {
                         if (numeroFacturation.validity.valid && typeRueFacturation.validity.valid && rueFacturation.validity.valid && codePostalFacturation.validity.valid && villeFacturation.validity.valid && enregistrerFacturation.validity.valid) {
-                            page2.classList.add("formulaire-invisible");
-                            nextPage.classList.remove("formulaire-invisible");
+                            page2.classList.add("formulaire-modal-invisible");
+                            nextPage.classList.remove("formulaire-modal-invisible");
                             if (!newFacturationOpen) {
-                                document.getElementById("commande-resume-adresseFacturation-choix").classList.remove("formulaire-invisible");
-                                document.getElementById("commande-resume-adresseFacturation-nouveau").classList.add("formulaire-invisible");
+                                document.getElementById("commande-resume-adresseFacturation-choix").classList.remove("formulaire-modal-invisible");
+                                document.getElementById("commande-resume-adresseFacturation-nouveau").classList.add("formulaire-modal-invisible");
                                 document.getElementById("commande-resume-adresseFacturation-0").textContent  = `${adresseFacturation.options[adresseFacturation.selectedIndex].innerText.split('-')[0]}`;
                                 document.getElementById("commande-resume-adresseFacturation-1").textContent  = `${adresseFacturation.options[adresseFacturation.selectedIndex].innerText.split('-')[1]}`;
                             } else {
-                                document.getElementById("commande-resume-adresseFacturation-choix").classList.add("formulaire-invisible");
-                                document.getElementById("commande-resume-adresseFacturation-nouveau").classList.remove("formulaire-invisible");
+                                document.getElementById("commande-resume-adresseFacturation-choix").classList.add("formulaire-modal-invisible");
+                                document.getElementById("commande-resume-adresseFacturation-nouveau").classList.remove("formulaire-modal-invisible");
                                 document.getElementById("commande-resume-adresseFacturation-numero").textContent  = `${numeroFacturation.value}`;
                                 document.getElementById("commande-resume-adresseFacturation-typerue").textContent  = `${typeRueFacturation.value}`;
                                 document.getElementById("commande-resume-adresseFacturation-rue").textContent  = `${rueFacturation.value}`;
@@ -300,8 +300,8 @@
                         }
                     }
                 } else {
-                    page2.classList.add("formulaire-invisible");
-                    nextPage.classList.remove("formulaire-invisible");
+                    page2.classList.add("formulaire-modal-invisible");
+                    nextPage.classList.remove("formulaire-modal-invisible");
                 }
             }
             else if (idCurrent === 3) {
@@ -313,16 +313,16 @@
                     && rueLivraison.value.length != 0 && codePostalLivraison.value.length != 0
                     && villeLivraison.value.length != 0)) {
                         if (numeroLivraison.validity.valid && typeRueLivraison.validity.valid && rueLivraison.validity.valid && codePostalLivraison.validity.valid && villeLivraison.validity.valid && enregistrerLivraison.validity.valid) {
-                            page3.classList.add("formulaire-invisible");
-                            nextPage.classList.remove("formulaire-invisible");
+                            page3.classList.add("formulaire-modal-invisible");
+                            nextPage.classList.remove("formulaire-modal-invisible");
                             if (!newLivraisonOpen) {
-                                document.getElementById("commande-resume-adresseLivraison-choix").classList.remove("formulaire-invisible");
-                                document.getElementById("commande-resume-adresseLivraison-nouveau").classList.add("formulaire-invisible");
+                                document.getElementById("commande-resume-adresseLivraison-choix").classList.remove("formulaire-modal-invisible");
+                                document.getElementById("commande-resume-adresseLivraison-nouveau").classList.add("formulaire-modal-invisible");
                                 document.getElementById("commande-resume-adresseLivraison-0").textContent  = `${adresseLivraison.options[adresseLivraison.selectedIndex].innerText.split('-')[0]}`;
                                 document.getElementById("commande-resume-adresseLivraison-1").textContent  = `${adresseLivraison.options[adresseLivraison.selectedIndex].innerText.split('-')[1]}`;
                             } else {
-                                document.getElementById("commande-resume-adresseLivraison-choix").classList.add("formulaire-invisible");
-                                document.getElementById("commande-resume-adresseLivraison-nouveau").classList.remove("formulaire-invisible");
+                                document.getElementById("commande-resume-adresseLivraison-choix").classList.add("formulaire-modal-invisible");
+                                document.getElementById("commande-resume-adresseLivraison-nouveau").classList.remove("formulaire-modal-invisible");
                                 document.getElementById("commande-resume-adresseLivraison-numero").textContent  = `${numeroLivraison.value}`;
                                 document.getElementById("commande-resume-adresseLivraison-typerue").textContent  = `${typeRueLivraison.value}`;
                                 document.getElementById("commande-resume-adresseLivraison-rue").textContent  = `${rueLivraison.value}`;
@@ -332,13 +332,13 @@
                         }
                     }
                 } else {
-                    page3.classList.add("formulaire-invisible");
-                    nextPage.classList.remove("formulaire-invisible");
+                    page3.classList.add("formulaire-modal-invisible");
+                    nextPage.classList.remove("formulaire-modal-invisible");
                 }
             }
             else if (idCurrent === 4) {
-                page4.classList.add("formulaire-invisible");
-                nextPage.classList.remove("formulaire-invisible");
+                page4.classList.add("formulaire-modal-invisible");
+                nextPage.classList.remove("formulaire-modal-invisible");
             }
         }
 
@@ -346,8 +346,8 @@
         function showFormFacturation() {
             const choix = document.getElementById("choix-ajout-facturation");
             const form = document.getElementById("formulaire-ajout-facturation");
-            choix.classList.add("formulaire-invisible");
-            form.classList.remove("formulaire-invisible");
+            choix.classList.add("formulaire-modal-invisible");
+            form.classList.remove("formulaire-modal-invisible");
             newFacturationOpen = true;
         }
 
@@ -361,8 +361,8 @@
             const codePostalFacturation = document.getElementById("commande_codePostalFacturation");
             const villeFacturation = document.getElementById("commande_villeFacturation");
             const enregistrerFacturation = document.getElementById("commande_enregistrerFacturation");
-            choix.classList.remove("formulaire-invisible");
-            form.classList.add("formulaire-invisible");
+            choix.classList.remove("formulaire-modal-invisible");
+            form.classList.add("formulaire-modal-invisible");
             numeroFacturation.value = '';
             typeRueFacturation.value = '';
             rueFacturation.value = '';
@@ -375,8 +375,8 @@
         function showFormLivraison() {
             const choix = document.getElementById("choix-ajout-livraison");
             const form = document.getElementById("formulaire-ajout-livraison");
-            choix.classList.add("formulaire-invisible");
-            form.classList.remove("formulaire-invisible");
+            choix.classList.add("formulaire-modal-invisible");
+            form.classList.remove("formulaire-modal-invisible");
             newLivraisonOpen = true;
         }
 
@@ -390,8 +390,8 @@
             const codePostalLivraison = document.getElementById("commande_codePostalLivraison");
             const villeLivraison = document.getElementById("commande_villeLivraison");
             const enregistrerLivraison = document.getElementById("commande_enregistrerLivraison");
-            choix.classList.remove("formulaire-invisible");
-            form.classList.add("formulaire-invisible");
+            choix.classList.remove("formulaire-modal-invisible");
+            form.classList.add("formulaire-modal-invisible");
             numeroLivraison.value = '';
             typeRueLivraison.value = '';
             rueLivraison.value = '';

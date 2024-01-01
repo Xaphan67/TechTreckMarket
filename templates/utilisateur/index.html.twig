@@ -293,28 +293,32 @@
                 <h3>Modifier une adresse de Facturation</h3>
                 <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
                 <form name="adresse_facturation" method="post" action="{{ path('modifier_adresse_facturation', {'id': adresse.id}) }}">
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_facturation_numero-{{ adresse.id }}" class="required">Numero</label>
-                            <input type="text" id="adresse_facturation_numero-{{ adresse.id }}" name="adresse_facturation[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                    <div class="formulaire-ligne-modal">
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_facturation_numero-{{ adresse.id }}" class="required">Numero</label>
+                                <input type="text" id="adresse_facturation_numero-{{ adresse.id }}" name="adresse_facturation[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                            </div>
+                        </div>
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_facturation_typeRue-{{ adresse.id }}" class="required">Type de rue</label>
+                                <input type="text" id="adresse_facturation_typeRue-{{ adresse.id }}" name="adresse_facturation[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                            </div>
                         </div>
                     </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_facturation_typeRue-{{ adresse.id }}" class="required">Type de rue</label>
-                            <input type="text" id="adresse_facturation_typeRue-{{ adresse.id }}" name="adresse_facturation[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                    <div class="formulaire-ligne-modal">
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_facturation_rue-{{ adresse.id }}" class="required">Rue</label>
+                                <input type="text" id="adresse_facturation_rue-{{ adresse.id }}" name="adresse_facturation[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_facturation_rue-{{ adresse.id }}" class="required">Rue</label>
-                            <input type="text" id="adresse_facturation_rue-{{ adresse.id }}" name="adresse_facturation[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
-                        </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_facturation_codePostal-{{ adresse.id }}" class="required">Code postal</label>
-                            <input type="text" id="adresse_facturation_codePostal-{{ adresse.id }}" name="adresse_facturation[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_facturation_codePostal-{{ adresse.id }}" class="required">Code postal</label>
+                                <input type="text" id="adresse_facturation_codePostal-{{ adresse.id }}" name="adresse_facturation[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                            </div>
                         </div>
                     </div>
                     <div class="formulaire-champ">
@@ -350,28 +354,32 @@
                 <h3>Modifier une adresse de livraison</h3>
                 <p>Remplissez les champs çi-dessous pour modifier cette adresse</p>
                 <form name="adresse_livraison" method="post" action="{{ path('modifier_adresse_livraison', {'id': adresse.id}) }}">
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_livraison_numero-{{ adresse.id }}" class="required">Numero</label>
-                            <input type="text" id="adresse_livraison_numero-{{ adresse.id }}" name="adresse_livraison[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                    <div class="formulaire-ligne-modal">
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_livraison_numero-{{ adresse.id }}" class="required">Numero</label>
+                                <input type="text" id="adresse_livraison_numero-{{ adresse.id }}" name="adresse_livraison[numero]" required="required" class="formulaire-texte" value="{{ adresse.numero }}">
+                            </div>
+                        </div>
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_livraison_typeRue-{{ adresse.id }}" class="required">Type de rue</label>
+                                <input type="text" id="adresse_livraison_typeRue-{{ adresse.id }}" name="adresse_livraison[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                            </div>
                         </div>
                     </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_livraison_typeRue-{{ adresse.id }}" class="required">Type de rue</label>
-                            <input type="text" id="adresse_livraison_typeRue-{{ adresse.id }}" name="adresse_livraison[typeRue]" required="required" class="formulaire-texte" value="{{ adresse.typeRue }}">
+                    <div class="formulaire-ligne-modal">
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_livraison_rue-{{ adresse.id }}" class="required">Rue</label>
+                                <input type="text" id="adresse_livraison_rue-{{ adresse.id }}" name="adresse_livraison[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
+                            </div>
                         </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_livraison_rue-{{ adresse.id }}" class="required">Rue</label>
-                            <input type="text" id="adresse_livraison_rue-{{ adresse.id }}" name="adresse_livraison[rue]" required="required" class="formulaire-texte" value="{{ adresse.rue }}">
-                        </div>
-                    </div>
-                    <div class="formulaire-champ">
-                        <div>
-                            <label for="adresse_livraison_codePostal-{{ adresse.id }}" class="required">Code postal</label>
-                            <input type="text" id="adresse_livraison_codePostal-{{ adresse.id }}" name="adresse_livraison[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                        <div class="formulaire-champ">
+                            <div>
+                                <label for="adresse_livraison_codePostal-{{ adresse.id }}" class="required">Code postal</label>
+                                <input type="text" id="adresse_livraison_codePostal-{{ adresse.id }}" name="adresse_livraison[codePostal]" required="required" class="formulaire-texte" value="{{ adresse.codePostal }}">
+                            </div>
                         </div>
                     </div>
                     <div class="formulaire-champ">
@@ -418,17 +426,21 @@
             </div>
             <div id="formulaire-facturation">
                 {{ form_start(adresseFacturationFormulaire, {'action': path('ajout_adresse_facturation'), 'method': 'POST'}) }}
-                <div class="formulaire-champ">
-                    {{ form_row(adresseFacturationFormulaire.numero) }}
+                <div class="formulaire-ligne-modal">
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.numero) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.typeRue) }}
+                    </div>
                 </div>
-                <div class="formulaire-champ">
-                    {{ form_row(adresseFacturationFormulaire.typeRue) }}
-                </div>
-                <div class="formulaire-champ">
-                    {{ form_row(adresseFacturationFormulaire.rue) }}
-                </div>
-                <div class="formulaire-champ">
-                    {{ form_row(adresseFacturationFormulaire.codePostal) }}
+                <div class="formulaire-ligne-modal">
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.rue) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseFacturationFormulaire.codePostal) }}
+                    </div>
                 </div>
                 <div class="formulaire-champ">
                     {{ form_row(adresseFacturationFormulaire.ville) }}
@@ -441,19 +453,23 @@
                 </div>
                 {{ form_end(adresseFacturationFormulaire) }}
             </div>
-            <div id="formulaire-livraison" class="formulaire-invisible">
+            <div id="formulaire-livraison" class="formulaire-modal-invisible">
                 {{ form_start(adresseLivraisonFormulaire, {'action': path('ajout_adresse_livraison'), 'method': 'POST'}) }}
-                <div class="formulaire-champ">
-                    {{ form_row(adresseLivraisonFormulaire.numero) }}
+                <div class="formulaire-ligne-modal">
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.numero) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.typeRue) }}
+                    </div>
                 </div>
-                <div class="formulaire-champ">
-                    {{ form_row(adresseLivraisonFormulaire.typeRue) }}
-                </div>
-                <div class="formulaire-champ">
-                    {{ form_row(adresseLivraisonFormulaire.rue) }}
-                </div>
-                <div class="formulaire-champ">
-                    {{ form_row(adresseLivraisonFormulaire.codePostal) }}
+                <div class="formulaire-ligne-modal">
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.rue) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(adresseLivraisonFormulaire.codePostal) }}
+                    </div>
                 </div>
                 <div class="formulaire-champ">
                     {{ form_row(adresseLivraisonFormulaire.ville) }}
@@ -522,8 +538,8 @@
 
             typeFacturation.classList.add("type-facture-selected")
             typeLivraison.classList.remove("type-facture-selected")
-            formulaireFacturation.classList.remove("formulaire-invisible")
-            formulaireLivraison.classList.add("formulaire-invisible")
+            formulaireFacturation.classList.remove("formulaire-modal-invisible")
+            formulaireLivraison.classList.add("formulaire-modal-invisible")
         }
 
         // Affiche le formulaire d'édidtion d'adresse de facturation
@@ -548,8 +564,8 @@
 
             typeFacturation.classList.remove("type-facture-selected")
             typeLivraison.classList.add("type-facture-selected")
-            formulaireFacturation.classList.add("formulaire-invisible")
-            formulaireLivraison.classList.remove("formulaire-invisible")
+            formulaireFacturation.classList.add("formulaire-modal-invisible")
+            formulaireLivraison.classList.remove("formulaire-modal-invisible")
         }
 
         // Affiche le formulaire d'édidtion d'adresse de livraison
