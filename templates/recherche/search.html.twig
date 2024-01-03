@@ -2,6 +2,8 @@
 
 {% block title %}E-Commerce - Votre recherche{% endblock %}
 
+{% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
+
 {% block body %}
     {# Fil d'ariane #}
     <div class="ariane">
@@ -60,7 +62,7 @@
                                     <span class="prix">
                                         {{ produit.prix }} €
                                     </span>
-                                    <a class="bouton-achat" href="{{ path('ajout_produit_commande', { 'id': produit.id }) }}">
+                                    <a class="bouton-achat" href="{{ path('ajout_produit_commande', { 'id': produit.id }) }}" title="Ajouter {{ produit }} au panier">
                                         <img src="{{ asset('svg/produits/panier.svg')}}" alt="Ajouter au panier">
                                     </a>
                                 </div>

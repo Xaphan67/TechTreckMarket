@@ -2,6 +2,8 @@
 
 {% block title %}E-Commerce - Votre profil{% endblock %}
 
+{% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
+
 {% block body %}
     <div class="conteneur-principal">
         <div class="categories">
@@ -78,7 +80,7 @@
                         <div class="conteneur">
                             <h2>Supprimer le compte</h2>
                             <div class="profil-supprimer">
-                                <a class="bouton-lien bouton-lien-centre bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</a>
+                                <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</div>
                             </div>
                         </div>
                     </div>
@@ -225,10 +227,10 @@
                                                 {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                                 {{ adresse.codePostal }} {{ adresse.ville }}
                                                 <div class="adresse-actions">
-                                                    <a class="bouton-lien boutton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')">
+                                                    <div class="bouton-lien boutton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')" title="Modifier l'adresse">
                                                         <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
-                                                    </a>
-                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}">
+                                                    </div>
+                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}" title="Supprimer l'adresse">
                                                         <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                                                     </a>
                                                 </div>
@@ -245,10 +247,10 @@
                                                 {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                                 {{ adresse.codePostal }} {{ adresse.ville }}
                                                 <div class="adresse-actions">
-                                                    <a class="bouton-lien boutton-icone" onclick="displayEditLivraisonForm('{{ adresse.id }}')">
+                                                    <div class="bouton-lien boutton-icone" onclick="displayEditLivraisonForm('{{ adresse.id }}')" title="Modifier l'adresse">
                                                         <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
-                                                    </a>
-                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}">
+                                                    </div>
+                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}" title="Supprimer l'adresse">
                                                         <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                                                     </a>
                                                 </div>
@@ -281,7 +283,7 @@
                 Êtes-vous sûr de vouloir supprimer votre compte ?
             </p>
             <div class="commande-suivant">
-                <a class="bouton-lien bouton-lien-centre bouton-100" onclick="closeModale('suppression-compte-utilisateur')" alt="Annuler">Annuler</a>
+                <div class="bouton-lien bouton-lien-centre bouton-100" onclick="closeModale('suppression-compte-utilisateur')">Annuler</div>
                 <a class="bouton-lien bouton-valider-commande bouton-150" href="{{ path('supprimer_compte_utilisateur') }}">Supprimer le compte</a>
             </div>
         </div>
