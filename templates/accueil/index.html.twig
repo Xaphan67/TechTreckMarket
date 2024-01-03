@@ -11,39 +11,45 @@
         <div class="mobile-uniquement">
             <div class="conteneur nouveautes">
                 {% for ordinateur in ordinateurs | slice(0, 1) %}
-                    <div class="nouveau-produit">
-                        <div class="produit-image-mini">
-                            <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                    <a href="{{ path('voir_produit', {'id': ordinateur.id}) }}" title="{{ ordinateur }}">
+                        <div class="nouveau-produit">
+                            <div class="produit-image-mini">
+                                <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                            </div>
+                            <div class="nouveau-infos">
+                                <span class="produit-designation no-transform">{{ ordinateur.designation }}</span>
+                                <span class="prix">{{ ordinateur.prix }} €</span>
+                            </div>
                         </div>
-                        <div class="nouveau-infos">
-                            <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': ordinateur.id}) }}">{{ ordinateur.designation }}</a></span>
-                            <span class="prix">{{ ordinateur.prix }} €</span>
-                        </div>
-                    </div>
+                    </a>
                 {% endfor %}
 
                 {% for composant in composants | slice(0, 1) %}
-                    <div class="nouveau-produit">
-                        <div class="produit-image-mini">
-                            <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                    <a href="{{ path('voir_produit', {'id': composant.id}) }}" title="{{ composant }}">
+                        <div class="nouveau-produit">
+                            <div class="produit-image-mini">
+                                <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                            </div>
+                            <div class="nouveau-infos">
+                                <span class="produit-designation no-transform">{{ composant.designation }}</span>
+                                <span class="prix">{{ composant.prix }} €</span>
+                            </div>
                         </div>
-                        <div class="nouveau-infos">
-                            <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': composant.id}) }}">{{ composant.designation }}</a></span>
-                            <span class="prix">{{ composant.prix }} €</span>
-                        </div>
-                    </div>
+                    </a>
                 {% endfor %}
 
                 {% for peripherique in peripheriques | slice(0, 1) %}
-                    <div class="nouveau-produit">
-                        <div class="produit-image-mini">
-                            <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                    <a href="{{ path('voir_produit', {'id': peripherique.id}) }}" title="{{ peripherique }}">
+                        <div class="nouveau-produit">
+                            <div class="produit-image-mini">
+                                <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                            </div>
+                            <div class="nouveau-infos">
+                                <span class="produit-designation no-transform">{{ peripherique.designation }}</span>
+                                <span class="prix">{{ peripherique.prix }} €</span>
+                            </div>
                         </div>
-                        <div class="nouveau-infos">
-                            <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': peripherique.id}) }}">{{ peripherique.designation }}</a></span>
-                            <span class="prix">{{ peripherique.prix }} €</span>
-                        </div>
-                    </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
@@ -53,15 +59,17 @@
                     <span class="nouveautes-entete">Les nouveaux ordinateurs</span>
                     <div class="nouveautes-ligne">
                         {% for ordinateur in ordinateurs | slice(0, 2) %}
-                            <div class="nouveau-produit">
-                                <div class="produit-image-mini">
-                                    <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                            <a href="{{ path('voir_produit', {'id': ordinateur.id}) }}" title="{{ ordinateur }}">
+                                <div class="nouveau-produit">
+                                    <div class="produit-image-mini">
+                                        <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                                    </div>
+                                    <div class="nouveau-infos">
+                                        <span class="produit-designation no-transform">{{ ordinateur.designation }}</span>
+                                        <span class="prix">{{ ordinateur.prix }} €</span>
+                                    </div>
                                 </div>
-                                <div class="nouveau-infos">
-                                    <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': ordinateur.id}) }}">{{ ordinateur.designation }}</a></span>
-                                    <span class="prix">{{ ordinateur.prix }} €</span>
-                                </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -69,15 +77,17 @@
                     <span class="nouveautes-entete">Les nouveaux composants</span>
                     <div class="nouveautes-ligne">
                         {% for composant in composants | slice(0, 2) %}
-                            <div class="nouveau-produit">
-                                <div class="produit-image-mini">
-                                    <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                            <a href="{{ path('voir_produit', {'id': composant.id}) }}" title="{{ composant }}">
+                                <div class="nouveau-produit">
+                                    <div class="produit-image-mini">
+                                        <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                                    </div>
+                                    <div class="nouveau-infos">
+                                        <span class="produit-designation no-transform">{{ composant.designation }}</span>
+                                        <span class="prix">{{ composant.prix }} €</span>
+                                    </div>
                                 </div>
-                                <div class="nouveau-infos">
-                                    <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': composant.id}) }}">{{ composant.designation }}</a></span>
-                                    <span class="prix">{{ composant.prix }} €</span>
-                                </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -85,15 +95,17 @@
                     <span class="nouveautes-entete">Les nouveaux périphériques</span>
                     <div class="nouveautes-ligne">
                         {% for peripherique in peripheriques | slice(0, 2) %}
-                            <div class="nouveau-produit">
-                                <div class="produit-image-mini">
-                                    <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                            <a href="{{ path('voir_produit', {'id': peripherique.id}) }}" title="{{ peripherique }}">
+                                <div class="nouveau-produit">
+                                    <div class="produit-image-mini">
+                                        <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                                    </div>
+                                    <div class="nouveau-infos">
+                                        <span class="produit-designation no-transform">{{ peripherique.designation }}</span>
+                                        <span class="prix">{{ peripherique.prix }} €</span>
+                                    </div>
                                 </div>
-                                <div class="nouveau-infos">
-                                    <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': peripherique.id}) }}">{{ peripherique.designation }}</a></span>
-                                    <span class="prix">{{ peripherique.prix }} €</span>
-                                </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -105,15 +117,17 @@
                     <div class="conteneur nouveautes">
                         <span class="nouveautes-entete">Les nouveaux ordinateurs</span>
                         {% for ordinateur in ordinateurs %}
-                            <div class="nouveau-produit">
-                                <div class="produit-image-mini">
-                                    <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                            <a href="{{ path('voir_produit', {'id': ordinateur.id}) }}" title="{{ ordinateur }}">
+                                <div class="nouveau-produit">
+                                    <div class="produit-image-mini">
+                                        <img src="{{ asset('img/produits/' ~ ordinateur.photo) }}" alt="{{ ordinateur.designation }}">
+                                    </div>
+                                    <div class="nouveau-infos">
+                                        <span class="produit-designation no-transform">{{ ordinateur.designation }}</span>
+                                        <span class="prix">{{ ordinateur.prix }} €</span>
+                                    </div>
                                 </div>
-                                <div class="nouveau-infos">
-                                    <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': ordinateur.id}) }}">{{ ordinateur.designation }}</a></span>
-                                    <span class="prix">{{ ordinateur.prix }} €</span>
-                                </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -121,15 +135,17 @@
                     <div class="conteneur nouveautes">
                         <span class="nouveautes-entete">Les nouveaux composants</span>
                         {% for composant in composants %}
-                            <div class="nouveau-produit">
-                                <div class="produit-image-mini">
-                                    <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                            <a href="{{ path('voir_produit', {'id': composant.id}) }}" title="{{ composant }}">
+                                <div class="nouveau-produit">
+                                    <div class="produit-image-mini">
+                                        <img src="{{ asset('img/produits/' ~ composant.photo) }}" alt="{{ composant.designation }}">
+                                    </div>
+                                    <div class="nouveau-infos">
+                                        <span class="produit-designation no-transform">{{ composant.designation }}</span>
+                                        <span class="prix">{{ composant.prix }} €</span>
+                                    </div>
                                 </div>
-                                <div class="nouveau-infos">
-                                    <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': composant.id}) }}">{{ composant.designation }}</a></span>
-                                    <span class="prix">{{ composant.prix }} €</span>
-                                </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}
@@ -137,15 +153,17 @@
                     <div class="conteneur nouveautes">
                         <span class="nouveautes-entete">Les nouveaux périphériques</span>
                         {% for peripherique in peripheriques %}
-                            <div class="nouveau-produit">
-                                <div class="produit-image-mini">
-                                    <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                            <a href="{{ path('voir_produit', {'id': peripherique.id}) }}" title="{{ peripherique }}">
+                                <div class="nouveau-produit">
+                                    <div class="produit-image-mini">
+                                        <img src="{{ asset('img/produits/' ~ peripherique.photo) }}" alt="{{ peripherique.designation }}">
+                                    </div>
+                                    <div class="nouveau-infos">
+                                        <span class="produit-designation no-transform">{{ peripherique.designation }}</span>
+                                        <span class="prix">{{ peripherique.prix }} €</span>
+                                    </div>
                                 </div>
-                                <div class="nouveau-infos">
-                                    <span class="produit-designation no-transform"><a href="{{ path('voir_produit', {'id': peripherique.id}) }}">{{ peripherique.designation }}</a></span>
-                                    <span class="prix">{{ peripherique.prix }} €</span>
-                                </div>
-                            </div>
+                            </a>
                         {% endfor %}
                     </div>
                 {% endif %}

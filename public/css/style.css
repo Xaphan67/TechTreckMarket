@@ -99,11 +99,13 @@ table td:not(:first-child) {
     --mainDark: #820F0F;
     --border: #D3D3D3;
     --bouton:#F8894B;
+    --boutonHover: #F99560;
     --boutonText: #FFFFFF;
     --lightTextB: #919191;
     --textGreen: #00B22E;
     --textRed: #D71010;
     --boutonBuy: #73B43E;
+    --boutonBuyHover: #7DC047;
     --boutonCurrent: #490D0D;
     --listBg: #F7F7F7;
     --textOrange: #B25500;
@@ -218,14 +220,11 @@ li {
 }
 
 .menuOption {
+    display: flex;
     height: 50px;
     width: 250px;
     padding-left: 10px;
     background-color: var(--boutonCurrent);
-}
-
-.menuOption a {
-    display: flex;
     align-items: center;
     gap: 10px;
     color: var(--boutonText);
@@ -470,7 +469,8 @@ input[type="radio"] + label {
     gap: 5px;
 }
 
-button, .bouton-lien {
+button,
+.bouton-lien {
     height: 35px;
     border-radius: 5px;
     border: 0px;
@@ -478,6 +478,11 @@ button, .bouton-lien {
     color: var(--boutonText);
     cursor: pointer;
     font-size: 14px;
+}
+
+button:hover,
+.bouton-lien:hover {
+    background-color: var(--boutonHover);
 }
 
 .bouton-lien {
@@ -647,6 +652,10 @@ label,
     background-color: var(--arianeBg);
 }
 
+.section-ariane-lien:hover {
+    background-color: var(--border);
+}
+
 .texte-ellispes {
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -713,6 +722,10 @@ label,
     height: 130px;
 }
 
+.sous-categorie:hover {
+    background-color: var(--listBg);
+}
+
 .sous-categorie-nom {
     margin-inline: auto;
 }
@@ -738,6 +751,11 @@ label,
     display: flex;
     gap: 5px;
     height: 80px;
+}
+
+.nouveau-produit:hover {
+    background-color: var(--listBg);
+    cursor: pointer;
 }
 
 .nouveau-infos {
@@ -785,6 +803,10 @@ label,
     display: flex;
     padding: 10px;
     border-bottom: 1px solid var(--border);
+}
+
+.produit:hover {
+    background-color: var(--listBg);
 }
 
 .produit-image,
@@ -919,14 +941,14 @@ label,
     border-radius: 5px;
 }
 
+.bouton-achat:hover,
+.bouton-valider-commande:hover {
+    background-color: var(--boutonBuyHover);
+}
+
 .bouton-achat-large {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 210px;
     height: 50px;
-    background-color: var(--boutonBuy);
-    border-radius: 5px;
 }
 
 .bouton-achat-large img {
@@ -946,6 +968,10 @@ label,
     font-size: 14px;
     height: 50px;
     width: 33.33%;;
+}
+
+.onglet-section-produit:hover {
+    cursor: default;
 }
 
 .onglet-section-produit:not(.onglet-actif ) {
@@ -1166,9 +1192,17 @@ label,
     height: 77px;
 }
 
+.adresse-info:not(.adresse-preferee):hover {
+    background-color: var(--listBg);
+}
+
 .adresse-preferee {
 background-color: var(--favoriteAdress);
 border: 1px solid var(--borderFavoriteAdress);
+}
+
+.adresse-preferee:hover {
+    background-color: var(--borderFavoriteAdress);
 }
 
 .adresse-actions {
@@ -1227,6 +1261,10 @@ border: 1px solid var(--borderFavoriteAdress);
     height: 120px;
 }
 
+.panier-produit:hover {
+    background-color: var(--listBg);
+}
+
 .panier-produit:not(.commande-header+.panier-produit) {
     border-top: 1px solid var(--border);
 }
@@ -1252,18 +1290,12 @@ border: 1px solid var(--borderFavoriteAdress);
 }
 
 .bouton-commander {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 240px;
     height: 50px;
     color: var(--boutonText);
-    background-color: var(--boutonBuy);
-    border-radius: 5px;
-    margin-inline: auto;
-    margin-top: 30px;
     cursor: pointer;
 }
+
 
 .panier-vide {
     width: 250px;
@@ -1348,6 +1380,10 @@ border: 1px solid var(--borderFavoriteAdress);
     border: 1px solid var(--border);
     background-color: var(--sectionBg);
     display: none;
+}
+
+.conteneur-modal>h3 {
+    background-color: transparent;
 }
 
 .fermer-modal {
@@ -1455,7 +1491,7 @@ border: 1px solid var(--borderFavoriteAdress);
     .menuOption{
         width: 190px;
         padding-left: 0px;
-        align-items: center;
+        justify-content: center;
     }
 
     #panier .panier-nbr-produits {

@@ -43,7 +43,9 @@
                                             <div class="panier-actions">
                                                 <span>Quantité : {{ produitCommande.quantite }}</span>
                                                 <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
-                                                <a href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit"><img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit"></a>
+                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
+                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit">
+                                                </a>
                                             </div>
                                         </div>
                                         <div class="ordinateur-uniquement">
@@ -66,7 +68,9 @@
                                             <span class="panier-header-quantite">{{ produitCommande.quantite }}</span>
                                             <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
                                             <span class="panier-header-action">
-                                                <a href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit"><img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit"></a>
+                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
+                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit">
+                                                </a>
                                             </span>
                                         </div>
                                     </div>
@@ -79,7 +83,7 @@
                             <h2>Montant total de vos produits</h2>
                             <span class="panier-prix">{{ total | number_format(2, '.') }} €</span>
                         </div>
-                        <div class="bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</div>
+                        <div class="bouton-achat bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</div>
                     </div>
                 {% else %}
                     <div class="conteneur conteneur-padding">

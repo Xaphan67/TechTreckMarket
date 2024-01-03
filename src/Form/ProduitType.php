@@ -30,7 +30,7 @@ class ProduitType extends AbstractType
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [
-                    'class' => 'bouton-achat-large'
+                    'class' => 'bouton-achat bouton-achat-large'
                 ]
             ]);
         ;

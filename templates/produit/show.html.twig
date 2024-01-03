@@ -7,7 +7,7 @@
 {% block body %}
     {# Fil d'ariane #}
     <div class="ariane">
-        <div class="section-ariane section-ariane-accueil">
+        <div class="section-ariane section-ariane-lien section-ariane-accueil">
             <div class="mobile-invisible">
                 <a href="{{ path('app_accueil') }}">
                     <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -30,7 +30,7 @@
                 <svg width="29" height="30" viewBox="0 0 29 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.875 7.5L18.125 15L10.875 22.5M10.875 15H10.8871" stroke="#4B4343" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                <div class="section-ariane">
+                <div class="section-ariane section-ariane-lien">
                     <a href="{{ path('afficher_categorie', { 'id':categorieParent.id }) }}">{{ categorieParent }}</a>
                 </div>
             {% endfor %}
