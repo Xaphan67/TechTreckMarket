@@ -1294,6 +1294,7 @@ border: 1px solid var(--borderFavoriteAdress);
     height: 50px;
     color: var(--boutonText);
     cursor: pointer;
+    margin-inline: auto;
 }
 
 
