@@ -64,7 +64,7 @@ class FiltresType extends AbstractType
         ])
         ->add('Valider', SubmitType::class, [
             'attr' => [
-                'class' => 'bouton-150'
+                'class' => 'bouton-centre bouton-centre-margin bouton-150'
             ],
         ]);
     }

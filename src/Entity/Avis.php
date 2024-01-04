@@ -31,6 +31,10 @@ class Avis
     #[ORM\JoinColumn(onDelete: 'SET NULL')]
     private ?Utilisateur $utilisateur = null;
 
+    public function __construct() {
+        $this->setDatePublication(new \DateTime('now'));
+    }
+
     public function getId(): ?int
     {
         return $this->id;

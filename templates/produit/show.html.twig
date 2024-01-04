@@ -71,10 +71,10 @@
                         </div>
                         <span class="fiche-prix">{{ produit.prix }} €</span>
                     </div>
-                    {{ form_start(formulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
-                    {{ form_row(formulaire.quantite) }}
-                    {{ form_row(formulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
-                    {{ form_end(formulaire) }}
+                    {{ form_start(quantiteFormulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
+                    {{ form_row(quantiteFormulaire.quantite) }}
+                    {{ form_row(quantiteFormulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
+                    {{ form_end(quantiteFormulaire) }}
                 </div>
             </div>
         </div>
@@ -99,8 +99,8 @@
                     <p>Aucun descriptif pour ce produit.</p>
                 {% endif %}
                 <div class="produit-actions">
-                    <a class="bouton-lien bouton-lien-centre bouton-250" href="{{ path('recherche_marque', {'marque': produit.marque.id, 'produit': produit.id}) }}">Voir les produits {{ produit.marque }}</a>
-                    <a class="bouton-lien bouton-lien-centre bouton-250" href="{{ path('recherche_categorie_marque', {'marque': produit.marque.id, 'categorie': produit.categorie.id, 'produit': produit.id}) }}">Voir les {{ produit.categorie }} {{ produit.marque }}</a>
+                    <a class="bouton-lien bouton-centre bouton-250" href="{{ path('recherche_marque', {'marque': produit.marque.id, 'produit': produit.id}) }}">Voir les produits {{ produit.marque }}</a>
+                    <a class="bouton-lien bouton-centre bouton-250" href="{{ path('recherche_categorie_marque', {'marque': produit.marque.id, 'categorie': produit.categorie.id, 'produit': produit.id}) }}">Voir les {{ produit.categorie }} {{ produit.marque }}</a>
                 </div>
             </div>
             <div id="sectionFiche" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
@@ -122,25 +122,42 @@
             </div>
             <div id="sectionAvis" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Les avis de nos clients :</h3>
-                {% if produit.avis | length > 0 %}
-                    {% for avis in produit.avis %}
-                        <div class="avis">
-                            <div class="avis-infos">
-                                {% if avis.utilisateur %}
-                                    <span class="avis-pseudo">{{ avis.utilisateur.pseudo ? avis.utilisateur.pseudo : "Utilisateur anonyme" }}</span> Publié le {{ avis.datePublication | date("d/m/Y") }}
-                                {% else %}
-                                    <span class="avis-pseudo">Utilisateur supprimé</span> Publié le {{ avis.datePublication | date("d/m/Y") }}
-                                {% endif %}
+                {% if avis | length > 0 %}
+                    <div class="avis-liste">
+                        {% for avi in avis %}
+                            <div class="avis">
+                                <div class="avis-infos">
+                                    {% if avi.utilisateur %}
+                                        <span class="avis-pseudo">{{ avi.utilisateur.pseudo ? avi.utilisateur.pseudo : "Utilisateur anonyme" }}</span> Publié le {{ avi.datePublication | date("d/m/Y") }}
+                                    {% else %}
+                                        <span class="avis-pseudo">Utilisateur supprimé</span> Publié le {{ avi.datePublication | date("d/m/Y") }}
+                                    {% endif %}
+                                </div>
+                                <div class="avis-contenu">
+                                    <h4 class="avis-titre">{{ avi.titre }}</h4>
+                                    {{ avi.texte }}
+                                </div>
                             </div>
-                            <div class="avis-contenu">
-                                <h4 class="avis-titre">{{ avis.titre }}</h4>
-                                {{ avis.texte }}
-                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if avis.pageCount > 1 %}
+                        <div class="pagination">
+                            {{ knp_pagination_render(avis) }}
                         </div>
-                    {% endfor %}
+                    {% endif %}
                 {% else %}
                     <p>Aucun avis n'a tété posté pour ce produit.</p>
                 {% endif %}
+                <h3 class="section-titre">Poster un avis :</h3>
+                {{ form_start(avisFormulaire) }}
+                <div class="formulaire-champ">
+                    {{ form_row(avisFormulaire.titre) }}
+                </div>
+                <div class="formulaire-champ">
+                    {{ form_row(avisFormulaire.texte) }}
+                </div>
+                {{ form_row(avisFormulaire.Valider) }}
+                {{ form_end(avisFormulaire) }}
             </div>
         </div>
     </div>

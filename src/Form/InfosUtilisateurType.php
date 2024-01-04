@@ -63,7 +63,7 @@ class InfosUtilisateurType extends AbstractType
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [
-                    'class' => 'bouton-100'
+                    'class' => 'bouton-centre bouton-100'
                 ]
             ]);
     }

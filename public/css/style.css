@@ -420,7 +420,8 @@ select option[value=""] {
   }
 
 input,
-select {
+select,
+textarea {
     border: 1px solid var(--text);
     padding-left: 10px;
     width: 100%;
@@ -438,6 +439,12 @@ input[type="password"],
 input[type="number"],
 select {
     height: 35px;
+}
+
+textarea {
+    min-height: 150px;
+    padding-top: 10px;
+    resize: vertical;
 }
 
 input[type="checkbox"] {
@@ -471,6 +478,9 @@ input[type="radio"] + label {
 
 button,
 .bouton-lien {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 35px;
     border-radius: 5px;
     border: 0px;
@@ -485,14 +495,24 @@ button:hover,
     background-color: var(--boutonHover);
 }
 
+.bouton-centre {
+    width: 100%;
+    text-align: center;
+    margin-inline: auto;
+}
+
+.bouton-centre-margin {
+    margin-top: 12px;
+}
+
+.bouton-droite {
+    float: right;
+}
+
 .bouton-lien {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.bouton-lien-centre {
-    align-self: center;
 }
 
 .boutton-icone {
@@ -516,12 +536,6 @@ label,
 
 .formulaire-texte-bouton input[type="text"] {
     width: 190px;
-}
-
-.bouton-centre {
-    width: 100%;
-    padding-top: 12px;
-    text-align: center;
 }
 
 .bouton-50 {
@@ -575,6 +589,10 @@ label,
     display: flex;
     width: 100%;
     flex-direction: column;
+}
+
+.formulaire-texte-titre {
+    width: 50%;
 }
 
 .formulaire-champ-horizontal {
@@ -995,9 +1013,8 @@ label,
 }
 
 .profil-bouton-droite-facture {
-    display: flex;
-    justify-content: end;
-    padding-bottom: 20px;
+    float: right;
+    margin-bottom: 20px;
 }
 
 .commande-details .profil-bouton-droite-facture {
@@ -1028,6 +1045,16 @@ label,
     background-color: transparent;
     margin-bottom: 15px;
     width: auto;
+}
+
+.section-titre:not(:first-child) {
+    margin-top: 10px;
+}
+
+.avis-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .avis {

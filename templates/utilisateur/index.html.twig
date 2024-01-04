@@ -54,9 +54,7 @@
                                     {{ form_row(infosUtilisateur.pseudo) }}
                                 </div>
                             </div>
-                            <div class="bouton-centre">
-                                {{ form_row(infosUtilisateur.Valider) }}
-                            </div>
+                            {{ form_row(infosUtilisateur.Valider) }}
                             {{ form_end(infosUtilisateur) }}
                         </div>
                         <div class="conteneur conteneur-padding">
@@ -72,9 +70,7 @@
                                     {{ form_row(mdpUtilisateur.password) }}
                                 </div>
                             </div>
-                            <div class="bouton-centre">
-                                {{ form_row(mdpUtilisateur.Valider) }}
-                            </div>
+                            {{ form_row(mdpUtilisateur.Valider) }}
                             {{ form_end(mdpUtilisateur) }}
                         </div>
                         <div class="conteneur">
@@ -133,9 +129,7 @@
                                             {% endfor %}
                                         </div>
                                     </div>
-                                    <div class="profil-bouton-droite-facture">
-                                        <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
-                                    </div>
+                                    <a class="bouton-droite bouton-lien bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
                                 {% endfor %}
                             {% else %}
                                 <p>Vous n'avez aucune commande en cours</p>
@@ -200,7 +194,7 @@
                                                     </div>
                                                 {% endfor %}
                                                 <div class="profil-bouton-droite-facture">
-                                                    <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
+                                                    <a class="bouton-lien bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -258,9 +252,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <div class="profil-bouton-centre">
-                                    <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
-                                </div>
+                                <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
                             </div>
                         </div>
                     </div>
@@ -339,11 +331,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="bouton-centre">
-                        <div>
-                            <button type="submit" id="adresse_facturation_Valider-{{ adresse.id }}" name="adresse_facturation[Valider]" class="bouton-100">Valider</button>
-                        </div>
-                    </div>
+                    <button type="submit" id="adresse_facturation_Valider-{{ adresse.id }}" name="adresse_facturation[Valider]" class="bouton-centre bouton-100">Valider</button>
                     <input type="hidden" name="token" value="{{ csrf_token('update-adresse-facturation') }}">
                 </form>
             </div>
@@ -400,11 +388,7 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="bouton-centre">
-                        <div>
-                            <button type="submit" id="adresse_livraison_Valider-{{ adresse.id }}" name="adresse_livraison[Valider]" class="bouton-100">Valider</button>
-                        </div>
-                    </div>
+                    <button type="submit" id="adresse_livraison_Valider-{{ adresse.id }}" name="adresse_livraison[Valider]" class="bouton-centre bouton-100">Valider</button>
                     <input type="hidden" name="token" value="{{ csrf_token('update-adresse-livraison') }}">
                 </form>
             </div>
@@ -450,9 +434,7 @@
                 <div class="formulaire-champ">
                     {{ form_row(adresseFacturationFormulaire.preferee) }}
                 </div>
-                <div class="bouton-centre">
-                    {{ form_row(adresseFacturationFormulaire.Valider) }}
-                </div>
+                {{ form_row(adresseFacturationFormulaire.Valider) }}
                 {{ form_end(adresseFacturationFormulaire) }}
             </div>
             <div id="formulaire-livraison" class="formulaire-modal-invisible">
@@ -479,9 +461,7 @@
                 <div class="formulaire-champ">
                     {{ form_row(adresseLivraisonFormulaire.preferee) }}
                 </div>
-                <div class="bouton-centre">
-                    {{ form_row(adresseLivraisonFormulaire.Valider) }}
-                </div>
+                {{ form_row(adresseLivraisonFormulaire.Valider) }}
                 {{ form_end(adresseLivraisonFormulaire) }}
             </div>
         </div>
