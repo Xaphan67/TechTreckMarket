@@ -4,9 +4,13 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <title>E-Commerce - Facture n° {{ numeroFacture }}</title>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css')}}">
+        <style>
+            h1 { color: red;}
+        </style>
     </head>
     <body>
         <div>
+            <h1>Facture</h1>
             Numéro de commande / facture : {{ numeroFacture }}<br>
             Numéro client : {{ numeroClient }}<br>
             Civilité : {{ civilite }}<br>
@@ -35,14 +39,14 @@
                         <td>{{ ref }}</td>
                         <td>{{ produit.quantite }}</td>
                         <td>{{ produit.designation }}</td>
-                        <td>{{ produit.prixHT }}</td>
-                        <td>{{ produit.prixHT * produit.quantite }}</td>
+                        <td>{{ produit.prixHT }} €</td>
+                        <td>{{ produit.prixHT * produit.quantite }} €</td>
                     </tr>
                 {% endfor %}
             </table>
             <br>
-            Total HT : {{ totalHT | number_format(2, '.') }}<br>
-            Total : {{ total | number_format(2, '.') }}
+            Total HT : {{ totalHT | number_format(2, '.') }} €<br>
+            Total : {{ total | number_format(2, '.') }} €
         </div>
     </body>
 </html>
