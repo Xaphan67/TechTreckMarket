@@ -1,0 +1,6 @@
+<h1>Merci pour votrecommande !</h1>
+
+<p>
+    Nous avons bien enregistré voter commande sur E-Commerce !<br>
+    Vous pouvez désormais laisser un avis sur {{ commande.produitCommandes | length > 1 ? "les " ~ commande.produitCommandes | length : "le"}} produit{{ commande.produitCommandes | length > 1 ?  "s" : "" }} que vous avez commandé.
+</p>

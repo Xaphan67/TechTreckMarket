@@ -248,6 +248,9 @@ class CommandeController extends AbstractController
 
                     // Ajoute un message flash
                     $this->addFlash('success', 'Votre commande à bien été enregistrée !');
+
+                    // Envoie un mail de confirmation
+                    return $this->redirectToRoute('email_commande', ['id' => $commande->getId()]);
                 } else {
                     // Ajoute un message flash
                     $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
