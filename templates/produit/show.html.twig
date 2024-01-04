@@ -148,16 +148,18 @@
                 {% else %}
                     <p>Aucun avis n'a tété posté pour ce produit.</p>
                 {% endif %}
-                <h3 class="section-titre">Poster un avis :</h3>
-                {{ form_start(avisFormulaire) }}
-                <div class="formulaire-champ">
-                    {{ form_row(avisFormulaire.titre) }}
-                </div>
-                <div class="formulaire-champ">
-                    {{ form_row(avisFormulaire.texte) }}
-                </div>
-                {{ form_row(avisFormulaire.Valider) }}
-                {{ form_end(avisFormulaire) }}
+                {% if produitAchete %}
+                    <h3 class="section-titre">Poster un avis :</h3>
+                    {{ form_start(avisFormulaire) }}
+                    <div class="formulaire-champ">
+                        {{ form_row(avisFormulaire.titre) }}
+                    </div>
+                    <div class="formulaire-champ">
+                        {{ form_row(avisFormulaire.texte) }}
+                    </div>
+                    {{ form_row(avisFormulaire.Valider) }}
+                    {{ form_end(avisFormulaire) }}
+                {% endif %}
             </div>
         </div>
     </div>
