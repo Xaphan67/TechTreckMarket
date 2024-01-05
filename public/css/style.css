@@ -1177,6 +1177,16 @@ label,
 
 .commande-details {
     display: none;
+    width: 100%;
+}
+
+.commande-details-visible {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    width: 100%;
+    padding-right: 15px;
+    padding-bottom: 15px;
 }
 
 .rotation-chevron {

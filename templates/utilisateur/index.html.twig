@@ -15,7 +15,7 @@
                     {% if utilisateur.nom and utilisateur.prenom %}
                         <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
                     {% endif %}
-                    <a class="bouton-lien bouton-lien-centre bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
+                    <a class="bouton-lien bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
                     <div class="profil-categories">
                         <div id="menuInfos" class="profil-categorie pc-actif">
                             Mes informations
@@ -76,7 +76,7 @@
                         <div class="conteneur">
                             <h2>Supprimer le compte</h2>
                             <div class="profil-supprimer">
-                                <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</div>
+                                <div class="bouton-lien bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</div>
                             </div>
                         </div>
                     </div>
@@ -113,23 +113,25 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            {% for produitCommande in commande.commande.produitCommandes %}
-                                                <div class="commande-produit">
-                                                    <div class="produit-image produit-image-commande">
-                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
-                                                    </div>
-                                                    <div class="produit-infos">
-                                                        <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
-                                                        <div class="panier-actions">
-                                                            <span>X {{ produitCommande.quantite }}</span>
-                                                            <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                            <div class="commande-details-visible">
+                                                {% for produitCommande in commande.commande.produitCommandes %}
+                                                    <div class="commande-produit">
+                                                        <div class="produit-image produit-image-commande">
+                                                            <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                                        </div>
+                                                        <div class="produit-infos">
+                                                            <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
+                                                            <div class="panier-actions">
+                                                                <span>X {{ produitCommande.quantite }}</span>
+                                                                <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            {% endfor %}
+                                                {% endfor %}
+                                                <a class="bouton-lien bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <a class="bouton-droite bouton-lien bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
                                 {% endfor %}
                             {% else %}
                                 <p>Vous n'avez aucune commande en cours</p>
@@ -252,7 +254,7 @@
                                         {% endfor %}
                                     </div>
                                 </div>
-                                <div class="bouton-lien bouton-lien-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
+                                <div class="bouton-lien bouton-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
                             </div>
                         </div>
                     </div>
@@ -275,7 +277,7 @@
                 Êtes-vous sûr de vouloir supprimer votre compte ?
             </p>
             <div class="commande-suivant">
-                <div class="bouton-lien bouton-lien-centre bouton-100" onclick="closeModale('suppression-compte-utilisateur')">Annuler</div>
+                <div class="bouton-lien bouton-100" onclick="closeModale('suppression-compte-utilisateur')">Annuler</div>
                 <a class="bouton-lien bouton-valider-commande bouton-150" href="{{ path('supprimer_compte_utilisateur') }}">Supprimer le compte</a>
             </div>
         </div>
