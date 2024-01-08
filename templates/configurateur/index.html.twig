@@ -18,39 +18,39 @@
 
         {# Etapes #}
         <section>
-            <h2 class="configurateur-etape">Etape 1 : Choix du boîtier</h2>
+            <h2 class="configurateur-etape">Etape {{ etape }} : Choix {{ (etape == 2 or etape == 5 or etape == 6 ? "de la " : (etape == 8 ? "de l'" : "du ")) ~ titreEtape }}</h2>
             <hr>
             <div class="etapes">
-                <div class="etape {{ etape == 1 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/boitier.svg') }}" alt="Boîtier">
+                <div class="etape {{ etape == 1 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/1.svg') }}" alt="Boîtier">
                     <span class="etape-nom">Boîtier</span>
                 </div>
-                <div class="etape {{ etape == 2 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/carte-mere.svg') }}" alt="Carte mère">
+                <div class="etape {{ etape == 2 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/2.svg') }}" alt="Carte mère">
                     <span class="etape-nom">Carte mère</span>
                 </div>
-                <div class="etape {{ etape == 3 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/processeur.svg') }}" alt="Processeur">
+                <div class="etape {{ etape == 3 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/3.svg') }}" alt="Processeur">
                     <span class="etape-nom">Processeur</span>
                 </div>
-                <div class="etape {{ etape == 4 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/ventirad.svg') }}" alt="Ventirad">
+                <div class="etape {{ etape == 4 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/4.svg') }}" alt="Ventirad">
                     <span class="etape-nom">Ventirad</span>
                 </div>
-                <div class="etape {{ etape == 5 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/memoire.svg') }}" alt="Mémoire">
+                <div class="etape {{ etape == 5 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/5.svg') }}" alt="Mémoire">
                     <span class="etape-nom">Mémoire</span>
                 </div>
-                <div class="etape {{ etape == 6 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/carte-graphique.svg') }}" alt="Carte graphique">
+                <div class="etape {{ etape == 6 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/6.svg') }}" alt="Carte graphique">
                     <span class="etape-nom">Carte graphique</span>
                 </div>
-                <div class="etape {{ etape == 7 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/stockage.svg') }}" alt="Stockage">
+                <div class="etape {{ etape == 7 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/7.svg') }}" alt="Stockage">
                     <span class="etape-nom">Stockage</span>
                 </div>
-                <div class="etape {{ etape == 8 ? 'etape-actuelle' : '' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/alimentation.svg') }}" alt="Alimentation">
+                <div class="etape {{ etape == 8 ? 'etape-actuelle' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/8.svg') }}" alt="Alimentation">
                     <span class="etape-nom">Alimentation</span>
                 </div>
             </div>
@@ -71,10 +71,11 @@
                 <div class="contenu-recapitulatif">
                     {% if configuration| length > 0 %}
                         <div class="liste-recapitulatif">
-                            {% for produit in configuration %}
+                            {% for etape, produit in configuration %}
                                 <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
                                     <article class="produit-configuration">
-                                        <img class="produit-configuration-image" src="{{ asset('svg/configurateur/boitier.svg') }}" alt="Boîtier">
+                                        <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
+                                        alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
                                         <div class="produit-configuration-infos">
                                             <span class="produit-designation">{{ produit }}</span>
                                             <div class="produit-prix-configuration">
@@ -95,7 +96,7 @@
                         Cliquez sur un élément<br>
                         pour voir sa fiche produit
                     </span>
-                    <a class="bouton-lien bouton-passer-etape bouton-150" href="">Passer cette étape</a>
+                    <a class="bouton-lien bouton-passer-etape bouton-150" href="{{ path('configurateur', {'etape': etape + 1}) }}">Passer cette étape</a>
                     <h3>total de la config</h3>
                     <span class="fiche-prix">{{ totalConfiguration }} €</span>
                 </div>

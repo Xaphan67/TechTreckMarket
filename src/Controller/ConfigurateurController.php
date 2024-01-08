@@ -18,30 +18,39 @@ class ConfigurateurController extends AbstractController
     {
         // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
         $nomCategorie = null;
+        $titreEtape = null;
         switch ($etape) {
             case 1:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Boîtiers";
+                $titreEtape = "boîtier";
                 break;
             case 2:
                 $nomCategorie = "Cartes mère";
+                $titreEtape = "carte mère";
                 break;
             case 3:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Processeurs";
+                $titreEtape = "processeur";
                 break;
             case 4:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Ventirads";
+                $titreEtape = "ventirad";
                 break;
             case 5:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Mémoires";
+                $titreEtape = "mémoire";
                 break;
             case 6:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Cartes graphique";
+                $titreEtape = "carte graphique";
                 break;
             case 7:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Stockage";
+                $titreEtape = "stockage";
                 break;
             case 8:
-                $nomCategorie = "Cartes mère";
+                $nomCategorie = "Alimentations";
+                $titreEtape = "alimentation";
                 break;
         }
 
@@ -61,14 +70,17 @@ class ConfigurateurController extends AbstractController
 
         // Calcul le prix total de la configuration
         $totalConfiguration = 0;
-        foreach ($request->getSession()->get('configuration') as $produit) {
-            $totalConfiguration += $produit->getprix();
+        if ($request->getSession()->get('configuration')) {
+            foreach ($request->getSession()->get('configuration') as $produit) {
+                $totalConfiguration += $produit->getprix();
+            }
         }
 
         return $this->render('configurateur/index.html.twig', [
             'etape' => $etape,
+            'titreEtape' => $titreEtape,
             'produits' => $produits,
-            'configuration' =>$request->getSession()->get('configuration'),
+            'configuration' => $request->getSession()->get('configuration'),
             'totalConfiguration' => $totalConfiguration
         ]);
     }
@@ -86,7 +98,7 @@ class ConfigurateurController extends AbstractController
         }
 
         // Ajoute le produit à la configuration
-        $configuration[] = $produit;
+        $configuration[$etape - 1] = $produit;
 
         // Stocke la configuration en session
         $request->getSession()->set('configuration', $configuration);
