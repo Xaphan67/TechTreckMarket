@@ -177,6 +177,10 @@ header {
     background-color: var(--mainBg);
 }
 
+.bouton-recherche-principale:hover {
+    background-color: var(--mainBg);
+}
+
 .headerNavigation {
     display: none;
     position: absolute;

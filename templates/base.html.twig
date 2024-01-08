@@ -19,19 +19,19 @@
         <main>
             {% for message in app.flashes('success') %}
                 <div class="message">
-                    <img src="{{ asset('svg/flash-succes.svg') }}" alt="réussite">
+                    <img src="{{ asset('svg/flash-succes.svg') }}" alt="Réussite">
                     {{ message }}
                 </div>
             {% endfor %}
             {% for message in app.flashes('danger') %}
                 <div class="message">
-                    <img src="{{ asset('svg/flash-erreur.svg') }}" alt="erreur">
+                    <img src="{{ asset('svg/flash-erreur.svg') }}" alt="Erreur">
                     {{ message }}
                 </div>
             {% endfor %}
             {% for message in app.flashes('notice') %}
                 <div class="message">
-                    <img src="{{ asset('svg/flash-infos.svg') }}" alt="information">
+                    <img src="{{ asset('svg/flash-infos.svg') }}" alt="Information">
                     {{ message }}
                 </div>
             {% endfor %}

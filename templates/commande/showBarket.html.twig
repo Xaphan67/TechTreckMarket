@@ -44,7 +44,7 @@
                                                 <span>Quantité : {{ produitCommande.quantite }}</span>
                                                 <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
                                                 <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
-                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit">
+                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                 </a>
                                             </div>
                                         </div>
@@ -69,7 +69,7 @@
                                             <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
                                             <span class="panier-header-action">
                                                 <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
-                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="supprimer le produit">
+                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                 </a>
                                             </span>
                                         </div>
@@ -88,7 +88,7 @@
                 {% else %}
                     <section class="conteneur conteneur-padding">
                         <h2>Votre panier est vide</h2>
-                        <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="votre panier est vide">
+                        <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="Votre panier est vide">
                     </section>
                 {% endif %}
             </div>
@@ -126,7 +126,9 @@
                             <span class="formulaire-sections">Adresse de facturation</span>
                             <div class="formulaire-champ-bouton">
                                 {{ form_row(formulaire.adresseFacturation) }}
-                                <div class="bouton-ajout" onclick="showFormFacturation()" title="Ajouter une adresse de facturation">+</div>
+                                <div class="bouton-lien bouton-ajout" onclick="showFormFacturation()" title="Ajouter une adresse de facturation">
+                                    <img src="{{ asset('svg/commandes/ajouter.svg') }}" alt="Ajouter une adresse de facturation">
+                                </div>
                             </div>
                         </div>
                     {% endif %}
@@ -134,7 +136,7 @@
                         <p>Remplissez les champs pour créer une nouvelle adresse de facturation, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de facturation</span>
-                            <div class="bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormFacturation()">
+                            <div class="bouton-lien bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormFacturation()">
                                 <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
                             </div>
                         </div>
@@ -169,7 +171,9 @@
                             <span class="formulaire-sections">Adresse de livraison</span>
                             <div class="formulaire-champ-bouton">
                                 {{ form_row(formulaire.adresseLivraison) }}
-                                <div class="bouton-ajout" onclick="showFormLivraison()" title="Ajouter une adresse de livraison">+</div>
+                                <div class="bouton-lien bouton-ajout" onclick="showFormLivraison()" title="Ajouter une adresse de livraison">
+                                    <img src="{{ asset('svg/commandes/ajouter.svg') }}" alt="Ajouter une adresse de livraison">
+                                </div>
                             </div>
                         </div>
                     {% endif %}
@@ -177,7 +181,7 @@
                         <p>Remplissez les champs pour créer une nouvelle adresse de livraison, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de livraison</span>
-                            <div class="bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormLivraison()">
+                            <div class="bouton-lien bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormLivraison()">
                                 <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
                             </div>
                         </div>

@@ -2,13 +2,13 @@
     <img class="headerHautMenu" onclick="interactMenu()" src="{{ asset('svg/header/hamburger-menu.svg') }}" alt="menu">
     <nav aria-label="menu principal" id="headerNavigation" class="headerNavigation">
         <ul>
-            <li><a class="menuOption" href=""><img src="{{ asset('svg/header/config.svg') }}" alt="configurateur PC">Configurateur PC</a></li>
-            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':1 }) }}"><img src="{{ asset('svg/header/ordinateurs.svg') }}" alt="ordinateurs">Ordinateurs</a></li>
-            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':2 }) }}"><img src="{{ asset('svg/header/composants.svg') }}" alt="composants">Composants</a></li>
-            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':3 }) }}"><img src="{{ asset('svg/header/peripheriques.svg') }}" alt="peripheriques">Périphériques</a></li> 
+            <li><a class="menuOption" href=""><img src="{{ asset('svg/header/config.svg') }}" alt="Configurateur PC">Configurateur PC</a></li>
+            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':1 }) }}"><img src="{{ asset('svg/header/ordinateurs.svg') }}" alt="Ordinateurs">Ordinateurs</a></li>
+            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':2 }) }}"><img src="{{ asset('svg/header/composants.svg') }}" alt="Composants">Composants</a></li>
+            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':3 }) }}"><img src="{{ asset('svg/header/peripheriques.svg') }}" alt="Peripheriques">Périphériques</a></li> 
         </ul>
     </nav>
-    <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
+    <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="Logo"></a>
     <nav class="headerIcones">
         {% if app.user %}
             <a href="{{ path('profil_utilisateur') }}">
@@ -16,7 +16,7 @@
             <a href="{{ path('app_login') }}">
         {% endif %}
             <div class="headerIcone">
-                <img src="{{ asset('svg/header/compte.svg') }}" alt="compte">
+                <img src="{{ asset('svg/header/compte.svg') }}" alt="Compte">
                 <span class="headerIcone-texte">Mon compte</span>
             </div>
         </a>
@@ -33,7 +33,7 @@
             <a href="{{ path('app_login') }}">
         {% endif %}
             <div class="headerIcone">
-                <img src="{{ asset('svg/header/panier.svg') }}" alt="panier">
+                <img src="{{ asset('svg/header/panier.svg') }}" alt="Panier">
                 <span class="headerIcone-texte">Mon panier</span>
             </div>
         </a>
