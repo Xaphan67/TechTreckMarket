@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Configurateur PC{% endblock %}
+
+{% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
+
+{% block body %}
+    <div class="conteneur-principal">
+        {# Nom et description de la page #}
+        <section>
+            <h1>Configurateur</h1>
+            <hr>
+            <p>
+                Composez votre PC grâce à notre configurateur !<br>
+                Vous avez choisi de créer votre propre config' ? Nous sommes là pour vous aider dans votre démarche à travers notre configurateur. Rien n'est laissé au hasard et des tests de compatibilité entre les composants sélectionnés vous garantissent une machine fonctionnelle !
+            </p>
+        </section>
+
+        {# Etapes #}
+        <section>
+            <h2 class="configurateur-etape">Etape 1 : Choix du boîtier</h2>
+            <hr>
+            <div class="etapes">
+                <div class="etape {{ etape == 1 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/boitier.svg') }}" alt="Boîtier">
+                    <span class="etape-nom">Boîtier</span>
+                </div>
+                <div class="etape {{ etape == 2 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/carte-mere.svg') }}" alt="Carte mère">
+                    <span class="etape-nom">Carte mère</span>
+                </div>
+                <div class="etape {{ etape == 3 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/processeur.svg') }}" alt="Processeur">
+                    <span class="etape-nom">Processeur</span>
+                </div>
+                <div class="etape {{ etape == 4 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/ventirad.svg') }}" alt="Ventirad">
+                    <span class="etape-nom">Ventirad</span>
+                </div>
+                <div class="etape {{ etape == 5 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/memoire.svg') }}" alt="Mémoire">
+                    <span class="etape-nom">Mémoire</span>
+                </div>
+                <div class="etape {{ etape == 6 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/carte-graphique.svg') }}" alt="Carte graphique">
+                    <span class="etape-nom">Carte graphique</span>
+                </div>
+                <div class="etape {{ etape == 7 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/stockage.svg') }}" alt="Stockage">
+                    <span class="etape-nom">Stockage</span>
+                </div>
+                <div class="etape {{ etape == 8 ? 'etape-actuelle' : '' }}">
+                    <img class="etape-image" src="{{ asset('svg/configurateur/alimentation.svg') }}" alt="Alimentation">
+                    <span class="etape-nom">Alimentation</span>
+                </div>
+            </div>
+        </section>
+
+        {# Récapitulatif #}
+        <section class="conteneur">
+            <div id="recapitulatif-titre">
+                <h2>Récapitulatif</h2>
+                <div id="chevron" class="chevron">
+                    <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            <div id="recapitulatif" class="filtres-recherche formulaire-invisible">
+                <hr>
+                <div class="contenu-recapitulatif">
+                    {% if configuration| length > 0 %}
+                        <div class="liste-recapitulatif">
+                            {% for produit in configuration %}
+                                <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
+                                    <article class="produit-configuration">
+                                        <img class="produit-configuration-image" src="{{ asset('svg/configurateur/boitier.svg') }}" alt="Boîtier">
+                                        <div class="produit-configuration-infos">
+                                            <span class="produit-designation">{{ produit }}</span>
+                                            <div class="produit-prix-configuration">
+                                                {% if produit.stock > 0 %}
+                                                    <span class="stock-oui">EN STOCK</span>
+                                                {% else %}
+                                                    <span class="stock-non">RUPTURE</span>
+                                                {% endif %}
+                                                <span class="produit-achat produit-prix-configuration prix">{{ produit.prix }} €</span>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <span class="recapitulatif-info">
+                        Cliquez sur un élément<br>
+                        pour voir sa fiche produit
+                    </span>
+                    <a class="bouton-lien bouton-passer-etape bouton-150" href="">Passer cette étape</a>
+                    <h3>total de la config</h3>
+                    <span class="fiche-prix">{{ totalConfiguration }} €</span>
+                </div>
+                <div class="actions-recapitulatif">
+                    <a class="bouton-lien bouton-110" href="">Charger</a>
+                    <a class="bouton-lien bouton-110" href="">Sauvegarder</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="liste-produits">
+            {# Affiche la pagination et le tri #}
+            {% if produits.pageCount > 1 %}
+                <section class="conteneur pagination-haut">
+                    {{ knp_pagination_render(produits) }}
+                </section>
+            {% endif %}
+
+            {# Affiche les produits #}
+            <div class="conteneur">
+                {% for produit in produits %}
+                    <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape + 1}) }}">
+                        <article class="produit">
+                            <div class="produit-image">
+                                <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                            </div>
+                            <div class="produit-infos">
+                                <span class="produit-designation">{{ produit.designation }}</span>
+                                <span class="produit-resume">{{ produit.resume }}</span>
+                                <div class="produit-prix">
+                                    {% if produit.stock > 0 %}
+                                        <span class="stock-oui">EN STOCK</span>
+                                    {% else %}
+                                        <span class="stock-non">RUPTURE</span>
+                                    {% endif %}
+                                    <span class="produit-achat prix">{{ produit.prix }} €</span>
+                                </div>
+                            </div>
+                        </article>
+                    </a>
+                {% endfor %}
+            </div>
+
+            {# Affiche la pagination #}
+            {% if produits.pageCount > 1 %}
+                <section class="conteneur">
+                    {{ knp_pagination_render(produits) }}
+                </section>
+            {% endif %}
+        </section>
+    </div>
+
+    <script>
+        const recapitulatifTitre = document.getElementById("recapitulatif-titre");
+        const recapitulatif = document.getElementById("recapitulatif");
+        const chevron = document.getElementById("chevron");
+        const styles = window.getComputedStyle(recapitulatif)
+
+        recapitulatifTitre.addEventListener("click", function()
+        {
+            if (styles.getPropertyValue("display") == "none") {
+                recapitulatif.classList.add("sub-conteneur-visible-filtres");
+                chevron.classList.add("chevron-fermer");
+                recapitulatif.classList.remove("formulaire-invisible");
+            } else {
+                recapitulatif.classList.remove("sub-conteneur-visible-filtres");
+                chevron.classList.remove("chevron-fermer");
+                recapitulatif.classList.add("formulaire-invisible");
+            }
+        })
+    </script>
+{% endblock %}

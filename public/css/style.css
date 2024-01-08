@@ -545,6 +545,10 @@ label,
     width: 100px;
 }
 
+.bouton-110 {
+    width: 110px;
+}
+
 .bouton-150 {
     width: 150px;
 }
@@ -869,6 +873,9 @@ label,
     text-transform: uppercase;
     font-size: 16px;
     padding-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .no-transform {
@@ -1397,6 +1404,110 @@ border: 1px solid var(--borderFavoriteAdress);
     flex-wrap: wrap;
     gap: 20px;
     width: 190px;
+}
+
+/* Configurateur */
+
+.configurateur-etape {
+    color: var(--text);
+    font-size: 22px;
+    font-weight: normal;
+    text-transform: none;
+}
+
+.etapes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.etape {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 25%;
+    height: 85px;
+}
+
+.etape-actuelle {
+    border-radius: 10px;
+    background-color: var(--border);
+}
+
+.etape-image {
+    width: 50px;
+    height: 50px;
+}
+
+.etape-nom {
+    font-size: 8px;
+    text-transform: uppercase;
+}
+
+.contenu-recapitulatif {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.recapitulatif-info {
+    text-align: center;
+    font-size: 14px;
+    color: var(--lightText);
+}
+
+.bouton-passer-etape {
+    background-color: var(--boutonBuy);
+}
+
+.actions-recapitulatif {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.produit-configuration-image {
+    width: 48px;
+    height: 48px;
+    padding: 9px;
+    background-color: var(--listBg);
+}
+
+.liste-recapitulatif {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.lien-produit .produit-configuration {
+    border-top: 1px solid var(--border);
+}
+
+.produit-configuration {
+    display: flex;
+    gap: 10px;
+    height: 50px;
+    width: 300px;
+}
+
+.produit-prix-configuration {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.produit-configuration-infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 230px;
+}
+
+.produit-prix-configuration {
+    margin-right: 0px;
 }
 
 /* Modales */
