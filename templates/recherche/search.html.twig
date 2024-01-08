@@ -53,7 +53,7 @@
                                     <span class="prix">
                                         {{ produit.prix }} €
                                     </span>
-                                    <a class="bouton-achat" href="{{ path('ajout_produit_commande', { 'id': produit.id }) }}" title="Ajouter {{ produit }} au panier">
+                                    <a class="bouton-achat" href="{{ path('ajout_produit_commande', { 'id': produit.id, 'recherche': recherche }) }}" title="Ajouter {{ produit }} au panier">
                                         <img src="{{ asset('svg/produits/panier.svg')}}" alt="Ajouter au panier">
                                     </a>
                                 </div>

@@ -15,8 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RechercheController extends AbstractController
 {
-    #[Route('/recherche', name: 'recherche_principale')]
-    public function mainSearch(ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
+    #[Route('recherche/{recherche?}', name: 'recherche_principale')]
+    public function mainSearch(?string $recherche = "", ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Instancie un formulaire de type RecherchePrincipale
         $form = $this->createForm(RecherchePrincipaleType::class);
@@ -29,26 +29,9 @@ class RechercheController extends AbstractController
         if($form->isSubmitted()) {
             // Vérifie que le formulaire est valide
             if ($form->isValid()) {
-                // Enregistre le contenu de la recherche dans une variable
-                $recherche = $form->getData()["recherche"];
-
-                // Récupère tout les produits dont la marque ou la designation contiennent la valeur entrée dans le champ de recherche
-                $produits = $produitRepository->findByTrademarkOrName(explode(" ", $recherche));
-
-                // Crée la pagination pour la liste des produits
-                $produitsPagination = $paginator->paginate(
-                    $produits, // Contenu à paginer
-                    $request->query->getInt('page', 1), // Page à afficher
-                    10 // Limite par page
-                );
-
-                $produits = $produitsPagination;
-
-                return $this->render('recherche/search.html.twig', [
-                    'recherche' => $recherche,
-                    'produits' => $produits,
-                    'url' => $url
-                ]);
+                    // Re-exécute la fonction avec le paramettre $recherche ayant la valeur de la recherche et visible dans l'url
+                    $request->getSession()->set('recherche', $form->getData()["recherche"]);
+                    return $this->redirectToRoute('recherche_principale', ['recherche' => $form->getData()["recherche"]]);
             } else {
                 // Affiche un message
                 $this->addFlash('danger', 'Veuillez entrer au moins un terme de recherche.');
@@ -56,7 +39,34 @@ class RechercheController extends AbstractController
                 // Redirige vers l'url d'entrée
                 return $this->redirect($url);
             }
+        } else if (!empty($recherche)) {
+            $recherche =  $request->getSession()->get('recherche');
+
+            // Récupère tout les produits dont la marque ou la designation contiennent la valeur entrée dans le champ de recherche
+            $produits = $produitRepository->findByTrademarkOrName(explode(" ", $recherche));
+
+            // Crée la pagination pour la liste des produits
+            $produitsPagination = $paginator->paginate(
+                $produits, // Contenu à paginer
+                $request->query->getInt('page', 1), // Page à afficher
+                10 // Limite par page
+            );
+
+            $produits = $produitsPagination;
         }
+
+        return $this->render('recherche/search.html.twig', [
+            'recherche' => $recherche,
+            'produits' => $produits,
+            'url' => $url
+        ]);
+    }
+
+    #[Route('/recherche-formulaire', name: 'recherche_principale_formulaire')]
+    public function searchForm(): Response
+    {
+        // Instancie un formulaire de type RecherchePrincipale
+        $form = $this->createForm(RecherchePrincipaleType::class);
 
         return $this->render('recherche/mainSearchForm.html.twig', [
             'formulaire' => $form

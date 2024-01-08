@@ -54,8 +54,8 @@ class CommandeController extends AbstractController
         return $this->redirectToRoute('app_accueil');
     }
 
-    #[Route('/commande/add/{id}', name: 'ajout_produit_commande')]
-    public function addProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager, Request $request): Response
+    #[Route('/commande/add/{id}/{recherche?}', name: 'ajout_produit_commande')]
+    public function addProduct(Produit $produit, ?string $recherche, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager, Request $request): Response
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
@@ -113,10 +113,14 @@ class CommandeController extends AbstractController
                 $this->addFlash('success', ($quantite > 1 ? $quantite . 'x ' : '') . $produit->getDesignation() .' ' . ($quantite > 1 ? 'ont' : 'à') . ' bien été' . ($quantite > 1 ? 's' : '') . ' ajouté' . ($quantite > 1 ? 's' : '') . ' au panier !');
             }
 
-            // Redirige vers la fiche du produit, ou la catégorie du produit
-            $url = $request->getSession()->get('urlFrom');
-            $request->getSession()->remove('urlFrom');
-            return $this->redirect($url);
+            // En cas de provenance de la page de recherche principale, redirige vers celle çi
+            if ($recherche) {
+                return $this->redirectToRoute('recherche_principale', ['recherche' => $recherche]);
+            } else { // Sinon, redirige vers la fiche du produit, ou la catégorie du produit
+                $url = $request->getSession()->get('urlFrom');
+                $request->getSession()->remove('urlFrom');
+                return $this->redirect($url);
+            }
         }
 
         // Redirige vers la page d'accueil
