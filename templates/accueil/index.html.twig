@@ -6,10 +6,10 @@
 
 {% block body %}
     {# Nouveautés #}
-    <div class="categories">
+    <section class="categories">
         <h2>Nouveautés</h2>
         <div class="mobile-uniquement">
-            <div class="conteneur nouveautes">
+            <section class="conteneur nouveautes">
                 {% for ordinateur in ordinateurs | slice(0, 1) %}
                     <a href="{{ path('voir_produit', {'id': ordinateur.id}) }}" title="{{ ordinateur }}">
                         <div class="nouveau-produit">
@@ -51,12 +51,12 @@
                         </div>
                     </a>
                 {% endfor %}
-            </div>
+            </section>
         </div>
         <div class="tablette-uniquement">
-            <div class="conteneur nouveautes">
+            <section class="conteneur nouveautes">
                 {% if ordinateurs | length > 0 %}
-                    <span class="nouveautes-entete">Les nouveaux ordinateurs</span>
+                    <h3 class="nouveautes-entete">Les nouveaux ordinateurs</h3>
                     <div class="nouveautes-ligne">
                         {% for ordinateur in ordinateurs | slice(0, 2) %}
                             <a href="{{ path('voir_produit', {'id': ordinateur.id}) }}" title="{{ ordinateur }}">
@@ -74,7 +74,7 @@
                     </div>
                 {% endif %}
                 {% if composants | length > 0 %}
-                    <span class="nouveautes-entete">Les nouveaux composants</span>
+                    <h3 class="nouveautes-entete">Les nouveaux composants</h3>
                     <div class="nouveautes-ligne">
                         {% for composant in composants | slice(0, 2) %}
                             <a href="{{ path('voir_produit', {'id': composant.id}) }}" title="{{ composant }}">
@@ -92,7 +92,7 @@
                     </div>
                 {% endif %}
                 {% if peripheriques | length > 0 %}
-                    <span class="nouveautes-entete">Les nouveaux périphériques</span>
+                    <h3 class="nouveautes-entete">Les nouveaux périphériques</h3>
                     <div class="nouveautes-ligne">
                         {% for peripherique in peripheriques | slice(0, 2) %}
                             <a href="{{ path('voir_produit', {'id': peripherique.id}) }}" title="{{ peripherique }}">
@@ -109,13 +109,13 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-            </div>
+            </section>
         </div>
         <div class="ordinateur-uniquement">
             <div class="conteneur-conteneurs">
                 {% if ordinateurs | length > 0 %}
-                    <div class="conteneur nouveautes">
-                        <span class="nouveautes-entete">Les nouveaux ordinateurs</span>
+                    <section class="conteneur nouveautes">
+                        <h3 class="nouveautes-entete">Les nouveaux ordinateurs</h3>
                         {% for ordinateur in ordinateurs %}
                             <a href="{{ path('voir_produit', {'id': ordinateur.id}) }}" title="{{ ordinateur }}">
                                 <div class="nouveau-produit">
@@ -129,11 +129,11 @@
                                 </div>
                             </a>
                         {% endfor %}
-                    </div>
+                        </section>
                 {% endif %}
                 {% if composants | length > 0 %}
-                    <div class="conteneur nouveautes">
-                        <span class="nouveautes-entete">Les nouveaux composants</span>
+                    <section class="conteneur nouveautes">
+                        <h3 class="nouveautes-entete">Les nouveaux composants</h3>
                         {% for composant in composants %}
                             <a href="{{ path('voir_produit', {'id': composant.id}) }}" title="{{ composant }}">
                                 <div class="nouveau-produit">
@@ -147,11 +147,11 @@
                                 </div>
                             </a>
                         {% endfor %}
-                    </div>
+                    </section>
                 {% endif %}
                 {% if peripheriques | length > 0 %}
-                    <div class="conteneur nouveautes">
-                        <span class="nouveautes-entete">Les nouveaux périphériques</span>
+                    <section class="conteneur nouveautes">
+                        <h3 class="nouveautes-entete">Les nouveaux périphériques</h3>
                         {% for peripherique in peripheriques %}
                             <a href="{{ path('voir_produit', {'id': peripherique.id}) }}" title="{{ peripherique }}">
                                 <div class="nouveau-produit">
@@ -165,19 +165,19 @@
                                 </div>
                             </a>
                         {% endfor %}
-                    </div>
+                    </section>
                 {% endif %}
             </div>
         </div>
-    </div>
+    </section>
 
     {# Catégories #}
-    <div class="categories">
+    <section class="categories">
         <h2>Catégories</h2>
         <div class="conteneur-conteneurs">
-            <div class="conteneur accueil-conteneur">
+            <section class="conteneur accueil-conteneur">
                 <img class="accueil-conteneur-image" src="{{ asset('img/accueil/ordinateurs.png') }}" alt="ordinateurs">
-                <span class="accueil-nom-categorie" >Ordinateurs</span>
+                <h3 class="accueil-nom-categorie" >Ordinateurs</h3>
                 <ul>
                     {% for categorie in categories %}
                         {% if categorie.categorieParent.id == 1 %}
@@ -185,10 +185,10 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-            </div>
-            <div class="conteneur accueil-conteneur">
+            </section>
+            <section class="conteneur accueil-conteneur">
                 <img class="accueil-conteneur-image" src="{{ asset('img/accueil/composants.png') }}" alt="composants">
-                <span class="accueil-nom-categorie" >Composants</span>
+                <h3 class="accueil-nom-categorie" >Composants</h3>
                 <ul>
                     {% for categorie in categories %}
                         {% if categorie.categorieParent.id == 2 %}
@@ -196,10 +196,10 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-            </div>
-            <div class="conteneur accueil-conteneur">
+            </section>
+            <section class="conteneur accueil-conteneur">
                 <img class="accueil-conteneur-image" src="{{ asset('img/accueil/peripheriques.png') }}" alt="péripheriques">
-                <span class="accueil-nom-categorie" >Péripheriques</span>
+                <h3 class="accueil-nom-categorie" >Péripheriques</h3>
                 <ul>
                     {% for categorie in categories %}
                         {% if categorie.categorieParent.id == 3 %}
@@ -207,12 +207,12 @@
                         {% endif %}
                     {% endfor %}
                 </ul>
-            </div>
+            </section>
         </div>
-    </div>
+    </section>
 
     {# Marques #}
-    <div class="categories">
+    <section class="categories">
         <h2>Nos Marques</h2>
         <div class="conteneur marques">
             {% for marque in marques %}
@@ -224,6 +224,6 @@
                 </div>
             {% endfor %}
         </div>
-    </div>
+    </section>
 
 {% endblock %}

@@ -6,32 +6,26 @@
 
 {% block body %}
     <div class="conteneur-principal">
-        <div class="categories">
+        <section class="categories">
             <h2>Votre compte</h2>
             <div class="conteneur-conteneurs">
                 {# Menu #}
-                <div class="conteneur profil">
+                <section class="conteneur profil">
                     <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
                     {% if utilisateur.nom and utilisateur.prenom %}
                         <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
                     {% endif %}
                     <a class="bouton-lien bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
-                    <div class="profil-categories">
-                        <div id="menuInfos" class="profil-categorie pc-actif">
-                            Mes informations
-                        </div>
-                        <div id="menuCommandes" class="profil-categorie">
-                            Mes commandes
-                        </div>
-                        <div id="menuAdresses" class="profil-categorie">
-                            Mes adresses
-                        </div>
-                    </div>
-                </div>
+                    <nav class="profil-categories">
+                        <span id="menuInfos" class="profil-categorie pc-actif">Mes informations</span>
+                        <span id="menuCommandes" class="profil-categorie">Mes commandes</span>
+                        <span id="menuAdresses" class="profil-categorie">Mes adresses</span>
+                    </nav>
+                </section>
 
                 <div class="formulaires">
                     {# Informations #}
-                    <div id="infos" class="sub-conteneur sub-conteneur-visible">
+                    <section id="infos" class="sub-conteneur sub-conteneur-visible">
                         <div class="conteneur conteneur-padding">
                             <h2>Vos informations personelles</h2>
                             {{ form_start(infosUtilisateur, {'action': path('modifier_donnees_utilisateur'), 'method': 'POST'}) }}
@@ -79,10 +73,10 @@
                                 <div class="bouton-lien bouton-200" onclick="displayDeleteAccount()">Supprimer le compte</div>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
                     {# Commandes #}
-                    <div id="commandes" class="sub-conteneur sub-conteneur-invisible">
+                    <section id="commandes" class="sub-conteneur sub-conteneur-invisible">
                         <div class="conteneur conteneur-padding">
                             <h2>Vos commandes en cours</h2>
                             {% if commandesEnCours | length > 0 %}
@@ -115,7 +109,7 @@
                                             </div>
                                             <div class="commande-details-visible">
                                                 {% for produitCommande in commande.commande.produitCommandes %}
-                                                    <div class="commande-produit">
+                                                    <article class="commande-produit">
                                                         <div class="produit-image produit-image-commande">
                                                             <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
                                                         </div>
@@ -126,7 +120,7 @@
                                                                 <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </article>
                                                 {% endfor %}
                                                 <a class="bouton-lien bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
                                             </div>
@@ -182,7 +176,7 @@
                                             </div>
                                             <div id="details-commande-{{ commande.commande.id }}" class="commande-details">
                                                 {% for produitCommande in commande.commande.produitCommandes %}
-                                                    <div class="commande-produit">
+                                                    <article class="commande-produit">
                                                         <div class="produit-image produit-image-commande">
                                                             <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
                                                         </div>
@@ -193,7 +187,7 @@
                                                                 <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </article>
                                                 {% endfor %}
                                                 <div class="profil-bouton-droite-facture">
                                                     <a class="bouton-lien bouton-200" href="{{ path('generer_facture_pdf', {'id': commande.commande.id }) }}" target="_blank">Télécharger la facture</a>
@@ -206,10 +200,10 @@
                                 <p>Vous n'avez passé aucune commande</p>
                             {% endif %}
                         </div>
-                    </div>
+                    </section>
 
                     {# Adresses #}
-                    <div id="adresses" class="sub-conteneur sub-conteneur-invisible">
+                    <section id="adresses" class="sub-conteneur sub-conteneur-invisible">
                         <div class="conteneur conteneur-padding">
                             <h2>Carnet d'adresses</h2>
                                 <div class="adresses">
@@ -257,15 +251,15 @@
                                 <div class="bouton-lien bouton-centre bouton-200" onclick="displayForms()">Ajouter une adresse</div>
                             </div>
                         </div>
-                    </div>
+                    </section>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 
     {# Modales #}
     <div id="modal" class="modal">
-        <div id="suppression-compte-utilisateur" class="conteneur-modal">
+        <section id="suppression-compte-utilisateur" class="conteneur-modal">
             <div class="fermer-modal" onclick="closeModale('suppression-compte-utilisateur')">
                 <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
             </div>
@@ -280,9 +274,9 @@
                 <div class="bouton-lien bouton-100" onclick="closeModale('suppression-compte-utilisateur')">Annuler</div>
                 <a class="bouton-lien bouton-valider-commande bouton-150" href="{{ path('supprimer_compte_utilisateur') }}">Supprimer le compte</a>
             </div>
-        </div>
+        </section>
         {% for adresse in adressesFacturation %}
-            <div id="formulaire-edition-facturation-{{ adresse.id }}" class="conteneur-modal">
+            <section id="formulaire-edition-facturation-{{ adresse.id }}" class="conteneur-modal">
                 <div class="fermer-modal" onclick="closeModale('formulaire-edition-facturation-{{ adresse.id }}')">
                     <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
                 </div>
@@ -336,10 +330,10 @@
                     <button type="submit" id="adresse_facturation_Valider-{{ adresse.id }}" name="adresse_facturation[Valider]" class="bouton-centre bouton-100">Valider</button>
                     <input type="hidden" name="token" value="{{ csrf_token('update-adresse-facturation') }}">
                 </form>
-            </div>
+            </section>
         {% endfor %}
         {% for adresse in adressesLivraison %}
-            <div id="formulaire-edition-livraison-{{ adresse.id }}" class="conteneur-modal">
+            <section id="formulaire-edition-livraison-{{ adresse.id }}" class="conteneur-modal">
                 <div class="fermer-modal" onclick="closeModale('formulaire-edition-livraison-{{ adresse.id }}')">
                     <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
                 </div>
@@ -393,9 +387,9 @@
                     <button type="submit" id="adresse_livraison_Valider-{{ adresse.id }}" name="adresse_livraison[Valider]" class="bouton-centre bouton-100">Valider</button>
                     <input type="hidden" name="token" value="{{ csrf_token('update-adresse-livraison') }}">
                 </form>
-            </div>
+            </section>
         {% endfor %}
-        <div id="formulaires-adresses" class="conteneur-modal">
+        <section id="formulaires-adresses" class="conteneur-modal">
             <div class="fermer-modal" onclick="closeModale('formulaires-adresses')">
                 <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
             </div>
@@ -466,7 +460,7 @@
                 {{ form_row(adresseLivraisonFormulaire.Valider) }}
                 {{ form_end(adresseLivraisonFormulaire) }}
             </div>
-        </div>
+        </section>
     </div>
 
     <script>

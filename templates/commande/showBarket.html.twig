@@ -6,11 +6,11 @@
 
 {% block body %}
     <div class="conteneur-principal">
-        <div class="categories">
+        <section class="categories">
             <h2>Votre panier</h2>
             <div class="conteneur-conteneurs">
                 {% if commande and commande.produitCommandes | length > 0 %}
-                    <div class="conteneur conteneur-padding">
+                    <section class="conteneur conteneur-padding">
                         <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" : "" }}</h2>
                         <div class="liste">
                             <div class="ordinateur-uniquement commande-header">
@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                             {% for produitCommande in commande.produitCommandes %}
-                                <div class="panier-produit">
+                                <article class="panier-produit">
                                     <div class="produit-image-mini mobile-tablette-uniquement">
                                         <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
                                     </div>
@@ -74,35 +74,35 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
+                                </article>
                             {% endfor %}
                         </div>
-                    </div>
-                    <div class="conteneur conteneur-padding conteneur-total-panier">
+                    </section>
+                    <section class="conteneur conteneur-padding conteneur-total-panier">
                         <div class="panier-total">
                             <h2>Montant total de vos produits</h2>
                             <span class="panier-prix">{{ total | number_format(2, '.') }} €</span>
                         </div>
                         <div class="bouton-achat bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</div>
-                    </div>
+                    </section>
                 {% else %}
-                    <div class="conteneur conteneur-padding">
+                    <section class="conteneur conteneur-padding">
                         <h2>Votre panier est vide</h2>
                         <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="votre panier est vide">
-                    </div>
+                    </section>
                 {% endif %}
             </div>
-        </div>
+        </section>
     </div>
 
     <div id="modal" class="modal">
-        <div id="formulaire-commande" class="conteneur-modal">
+        <section id="formulaire-commande" class="conteneur-modal">
+            <h3>Passer commande</h3>
             <div class="fermer-modal" onclick="closeModale()">
                 <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
             </div>
-            <h3>Passer commande</h3>
             {{ form_start(formulaire, {'action': path('valider_commande'), 'method': 'POST'}) }}
-                <div id="commander-page-1" class="commander-page-1">
+                <section id="commander-page-1" class="commander-page-1">
                     <p>Remplissez les champs çi-dessous pour passer la commande.</p>
                     <p>Si vous avez pré-remplis les champs dans votre profil, vous avez simplement besoin de vérifier les informations.</p>
                     <span class="formulaire-sections">Informations personnelles</span>
@@ -118,8 +118,8 @@
                     <div class="commande-suivant">
                         <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(1, 2)">Suivant</div>
                     </div>
-                </div>
-                <div id="commander-page-2" class="commander-page-2">
+                </section>
+                <section id="commander-page-2" class="commander-page-2">
                     {% if formulaire.adresseFacturation.vars.choices | length > 0 %}
                         <div id="choix-ajout-facturation">
                             <p>Séléctionnez votre adresse de facturation, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
@@ -161,8 +161,8 @@
                         <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(2, 1)" alt="Etape suivante">Précédent</div>
                         <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(2, 3)" alt="Etape suivante">Suivant</div>
                     </div>
-                </div>
-                <div id="commander-page-3" class="commander-page-3">
+                </section>
+                <section id="commander-page-3" class="commander-page-3">
                     {% if formulaire.adresseLivraison.vars.choices | length > 0 %}
                         <div id="choix-ajout-livraison">
                             <p>Séléctionnez votre adresse de livraison, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
@@ -204,8 +204,8 @@
                         <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(3, 2)">Précédent</div>
                         <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(3, 4)">Suivant</div>
                     </div>
-                </div>
-                <div id="commander-page-4" class="commander-page-4">
+                </section>
+                <section id="commander-page-4" class="commander-page-4">
                     <p>Veuillez vérifier que les informations çi-dessous sont correctes, puis cliquez sur Commander pour valider votre commande.</p>
                     <div class="commande-resume">
                         <p>
@@ -242,10 +242,10 @@
                         <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(4, 3)">Précédent</div>
                         {{ form_row(formulaire.Commander) }}
                     </div>
-                </div>
+                </section>
                 {{ form_widget(formulaire._token) }}
                 {{ form_end(formulaire, {'render_rest': false}) }}
-        </div>
+        </section>
     </div>
 
     <script>

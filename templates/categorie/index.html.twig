@@ -45,15 +45,15 @@
 
     <div class="conteneur-principal">
         {# Nom et description de la catégorie #}
-        <div>
+        <section>
             <h1>{{ categorie }}</h1>
             <hr>
             <p>{{ categorie.description | raw }}</p>
-        </div>
+        </section>
 
         {# Vérifie si la catégorie à des sous-catégories ou non #}
         {% if categorie.sousCategories |length > 0 %} {# Si oui, on affiche les sous-catégories #}
-            <div class="categories">
+            <section class="categories">
                 <h2>Catégories {{ categorie }}</h2>
                 <div class="liste-categories">
                     {% for sousCategorie in categorie.sousCategories %}
@@ -63,17 +63,16 @@
                     </a>
                     {% endfor %}
                 </div>
-            </div>
+            </section>
         {% else %} {# Si non, on affiche les produits de la catégorie #}
-
             {% if produits | length == 0 and not filtres %}
-                <div class="conteneur">
+                <section class="conteneur">
                     <p class="aucunProduit">Désolé, pour le moment il n'y à aucun produit dans cette catégorie</p>
-                </div>
+                </section>
             {% else %}
                 <div class="conteneur-conteneurs">
                     {# Affiche les options de filtre des résultats #}
-                    <div class="conteneur filtres">
+                    <section class="conteneur filtres">
                         <div id="filtres-titre">
                             <h2>Filtrez votre recherche</h2>
                             <div id="chevron" class="chevron">
@@ -107,26 +106,26 @@
                                 {{ form_row(filtresFormulaire.Valider) }}
                             {{ form_end(filtresFormulaire) }}
                         </div>
-                    </div>
+                    </section>
 
                     {# Affiche les produits, ou un message si les filtres ne retournent aucun produit #}
                     {% if produits | length == 0 and filtres %}
-                        <div class="conteneur">
+                        <section class="conteneur">
                             <p class="aucunProduit">Aucun produit ne correspond aux filtres que vous avez spécifié.</p>
-                        </div>
+                        </section>
                     {% else %}
-                        <div class="liste-produits">
+                        <section class="liste-produits">
                             {# Affiche la pagination et le tri #}
                             {% if produits.pageCount > 1 %}
-                                <div class="conteneur pagination-haut">
+                                <section class="conteneur pagination-haut">
                                     {{ knp_pagination_render(produits) }}
-                                </div>
+                                </section>
                             {% endif %}
 
                             {# Affiche les produits #}
                             <div class="conteneur">
                                 {% for produit in produits %}
-                                    <div class="produit">
+                                    <article class="produit">
                                         <div class="produit-image">
                                             <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
                                         </div>
@@ -149,17 +148,17 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </article>
                                 {% endfor %}
                             </div>
 
                             {# Affiche la pagination #}
                             {% if produits.pageCount > 1 %}
-                                <div class="conteneur">
+                                <section class="conteneur">
                                     {{ knp_pagination_render(produits) }}
-                                </div>
+                                </section>
                             {% endif %}
-                        </div>
+                        </section>
                     {% endif %}
                 </div>
             {% endif %}

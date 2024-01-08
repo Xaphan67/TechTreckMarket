@@ -45,16 +45,14 @@
 
     <div class="conteneur-principal">
         {# Designation et résumé du produit #}
-        <div class="conteneur conteneur-padding-produits produit-haut">
-            <div>
-                <h1 class="produit-designation">{{ produit }}</h1>
-                <p class="produit-resume">{{ produit.resume }}</p>
-            </div>
+        <section class="conteneur conteneur-padding-produits produit-haut">
+            <h1 class="produit-designation">{{ produit }}</h1>
+            <p class="produit-resume">{{ produit.resume }}</p>
             <img class="mobile-invisible" src="{{ asset('img/marques/' ~ produit.marque.logo) }}" alt="{{ produit.marque }}">
-        </div>
+        </section>
 
         {# Descriptif et achat du produit #}
-        <div class="conteneur conteneur-padding-produits produit-conteneur-descriptif">
+        <section class="conteneur conteneur-padding-produits produit-conteneur-descriptif">
             <div class="produit-descriptif-image">
                 <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit }}">
             </div>
@@ -77,10 +75,10 @@
                     {{ form_end(quantiteFormulaire) }}
                 </div>
             </div>
-        </div>
+        </section>
 
         {# Sections #}
-        <div class="conteneur">
+        <section class="conteneur">
             <div class="onglets">
                 <div id="ongletDescriptif" class="onglet-section-produit onglet-actif">
                     Descriptif
@@ -92,7 +90,7 @@
                     Avis<span class="mobile-invisible">  clients</span> ({{ produit.avis | length }})
                 </div>
             </div>
-            <div id="sectionDescriptif" class="conteneur-padding-produits">
+            <section id="sectionDescriptif" class="conteneur-padding-produits">
                 {% if produit.descriptif %}
                     {{ produit.descriptif | raw }}
                 {% else %}
@@ -102,8 +100,8 @@
                     <a class="bouton-lien bouton-centre bouton-250" href="{{ path('recherche_marque', {'marque': produit.marque.id, 'produit': produit.id}) }}">Voir les produits {{ produit.marque }}</a>
                     <a class="bouton-lien bouton-centre bouton-250" href="{{ path('recherche_categorie_marque', {'marque': produit.marque.id, 'categorie': produit.categorie.id, 'produit': produit.id}) }}">Voir les {{ produit.categorie }} {{ produit.marque }}</a>
                 </div>
-            </div>
-            <div id="sectionFiche" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
+            </section>
+            <section id="sectionFiche" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Caractéristiques techniques :</h3>
                 {% if produit.caracteristiquesTechniques %}
                     <table>
@@ -119,13 +117,13 @@
                 {% else %}
                     <p>Aucune caractéristiques technique n'a été renseignée pour ce produit.</p>
                 {% endif %}
-            </div>
-            <div id="sectionAvis" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
+            </section>
+            <section id="sectionAvis" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Les avis de nos clients :</h3>
                 {% if avis | length > 0 %}
                     <div class="avis-liste">
                         {% for avi in avis %}
-                            <div class="avis">
+                            <article class="avis">
                                 <div class="avis-infos">
                                     {% if avi.utilisateur %}
                                         <span class="avis-pseudo">{{ avi.utilisateur.pseudo ? avi.utilisateur.pseudo : "Utilisateur anonyme" }}</span> Publié le {{ avi.datePublication | date("d/m/Y") }}
@@ -137,7 +135,7 @@
                                     <h4 class="avis-titre">{{ avi.titre }}</h4>
                                     {{ avi.texte }}
                                 </div>
-                            </div>
+                            </article>
                         {% endfor %}
                     </div>
                     {% if avis.pageCount > 1 %}
@@ -160,8 +158,8 @@
                     {{ form_row(avisFormulaire.Valider) }}
                     {{ form_end(avisFormulaire) }}
                 {% endif %}
-            </div>
-        </div>
+            </section>
+        </section>
     </div>
 
     <script>

@@ -1,17 +1,15 @@
 <div class="headerHaut">
-    <div id="headerNavigation" class="headerNavigation">
+    <img class="headerHautMenu" onclick="interactMenu()" src="{{ asset('svg/header/hamburger-menu.svg') }}" alt="menu">
+    <nav aria-label="menu principal" id="headerNavigation" class="headerNavigation">
         <ul>
             <li><a class="menuOption" href=""><img src="{{ asset('svg/header/config.svg') }}" alt="configurateur PC">Configurateur PC</a></li>
             <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':1 }) }}"><img src="{{ asset('svg/header/ordinateurs.svg') }}" alt="ordinateurs">Ordinateurs</a></li>
             <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':2 }) }}"><img src="{{ asset('svg/header/composants.svg') }}" alt="composants">Composants</a></li>
             <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':3 }) }}"><img src="{{ asset('svg/header/peripheriques.svg') }}" alt="peripheriques">Périphériques</a></li> 
         </ul>
-    </div>
-    <div class="headerMenu">
-        <img class="headerHautMenu" onclick="interactMenu()" src="{{ asset('svg/header/hamburger-menu.svg') }}" alt="menu">
-    </div>
+    </nav>
     <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
-    <div class="headerIcones">
+    <nav class="headerIcones">
         {% if app.user %}
             <a href="{{ path('profil_utilisateur') }}">
         {% else %}
@@ -39,7 +37,7 @@
                 <span class="headerIcone-texte">Mon panier</span>
             </div>
         </a>
-    </div>
+    </nav>
 </div>
 {{ render(path('recherche_principale')) }}
 

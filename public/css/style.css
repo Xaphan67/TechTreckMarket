@@ -141,11 +141,6 @@ header {
     padding-top: 5px;
 }
 
-.headerMenu {
-    position: relative;
-    cursor: pointer;
-}
-
 .headerLogo {
     max-height: 50px;
     max-width: 140px;
@@ -699,10 +694,15 @@ label,
 }
 
 .accueil-nom-categorie {
+    display: block;
     text-align: end;
     font-size: 20px;
+    line-height: normal;
+    text-transform: none;
+    background-color: transparent;
     color: var(--lightText);
     margin: 15px 12px 26px 0px;
+    width: auto;
 }
 
 .menu-categorie {
@@ -1487,9 +1487,10 @@ border: 1px solid var(--borderFavoriteAdress);
         padding-top: 0px;
     }
 
-    .headerHautMenu,
-    .headerMenu {
+    .headerHautMenu {
         display: none;
+        position: relative;
+        cursor: pointer;
     }
 
     .headerLogo {
@@ -1626,7 +1627,12 @@ border: 1px solid var(--borderFavoriteAdress);
         display: block;
         text-align: center;
         color: var(--lightText);
-        margin-bottom: 10px;
+        margin-top: 10px;
+        width: auto;
+        font-size: medium;
+        line-height: normal;
+        text-transform: none;
+        background-color: transparent;
     }
 
     .nouveautes-ligne {

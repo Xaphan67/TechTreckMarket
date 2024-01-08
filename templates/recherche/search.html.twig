@@ -20,32 +20,25 @@
 
     <div class="conteneur-principal">
         {# Titre de la page de recherche #}
-        <div>
+        <section>
             <h1>Votre recherche pour : "{{ recherche }}"</h1>
             <hr>
             <p>Il y a {{ produits | length }} produit{{ produits | length != 1 ? "s" : "" }} correspondant à votre recherche.</p>
-        </div>
+        </section>
 
         {# On affiche les produits correspondant à la recherche #}
         {% if produits |length > 0 %}
-            {# Affiche la pagination et le tri #}
+            {# Affiche la pagination #}
             {% if produits.pageCount > 1 %}
-                <div class="conteneur pagination-haut">
+                <section class="conteneur pagination-haut">
                     {{ knp_pagination_render(produits) }}
-                    <select class="" name="tri" id="tri">
-                        <option value="">Trier les produits</option>
-                        <option value="nom">Nom</option>
-                        <option value="marque">Marque</option>
-                        <option value="prixASC">Du - cher au + cher</option>
-                        <option value="prixDESC">Du + cher au - cher</option>
-                    </select>
-                </div>
+                </section>
             {% endif %}
 
             {# Affiche les produits #}
-            <div class="conteneur">
+            <section class="conteneur">
                 {% for produit in produits %}
-                    <div class="produit">
+                    <article class="produit">
                         <div class="produit-image">
                             <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
                         </div>
@@ -68,15 +61,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 {% endfor %}
-            </div>
+            </section>
 
             {# Affiche la pagination #}
             {% if produits.pageCount > 1 %}
-                <div class="conteneur">
+                <section class="conteneur">
                     {{ knp_pagination_render(produits) }}
-                </div>
+                </section>
             {% endif %}
         {% endif %}
     </div>
