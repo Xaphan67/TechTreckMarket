@@ -39,7 +39,7 @@ class RechercheController extends AbstractController
                 // Redirige vers l'url d'entrée
                 return $this->redirect($url);
             }
-        } else if (!empty($recherche)) {
+        } else {
             $recherche =  $request->getSession()->get('recherche');
 
             // Récupère tout les produits dont la marque ou la designation contiennent la valeur entrée dans le champ de recherche
