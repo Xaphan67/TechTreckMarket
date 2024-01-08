@@ -28,11 +28,14 @@ class ProduitController extends AbstractController
         $produitAchete = false;
 
         // Récupère les catégories parentes à la catégorie du produit pour
-        //pouvoir les afficher correctement dans le fil d'ariane via twig
+        // pouvoir les afficher correctement dans le fil d'ariane via twig
         // Ceci permet une meilleure optimisation dans la vue en twig
 
         // Instancie un tableau vide
         $categoriesParent = [];
+
+        // Ajoute la catégorie du produit
+        $categoriesParent[] =$produit->getCategorie();
 
         // Récupère la valeur de la catégorie parente à la catégorie actuelle
         $parent = $produit->getCategorie()->getCategorieParent();
@@ -44,6 +47,10 @@ class ProduitController extends AbstractController
             $parent = $parent->getCategorieParent();
         }
 
+        // Inverse l'odre des éléments du tableau $categoriesParent
+        // pour obtenir les catégories de la plus éloignées à celle du produit
+        $categoriesParent = array_reverse($categoriesParent);
+
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             // Vérifie si le formulaire pour poster un avis est soumis
@@ -53,21 +60,21 @@ class ProduitController extends AbstractController
                 if ($avisForm->isValid()) {
                     // Instancie un nouvel avis
                     $avi = new Avis();
-    
+
                     // Récupère les informations du formulaire
                     $avi = $avisForm->getData();
-    
+
                     // Ajoute l'utilisateur actif et le produit à l'avis
                     $avi->setUtilisateur($this->getUser());
                     $avi->setProduit($produit);
-    
+
                     // Envoie en base de données
                     $entityManager->persist($avi);
                     $entityManager->flush();
-                    
+
                     // Ajoute un message flash
                     $this->addFlash('success', 'Votre avis à bien été posté !');
-    
+
                     // Vide puis génère un nouveau formulaire pour les avis
                     unset($avisForm);
                     $avisForm = $this->createForm(AvisType::class);
