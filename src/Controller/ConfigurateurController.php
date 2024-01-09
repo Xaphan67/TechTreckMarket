@@ -16,9 +16,12 @@ class ConfigurateurController extends AbstractController
     #[Route('/configurateur/{etape}', name: 'configurateur')]
     public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
+        // Initialisation des variables
         $nomCategorie = null;
         $titreEtape = null;
+        $produits = [];
+
+        // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
         switch ($etape) {
             case 1:
                 $nomCategorie = "Boîtiers";
@@ -33,11 +36,11 @@ class ConfigurateurController extends AbstractController
                 $titreEtape = "processeur";
                 break;
             case 4:
-                $nomCategorie = "Ventirads";
+                $nomCategorie = "Refroidissement";
                 $titreEtape = "ventirad";
                 break;
             case 5:
-                $nomCategorie = "Mémoires";
+                $nomCategorie = "Mémoire";
                 $titreEtape = "mémoire";
                 break;
             case 6:
@@ -54,10 +57,19 @@ class ConfigurateurController extends AbstractController
                 break;
         }
 
+        // Récupère la catégorie correspondante à l'étape
         $categorie = $categorieRepository->findOneBy(['nom' => $nomCategorie]);
 
-        // Récupère les produits correspondant à la catégorie
-        $produits = $produitRepository->findBy(['categorie' => $categorie]);
+        // Vérifie s'il y a des sous-catégories
+        if (count($categorie->getSousCategories()) > 0) {
+            // Si oui, ajoute tout les produit de chaque sous-catégorie
+            foreach ($categorie->getSousCategories() as $sousCategorie) {
+                $produits += $produitRepository->findBy(['categorie' => $sousCategorie]);
+            }
+        } else {
+            // Récupère les produits correspondant à la catégorie
+            $produits = $produitRepository->findBy(['categorie' => $categorie]);
+        }
 
         // Crée la pagination pour la liste des produits
         $produitsPagination = $paginator->paginate(
@@ -98,11 +110,14 @@ class ConfigurateurController extends AbstractController
         }
 
         // Ajoute le produit à la configuration
-        $configuration[$etape - 1] = $produit;
+        $configuration[$etape] = $produit;
+
+        // Trie la configuration par ordre d'étapes
+        ksort($configuration);
 
         // Stocke la configuration en session
         $request->getSession()->set('configuration', $configuration);
 
-        return $this->redirectToRoute('configurateur', ['etape' => $etape]);
+        return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
     }
 }

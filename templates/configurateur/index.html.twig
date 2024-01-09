@@ -118,7 +118,7 @@
             {# Affiche les produits #}
             <div class="conteneur">
                 {% for produit in produits %}
-                    <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape + 1}) }}">
+                    <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape }) }}">
                         <article class="produit">
                             <div class="produit-image">
                                 <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
