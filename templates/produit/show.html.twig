@@ -36,8 +36,10 @@
     <div class="conteneur-principal">
         {# Designation et résumé du produit #}
         <section class="conteneur conteneur-padding-produits produit-haut">
-            <h1 class="produit-designation">{{ produit }}</h1>
-            <p class="produit-resume">{{ produit.resume }}</p>
+            <div>
+                <h1 class="produit-designation">{{ produit }}</h1>
+                <p class="produit-resume">{{ produit.resume }}</p>
+            </div>
             <img class="mobile-invisible" src="{{ asset('img/marques/' ~ produit.marque.logo) }}" alt="{{ produit.marque }}">
         </section>
 
@@ -93,7 +95,7 @@
             </section>
             <section id="sectionFiche" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Caractéristiques techniques :</h3>
-                {% if produit.CaracteristiquesTechniques %}
+                {% if produit.CaracteristiquesTechniques | length > 0 %}
                     <table>
                         <tbody>
                             {% for caracteristique in produit.CaracteristiquesTechniques %}

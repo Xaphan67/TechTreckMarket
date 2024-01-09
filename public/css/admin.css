@@ -29,10 +29,13 @@
 }
 
 .menu-icon {
-    height: 50px !important;
-    width: 50px !important;
     font-size: 50px !important;
     padding-left: 4px;
+}
+
+.menu-item-label {
+    text-align: center;
+    line-height: 16px;
 }
 
 @media (min-width: 992px) {
