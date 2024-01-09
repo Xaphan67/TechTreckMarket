@@ -38,7 +38,7 @@
         <section>
             <h1>{{ categorie }}</h1>
             <hr>
-            <p>{{ categorie.description | raw }}</p>
+            <p>{{ categorie.description | slice(5, -6) | raw }}</p>
         </section>
 
         {# Vérifie si la catégorie à des sous-catégories ou non #}
