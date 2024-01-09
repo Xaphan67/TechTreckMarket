@@ -3,18 +3,19 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Repository\CategorieRepository;
 use App\Repository\ProduitRepository;
+use App\Repository\CategorieRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ProduitCaracteristiqueTechniqueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ConfigurateurController extends AbstractController
 {
     #[Route('/configurateur/{etape}', name: 'configurateur')]
-    public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Initialisation des variables
         $nomCategorie = null;
@@ -71,6 +72,18 @@ class ConfigurateurController extends AbstractController
             $produits = $produitRepository->findBy(['categorie' => $categorie]);
         }
 
+        // Vérifications propres à chaque étape
+        switch ($etape) {
+            case 2:
+                // Récupère les caractèristiques techniques du boîtier de la configuration
+                $boitier = $request->getSession()->get('configuration')[1];
+                $boitierCt = $produitCtRepository->findBy(['produit' => $boitier]);
+                dd($boitierCt);
+
+                // Retire tout les produits qui ne sont pas compatibles
+                break;
+        }
+
         // Crée la pagination pour la liste des produits
         $produitsPagination = $paginator->paginate(
             $produits, // Contenu à paginer
@@ -93,7 +106,8 @@ class ConfigurateurController extends AbstractController
             'titreEtape' => $titreEtape,
             'produits' => $produits,
             'configuration' => $request->getSession()->get('configuration'),
-            'totalConfiguration' => $totalConfiguration
+            'totalConfiguration' => $totalConfiguration,
+            'boitier' => $boitier
         ]);
     }
 
