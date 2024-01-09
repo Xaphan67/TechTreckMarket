@@ -13,12 +13,13 @@ use App\Repository\ProduitCommandeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\ProduitCaracteristiqueTechniqueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ProduitController extends AbstractController
 {
     #[Route('/produit/{id}', name: 'voir_produit')]
-    public function show(Produit $produit, AvisRepository $avisRepository, ProduitCommandeRepository $produitCommandeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager): Response
+    public function show(Produit $produit, AvisRepository $avisRepository, ProduitCaracteristiqueTechniqueRepository $produitCaracteristiqueTechniqueRepository, ProduitCommandeRepository $produitCommandeRepository, PaginatorInterface $paginator, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Génération des formulaires pour modifier la quantité et poster des avis
         $quantiteForm = $this->createForm(ProduitType::class);
@@ -103,8 +104,6 @@ class ProduitController extends AbstractController
             $request->query->getInt('page', 1), // Page à afficher
             10 // Limite par page
         );
-
-
 
         return $this->render('produit/show.html.twig', [
             'categoriesParent' => $categoriesParent,

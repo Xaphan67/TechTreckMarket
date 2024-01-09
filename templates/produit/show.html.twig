@@ -93,13 +93,13 @@
             </section>
             <section id="sectionFiche" class="conteneur-padding-produits conteneur-padding-produits-tablette sub-conteneur-invisible">
                 <h3 class="section-titre">Caractéristiques techniques :</h3>
-                {% if produit.caracteristiquesTechniques %}
+                {% if produit.CaracteristiquesTechniques %}
                     <table>
                         <tbody>
-                            {% for nomCaracteristique, valeurCaracteristique in produit.caracteristiquesTechniques %}
+                            {% for caracteristique in produit.CaracteristiquesTechniques %}
                                 <tr>
-                                    <td>{{ nomCaracteristique }}</td>
-                                    <td>{{ valeurCaracteristique }}</td>
+                                    <td>{{ caracteristique.caracteristiqueTechnique.nom }}</td>
+                                    <td>{{ caracteristique.valeur }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>

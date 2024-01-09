@@ -7,8 +7,10 @@ use App\Entity\Marque;
 use App\Entity\Produit;
 use App\Entity\Commande;
 use App\Entity\Categorie;
+use App\Entity\CaracteristiqueTechnique;
 use App\Controller\Admin\AvisCrudController;
 use Symfony\Component\HttpFoundation\Response;
+use App\Entity\ProduitCaracteristiqueTechnique;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -57,6 +59,8 @@ class AdminController extends AbstractDashboardController
         ->setQueryParameter('filters[etat][comparison]', '!=');
         yield MenuItem::linkToCrud('Marques', 'fa-solid fa-city', Marque::class);
         yield MenuItem::linkToCrud('Produits', 'fa-solid fa-computer', Produit::class);
+        yield MenuItem::linkToCrud('Carac. Techniques', 'fa-solid fa-computer', CaracteristiqueTechnique::class);
+        yield MenuItem::linkToCrud('Produits -> Carac. Techniques', 'fa-solid fa-computer', ProduitCaracteristiqueTechnique::class);
     }
 
     public function configureAssets(): Assets

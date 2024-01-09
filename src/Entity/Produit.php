@@ -46,9 +46,6 @@ class Produit
     #[ORM\Column]
     private ?int $stock = null;
 
-    #[ORM\Column]
-    private array $caracteristiquesTechniques = [];
-
     #[ORM\ManyToOne(inversedBy: 'produits')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Marque $marque = null;
@@ -60,17 +57,17 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: Avis::class, orphanRemoval: true)]
     private Collection $avis;
 
-    #[ORM\ManyToMany(targetEntity: self::class)]
-    private Collection $produitsCompatibles;
-
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
     private ?Categorie $categoriePrincipale = null;
 
+    #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ProduitCaracteristiqueTechnique::class)]
+    private Collection $caracteristiquesTechniques;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
-        $this->produitsCompatibles = new ArrayCollection();
+        $this->caracteristiquesTechniques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,18 +195,6 @@ class Produit
         return $this;
     }
 
-    public function getCaracteristiquesTechniques(): array
-    {
-        return $this->caracteristiquesTechniques;
-    }
-
-    public function setCaracteristiquesTechniques(array $caracteristiquesTechniques): static
-    {
-        $this->caracteristiquesTechniques = $caracteristiquesTechniques;
-
-        return $this;
-    }
-
     public function getMarque(): ?Marque
     {
         return $this->marque;
@@ -264,35 +249,6 @@ class Produit
         return $this;
     }
 
-    /**
-     * @return Collection<int, self>
-     */
-    public function getProduitsCompatibles(): Collection
-    {
-        return $this->produitsCompatibles;
-    }
-
-    public function addProduitsCompatible(self $produitsCompatible): static
-    {
-        if (!$this->produitsCompatibles->contains($produitsCompatible)) {
-            $this->produitsCompatibles->add($produitsCompatible);
-        }
-
-        return $this;
-    }
-
-    public function removeProduitsCompatible(self $produitsCompatible): static
-    {
-        $this->produitsCompatibles->removeElement($produitsCompatible);
-
-        return $this;
-    }
-
-    public function __toString()
-    {
-        return $this->designation;
-    }
-
     public function getCategoriePrincipale(): ?Categorie
     {
         return $this->categoriePrincipale;
@@ -301,6 +257,41 @@ class Produit
     public function setCategoriePrincipale(?Categorie $categoriePrincipale): static
     {
         $this->categoriePrincipale = $categoriePrincipale;
+
+        return $this;
+    }
+    
+    public function __toString()
+    {
+        return $this->designation;
+    }
+
+    /**
+     * @return Collection<int, ProduitCaracteristiqueTechnique>
+     */
+    public function getCaracteristiquesTechniques(): Collection
+    {
+        return $this->caracteristiquesTechniques;
+    }
+
+    public function addCaracteristiquesTechnique(ProduitCaracteristiqueTechnique $caracteristiquesTechnique): static
+    {
+        if (!$this->caracteristiquesTechniques->contains($caracteristiquesTechnique)) {
+            $this->caracteristiquesTechniques->add($caracteristiquesTechnique);
+            $caracteristiquesTechnique->setProduit($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaracteristiquesTechnique(ProduitCaracteristiqueTechnique $caracteristiquesTechnique): static
+    {
+        if ($this->caracteristiquesTechniques->removeElement($caracteristiquesTechnique)) {
+            // set the owning side to null (unless already changed)
+            if ($caracteristiquesTechnique->getProduit() === $this) {
+                $caracteristiquesTechnique->setProduit(null);
+            }
+        }
 
         return $this;
     }
