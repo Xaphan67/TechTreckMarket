@@ -98,6 +98,9 @@ class ProduitController extends AbstractController
         // Récupère les avis qui concernent le produit
         $avis = $avisRepository->findBy(['produit' => $produit], ['datePublication' => 'DESC']);
 
+        // Récupère les caractéristiques techniques du produit
+        $caracteristiquesTechniques = $produitCaracteristiqueTechniqueRepository->findBy(['produit' => $produit]);
+
         // Crée la pagination pour la liste des avis
         $avisPagination = $paginator->paginate(
             $avis, // Contenu à paginer
@@ -108,6 +111,7 @@ class ProduitController extends AbstractController
         return $this->render('produit/show.html.twig', [
             'categoriesParent' => $categoriesParent,
             'avis' => $avisPagination,
+            'caracteristiquesTechniques' => $caracteristiquesTechniques,
             'produit' => $produit,
             'quantiteFormulaire' => $quantiteForm,
             'avisFormulaire' => $avisForm,

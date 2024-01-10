@@ -72,16 +72,23 @@ class ConfigurateurController extends AbstractController
             $produits = $produitRepository->findBy(['categorie' => $categorie]);
         }
 
-        // Vérifications propres à chaque étape
-        switch ($etape) {
-            case 2:
-                // Récupère les caractèristiques techniques du boîtier de la configuration
-                $boitier = $request->getSession()->get('configuration')[1];
-                $boitierCt = $produitCtRepository->findBy(['produit' => $boitier]);
-                dd($boitierCt);
-
-                // Retire tout les produits qui ne sont pas compatibles
+        // Vérifications propres à chaque étape à partir de l'étape 2
+        if ($etape >= 2) {
+            $produitsCompatibles = [];
+            switch ($etape) {
+                case 2:
+                $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 1, "Format de carte mère");
                 break;
+                case 3:
+                $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 2, "Support du processeur");
+                break;
+                case 4:
+                $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 2, "Support du processeur");
+                break;
+            }
+
+            // Met à jour la liste des produits
+            $produits = $produitsCompatibles;
         }
 
         // Crée la pagination pour la liste des produits
@@ -107,7 +114,6 @@ class ConfigurateurController extends AbstractController
             'produits' => $produits,
             'configuration' => $request->getSession()->get('configuration'),
             'totalConfiguration' => $totalConfiguration,
-            'boitier' => $boitier
         ]);
     }
 
@@ -133,5 +139,37 @@ class ConfigurateurController extends AbstractController
         $request->getSession()->set('configuration', $configuration);
 
         return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+    }
+
+    // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une caractéristique technique
+    // spécifique du produit de la configuration de l'étape spécifiée à une caractéristique des produits de l'étape en cours
+    public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, int $etape, string $caracteristique) {
+        // Récupère les caractèristiques techniques du produit à vérifier de la configuration
+        $produitSource = $request->getSession()->get('configuration')[$etape];
+        $produitSourceCt = $produitCtRepository->findBy(['produit' => $produitSource]);
+
+        // Récupère les valeur des caractéristiques du produit à vérifier pour la caractéristique spécifiée
+        $valeursCaracteristiquesTechniques = [];
+        foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
+            if ($produitCaracteristiqueTechnique->getCaracteristiqueTechnique()->getNom() == $caracteristique) {
+                $valeursCaracteristiquesTechniques[] = $produitCaracteristiqueTechnique->getValeur();
+            }
+        }
+
+        // Crée la liste des produits compatibles
+        $produitsCompatibles = [];
+        foreach ($produits as $produit) { // Itère chaque produit
+            foreach ($produit->getCaracteristiquesTechniques() as $produitCaracteristique) { // Itère chaque caractéristique technique de chaque produit
+                if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristique) { // Si son nom est celui spécifié...
+                    foreach ($valeursCaracteristiquesTechniques as $valeur) { // Itère les valeurs des caractéristiques compatibles...
+                        if ($valeur == $produitCaracteristique->getValeur()) { // Vérifie que la valeur est compatible
+                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                        }
+                    }
+                }
+            }
+        }
+
+        return $produitsCompatibles;
     }
 }
