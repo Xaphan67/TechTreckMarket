@@ -24,6 +24,9 @@ class ProduitCaracteristiqueTechnique
     #[ORM\JoinColumn(nullable: false)]
     private ?CaracteristiqueTechnique $caracteristiqueTechnique = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $quantite = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -67,5 +70,17 @@ class ProduitCaracteristiqueTechnique
 
     public function __toString() {
         return $this->getCaracteristiqueTechnique()->getNom();
+    }
+
+    public function getQuantite(): ?int
+    {
+        return $this->quantite;
+    }
+
+    public function setQuantite(?int $quantite): static
+    {
+        $this->quantite = $quantite;
+
+        return $this;
     }
 }

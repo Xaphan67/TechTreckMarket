@@ -74,33 +74,74 @@ class ConfigurateurController extends AbstractController
 
         // Vérifications propres à chaque étape à partir de l'étape 2
         if ($etape >= 2) {
-            $produitsCompatibles = [];
             switch ($etape) {
                 case 2:
-                    $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 1, [
-                        "Format de carte mère" => "Format de carte mère"
-                    ]);
+                    $etapesAVerifier = [1];
+                    $caracteristiquesAVerifier = [
+                        1 => [
+                            "Format de carte mère" => "Format de carte mère"
+                        ]
+                    ];
                     break;
                 case 3:
-                    $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 2, [
-                        "Support du processeur" => "Support du processeur"
-                    ]);
+                    $etapesAVerifier = [2];
+                    $caracteristiquesAVerifier = [
+                        2 => [
+                            "Support du processeur" => "Support du processeur"
+                        ]
+                    ];
                     break;
                 case 4:
-                    $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 2, [
-                        "Support du processeur" => "Support du processeur"
-                    ]);
+                    $etapesAVerifier = [2];
+                    $caracteristiquesAVerifier = [
+                        2 => [
+                            "Support du processeur" => "Support du processeur"
+                        ]
+                    ];
                     break;
                 case 5:
-                    $produitsCompatibles += $this->checkCompatibility($request, $produitCtRepository, $produits, 2, [
-                        "Fréquence(s) Mémoire" => "Fréquence(s) Mémoire",
-                        "Nombre de slots mémoire" => "Nombre de barrettes"
-                    ]);
+                    $etapesAVerifier = [2];
+                    $caracteristiquesAVerifier = [
+                        2 => [
+                            "Fréquence(s) Mémoire" => "Fréquence(s) Mémoire",
+                            "Nombre de slots mémoire" => "Nombre de barrettes"
+                        ]
+                    ];
+                    break;
+                case 6:
+                    $etapesAVerifier = [1, 2];
+                    $caracteristiquesAVerifier = [
+                        1 => [
+                            "Longueur max. carte graphique" => "Longueur"
+                        ],
+                        2 => [
+                            "Type de connecteur(s) graphique" => "Bus"
+                        ]
+                    ];
+                    break;
+                case 7:
+                    $etapesAVerifier = [2];
+                    $caracteristiquesAVerifier = [
+                        2 => [
+                            "Connecteurs pour disques durs" => "Interface avec l'ordinateur"
+                        ]
+                    ];
+                    break;
+                case 8:
+                    $etapesAVerifier = [6, 7];
+                    $caracteristiquesAVerifier = [
+                        6 => [
+                            "Connecteur alimentation" => "Connecteurs"
+                        ],
+                        7 => [
+                            "Interface avec l'ordinateur" => "Connecteurs"
+                        ]
+                    ];
                     break;
             }
 
             // Met à jour la liste des produits
-            $produits = $produitsCompatibles;
+            $produits = $this->checkCompatibility($request, $produitCtRepository, $produits, $etapesAVerifier, $caracteristiquesAVerifier);
         }
 
         // Crée la pagination pour la liste des produits
@@ -155,58 +196,87 @@ class ConfigurateurController extends AbstractController
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques
     // spécifique du produit de la configuration de l'étape spécifiée à une ou plusieurs caractéristiques des produits de l'étape en cours
-    public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, int $etape, array $caracteristiques) {
-        // Récupère les caractèristiques techniques du produit à vérifier de la configuration
-        $produitSource = $request->getSession()->get('configuration')[$etape];
-        $produitSourceCt = $produitCtRepository->findBy(['produit' => $produitSource]);
-
-        // Vérifie chaque caractéristique spécifiée
+    public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, array $etapes, array $caracteristiques) {
+        // Pour chaque étape...
         $ListesProduitsCompatibles = [];
-        foreach ($caracteristiques as $caracteristiqueSource => $caracteristiqueCible) {
-            // Récupère les valeur des caractéristiques du produit à vérifier pour la caractéristique spécifiée
-            $valeursCaracteristiquesTechniques = [];
-            foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
-                if ($produitCaracteristiqueTechnique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueSource) {
-                    $valeursCaracteristiquesTechniques[] = $produitCaracteristiqueTechnique->getValeur();
-                }
-            }
+        foreach($etapes as $etape) {
+            if (array_key_exists($etape, $request->getSession()->get('configuration'))) {
+                // Récupère les caractèristiques techniques du produit à vérifier de la configuration
+                $produitSource = $request->getSession()->get('configuration')[$etape];
+                $produitSourceCt = $produitCtRepository->findBy(['produit' => $produitSource]);
 
-            // Crée la liste des produits compatibles avec cette caractéristique
-            $produitsCompatibles = [];
-            foreach ($produits as $produit) { // Itère chaque produit
-                foreach ($produit->getCaracteristiquesTechniques() as $produitCaracteristique) { // Itère chaque caractéristique technique de chaque produit
-                    if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueCible) { // Si son nom est celui spécifié...
-                        foreach ($valeursCaracteristiquesTechniques as $valeur) { // Itère les valeurs des caractéristiques compatibles...
-                            if (ctype_digit($valeur)) { // Si la valeur est une chaîne de caractères uniquement constituée de nombres
-                                $valeurInt = intval($valeur); // Converti la chaîne de caractère en nombre entier
-                                if ($valeurInt >= intval($produitCaracteristique->getValeur())) { // Vérifie que la valeur est compatible
-                                    $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
-                                }
-                            } else {
-                                if ($valeur == $produitCaracteristique->getValeur()) { // Vérifie que la valeur est compatible
-                                    $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                // Vérifie chaque caractéristique spécifiée
+                $ListesProduitsEtapeCompatibles = [];
+                foreach ($caracteristiques[$etape] as $caracteristiqueSource => $caracteristiqueCible) {
+                    // Récupère les valeur des caractéristiques du produit à vérifier pour la caractéristique spécifiée
+                    $valeursCaracteristiquesTechniques = [];
+                    foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
+                        if ($produitCaracteristiqueTechnique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueSource) {
+                            $valeursCaracteristiquesTechniques[] = $produitCaracteristiqueTechnique->getValeur();
+                        }
+                    }
+
+                    // Crée la liste des produits compatibles avec cette caractéristique
+                    $produitsCompatibles = [];
+                    foreach ($produits as $produit) { // Itère chaque produit
+                        foreach ($produit->getCaracteristiquesTechniques() as $produitCaracteristique) { // Itère chaque caractéristique technique de chaque produit
+                            if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueCible) { // Si son nom est celui spécifié...
+                                foreach ($valeursCaracteristiquesTechniques as $valeur) { // Itère les valeurs des caractéristiques compatibles...
+                                    if (ctype_digit($valeur)) { // Si la valeur est une chaîne de caractères uniquement constituée de nombres
+                                        $valeurInt = intval($valeur); // Converti la chaîne de caractère en nombre entier
+                                        if ($valeurInt >= intval($produitCaracteristique->getValeur())) { // Vérifie que la valeur est compatible
+                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                        }
+                                    } else if (substr($valeur, -3) == " mm") { // Si la valeur se termine par " mm"
+                                        $valeurInt = intval(substr($valeur, 0, -3)); // Récupère la valeur numérique et la converti en nombre entier
+                                        if ($valeurInt >= intval(substr($produitCaracteristique->getValeur(), 0, -3))) { // Vérifie que la valeur est compatible
+                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                        }
+                                    } else {
+                                        if ($valeur == $produitCaracteristique->getValeur()) { // Vérifie que la valeur est compatible
+                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            }
 
-            // Ajoute la liste des produits compatibles avec cette caractéristique au tableau global
-            $ListesProduitsCompatibles[] = $produitsCompatibles;
+                    // Ajoute la liste des produits compatibles avec cette caractéristique au tableau global de l'étape
+                    $ListesProduitsEtapeCompatibles[] = $produitsCompatibles;
+                }
+
+                // Crée la liste des produits compatibles avec cette étape
+                $produitsCompatibles = [];
+                foreach ($produits as $produit) { // Itère chaque produit
+                    $compatible = true; // Considère le produit comme compatible
+                    foreach ($ListesProduitsEtapeCompatibles as $listeProduitsCompatibles) { // Itère la liste des produits compatible avec chaque caractéristique
+                        if (!in_array($produit, $listeProduitsCompatibles)) { // Si le produit n'est pas compatible avec une caractéristique
+                            $compatible = false; // Considère le produit comme non compatible
+                            break; // Arrete la boucle
+                        }
+                    }
+                    if ($compatible) { // Si le produit est compatible avec toutes les caractéristiques
+                        $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                    }
+                }
+
+                // Ajoute la liste des produits compatibles avec cette caractéristique à cette étape au tableau global
+                $ListesProduitsCompatibles[] = $produitsCompatibles;
+            }
         }
 
-        // Crée la liste des prouits compatibles
+        // Crée la liste des produits compatibles avec toutes les étapes
         $produitsCompatibles = [];
         foreach ($produits as $produit) { // Itère chaque produit
             $compatible = true; // Considère le produit comme compatible
-            foreach ($ListesProduitsCompatibles as $listeProduitsCompatibles) { // Itère la liste des produits compatible avec chaque caractéristique
-                if (!in_array($produit, $listeProduitsCompatibles)) { // Si le produit n'est pas compatible avec une caractéristique
+            foreach ($ListesProduitsCompatibles as $listeProduitsCompatibles) { // Itère la liste des produits compatible avec chaque étape
+                if (!in_array($produit, $listeProduitsCompatibles)) { // Si le produit n'est pas compatible avec une étape
                     $compatible = false; // Considère le produit comme non compatible
                     break; // Arrete la boucle
                 }
             }
-            if ($compatible) { // Si le produit est compatible avec toutes les caractéristiques
+            if ($compatible) { // Si le produit est compatible avec toutes les étapes
                 $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
             }
         }

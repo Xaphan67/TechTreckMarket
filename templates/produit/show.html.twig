@@ -101,7 +101,7 @@
                             {% for caracteristique in caracteristiquesTechniques %}
                                 <tr>
                                     <td>{{ caracteristique.caracteristiqueTechnique.nom }}</td>
-                                    <td>{{ caracteristique.valeur }}</td>
+                                    <td>{{ caracteristique.quantite ? caracteristique.quantite ~ "x " }}{{ caracteristique.valeur }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
