@@ -3,18 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
+use App\Entity\ConfigurationPC;
+use App\Entity\ProduitConfig;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Repository\ConfigurationPCRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitCaracteristiqueTechniqueRepository;
+use App\Repository\ProduitConfigRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ConfigurateurController extends AbstractController
 {
-    #[Route('/configurateur/{etape}', name: 'configurateur')]
+    #[Route('/configurateur/creer/{etape}', name: 'configurateur')]
     public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Initialisation des variables
@@ -192,6 +197,58 @@ class ConfigurateurController extends AbstractController
         $request->getSession()->set('configuration', $configuration);
 
         return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+    }
+
+    #[Route('/configurateur/sauvegarder/', name: 'sauvegarder_configuration')]
+    public function save(ConfigurationPCRepository $configurationPCRepository, ProduitConfigRepository $produitConfigRepository, EntityManagerInterface $entityManager, Request $request) {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            // Récupère la configuration stockée en session
+            $configurationSession = $request->getSession()->get('configuration');
+
+            if ($configurationSession) {
+                // Récupère et traite formulaire ici
+                $nomConfiguration = "Configuration";
+
+                // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
+                $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
+
+                // Si l'utilisateur n'a aucune configuration enregistrée avec ce nom
+                if (!$configuration) {
+                    // Créer une nouvelle configuration
+                    $configuration = new ConfigurationPC();
+                    $configuration->setNom($nomConfiguration);
+                    $this->getUser()->addConfiguration($configuration);
+                }
+
+                // Récupère et supprime les produits de la configuration correspondante de l'utilisateur
+                $produitsConfiguration = $produitConfigRepository->findBy(['configurationPC' => $configuration]);
+
+                foreach ($produitsConfiguration as $produitConfiguration) {
+                    $configuration->removeProduitsConfig($produitConfiguration);
+                }
+
+                // Ajoute les nouveaux produits
+                foreach ($configurationSession as $nouveauProduit) {
+                    $configuration->addProduitsConfig(new ProduitConfig($configuration, $nouveauProduit, 1));
+                }
+
+                // Stocke la configuration dans la base de données
+                $entityManager->persist($configuration);
+                $entityManager->flush($configuration);
+
+                // Ajoute un message flash
+                $this->addFlash('success', 'Votre configuration à bien été sauvegardée !');
+
+            } else {
+                // Ajoute un message flash
+                $this->addFlash('danger', 'Votre configuration est vide !');
+            }
+
+        }
+
+        // Redirige vers la page du configurateur
+        return $this->redirectToRoute('configurateur', ['etape' => 1]);
     }
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques

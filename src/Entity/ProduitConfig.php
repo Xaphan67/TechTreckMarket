@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProduitConfigRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProduitConfigRepository::class)]
@@ -20,9 +22,16 @@ class ProduitConfig
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(inversedBy: 'produitsConfig')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ConfigurationPC $configuration = null;
+    private ?ConfigurationPC $configurationPC = null;
+
+    public function __construct(ConfigurationPC $configuration, Produit $produit, int $quantite)
+    {
+        $this->setConfigurationPC($configuration);
+        $this->setProduit($produit);
+        $this->setQuantite($quantite);
+    }
 
     public function getId(): ?int
     {
@@ -53,14 +62,14 @@ class ProduitConfig
         return $this;
     }
 
-    public function getConfiguration(): ?ConfigurationPC
+    public function getConfigurationPC(): ?ConfigurationPC
     {
-        return $this->configuration;
+        return $this->configurationPC;
     }
 
-    public function setConfiguration(?ConfigurationPC $configuration): static
+    public function setConfigurationPC(?ConfigurationPC $configurationPC): static
     {
-        $this->configuration = $configuration;
+        $this->configurationPC = $configurationPC;
 
         return $this;
     }

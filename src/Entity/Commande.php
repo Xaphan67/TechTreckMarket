@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-use DateTime;
+use App\Entity\Utilisateur;
 use Doctrine\DBAL\Types\Types;
 use App\Entity\ProduitCommande;
 use Doctrine\ORM\Mapping as ORM;
