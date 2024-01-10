@@ -971,7 +971,8 @@ label,
 }
 
 .bouton-achat:hover,
-.bouton-valider-commande:hover {
+.bouton-valider-commande:hover,
+.bouton-passer-etape:hover {
     background-color: var(--boutonBuyHover);
 }
 
