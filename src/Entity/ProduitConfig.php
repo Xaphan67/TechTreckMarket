@@ -25,11 +25,15 @@ class ProduitConfig
     #[ORM\JoinColumn(nullable: false)]
     private ?ConfigurationPC $configurationPC = null;
 
-    public function __construct(ConfigurationPC $configuration, Produit $produit, int $quantite)
+    #[ORM\Column]
+    private ?int $etape = null;
+
+    public function __construct(ConfigurationPC $configuration, Produit $produit, int $quantite, int $etape)
     {
         $this->setConfigurationPC($configuration);
         $this->setProduit($produit);
         $this->setQuantite($quantite);
+        $this->setEtape($etape);
     }
 
     public function getId(): ?int
@@ -69,6 +73,18 @@ class ProduitConfig
     public function setConfigurationPC(?ConfigurationPC $configurationPC): static
     {
         $this->configurationPC = $configurationPC;
+
+        return $this;
+    }
+
+    public function getEtape(): ?int
+    {
+        return $this->etape;
+    }
+
+    public function setEtape(int $etape): static
+    {
+        $this->etape = $etape;
 
         return $this;
     }

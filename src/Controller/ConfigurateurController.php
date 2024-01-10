@@ -228,7 +228,7 @@ class ConfigurateurController extends AbstractController
 
                 // Ajoute les nouveaux produits
                 foreach ($configurationSession as $nouveauProduit) {
-                    $configuration->addProduitConfig(new ProduitConfig($configuration, $nouveauProduit, 1));
+                    $configuration->addProduitConfig(new ProduitConfig($configuration, $nouveauProduit, 1, 0));
                 }
 
                 // Stocke la configuration dans la base de données
@@ -242,11 +242,51 @@ class ConfigurateurController extends AbstractController
                 // Ajoute un message flash
                 $this->addFlash('danger', 'Votre configuration est vide !');
             }
-
+        } else {
+            // Ajoute un message flash
+            $this->addFlash('danger', 'Vous devez être connecté pour sauvegarder une configuration !');
         }
 
         // Redirige vers la page du configurateur
         return $this->redirectToRoute('configurateur', ['etape' => 1]);
+    }
+
+    #[Route('/configurateur/charger/', name: 'charger_configuration')]
+    public function load(ConfigurationPCRepository $configurationPCRepository, Request $request) {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            // Initialisation des variables
+            $etape = 0;
+
+            // Récupère la configuration de l'utilisateur
+            $configuration = $configurationPCRepository->findOneBy(['utilisateur' => $this->getUser()]);
+
+            if ($configuration) {
+                // Récupère les produits correspondant à la configuration
+                $produitsConfiguration = [];
+                foreach ($configuration->getProduitConfigs() as $produit) {
+                    $fix = $produit->getProduit()->getDesignation(); // Produit non initialisé si je n'accède pas a un des ses attributs
+                    $etape = $produit->getEtape();
+                    $produitsConfiguration[$etape] = $produit->getProduit();
+                }
+
+                // Stocke la configuration en session
+                 $request->getSession()->set('configuration', $produitsConfiguration);
+
+                 // Ajoute un message flash
+                 $this->addFlash('success', 'Votre configuration à bien été chargée !');
+            } else {
+                // Ajoute un message flash
+                $this->addFlash('danger', 'Vous n\'avez enregistré aucune configuration !');
+            }
+
+        } else {
+            // Ajoute un message flash
+            $this->addFlash('danger', 'Vous devez être connecté pour charger une configuration !');
+        }
+
+        // Redirige vers la page du configurateur
+        return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
     }
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques
