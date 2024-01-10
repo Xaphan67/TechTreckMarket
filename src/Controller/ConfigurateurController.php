@@ -213,11 +213,9 @@ class ConfigurateurController extends AbstractController
                 // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
                 $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
 
-                // Si l'utilisateur n'a aucune configuration enregistrée avec ce nom
+                // Crée une nouvelle configuration si l'utilisateur n'a aucune configuration enregistrée avec ce nom
                 if (!$configuration) {
-                    // Créer une nouvelle configuration
-                    $configuration = new ConfigurationPC();
-                    $configuration->setNom($nomConfiguration);
+                    $configuration = new ConfigurationPC($nomConfiguration);
                     $this->getUser()->addConfiguration($configuration);
                 }
 
@@ -230,7 +228,7 @@ class ConfigurateurController extends AbstractController
 
                 // Ajoute les nouveaux produits
                 foreach ($configurationSession as $nouveauProduit) {
-                    $configuration->addProduitsConfig(new ProduitConfig($configuration, $nouveauProduit, 1));
+                    $configuration->addProduitConfig(new ProduitConfig($configuration, $nouveauProduit, 1));
                 }
 
                 // Stocke la configuration dans la base de données
@@ -254,6 +252,12 @@ class ConfigurateurController extends AbstractController
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques
     // spécifique du produit de la configuration de l'étape spécifiée à une ou plusieurs caractéristiques des produits de l'étape en cours
     public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, array $etapes, array $caracteristiques) {
+        // Vérifie qu'une configuration existe en session, sinon, en crée une configuration vide
+        // Empèche une erreur si on passe la 1ere étape sans avoir ajouté de produits
+        if (!$request->getSession()->get('configuration')) {
+            $request->getSession()->set('configuration', []);
+        }
+
         // Pour chaque étape...
         $ListesProduitsCompatibles = [];
         foreach($etapes as $etape) {

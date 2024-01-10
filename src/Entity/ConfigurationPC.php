@@ -24,11 +24,12 @@ class ConfigurationPC
     private ?Utilisateur $utilisateur = null;
 
     #[ORM\OneToMany(mappedBy: 'configurationPC', targetEntity: ProduitConfig::class, orphanRemoval: true, cascade:["persist"])]
-    private Collection $produitsConfig;
+    private Collection $produitConfigs;
 
-    public function __construct()
+    public function __construct(string $nom)
     {
-        $this->produitsConfig = new ArrayCollection();
+        $this->produitConfigs = new ArrayCollection();
+        $this->setNom($nom);
     }
 
     public function getId(): ?int
@@ -63,27 +64,27 @@ class ConfigurationPC
     /**
      * @return Collection<int, ProduitConfig>
      */
-    public function getProduitsConfig(): Collection
+    public function getProduitConfigs(): Collection
     {
-        return $this->produitsConfig;
+        return $this->produitConfigs;
     }
 
-    public function addProduitsConfig(ProduitConfig $produitsConfig): static
+    public function addProduitConfig(ProduitConfig $produitConfig): static
     {
-        if (!$this->produitsConfig->contains($produitsConfig)) {
-            $this->produitsConfig->add($produitsConfig);
-            $produitsConfig->setConfigurationPC($this);
+        if (!$this->produitConfigs->contains($produitConfig)) {
+            $this->produitConfigs->add($produitConfig);
+            $produitConfig->setConfigurationPC($this);
         }
 
         return $this;
     }
 
-    public function removeProduitsConfig(ProduitConfig $produitsConfig): static
+    public function removeProduitsConfig(ProduitConfig $produitConfig): static
     {
-        if ($this->produitsConfig->removeElement($produitsConfig)) {
+        if ($this->produitConfigs->removeElement($produitConfig)) {
             // set the owning side to null (unless already changed)
-            if ($produitsConfig->getConfigurationPC() === $this) {
-                $produitsConfig->setConfigurationPC(null);
+            if ($produitConfig->getConfigurationPC() === $this) {
+                $produitConfig->setConfigurationPC(null);
             }
         }
 
