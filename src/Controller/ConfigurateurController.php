@@ -315,8 +315,12 @@ class ConfigurateurController extends AbstractController
             $this->addFlash('danger', 'Vous devez être connecté pour charger une configuration !');
         }
 
-        // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+         // Redirige vers l'étape suivante, ou vers le résumé de la configuration
+         if ($etape != 8) { // 8 est la dernière étape
+            return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+        } else {
+            return $this->redirectToRoute('recapitulatif_configuration');
+        }
     }
 
     #[Route('/configurateur/recapitulatif', name: 'recapitulatif_configuration')]
