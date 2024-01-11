@@ -49,6 +49,11 @@ class ConfigurateurController extends AbstractController
             $etape = $request->query->get('passer') + 1;
         }
 
+        // Redirige vers le récapitulatif si toutes les étapes sont complétées
+        if ($etape > 8) { // 8 est la dernière étape
+            return $this->redirectToRoute('recapitulatif_configuration');
+        }
+
         // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
         switch ($etape) {
             case 1:
