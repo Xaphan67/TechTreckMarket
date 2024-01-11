@@ -283,15 +283,15 @@ class ConfigurateurController extends AbstractController
 
                 if ($configuration) {
                     // Récupère les produits correspondant à la configuration
-                    $produitsConfiguration = [];
+                    $configurationSession = [];
                     foreach ($configuration->getProduitConfigs() as $produit) {
                         $fix = $produit->getProduit()->getDesignation(); // Produit non initialisé si je n'accède pas a un des ses attributs
                         $etape = $produit->getEtape();
-                        $produitsConfiguration[$etape] = $produit->getProduit();
+                        $configurationSession[$etape] = $produit->getProduit();
                     }
 
                     // Stocke la configuration en session
-                     $request->getSession()->set('configuration', $produitsConfiguration);
+                     $request->getSession()->set('configuration', $configurationSession);
 
                      // Ajoute un message flash
                      $this->addFlash('success', 'Votre configuration à bien été chargée !');
