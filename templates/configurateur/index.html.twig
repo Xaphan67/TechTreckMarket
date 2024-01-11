@@ -57,62 +57,70 @@
         </section>
 
         {# Récapitulatif #}
-        <section class="conteneur">
-            <div id="recapitulatif-titre">
-                <h2>Récapitulatif</h2>
-                <div id="chevron" class="chevron">
-                    <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </div>
-            <div id="recapitulatif" class="filtres-recherche formulaire-invisible">
-                <hr>
-                <div class="contenu-recapitulatif">
-                    {% if configuration| length > 0 %}
-                        <div class="liste-recapitulatif">
-                            {% for etape, produit in configuration %}
-                                {% if produit is not null %}
-                                    <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
-                                        <article class="produit-configuration">
-                                            <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
-                                            alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
-                                            <div class="produit-configuration-infos">
-                                                <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
-                                                <div class="produit-prix-configuration">
-                                                    {% if produit.stock > 0 %}
-                                                        <span class="stock-oui">EN STOCK</span>
-                                                    {% else %}
-                                                        <span class="stock-non">RUPTURE</span>
-                                                    {% endif %}
-                                                    <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    </a>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <span class="recapitulatif-info">
-                        Cliquez sur un élément<br>
-                        pour voir sa fiche produit
-                    </span>
-                    <a class="bouton-lien bouton-passer-etape bouton-150" href="{{ etape < 8 ? path('passer_configurateur', {'etape': etape }) : path('recapitulatif_configuration') }}">Passer cette étape</a>
-                    <h3>total de la config</h3>
-                    <span class="fiche-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
-                </div>
-                {% if app.user %}
-                    <div class="actions-recapitulatif">
-                        {% if configurations | length > 0 %}
-                            <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
-                        {% endif %}
-                        <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
-                        <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
+        {% if configuration | length > 0 %}
+            <section class="conteneur">
+                <div id="recapitulatif-titre">
+                    <h2>Récapitulatif</h2>
+                    <div id="chevron" class="chevron">
+                        <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                {% endif %}
+                </div>
+                <div id="recapitulatif" class="filtres-recherche formulaire-invisible">
+                    <hr>
+                    <div class="contenu-recapitulatif">
+                            <div class="liste-recapitulatif">
+                                {% for etape, produit in configuration %}
+                                    {% if produit is not null %}
+                                        <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
+                                            <article class="produit-configuration">
+                                                <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
+                                                alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
+                                                <div class="produit-configuration-infos">
+                                                    <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
+                                                    <div class="produit-prix-configuration">
+                                                        {% if produit.stock > 0 %}
+                                                            <span class="stock-oui">EN STOCK</span>
+                                                        {% else %}
+                                                            <span class="stock-non">RUPTURE</span>
+                                                        {% endif %}
+                                                        <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </a>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        <span class="recapitulatif-info">
+                            Cliquez sur un élément<br>
+                            pour voir sa fiche produit
+                        </span>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+
+        <section class="conteneur conteneur-padding">
+            <div class="infos-recapitulatif">
+                <h2>Total de la config</h2>
+                <span class="fiche-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
+                <a class="bouton-lien bouton-passer-etape bouton-150" href="{{ path('passer_configurateur', {'etape': etape }) }}">Passer cette étape</a>
             </div>
         </section>
+
+        {% if app.user %}
+            <section class="conteneur conteneur-padding-complet">
+                <div class="actions-recapitulatif">
+                    {% if configurations | length > 0 %}
+                        <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
+                    {% endif %}
+                    <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                    <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
+                </div>
+            </section>
+        {% endif %}
 
         <section class="liste-produits">
             {# Affiche la pagination et le tri #}

@@ -35,6 +35,16 @@ class ConfigurateurController extends AbstractController
         $etape = 1;
         $configuration = $request->getSession()->get('configuration');
 
+        // Vérifie si il y à au moins un produit dans la configuration
+        $produitsConfiguration = [];
+        if ($configuration) {
+            foreach ($configuration as $etape => $produitConfiguration) {
+                if ($produitConfiguration != null) {
+                    $produitsConfiguration[$etape] = $produitConfiguration;
+                }
+            }
+        }
+
         if ($configuration) {
             foreach ($configuration as $etapeProduit => $produit) {
                 $etape = $etapeProduit;
@@ -42,11 +52,6 @@ class ConfigurateurController extends AbstractController
 
             // Affiche l'étape suivante
             $etape += 1;
-        }
-
-        // Si une étape doit être passée, change étape à l'étape suivant celle devant être passée
-        if ($request->query->get('passer')) {
-            $etape = $request->query->get('passer') + 1;
         }
 
         // Redirige vers le récapitulatif si toutes les étapes sont complétées
@@ -187,8 +192,8 @@ class ConfigurateurController extends AbstractController
 
         // Calcul le prix total de la configuration
         $totalConfiguration = 0;
-        if ($request->getSession()->get('configuration')) {
-            foreach ($request->getSession()->get('configuration') as $produit) {
+        if ($produitsConfiguration) {
+            foreach ($produitsConfiguration as $produit) {
                 if ($produit != null) {
                     $totalConfiguration += $produit->getprix();
                 }
@@ -216,7 +221,7 @@ class ConfigurateurController extends AbstractController
             'etape' => $etape,
             'titreEtape' => $titreEtape,
             'produits' => $produits,
-            'configuration' => $request->getSession()->get('configuration'),
+            'configuration' => $produitsConfiguration,
             'totalConfiguration' => $totalConfiguration,
             'formulaire' => $form,
             'configurations' => $configurations,
@@ -274,12 +279,8 @@ class ConfigurateurController extends AbstractController
         // Stocke la configuration en session
         $request->getSession()->set('configuration', $configuration);
 
-        // Redirige vers l'étape suivante, ou vers le résumé de la configuration
-        if ($etape != 8) { // 8 est la dernière étape
-            return $this->redirectToRoute('configurateur');
-        } else {
-            return $this->redirectToRoute('recapitulatif_configuration');
-        }
+        // Redirige vers l'étape suivante
+        return $this->redirectToRoute('configurateur');
     }
 
     #[Route('/configurateur/sauvegarder/', name: 'sauvegarder_configuration')]
