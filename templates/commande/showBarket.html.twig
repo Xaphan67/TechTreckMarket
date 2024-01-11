@@ -83,7 +83,7 @@
                             <h2>Montant total de vos produits</h2>
                             <span class="panier-prix">{{ total | number_format(2, ',', ' ') }} €</span>
                         </div>
-                        <div class="bouton-achat bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</div>
+                        <div class="bouton-achat bouton-commander" onclick="displayValidateForm()">Passer commande</div>
                     </section>
                 {% else %}
                     <section class="conteneur conteneur-padding">
@@ -116,7 +116,7 @@
                         {{ form_row(formulaire.prenom) }}
                     </div>
                     <div class="commande-suivant">
-                        <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(1, 2)">Suivant</div>
+                        <div class="bouton-lien bouton-100" onclick="displayNextPage(1, 2)">Suivant</div>
                     </div>
                 </section>
                 <section id="commander-page-2" class="commander-page-2">
@@ -160,8 +160,8 @@
                         </div>
                     </div>
                     <div class="commande-suivant">
-                        <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(2, 1)" alt="Etape suivante">Précédent</div>
-                        <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(2, 3)" alt="Etape suivante">Suivant</div>
+                        <div class="bouton-lien bouton-100" onclick="displayNextPage(2, 1)" alt="Etape suivante">Précédent</div>
+                        <div class="bouton-lien bouton-100" onclick="displayNextPage(2, 3)" alt="Etape suivante">Suivant</div>
                     </div>
                 </section>
                 <section id="commander-page-3" class="commander-page-3">
@@ -205,8 +205,8 @@
                         </div>
                     </div>
                     <div class="commande-suivant">
-                        <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(3, 2)">Précédent</div>
-                        <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(3, 4)">Suivant</div>
+                        <div class="bouton-lien bouton-100" onclick="displayNextPage(3, 2)">Précédent</div>
+                        <div class="bouton-lien bouton-100" onclick="displayNextPage(3, 4)">Suivant</div>
                     </div>
                 </section>
                 <section id="commander-page-4" class="commander-page-4">
@@ -243,7 +243,7 @@
                         {% endif %}
                     </div>
                     <div class="commande-suivant">
-                        <div class="bouton-lien bouton-lien-centre bouton-100" onclick="displayNextPage(4, 3)">Précédent</div>
+                        <div class="bouton-lien bouton-100" onclick="displayNextPage(4, 3)">Précédent</div>
                         {{ form_row(formulaire.Commander) }}
                     </div>
                 </section>

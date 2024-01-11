@@ -7,6 +7,7 @@ use App\Entity\ConfigurationPC;
 use App\Entity\ProduitConfig;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\ConfigurationPCRepository;
@@ -324,7 +325,7 @@ class ConfigurateurController extends AbstractController
     }
 
     #[Route('/configurateur/recapitulatif', name: 'recapitulatif_configuration')]
-    public function summary(Request $request){
+    public function summary(CommandeRepository $commandeRepository, Request $request){
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             $configuration = $request->getSession()->get('configuration');
@@ -334,9 +335,23 @@ class ConfigurateurController extends AbstractController
                 $totalConfiguration += $produit->getprix();
             }
 
+            // Récupère la commande active de l'utilisateur.
+            $utilisateur = $this->getUser();
+            $commande = $commandeRepository->findOneBy([
+                'utilisateur' => $utilisateur->getId(),
+                'etat' => "panier"
+            ]);
+
+            // Vérifie si la commande en cours est vide
+            $panierVide = true;
+            if ($commande && count($commande->getProduitCommandes()) > 0) {
+                $panierVide = false;
+            }
+
             return $this->render('configurateur/summary.html.twig', [
                 'configuration' => $configuration,
-                'totalConfiguration' => $totalConfiguration
+                'totalConfiguration' => $totalConfiguration,
+                'panierVide' => $panierVide
             ]);
         } else {
             // Ajoute un message flash

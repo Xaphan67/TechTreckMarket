@@ -65,10 +65,57 @@
                     </div>
                     <div class="configuration-actions">
                         <a class="bouton-lien bouton-commander" href="{{ path('sauvegarder_configuration') }}">Sauvegarder la configuration</a>
-                        <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
+                        {% if panierVide %}
+                            <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
+                        {% else %}
+                            <div class="bouton-achat bouton-commander" onclick="displayBarketWarning()">Ajouter au panier</div>
+                        {% endif %}
+
                     </div>
                 </section>
             </div>
         </section>
     </div>
+
+    {# Modales #}
+    <div id="modal" class="modal">
+        <section id="panier-non-vide" class="conteneur-modal">
+            <div class="fermer-modal" onclick="closeModale('panier-non-vide')">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <h3>Remplacer le panier ?</h3>
+            <p>
+                Attention ! Votre panier actuel n'est pas vide. <br>
+                Continuer remplacera les produits dans votre panier par ceux contenus dans cette configuration.<br><br>
+                Remplacer les produits de votre panier par ceux de cette configuration ?
+            </p>
+            <div class="commande-suivant">
+                <div class="bouton-lien bouton-100" onclick="closeModale('panier-non-vide')">Non</div>
+                <a class="bouton-lien bouton-valider-commande bouton-100" href="{{ path('ajout_config_commande') }}">Oui</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Afficher l'avertissement de panier non vide
+        function displayBarketWarning()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("panier-non-vide")
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
+
+        // ferme les modales
+        function closeModale(id)
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById(id)
+            element.style.display = "none";
+            modal.style.display = "none";
+        }
+    </script>
 {% endblock %}
