@@ -829,6 +829,7 @@ label,
     display: flex;
     padding: 10px;
     border-bottom: 1px solid var(--border);
+    gap: 10px;
 }
 
 .produit:hover {
