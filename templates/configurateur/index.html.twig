@@ -77,7 +77,7 @@
                                         <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
                                         alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
                                         <div class="produit-configuration-infos">
-                                            <span class="produit-designation">{{ produit }}</span>
+                                            <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
                                             <div class="produit-prix-configuration">
                                                 {% if produit.stock > 0 %}
                                                     <span class="stock-oui">EN STOCK</span>
@@ -128,7 +128,7 @@
                                 <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
                             </div>
                             <div class="produit-infos">
-                                <span class="produit-designation">{{ produit.designation }}</span>
+                                <span class="produit-designation produit-designation-ellipses">{{ produit.designation }}</span>
                                 <span class="produit-resume">{{ produit.resume }}</span>
                                 <div class="produit-prix">
                                     {% if produit.stock > 0 %}
