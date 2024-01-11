@@ -1511,6 +1511,29 @@ border: 1px solid var(--borderFavoriteAdress);
     margin-right: 0px;
 }
 
+.configurations {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.configuration {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    padding: 10px;
+}
+
+.configuration:hover {
+    background-color: var(--tabBg);
+}
+
+.configuration-infos {
+    display: flex;
+    justify-content: space-between;
+}
+
 /* Modales */
 
 .modal {

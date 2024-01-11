@@ -102,7 +102,7 @@
                 </div>
                 {% if app.user %}
                     <div class="actions-recapitulatif">
-                        <a class="bouton-lien bouton-110" href="{{ path('charger_configuration') }}">Charger</a>
+                        <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
                         <a class="bouton-lien bouton-110" href="{{ path('sauvegarder_configuration') }}">Sauvegarder</a>
                     </div>
                 {% endif %}
@@ -151,6 +151,30 @@
         </section>
     </div>
 
+    {# Modales #}
+    <div id="modal" class="modal">
+        <section id="charger-configuration" class="conteneur-modal">
+            <div class="fermer-modal" onclick="closeModale('charger-configuration')">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <h3>Charger une configuration</h3>
+            <p>
+                Séléctionnez la configuration que vous souhaitez charger dans la liste çi-dessous.
+            </p>
+            <div class="configurations">
+                {% for configuration in configurations %}
+                    <a class="configuration" href="{{ path('charger_configuration', {'id': configuration.id}) }}">
+                        <span class="produit-designation">{{ configuration.nom }}</span>
+                        <div class="configuration-infos">
+                            <span>{{ configuration.produitConfigs | length }} produit{{ configuration.produitConfigs | length > 1 ? "s" }}</span>
+                            <span class="prix">{{ configurationsPrixTotal[configuration.id] }} €</span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+
     <script>
         const recapitulatifTitre = document.getElementById("recapitulatif-titre");
         const recapitulatif = document.getElementById("recapitulatif");
@@ -169,5 +193,26 @@
                 recapitulatif.classList.add("formulaire-invisible");
             }
         })
+
+        // Afficher la selection de configurations
+        function displaySavedBuildsSelection()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("charger-configuration")
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
+
+        // ferme les modales
+        function closeModale(id)
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById(id)
+            element.style.display = "none";
+            modal.style.display = "none";
+        }
     </script>
 {% endblock %}

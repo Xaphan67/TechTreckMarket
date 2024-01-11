@@ -20,12 +20,28 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ConfigurateurController extends AbstractController
 {
     #[Route('/configurateur/creer/{etape}', name: 'configurateur')]
-    public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, ConfigurationPCRepository $configurationPCRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Initialisation des variables
         $nomCategorie = null;
         $titreEtape = null;
         $produits = [];
+        $configurations = [];
+        $configurationsPrixTotal = [];
+
+        // Récupère les configurations enregistrés pour l'utilisateur
+        if ($this->getUser()) {
+            $configurations = $configurationPCRepository->findBy(['utilisateur' => $this->getUser()], ['nom' => 'ASC']);
+
+            // Rédcupère le prix de chaque configuration
+            foreach ($configurations as $configuration) {
+                $totalConfig = 0;
+                foreach ($configuration->getProduitConfigs() as $produitConfig) {
+                    $totalConfig += $produitConfig->getProduit()->getPrix();
+                }
+                $configurationsPrixTotal[$configuration->getId()] = $totalConfig;
+            }
+        }
 
         // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
         switch ($etape) {
@@ -172,6 +188,8 @@ class ConfigurateurController extends AbstractController
             'produits' => $produits,
             'configuration' => $request->getSession()->get('configuration'),
             'totalConfiguration' => $totalConfiguration,
+            'configurations' => $configurations,
+            'configurationsPrixTotal' => $configurationsPrixTotal
         ]);
     }
 
@@ -251,33 +269,39 @@ class ConfigurateurController extends AbstractController
         return $this->redirectToRoute('configurateur', ['etape' => 1]);
     }
 
-    #[Route('/configurateur/charger/', name: 'charger_configuration')]
-    public function load(ConfigurationPCRepository $configurationPCRepository, Request $request) {
+    #[Route('/configurateur/charger/{id}', name: 'charger_configuration')]
+    public function load(ConfigurationPC $configurationPC, ConfigurationPCRepository $configurationPCRepository, Request $request) {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
-            // Initialisation des variables
-            $etape = 0;
+            // Vérifie que la configuration appartient bien à l'utilisateur connecté
+            if ($configurationPC->getUtilisateur() == $this->getUser()) {
+                // Initialisation des variables
+                $etape = 0;
 
-            // Récupère la configuration de l'utilisateur
-            $configuration = $configurationPCRepository->findOneBy(['utilisateur' => $this->getUser()]);
+                // Récupère la configuration de l'utilisateur
+                $configuration = $configurationPCRepository->findOneBy(['utilisateur' => $this->getUser(), 'id' => $configurationPC->getId()]);
 
-            if ($configuration) {
-                // Récupère les produits correspondant à la configuration
-                $produitsConfiguration = [];
-                foreach ($configuration->getProduitConfigs() as $produit) {
-                    $fix = $produit->getProduit()->getDesignation(); // Produit non initialisé si je n'accède pas a un des ses attributs
-                    $etape = $produit->getEtape();
-                    $produitsConfiguration[$etape] = $produit->getProduit();
+                if ($configuration) {
+                    // Récupère les produits correspondant à la configuration
+                    $produitsConfiguration = [];
+                    foreach ($configuration->getProduitConfigs() as $produit) {
+                        $fix = $produit->getProduit()->getDesignation(); // Produit non initialisé si je n'accède pas a un des ses attributs
+                        $etape = $produit->getEtape();
+                        $produitsConfiguration[$etape] = $produit->getProduit();
+                    }
+
+                    // Stocke la configuration en session
+                     $request->getSession()->set('configuration', $produitsConfiguration);
+
+                     // Ajoute un message flash
+                     $this->addFlash('success', 'Votre configuration à bien été chargée !');
+                } else {
+                    // Ajoute un message flash
+                    $this->addFlash('danger', 'Vous n\'avez enregistré aucune configuration !');
                 }
-
-                // Stocke la configuration en session
-                 $request->getSession()->set('configuration', $produitsConfiguration);
-
-                 // Ajoute un message flash
-                 $this->addFlash('success', 'Votre configuration à bien été chargée !');
             } else {
                 // Ajoute un message flash
-                $this->addFlash('danger', 'Vous n\'avez enregistré aucune configuration !');
+                $this->addFlash('danger', 'Vous ne pouvez pas charcher une configuration qui ne vous appartient pas !');
             }
 
         } else {

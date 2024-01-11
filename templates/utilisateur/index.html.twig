@@ -210,7 +210,7 @@
                                     <div class="liste">
                                         <div class="adresse-haut">
                                             <img class="adresse-image" src="{{ asset('svg/utilisateurs/adresse-facturation.svg') }}" alt="Adresse de facturation">
-                                            Adresse{{ adressesFacturation | length > 1 ? "s" : "" }} de Facturation
+                                            Adresse{{ adressesFacturation | length > 1 ? "s" }} de Facturation
                                         </div>
                                         {% for adresse in adressesFacturation %}
                                             <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">
@@ -230,7 +230,7 @@
                                     <div class="liste">
                                         <div class="adresse-haut">
                                             <img src="{{ asset('svg/utilisateurs/adresse-livraison.svg') }}" alt="Adresse de facturation">
-                                            Adresse{{ adressesLivraison | length > 1 ? "s" : "" }} de Livraison
+                                            Adresse{{ adressesLivraison | length > 1 ? "s" }} de Livraison
                                         </div>
                                         {% for adresse in adressesLivraison %}
                                             <div class="adresse-info {{ adresse.preferee ? "adresse-preferee" }}">

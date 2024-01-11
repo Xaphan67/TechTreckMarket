@@ -11,7 +11,7 @@
             <div class="conteneur-conteneurs">
                 {% if commande and commande.produitCommandes | length > 0 %}
                     <section class="conteneur conteneur-padding">
-                        <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" : "" }}</h2>
+                        <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }}</h2>
                         <div class="liste">
                             <div class="ordinateur-uniquement commande-header">
                                 <div class="commande-header-info">
@@ -132,7 +132,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-modal-invisible" : "" }}">
+                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-modal-invisible" }}">
                         <p>Remplissez les champs pour créer une nouvelle adresse de facturation, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de facturation</span>
@@ -177,7 +177,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-modal-invisible" : "" }}">
+                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-modal-invisible" }}">
                         <p>Remplissez les champs pour créer une nouvelle adresse de livraison, ou cliquez sur la croix pour annuler.</p>
                         <div class="formulaire-sections-haut">
                             <span class="formulaire-sections">Adresse de livraison</span>
@@ -239,7 +239,7 @@
                             </span>
                         </p>
                         {% if commande %}
-                            <p>Votre commande contient {{ commande. produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" : "" }} pour un total de {{ total | number_format(2, '.')}} €</p>
+                            <p>Votre commande contient {{ commande. produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }} pour un total de {{ total | number_format(2, '.')}} €</p>
                         {% endif %}
                     </div>
                     <div class="commande-suivant">

@@ -21,7 +21,7 @@
         <section>
             <h1>Votre recherche pour : "{{ recherche }}"</h1>
             <hr>
-            <p>Il y a {{ produits | length }} produit{{ produits | length != 1 ? "s" : "" }} correspondant à votre recherche.</p>
+            <p>Il y a {{ produits | length }} produit{{ produits | length != 1 ? "s" }} correspondant à votre recherche.</p>
         </section>
 
         {# On affiche les produits correspondant à la recherche #}
