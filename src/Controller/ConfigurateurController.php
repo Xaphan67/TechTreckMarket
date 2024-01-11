@@ -21,8 +21,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ConfigurateurController extends AbstractController
 {
-    #[Route('/configurateur/creer/{etape}', name: 'configurateur')]
-    public function index(int $etape, CategorieRepository $categorieRepository, ProduitRepository $produitRepository, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, ConfigurationPCRepository $configurationPCRepository, PaginatorInterface $paginator, Request $request): Response
+    #[Route('/configurateur/creer', name: 'configurateur')]
+    public function index(CategorieRepository $categorieRepository, ProduitRepository $produitRepository, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, ConfigurationPCRepository $configurationPCRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Initialisation des variables
         $nomCategorie = null;
@@ -31,18 +31,22 @@ class ConfigurateurController extends AbstractController
         $configurations = [];
         $configurationsPrixTotal = [];
 
-        // Récupère les configurations enregistrés pour l'utilisateur
-        if ($this->getUser()) {
-            $configurations = $configurationPCRepository->findBy(['utilisateur' => $this->getUser()], ['nom' => 'ASC']);
+        // Récupère l'étape la plus avancée de la configuration stockée en sesison
+        $etape = 1;
+        $configuration = $request->getSession()->get('configuration');
 
-            // Rédcupère le prix de chaque configuration
-            foreach ($configurations as $configuration) {
-                $totalConfig = 0;
-                foreach ($configuration->getProduitConfigs() as $produitConfig) {
-                    $totalConfig += $produitConfig->getProduit()->getPrix();
-                }
-                $configurationsPrixTotal[$configuration->getId()] = $totalConfig;
+        if ($configuration) {
+            foreach ($configuration as $etapeProduit => $produit) {
+                $etape = $etapeProduit;
             }
+
+            // Affiche l'étape suivante
+            $etape += 1;
+        }
+
+        // Si une étape doit être passée, change étape à l'étape suivant celle devant être passée
+        if ($request->query->get('passer')) {
+            $etape = $request->query->get('passer') + 1;
         }
 
         // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
@@ -180,12 +184,28 @@ class ConfigurateurController extends AbstractController
         $totalConfiguration = 0;
         if ($request->getSession()->get('configuration')) {
             foreach ($request->getSession()->get('configuration') as $produit) {
-                $totalConfiguration += $produit->getprix();
+                if ($produit != null) {
+                    $totalConfiguration += $produit->getprix();
+                }
             }
         }
 
         // Instancie un formulaire de type ConfigurationPCType
         $form = $this->createForm(ConfigurationPCType::class, null);
+
+        // Récupère les configurations enregistrés pour l'utilisateur
+        if ($this->getUser()) {
+            $configurations = $configurationPCRepository->findBy(['utilisateur' => $this->getUser()], ['nom' => 'ASC']);
+
+            // Rédcupère le prix de chaque configuration
+            foreach ($configurations as $configuration) {
+                $totalConfig = 0;
+                foreach ($configuration->getProduitConfigs() as $produitConfig) {
+                    $totalConfig += $produitConfig->getProduit()->getPrix();
+                }
+                $configurationsPrixTotal[$configuration->getId()] = $totalConfig;
+            }
+        }
 
         return $this->render('configurateur/index.html.twig', [
             'etape' => $etape,
@@ -193,9 +213,9 @@ class ConfigurateurController extends AbstractController
             'produits' => $produits,
             'configuration' => $request->getSession()->get('configuration'),
             'totalConfiguration' => $totalConfiguration,
+            'formulaire' => $form,
             'configurations' => $configurations,
-            'configurationsPrixTotal' => $configurationsPrixTotal,
-            'formulaire' => $form
+            'configurationsPrixTotal' => $configurationsPrixTotal
         ]);
     }
 
@@ -222,7 +242,36 @@ class ConfigurateurController extends AbstractController
 
         // Redirige vers l'étape suivante, ou vers le résumé de la configuration
         if ($etape != 8) { // 8 est la dernière étape
-            return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+            return $this->redirectToRoute('configurateur');
+        } else {
+            return $this->redirectToRoute('recapitulatif_configuration');
+        }
+    }
+
+    #[Route('/configurateur/passer/{etape}', name: 'passer_configurateur')]
+    public function skip(int $etape, Request $request)
+    {
+        // Initialise les vraiables
+        $configuration = [];
+
+        // Vérifie si l'utilisateur à déja une configuration en session
+        if ($request->getSession()->get('configuration')) {
+            // Récupère la configuration stockée en session
+            $configuration = $request->getSession()->get('configuration');
+        }
+
+        // Ajoute une valeur null à la configuration à l'étape correspondante
+        $configuration[$etape] = null;
+
+        // Trie la configuration par ordre d'étapes
+        ksort($configuration);
+
+        // Stocke la configuration en session
+        $request->getSession()->set('configuration', $configuration);
+
+        // Redirige vers l'étape suivante, ou vers le résumé de la configuration
+        if ($etape != 8) { // 8 est la dernière étape
+            return $this->redirectToRoute('configurateur');
         } else {
             return $this->redirectToRoute('recapitulatif_configuration');
         }
@@ -268,8 +317,10 @@ class ConfigurateurController extends AbstractController
 
                         // Ajoute les nouveaux produits
                         foreach ($configurationSession as $etape => $nouveauProduit) {
-                            $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
-                            $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
+                            if ($nouveauProduit != null) {
+                                $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
+                                $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
+                            }
                         }
 
                         // Stocke la configuration dans la base de données
@@ -298,7 +349,7 @@ class ConfigurateurController extends AbstractController
         }
 
         // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur', ['etape' => 1]);
+        return $this->redirectToRoute('configurateur');
     }
 
     #[Route('/configurateur/charger/{id}', name: 'charger_configuration')]
@@ -343,7 +394,7 @@ class ConfigurateurController extends AbstractController
 
          // Redirige vers l'étape suivante, ou vers le résumé de la configuration
          if ($etape != 8) { // 8 est la dernière étape
-            return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+            return $this->redirectToRoute('configurateur');
         } else {
             return $this->redirectToRoute('recapitulatif_configuration');
         }
@@ -357,7 +408,9 @@ class ConfigurateurController extends AbstractController
 
             $totalConfiguration = 0;
             foreach ($request->getSession()->get('configuration') as $produit) {
-                $totalConfiguration += $produit->getprix();
+                if ($produit != null) {
+                    $totalConfiguration += $produit->getprix();
+                }
             }
 
             // Récupère la commande active de l'utilisateur.
@@ -388,7 +441,7 @@ class ConfigurateurController extends AbstractController
         }
 
         // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur', ['etape' => 1]);
+        return $this->redirectToRoute('configurateur');
     }
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques
@@ -404,68 +457,71 @@ class ConfigurateurController extends AbstractController
         $ListesProduitsCompatibles = [];
         foreach($etapes as $etape) {
             if (array_key_exists($etape, $request->getSession()->get('configuration'))) {
-                // Récupère les caractèristiques techniques du produit à vérifier de la configuration
-                $produitSource = $request->getSession()->get('configuration')[$etape];
-                $produitSourceCt = $produitCtRepository->findBy(['produit' => $produitSource]);
+                // Vérifie que le produit de l'étape n'est pas null (étape passée)
+                if ($request->getSession()->get('configuration')[$etape] != null) {
+                    // Récupère les caractèristiques techniques du produit à vérifier de la configuration
+                    $produitSource = $request->getSession()->get('configuration')[$etape];
+                    $produitSourceCt = $produitCtRepository->findBy(['produit' => $produitSource]);
 
-                // Vérifie chaque caractéristique spécifiée
-                $ListesProduitsEtapeCompatibles = [];
-                foreach ($caracteristiques[$etape] as $caracteristiqueSource => $caracteristiqueCible) {
-                    // Récupère les valeur des caractéristiques du produit à vérifier pour la caractéristique spécifiée
-                    $valeursCaracteristiquesTechniques = [];
-                    foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
-                        if ($produitCaracteristiqueTechnique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueSource) {
-                            $valeursCaracteristiquesTechniques[] = $produitCaracteristiqueTechnique->getValeur();
+                    // Vérifie chaque caractéristique spécifiée
+                    $ListesProduitsEtapeCompatibles = [];
+                    foreach ($caracteristiques[$etape] as $caracteristiqueSource => $caracteristiqueCible) {
+                        // Récupère les valeur des caractéristiques du produit à vérifier pour la caractéristique spécifiée
+                        $valeursCaracteristiquesTechniques = [];
+                        foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
+                            if ($produitCaracteristiqueTechnique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueSource) {
+                                $valeursCaracteristiquesTechniques[] = $produitCaracteristiqueTechnique->getValeur();
+                            }
                         }
-                    }
 
-                    // Crée la liste des produits compatibles avec cette caractéristique
-                    $produitsCompatibles = [];
-                    foreach ($produits as $produit) { // Itère chaque produit
-                        foreach ($produit->getCaracteristiquesTechniques() as $produitCaracteristique) { // Itère chaque caractéristique technique de chaque produit
-                            if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueCible) { // Si son nom est celui spécifié...
-                                foreach ($valeursCaracteristiquesTechniques as $valeur) { // Itère les valeurs des caractéristiques compatibles...
-                                    if (ctype_digit($valeur)) { // Si la valeur est une chaîne de caractères uniquement constituée de nombres
-                                        $valeurInt = intval($valeur); // Converti la chaîne de caractère en nombre entier
-                                        if ($valeurInt >= intval($produitCaracteristique->getValeur())) { // Vérifie que la valeur est compatible
-                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
-                                        }
-                                    } else if (substr($valeur, -3) == " mm") { // Si la valeur se termine par " mm"
-                                        $valeurInt = intval(substr($valeur, 0, -3)); // Récupère la valeur numérique et la converti en nombre entier
-                                        if ($valeurInt >= intval(substr($produitCaracteristique->getValeur(), 0, -3))) { // Vérifie que la valeur est compatible
-                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
-                                        }
-                                    } else {
-                                        if ($valeur == $produitCaracteristique->getValeur()) { // Vérifie que la valeur est compatible
-                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                        // Crée la liste des produits compatibles avec cette caractéristique
+                        $produitsCompatibles = [];
+                        foreach ($produits as $produit) { // Itère chaque produit
+                            foreach ($produit->getCaracteristiquesTechniques() as $produitCaracteristique) { // Itère chaque caractéristique technique de chaque produit
+                                if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueCible) { // Si son nom est celui spécifié...
+                                    foreach ($valeursCaracteristiquesTechniques as $valeur) { // Itère les valeurs des caractéristiques compatibles...
+                                        if (ctype_digit($valeur)) { // Si la valeur est une chaîne de caractères uniquement constituée de nombres
+                                            $valeurInt = intval($valeur); // Converti la chaîne de caractère en nombre entier
+                                            if ($valeurInt >= intval($produitCaracteristique->getValeur())) { // Vérifie que la valeur est compatible
+                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                            }
+                                        } else if (substr($valeur, -3) == " mm") { // Si la valeur se termine par " mm"
+                                            $valeurInt = intval(substr($valeur, 0, -3)); // Récupère la valeur numérique et la converti en nombre entier
+                                            if ($valeurInt >= intval(substr($produitCaracteristique->getValeur(), 0, -3))) { // Vérifie que la valeur est compatible
+                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                            }
+                                        } else {
+                                            if ($valeur == $produitCaracteristique->getValeur()) { // Vérifie que la valeur est compatible
+                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
+
+                        // Ajoute la liste des produits compatibles avec cette caractéristique au tableau global de l'étape
+                        $ListesProduitsEtapeCompatibles[] = $produitsCompatibles;
                     }
 
-                    // Ajoute la liste des produits compatibles avec cette caractéristique au tableau global de l'étape
-                    $ListesProduitsEtapeCompatibles[] = $produitsCompatibles;
-                }
-
-                // Crée la liste des produits compatibles avec cette étape
-                $produitsCompatibles = [];
-                foreach ($produits as $produit) { // Itère chaque produit
-                    $compatible = true; // Considère le produit comme compatible
-                    foreach ($ListesProduitsEtapeCompatibles as $listeProduitsCompatibles) { // Itère la liste des produits compatible avec chaque caractéristique
-                        if (!in_array($produit, $listeProduitsCompatibles)) { // Si le produit n'est pas compatible avec une caractéristique
-                            $compatible = false; // Considère le produit comme non compatible
-                            break; // Arrete la boucle
+                    // Crée la liste des produits compatibles avec cette étape
+                    $produitsCompatibles = [];
+                    foreach ($produits as $produit) { // Itère chaque produit
+                        $compatible = true; // Considère le produit comme compatible
+                        foreach ($ListesProduitsEtapeCompatibles as $listeProduitsCompatibles) { // Itère la liste des produits compatible avec chaque caractéristique
+                            if (!in_array($produit, $listeProduitsCompatibles)) { // Si le produit n'est pas compatible avec une caractéristique
+                                $compatible = false; // Considère le produit comme non compatible
+                                break; // Arrete la boucle
+                            }
+                        }
+                        if ($compatible) { // Si le produit est compatible avec toutes les caractéristiques
+                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
                         }
                     }
-                    if ($compatible) { // Si le produit est compatible avec toutes les caractéristiques
-                        $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
-                    }
-                }
 
-                // Ajoute la liste des produits compatibles avec cette caractéristique à cette étape au tableau global
-                $ListesProduitsCompatibles[] = $produitsCompatibles;
+                    // Ajoute la liste des produits compatibles avec cette caractéristique à cette étape au tableau global
+                    $ListesProduitsCompatibles[] = $produitsCompatibles;
+                }
             }
         }
 

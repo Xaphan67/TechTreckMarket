@@ -156,8 +156,10 @@ class CommandeController extends AbstractController
 
             // Ajoute tout les produits de la configuration à la commande
             foreach ($configuration as $produit) {
-                $prod = $produitRepository->findOneBy(['id' => $produit->getId()]);
-                $commande->addProduitCommande(new ProduitCommande($prod, 1));
+                if ($produit != null) {
+                    $prod = $produitRepository->findOneBy(['id' => $produit->getId()]);
+                    $commande->addProduitCommande(new ProduitCommande($prod, 1));
+                }
             }
 
             // Stocke la commande dans la base de données
@@ -176,7 +178,7 @@ class CommandeController extends AbstractController
         }
 
         // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur', ['etape' => 1]);
+        return $this->redirectToRoute('configurateur');
     }
 
     #[Route('/commande/delete/{id}', name: 'supprimer_produit_commande')]

@@ -13,7 +13,7 @@
                     <h2>Composants</h2>
                     <div class="liste-recapitulatif-configuration">
                         {% for etape, produit in configuration %}
-                            {% if etape <= 8 %}
+                            {% if etape <= 8 and produit is not null %}
                                 <article class="panier-produit">
                                     <div class="produit-image-mini mobile-tablette-uniquement">
                                         <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
