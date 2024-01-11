@@ -105,7 +105,7 @@
                         {% if configurations | length > 0 %}
                             <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
                         {% endif %}
-                        <a class="bouton-lien bouton-110" href="{{ path('sauvegarder_configuration') }}">Sauvegarder</a>
+                        <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
                     </div>
                 {% endif %}
             </div>
@@ -155,6 +155,21 @@
 
     {# Modales #}
     <div id="modal" class="modal">
+        <section id="sauvegarder-configuration" class="conteneur-modal">
+            <h3>Sauvegarder la configuration</h3>
+            <div class="fermer-modal" onclick="closeModale('sauvegarder-configuration')">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <p>
+                Entrez un nom pour la configuration. Vous pourrez la charger à tout moment en cliquant sur le bouton "Charger" du configurateur.
+            </p>
+            {{ form_start(formulaire, {'action': path('sauvegarder_configuration'), 'method': 'POST'}) }}
+                <div class="formulaire-champ">
+                    {{ form_row(formulaire.nom) }}
+                </div>
+                {{ form_row(formulaire.Valider) }}
+            {{ form_end(formulaire) }}
+        </section>
         <section id="charger-configuration" class="conteneur-modal">
             <div class="fermer-modal" onclick="closeModale('charger-configuration')">
                 <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
@@ -195,6 +210,18 @@
                 recapitulatif.classList.add("formulaire-invisible");
             }
         })
+
+        // Afficher le formulaire de sauvegarde de configuration
+        function displaySaveBuildForm()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("sauvegarder-configuration")
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
 
         // Afficher la selection de configurations
         function displaySavedBuildsSelection()

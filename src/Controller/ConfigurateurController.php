@@ -3,19 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Produit;
-use App\Entity\ConfigurationPC;
 use App\Entity\ProduitConfig;
+use App\Entity\ConfigurationPC;
+use App\Form\ConfigurationPCType;
 use App\Repository\ProduitRepository;
-use App\Repository\CategorieRepository;
 use App\Repository\CommandeRepository;
+use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\ProduitConfigRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use App\Repository\ConfigurationPCRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitCaracteristiqueTechniqueRepository;
-use App\Repository\ProduitConfigRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ConfigurateurController extends AbstractController
@@ -183,6 +184,9 @@ class ConfigurateurController extends AbstractController
             }
         }
 
+        // Instancie un formulaire de type ConfigurationPCType
+        $form = $this->createForm(ConfigurationPCType::class, null);
+
         return $this->render('configurateur/index.html.twig', [
             'etape' => $etape,
             'titreEtape' => $titreEtape,
@@ -190,7 +194,8 @@ class ConfigurateurController extends AbstractController
             'configuration' => $request->getSession()->get('configuration'),
             'totalConfiguration' => $totalConfiguration,
             'configurations' => $configurations,
-            'configurationsPrixTotal' => $configurationsPrixTotal
+            'configurationsPrixTotal' => $configurationsPrixTotal,
+            'formulaire' => $form
         ]);
     }
 
@@ -231,38 +236,58 @@ class ConfigurateurController extends AbstractController
             $configurationSession = $request->getSession()->get('configuration');
 
             if ($configurationSession) {
-                // Récupère et traite formulaire ici
-                $nomConfiguration = "Configuration";
+                // Récupère le formulaire
+                $form = $this->createForm(ConfigurationPCType::class);
+                $form->handleRequest($request);
 
-                // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
-                $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
+                // Vérifie que le formulaire est soumis
+                if ($form->isSubmitted()) {
+                    // Vérifie que le formulaire est valide
+                    if ($form->isValid()) {
+                        // Enregistre l'url d'entrée dans une variable en session
+                        $request->getSession()->set('urlFrom', $request->headers->get('referer'));
 
-                // Crée une nouvelle configuration si l'utilisateur n'a aucune configuration enregistrée avec ce nom
-                if (!$configuration) {
-                    $configuration = new ConfigurationPC($nomConfiguration);
-                    $this->getUser()->addConfiguration($configuration);
+                        // Récupère le nom de la confiration à partir du formulaire
+                        $nomConfiguration = $form->getData()['nom'];
+
+                        // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
+                        $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
+
+                        // Crée une nouvelle configuration si l'utilisateur n'a aucune configuration enregistrée avec ce nom
+                        if (!$configuration) {
+                            $configuration = new ConfigurationPC($nomConfiguration);
+                            $this->getUser()->addConfiguration($configuration);
+                        }
+
+                        // Récupère et supprime les produits de la configuration correspondante de l'utilisateur
+                        $produitsConfiguration = $produitConfigRepository->findBy(['configurationPC' => $configuration]);
+
+                        foreach ($produitsConfiguration as $produitConfiguration) {
+                            $configuration->removeProduitsConfig($produitConfiguration);
+                        }
+
+                        // Ajoute les nouveaux produits
+                        foreach ($configurationSession as $etape => $nouveauProduit) {
+                            $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
+                            $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
+                        }
+
+                        // Stocke la configuration dans la base de données
+                        $entityManager->persist($configuration);
+                        $entityManager->flush($configuration);
+
+                        // Ajoute un message flash
+                        $this->addFlash('success', 'Votre configuration à bien été sauvegardée !');
+                    } else {
+                        // Ajoute un message flash
+                        $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
+                    }
+
+                    // Redirige vers l'url d'entrée
+                    $url = $request->getSession()->get('urlFrom');
+                    $request->getSession()->remove('urlFrom');
+                    return $this->redirect($url);
                 }
-
-                // Récupère et supprime les produits de la configuration correspondante de l'utilisateur
-                $produitsConfiguration = $produitConfigRepository->findBy(['configurationPC' => $configuration]);
-
-                foreach ($produitsConfiguration as $produitConfiguration) {
-                    $configuration->removeProduitsConfig($produitConfiguration);
-                }
-
-                // Ajoute les nouveaux produits
-                foreach ($configurationSession as $etape => $nouveauProduit) {
-                    $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
-                    $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
-                }
-
-                // Stocke la configuration dans la base de données
-                $entityManager->persist($configuration);
-                $entityManager->flush($configuration);
-
-                // Ajoute un message flash
-                $this->addFlash('success', 'Votre configuration à bien été sauvegardée !');
-
             } else {
                 // Ajoute un message flash
                 $this->addFlash('danger', 'Votre configuration est vide !');
@@ -348,10 +373,14 @@ class ConfigurateurController extends AbstractController
                 $panierVide = false;
             }
 
+            // Instancie un formulaire de type ConfigurationPCType
+            $form = $this->createForm(ConfigurationPCType::class, null);
+
             return $this->render('configurateur/summary.html.twig', [
                 'configuration' => $configuration,
                 'totalConfiguration' => $totalConfiguration,
-                'panierVide' => $panierVide
+                'panierVide' => $panierVide,
+                'formulaire' => $form
             ]);
         } else {
             // Ajoute un message flash
