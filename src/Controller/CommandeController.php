@@ -12,6 +12,7 @@ use App\Entity\AdresseFacturation;
 use App\Repository\CommandeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ProduitCommandeRepository;
+use App\Repository\ProduitRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -98,7 +99,7 @@ class CommandeController extends AbstractController
             if (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()) {
                 // Ajoute le produit à la commande s'il n'existe pas déjà
                 if (!$produitActuel) {
-                    $commande->addProduitCommande(new ProduitCommande($commande, $produit, $quantite));
+                    $commande->addProduitCommande(new ProduitCommande($produit, $quantite));
 
                     // Stocke la commande dans la base de données
                     $entityManager->persist($commande);
@@ -125,6 +126,57 @@ class CommandeController extends AbstractController
 
         // Redirige vers la page d'accueil
         return $this->redirectToRoute('app_accueil');
+    }
+
+    #[Route('commande/add_build', name: 'ajout_config_commande')]
+    public function addBuildToBarket(ProduitRepository $produitRepository, CommandeRepository $commandeRepository, EntityManagerInterface $entityManager, Request $request) {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            // Récupère la commande active de l'utilisateur.
+            $utilisateur = $this->getUser();
+            $commande = $commandeRepository->findOneBy([
+                'utilisateur' => $utilisateur->getId(),
+                'etat' => "panier"
+            ]);
+
+            // Crée une nouvelle commande si l'utilisateur n'en à aucune à l'était "panier"
+            if (!$commande) {
+                $commande = new Commande($utilisateur);
+                $utilisateur->addCommande($commande);
+            }
+
+            // Supprime tout les produits de la commande
+            foreach ($commande->getProduitCommandes() as $produitCommande) {
+                $entityManager->remove($produitCommande);
+                $entityManager->flush();
+            }
+
+            // Récupère la configuration stockée en session
+            $configuration = $request->getSession()->get('configuration');
+
+            // Ajoute tout les produits de la configuration à la commande
+            foreach ($configuration as $produit) {
+                $prod = $produitRepository->findOneBy(['id' => $produit->getId()]);
+                $commande->addProduitCommande(new ProduitCommande($prod, 1));
+            }
+
+            // Stocke la commande dans la base de données
+            $entityManager->persist($commande);
+            $entityManager->flush($commande);
+
+            // Ajoute un message flash
+            $this->addFlash('success', 'La configuration à été ajoutée au panier !');
+
+            // Redirige vers le panier
+            return $this->redirectToRoute('afficher_panier');
+
+        } else {
+            // Ajoute un message flash
+            $this->addFlash('danger', 'Vous devez être connecté pour ajouter une configuration au panier !');
+        }
+
+        // Redirige vers la page du configurateur
+        return $this->redirectToRoute('configurateur', ['etape' => 1]);
     }
 
     #[Route('/commande/delete/{id}', name: 'supprimer_produit_commande')]

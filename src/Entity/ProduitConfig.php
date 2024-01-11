@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\ProduitConfigRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Cascade;
 
 #[ORM\Entity(repositoryClass: ProduitConfigRepository::class)]
 class ProduitConfig
@@ -28,9 +27,8 @@ class ProduitConfig
     #[ORM\Column]
     private ?int $etape = null;
 
-    public function __construct(ConfigurationPC $configuration, Produit $produit, int $quantite, int $etape)
+    public function __construct(Produit $produit, int $quantite, int $etape)
     {
-        $this->setConfigurationPC($configuration);
         $this->setProduit($produit);
         $this->setQuantite($quantite);
         $this->setEtape($etape);

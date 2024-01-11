@@ -63,7 +63,7 @@
                         <h2>Montant total de la configuration</h2>
                         <span class="panier-prix">{{ totalConfiguration | number_format(2, '.') }} €</span>
                     </div>
-                    <a class="bouton-achat bouton-commander bouton-lien-centre" href="">Ajouter au panier</a>
+                    <a class="bouton-achat bouton-commander bouton-lien-centre" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
                 </section>
             </div>
         </section>

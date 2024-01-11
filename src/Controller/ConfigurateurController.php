@@ -223,7 +223,7 @@ class ConfigurateurController extends AbstractController
     }
 
     #[Route('/configurateur/sauvegarder/', name: 'sauvegarder_configuration')]
-    public function save(ConfigurationPCRepository $configurationPCRepository, ProduitConfigRepository $produitConfigRepository, EntityManagerInterface $entityManager, Request $request) {
+    public function save(ProduitRepository $produitRepository, ConfigurationPCRepository $configurationPCRepository, ProduitConfigRepository $produitConfigRepository, EntityManagerInterface $entityManager, Request $request) {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             // Récupère la configuration stockée en session
@@ -250,8 +250,9 @@ class ConfigurateurController extends AbstractController
                 }
 
                 // Ajoute les nouveaux produits
-                foreach ($configurationSession as $nouveauProduit) {
-                    $configuration->addProduitConfig(new ProduitConfig($configuration, $nouveauProduit, 1, 0));
+                foreach ($configurationSession as $etape => $nouveauProduit) {
+                    $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
+                    $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
                 }
 
                 // Stocke la configuration dans la base de données
@@ -318,7 +319,7 @@ class ConfigurateurController extends AbstractController
         return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
     }
 
-    #[Route('/configurateur/recapitulatif', name:'recapitulatif_configuration')]
+    #[Route('/configurateur/recapitulatif', name: 'recapitulatif_configuration')]
     public function summary(Request $request){
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
