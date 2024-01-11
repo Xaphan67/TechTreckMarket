@@ -84,7 +84,7 @@
                                                 {% else %}
                                                     <span class="stock-non">RUPTURE</span>
                                                 {% endif %}
-                                                <span class="produit-achat produit-prix-configuration prix">{{ produit.prix }} €</span>
+                                                <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, '.') }} €</span>
                                             </div>
                                         </div>
                                     </article>
@@ -96,9 +96,9 @@
                         Cliquez sur un élément<br>
                         pour voir sa fiche produit
                     </span>
-                    <a class="bouton-lien bouton-passer-etape bouton-150" href="{{ path('configurateur', {'etape': etape + 1}) }}">Passer cette étape</a>
+                    <a class="bouton-lien bouton-passer-etape bouton-150" href="{{ etape < 8 ? path('configurateur', {'etape': etape + 1}) : path('recapitulatif_configuration') }}">Passer cette étape</a>
                     <h3>total de la config</h3>
-                    <span class="fiche-prix">{{ totalConfiguration }} €</span>
+                    <span class="fiche-prix">{{ totalConfiguration | number_format(2, '.') }} €</span>
                 </div>
                 {% if app.user %}
                     <div class="actions-recapitulatif">
@@ -136,7 +136,7 @@
                                     {% else %}
                                         <span class="stock-non">RUPTURE</span>
                                     {% endif %}
-                                    <span class="produit-achat prix">{{ produit.prix }} €</span>
+                                    <span class="produit-achat prix">{{ produit.prix | number_format(2, '.') }} €</span>
                                 </div>
                             </div>
                         </article>
@@ -169,7 +169,7 @@
                         <span class="produit-designation">{{ configuration.nom }}</span>
                         <div class="configuration-infos">
                             <span>{{ configuration.produitConfigs | length }} produit{{ configuration.produitConfigs | length > 1 ? "s" }}</span>
-                            <span class="prix">{{ configurationsPrixTotal[configuration.id] }} €</span>
+                            <span class="prix">{{ configurationsPrixTotal[configuration.id] | number_format(2, '.') }} €</span>
                         </div>
                     </a>
                 {% endfor %}

@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Configurateur PC - Votre configuration{% endblock %}
+
+{% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
+
+{% block body %}
+    <div class="conteneur-principal">
+        <section class="categories">
+            <h2>Votre configuration</h2>
+            <div class="conteneur-conteneurs">
+                <section class="conteneur conteneur-padding">
+                    <h2>Composants</h2>
+                    <div class="liste-recapitulatif-configuration">
+                        {% for etape, produit in configuration %}
+                            {% if etape <= 8 %}
+                                <article class="panier-produit">
+                                    <div class="produit-image-mini mobile-tablette-uniquement">
+                                        <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                                    </div>
+                                    <div class="panier-infos">
+                                        <div class="mobile-tablette-uniquement">
+                                            <span class="produit-designation">
+                                                <a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a>
+                                            </span>
+                                            <span>
+                                                Disponibilité :
+                                                {% if produit.stock > 0 %}
+                                                    <span class="stock-oui">EN STOCK</span>
+                                                {% else %}
+                                                    <span class="stock-non">RUPTURE</span>
+                                                {% endif %}
+                                            </span>
+                                            <span class="prix prix-recapitulatif">{{ produit.prix  | number_format(2, '.') }} €</span>
+                                        </div>
+                                        <div class="ordinateur-uniquement">
+                                            <div class="produit-image-mini panier-header-image">
+                                                <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                                            </div>
+                                            <div class="configurateur-designation">
+                                                <span class="produit-designation">
+                                                    <a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a>
+                                                </span>
+                                                <span>
+                                                    Disponibilité :
+                                                    {% if produit.stock > 0 %}
+                                                        <span class="stock-oui">EN STOCK</span>
+                                                    {% else %}
+                                                        <span class="stock-non">RUPTURE</span>
+                                                    {% endif %}
+                                                </span>
+                                            </div>
+                                            <span class="configurateur-prix prix">{{ produit.prix | number_format(2, '.') }} €</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </section>
+                <section class="conteneur conteneur-padding conteneur-total-panier">
+                    <div class="panier-total">
+                        <h2>Montant total de la configuration</h2>
+                        <span class="panier-prix">{{ totalConfiguration | number_format(2, '.') }} €</span>
+                    </div>
+                    <a class="bouton-achat bouton-commander bouton-lien-centre" href="">Ajouter au panier</a>
+                </section>
+            </div>
+        </section>
+    </div>
+{% endblock %}

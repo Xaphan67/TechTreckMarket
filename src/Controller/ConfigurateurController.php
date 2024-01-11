@@ -214,7 +214,12 @@ class ConfigurateurController extends AbstractController
         // Stocke la configuration en session
         $request->getSession()->set('configuration', $configuration);
 
-        return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+        // Redirige vers l'étape suivante, ou vers le résumé de la configuration
+        if ($etape != 8) { // 8 est la dernière étape
+            return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+        } else {
+            return $this->redirectToRoute('recapitulatif_configuration');
+        }
     }
 
     #[Route('/configurateur/sauvegarder/', name: 'sauvegarder_configuration')]
@@ -311,6 +316,30 @@ class ConfigurateurController extends AbstractController
 
         // Redirige vers la page du configurateur
         return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+    }
+
+    #[Route('/configurateur/recapitulatif', name:'recapitulatif_configuration')]
+    public function summary(Request $request){
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            $configuration = $request->getSession()->get('configuration');
+
+            $totalConfiguration = 0;
+            foreach ($request->getSession()->get('configuration') as $produit) {
+                $totalConfiguration += $produit->getprix();
+            }
+
+            return $this->render('configurateur/summary.html.twig', [
+                'configuration' => $configuration,
+                'totalConfiguration' => $totalConfiguration
+            ]);
+        } else {
+            // Ajoute un message flash
+            $this->addFlash('danger', 'Vous devez être connecté pour voir une configuration !');
+        }
+
+        // Redirige vers la page du configurateur
+        return $this->redirectToRoute('configurateur', ['etape' => 1]);
     }
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques

@@ -1312,7 +1312,7 @@ border: 1px solid var(--borderFavoriteAdress);
     display: flex;
     align-items: center;
     gap: 5px;
-    height: 120px;
+    height: 122px;
 }
 
 .panier-produit:hover {
@@ -1343,6 +1343,13 @@ border: 1px solid var(--borderFavoriteAdress);
     color: var(--textRed);
 }
 
+.panier-infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
 .bouton-commander {
     width: 240px;
     height: 50px;
@@ -1350,7 +1357,6 @@ border: 1px solid var(--borderFavoriteAdress);
     cursor: pointer;
     margin-inline: auto;
 }
-
 
 .panier-vide {
     width: 250px;
@@ -1537,6 +1543,16 @@ border: 1px solid var(--borderFavoriteAdress);
 .configuration-infos {
     display: flex;
     justify-content: space-between;
+}
+
+.liste-recapitulatif-configuration {
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.prix-recapitulatif {
+    margin-top: 10px;
 }
 
 /* Modales */
@@ -2155,7 +2171,7 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .panier-produit {
         border-top: 1px solid var(--border);
-        height: 80px;
+        height: 82px;
     }
 
     .panier-header-image {
@@ -2200,6 +2216,23 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .footerHaut {
         padding-inline: calc((100vw - 824px) / 2);
+    }
+
+    /* Configurateur */
+
+    .configurateur-designation {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 10px;
+        width: 75%;
+    }
+
+    .configurateur-prix {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
     }
 
     /* Modales */
