@@ -59,7 +59,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p>Aucunn composant ajouté dans cette configuration</p>
+                        <p class="paragraphe-centre">Aucunn composant ajouté dans cette configuration</p>
                     {% endif %}
                 </section>
                 <section class="conteneur conteneur-padding conteneur-total-configuration">
@@ -68,14 +68,17 @@
                         <span class="panier-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
                     </div>
                     <div class="configuration-actions">
-                        <div class="bouton-lien bouton-commander" onclick="displaySaveBuildForm()">Sauvegarder la configuration</div>
-                        <div class="bouton-lien bouton-commander" onclick="displayResetWarning()">Créer une nouvelle configuration</div>
-                        {% if panierVide %}
-                            <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
-                        {% else %}
-                            <div class="bouton-achat bouton-commander" onclick="displayBarketWarning()">Ajouter au panier</div>
+                        {% if app.user %}
+                            <div class="bouton-lien bouton-commander" onclick="displaySaveBuildForm()">Sauvegarder la configuration</div>
                         {% endif %}
-
+                        <div class="bouton-lien bouton-commander" onclick="displayResetWarning()">Créer une nouvelle configuration</div>
+                        {% if app.user %}
+                            {% if panierVide %}
+                                <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
+                            {% else %}
+                                <div class="bouton-achat bouton-commander" onclick="displayBarketWarning()">Ajouter au panier</div>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </section>
             </div>

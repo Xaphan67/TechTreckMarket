@@ -110,16 +110,15 @@
                     <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('passer_configurateur', {'etape': etape }) }}">Passer cette étape</a>
                     <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('terminer_configurateur') }}">Terminer</a>
                 </div>
-            </div>
-        </section>
-
-        <section class="conteneur conteneur-padding-complet">
-            <div class="actions-recapitulatif">
-                {% if configurations | length > 0 %}
-                    <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
-                {% endif %}
-                <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
-                <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
+                <div class="actions-recapitulatif">
+                    {% if app.user %}
+                        {% if configurations | length > 0 %}
+                            <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
+                        {% endif %}
+                        <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                    {% endif %}
+                    <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
+                </div>
             </div>
         </section>
 
