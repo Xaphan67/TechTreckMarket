@@ -1372,6 +1372,15 @@ border: 1px solid var(--borderFavoriteAdress);
     margin-bottom: 10px;
 }
 
+.conteneur-total-panier {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 207px;
+}
+
 /* Footer */
 
 .footerHaut {
@@ -1553,6 +1562,21 @@ border: 1px solid var(--borderFavoriteAdress);
 
 .prix-recapitulatif {
     margin-top: 10px;
+}
+
+.configuration-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.conteneur-total-configuration {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 267px;
 }
 
 /* Modales */
@@ -1933,20 +1957,14 @@ border: 1px solid var(--borderFavoriteAdress);
 
     /* Panier */
 
-    .panier-prix {
-        margin-top: 40px;
-    }
-
     .conteneur-total-panier {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        order: -1;
         width: 280px;
-        height: 277px;
+        height: 218px;
+        order: -1;
     }
 
-    .conteneur-total-panier h2 {
+    .conteneur-total-panier h2,
+    .conteneur-total-configuration h2 {
         display: flex;
         align-items: center;
         line-height: normal;
@@ -1970,6 +1988,14 @@ border: 1px solid var(--borderFavoriteAdress);
         gap: 20px;
         justify-content: center;
         width: 100%;
+    }
+
+    /* Configurateur */
+
+    .conteneur-total-configuration {
+        order: -1;
+        width: 280px;
+        height: 278px;
     }
 
     /* Modales */

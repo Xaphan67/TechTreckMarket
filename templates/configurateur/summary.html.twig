@@ -58,12 +58,15 @@
                         {% endfor %}
                     </div>
                 </section>
-                <section class="conteneur conteneur-padding conteneur-total-panier">
+                <section class="conteneur conteneur-padding conteneur-total-configuration">
                     <div class="panier-total">
                         <h2>Montant total de la configuration</h2>
                         <span class="panier-prix">{{ totalConfiguration | number_format(2, '.') }} €</span>
                     </div>
-                    <a class="bouton-achat bouton-commander bouton-lien-centre" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
+                    <div class="configuration-actions">
+                        <a class="bouton-lien bouton-commander" href="{{ path('sauvegarder_configuration') }}">Sauvegarder la configuration</a>
+                        <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
+                    </div>
                 </section>
             </div>
         </section>
