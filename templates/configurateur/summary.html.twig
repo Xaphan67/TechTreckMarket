@@ -11,33 +11,16 @@
             <div class="conteneur-conteneurs">
                 <section class="conteneur conteneur-padding">
                     <h2>Composants</h2>
-                    <div class="liste-recapitulatif-configuration">
-                        {% for etape, produit in configuration %}
-                            {% if etape <= 8 and produit is not null %}
-                                <article class="panier-produit">
-                                    <div class="produit-image-mini mobile-tablette-uniquement">
-                                        <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
-                                    </div>
-                                    <div class="panier-infos">
-                                        <div class="mobile-tablette-uniquement">
-                                            <span class="produit-designation">
-                                                <a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a>
-                                            </span>
-                                            <span>
-                                                Disponibilité :
-                                                {% if produit.stock > 0 %}
-                                                    <span class="stock-oui">EN STOCK</span>
-                                                {% else %}
-                                                    <span class="stock-non">RUPTURE</span>
-                                                {% endif %}
-                                            </span>
-                                            <span class="prix prix-recapitulatif">{{ produit.prix  | number_format(2, ',', ' ') }} €</span>
+                    {% if composants | length > 0 %}
+                        <div class="liste-recapitulatif-configuration">
+                            {% for etape, produit in composants %}
+                                {% if produit is not null %}
+                                    <article class="panier-produit">
+                                        <div class="produit-image-mini mobile-tablette-uniquement">
+                                            <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
                                         </div>
-                                        <div class="ordinateur-uniquement">
-                                            <div class="produit-image-mini panier-header-image">
-                                                <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
-                                            </div>
-                                            <div class="configurateur-designation">
+                                        <div class="panier-infos">
+                                            <div class="mobile-tablette-uniquement">
                                                 <span class="produit-designation">
                                                     <a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a>
                                                 </span>
@@ -49,14 +32,35 @@
                                                         <span class="stock-non">RUPTURE</span>
                                                     {% endif %}
                                                 </span>
+                                                <span class="prix prix-recapitulatif">{{ produit.prix  | number_format(2, ',', ' ') }} €</span>
                                             </div>
-                                            <span class="configurateur-prix prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                            <div class="ordinateur-uniquement">
+                                                <div class="produit-image-mini panier-header-image">
+                                                    <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                                                </div>
+                                                <div class="configurateur-designation">
+                                                    <span class="produit-designation">
+                                                        <a href="{{ path('voir_produit', {'id': produit.id}) }}">{{ produit.designation }}</a>
+                                                    </span>
+                                                    <span>
+                                                        Disponibilité :
+                                                        {% if produit.stock > 0 %}
+                                                            <span class="stock-oui">EN STOCK</span>
+                                                        {% else %}
+                                                            <span class="stock-non">RUPTURE</span>
+                                                        {% endif %}
+                                                    </span>
+                                                </div>
+                                                <span class="configurateur-prix prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </article>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+                                    </article>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p>Aucunn composant ajouté dans cette configuration</p>
+                    {% endif %}
                 </section>
                 <section class="conteneur conteneur-padding conteneur-total-configuration">
                     <div class="panier-total">
@@ -65,6 +69,7 @@
                     </div>
                     <div class="configuration-actions">
                         <div class="bouton-lien bouton-commander" onclick="displaySaveBuildForm()">Sauvegarder la configuration</div>
+                        <div class="bouton-lien bouton-commander" onclick="displayResetWarning()">Créer une nouvelle configuration</div>
                         {% if panierVide %}
                             <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
                         {% else %}
@@ -109,6 +114,20 @@
                 <a class="bouton-lien bouton-valider-commande bouton-100" href="{{ path('ajout_config_commande') }}">Oui</a>
             </div>
         </section>
+        <section id="reset-configuration" class="conteneur-modal">
+            <div class="fermer-modal" onclick="closeModale('reset-configuration')">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <h3>Réinitialiser le configurateur ?</h3>
+            <p>
+                Cette action va supprimer votre confuration actuelle pour vous permettre d'en créer une nouvelle.<br><br>
+                Êtes-vous sûr de vouloir continuer ?
+            </p>
+            <div class="commande-suivant">
+                <div class="bouton-lien bouton-100" onclick="closeModale('reset-configuration')">Non</div>
+                <a class="bouton-lien bouton-valider-commande bouton-100" href="{{ path('reset_configuration') }}">Oui</a>
+            </div>
+        </section>
     </div>
 
     <script>
@@ -129,6 +148,18 @@
         {
             const modal = document.getElementById("modal")
             const element = document.getElementById("panier-non-vide")
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
+
+        // Afiche l'avertissement de réinitialisation
+        function displayResetWarning()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("reset-configuration")
             const stylesModal = window.getComputedStyle(modal)
             if (stylesModal.getPropertyValue("display") == "none") {
                 element.style.display = "block";

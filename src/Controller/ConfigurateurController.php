@@ -405,12 +405,25 @@ class ConfigurateurController extends AbstractController
         }
     }
 
+    #[Route('/configurateur/reset', name: 'reset_configuration')]
+    public function reset(Request $request) {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            $request->getSession()->remove('configuration');
+        }
+
+        // Redirige vers le configurateur
+        return $this->redirectToRoute('configurateur');
+    }
+
     #[Route('/configurateur/recapitulatif', name: 'recapitulatif_configuration')]
     public function summary(CommandeRepository $commandeRepository, Request $request){
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
+            // Récupère la configuration stockée en session
             $configuration = $request->getSession()->get('configuration');
 
+            // Récupère le total de la configuration
             $totalConfiguration = 0;
             foreach ($request->getSession()->get('configuration') as $produit) {
                 if ($produit != null) {
@@ -431,11 +444,19 @@ class ConfigurateurController extends AbstractController
                 $panierVide = false;
             }
 
+            // Vérifie si il y à au moins un composant dans la configuration
+            $composants = [];
+            foreach (array_slice($configuration, 0, 8) as $composant) {
+                if ($composant != null) {
+                    $composants[] = $composant;
+                }
+            }
+
             // Instancie un formulaire de type ConfigurationPCType
             $form = $this->createForm(ConfigurationPCType::class, null);
 
             return $this->render('configurateur/summary.html.twig', [
-                'configuration' => $configuration,
+                'composants' => $composants,
                 'totalConfiguration' => $totalConfiguration,
                 'panierVide' => $panierVide,
                 'formulaire' => $form

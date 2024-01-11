@@ -1487,6 +1487,7 @@ border: 1px solid var(--borderFavoriteAdress);
 .actions-recapitulatif {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -1576,7 +1577,7 @@ border: 1px solid var(--borderFavoriteAdress);
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 267px;
+    height: 332px;
 }
 
 /* Modales */
@@ -1995,7 +1996,7 @@ border: 1px solid var(--borderFavoriteAdress);
     .conteneur-total-configuration {
         order: -1;
         width: 280px;
-        height: 278px;
+        height: 343px;
     }
 
     /* Modales */

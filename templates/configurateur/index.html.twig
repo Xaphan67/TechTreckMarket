@@ -108,6 +108,7 @@
                             <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
                         {% endif %}
                         <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                        <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
                     </div>
                 {% endif %}
             </div>
@@ -192,6 +193,20 @@
                 {% endfor %}
             </div>
         </section>
+        <section id="reset-configuration" class="conteneur-modal">
+            <div class="fermer-modal" onclick="closeModale('reset-configuration')">
+                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+            </div>
+            <h3>Réinitialiser le configurateur ?</h3>
+            <p>
+                Cette action va supprimer votre confuration actuelle pour vous permettre d'en créer une nouvelle.<br><br>
+                Êtes-vous sûr de vouloir continuer ?
+            </p>
+            <div class="commande-suivant">
+                <div class="bouton-lien bouton-100" onclick="closeModale('reset-configuration')">Non</div>
+                <a class="bouton-lien bouton-valider-commande bouton-100" href="{{ path('reset_configuration') }}">Oui</a>
+            </div>
+        </section>
     </div>
 
     <script>
@@ -230,6 +245,18 @@
         {
             const modal = document.getElementById("modal")
             const element = document.getElementById("charger-configuration")
+            const stylesModal = window.getComputedStyle(modal)
+            if (stylesModal.getPropertyValue("display") == "none") {
+                element.style.display = "block";
+                modal.style.display = "flex";
+            }
+        }
+
+        // Afiche l'avertissement de réinitialisation
+        function displayResetWarning()
+        {
+            const modal = document.getElementById("modal")
+            const element = document.getElementById("reset-configuration")
             const stylesModal = window.getComputedStyle(modal)
             if (stylesModal.getPropertyValue("display") == "none") {
                 element.style.display = "block";
