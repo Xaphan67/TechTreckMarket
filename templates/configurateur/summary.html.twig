@@ -31,7 +31,7 @@
                                                     <span class="stock-non">RUPTURE</span>
                                                 {% endif %}
                                             </span>
-                                            <span class="prix prix-recapitulatif">{{ produit.prix  | number_format(2, '.') }} €</span>
+                                            <span class="prix prix-recapitulatif">{{ produit.prix  | number_format(2, ',', ' ') }} €</span>
                                         </div>
                                         <div class="ordinateur-uniquement">
                                             <div class="produit-image-mini panier-header-image">
@@ -50,7 +50,7 @@
                                                     {% endif %}
                                                 </span>
                                             </div>
-                                            <span class="configurateur-prix prix">{{ produit.prix | number_format(2, '.') }} €</span>
+                                            <span class="configurateur-prix prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
                                         </div>
                                     </div>
                                 </article>
@@ -61,7 +61,7 @@
                 <section class="conteneur conteneur-padding conteneur-total-configuration">
                     <div class="panier-total">
                         <h2>Montant total de la configuration</h2>
-                        <span class="panier-prix">{{ totalConfiguration | number_format(2, '.') }} €</span>
+                        <span class="panier-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
                     </div>
                     <div class="configuration-actions">
                         <a class="bouton-lien bouton-commander" href="{{ path('sauvegarder_configuration') }}">Sauvegarder la configuration</a>

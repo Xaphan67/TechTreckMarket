@@ -42,7 +42,7 @@
                                             </span>
                                             <div class="panier-actions">
                                                 <span>Quantité : {{ produitCommande.quantite }}</span>
-                                                <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
                                                 <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
                                                     <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                 </a>
@@ -66,7 +66,7 @@
                                                 </span>
                                             </div>
                                             <span class="panier-header-quantite">{{ produitCommande.quantite }}</span>
-                                            <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                            <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
                                             <span class="panier-header-action">
                                                 <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
                                                     <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
@@ -81,7 +81,7 @@
                     <section class="conteneur conteneur-padding conteneur-total-panier">
                         <div class="panier-total">
                             <h2>Montant total de vos produits</h2>
-                            <span class="panier-prix">{{ total | number_format(2, '.') }} €</span>
+                            <span class="panier-prix">{{ total | number_format(2, ',', ' ') }} €</span>
                         </div>
                         <div class="bouton-achat bouton-commander bouton-lien-centre" onclick="displayValidateForm()">Passer commande</div>
                     </section>
@@ -239,7 +239,7 @@
                             </span>
                         </p>
                         {% if commande %}
-                            <p>Votre commande contient {{ commande. produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }} pour un total de {{ total | number_format(2, '.')}} €</p>
+                            <p>Votre commande contient {{ commande. produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }} pour un total de {{ total | number_format(2, ',', ' ')}} €</p>
                         {% endif %}
                     </div>
                     <div class="commande-suivant">

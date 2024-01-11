@@ -45,8 +45,8 @@
                 {% endfor %}
             </table>
             <br>
-            Total HT : {{ totalHT | number_format(2, '.') }} €<br>
-            Total : {{ total | number_format(2, '.') }} €
+            Total HT : {{ totalHT | number_format(2, ',', ' ') }} €<br>
+            Total : {{ total | number_format(2, ',', ' ') }} €
         </div>
     </body>
 </html>

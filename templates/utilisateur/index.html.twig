@@ -117,7 +117,7 @@
                                                             <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
                                                             <div class="panier-actions">
                                                                 <span>X {{ produitCommande.quantite }}</span>
-                                                                <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                                <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
                                                             </div>
                                                         </div>
                                                     </article>
@@ -184,7 +184,7 @@
                                                             <span class="produit-designation"><a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a></span>
                                                             <div class="panier-actions">
                                                                 <span>X {{ produitCommande.quantite }}</span>
-                                                                <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, '.') }} €</span>
+                                                                <span class="prix">{{ (commande.commande.prixProduits[produitCommande.produit.id] * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
                                                             </div>
                                                         </div>
                                                     </article>
