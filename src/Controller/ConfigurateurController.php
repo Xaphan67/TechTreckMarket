@@ -111,77 +111,72 @@ class ConfigurateurController extends AbstractController
             $produits = $produitRepository->findBy(['categorie' => $categorie]);
         }
 
-        // Vérifications propres à chaque étape à partir de l'étape 2
-        if ($etape >= 2) {
-            switch ($etape) {
-                case 2:
-                    $etapesAVerifier = [1];
-                    $caracteristiquesAVerifier = [
-                        1 => [
-                            "Format de carte mère" => "Format de carte mère"
-                        ]
-                    ];
-                    break;
-                case 3:
-                    $etapesAVerifier = [2];
-                    $caracteristiquesAVerifier = [
-                        2 => [
-                            "Support du processeur" => "Support du processeur"
-                        ]
-                    ];
-                    break;
-                case 4:
-                    $etapesAVerifier = [2];
-                    $caracteristiquesAVerifier = [
-                        2 => [
-                            "Support du processeur" => "Support du processeur"
-                        ]
-                    ];
-                    break;
-                case 5:
-                    $etapesAVerifier = [2];
-                    $caracteristiquesAVerifier = [
-                        2 => [
-                            "Fréquence(s) Mémoire" => "Fréquence(s) Mémoire",
-                            "Nombre de slots mémoire" => "Nombre de barrettes"
-                        ]
-                    ];
-                    break;
-                case 6:
-                    $etapesAVerifier = [1, 2];
-                    $caracteristiquesAVerifier = [
-                        1 => [
-                            "Longueur max. carte graphique" => "Longueur"
-                        ],
-                        2 => [
-                            "Type de connecteur(s) graphique" => "Bus"
-                        ]
-                    ];
-                    break;
-                case 7:
-                    $etapesAVerifier = [2];
-                    $caracteristiquesAVerifier = [
-                        2 => [
-                            "Connecteurs pour disques durs" => "Interface avec l'ordinateur"
-                        ]
-                    ];
-                    break;
-                case 8:
-                    $etapesAVerifier = [6, 7];
-                    $caracteristiquesAVerifier = [
-                        6 => [
-                            "Connecteur alimentation" => "Connecteurs"
-                        ],
-                        7 => [
-                            "Interface avec l'ordinateur" => "Connecteurs"
-                        ]
-                    ];
-                    break;
-            }
-
-            // Met à jour la liste des produits
-            $produits = $this->checkCompatibility($request, $produitCtRepository, $produits, $etapesAVerifier, $caracteristiquesAVerifier);
+        // Vérifications à chaque étape
+        // Tableau clé => valeur
+        // clé = numéro de l'étape à vérifier
+        // valeur = tableau de comparaison : caractéristique sur le produit déja existant sur la config => caractéristique du produit à ajouter
+        $caracteristiquesAVerifier = [];
+        switch ($etape) {
+            case 2:
+                $caracteristiquesAVerifier = [
+                    1 => [
+                        "Format de carte mère" => "Format de carte mère"
+                    ]
+                ];
+                break;
+            case 3:
+                $caracteristiquesAVerifier = [
+                    2 => [
+                        "Support du processeur" => "Support du processeur"
+                    ]
+                ];
+                break;
+            case 4:
+                $caracteristiquesAVerifier = [
+                    2 => [
+                        "Support du processeur" => "Support du processeur"
+                    ]
+                ];
+                break;
+            case 5:
+                $caracteristiquesAVerifier = [
+                    2 => [
+                        "Fréquence(s) Mémoire" => "Fréquence(s) Mémoire",
+                        "Nombre de slots mémoire" => "Nombre de barrettes"
+                    ]
+                ];
+                break;
+            case 6:
+                $caracteristiquesAVerifier = [
+                    1 => [
+                        "Longueur max. carte graphique" => "Longueur"
+                    ],
+                    2 => [
+                        "Type de connecteur(s) graphique" => "Bus"
+                    ]
+                ];
+                break;
+            case 7:
+                $caracteristiquesAVerifier = [
+                    2 => [
+                        "Connecteurs pour disques durs" => "Interface avec l'ordinateur"
+                    ]
+                ];
+                break;
+            case 8:
+                $caracteristiquesAVerifier = [
+                    6 => [
+                        "Connecteur alimentation" => "Connecteurs"
+                    ],
+                    7 => [
+                        "Interface avec l'ordinateur" => "Connecteurs"
+                    ]
+                ];
+                break;
         }
+
+        // Met à jour la liste des produits
+        $produits = $this->checkCompatibility($request, $produitCtRepository, $produits, $caracteristiquesAVerifier);
 
         // Crée la pagination pour la liste des produits
         $produitsPagination = $paginator->paginate(
@@ -500,7 +495,7 @@ class ConfigurateurController extends AbstractController
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques
     // spécifique du produit de la configuration de l'étape spécifiée à une ou plusieurs caractéristiques des produits de l'étape en cours
-    public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, array $etapes, array $caracteristiques) {
+    public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, array $caracteristiquesAVerifier) {
         // Vérifie qu'une configuration existe en session, sinon, en crée une configuration vide
         // Empèche une erreur si on passe la 1ere étape sans avoir ajouté de produits
         if (!$request->getSession()->get('configuration')) {
@@ -509,7 +504,7 @@ class ConfigurateurController extends AbstractController
 
         // Pour chaque étape...
         $ListesProduitsCompatibles = [];
-        foreach($etapes as $etape) {
+        foreach($caracteristiquesAVerifier as $etape => $correspondanceCaracterstique) {
             if (array_key_exists($etape, $request->getSession()->get('configuration'))) {
                 // Vérifie que le produit de l'étape n'est pas null (étape passée)
                 if ($request->getSession()->get('configuration')[$etape] != null) {
@@ -519,7 +514,7 @@ class ConfigurateurController extends AbstractController
 
                     // Vérifie chaque caractéristique spécifiée
                     $ListesProduitsEtapeCompatibles = [];
-                    foreach ($caracteristiques[$etape] as $caracteristiqueSource => $caracteristiqueCible) {
+                    foreach ($caracteristiquesAVerifier[$etape] as $caracteristiqueSource => $caracteristiqueCible) {
                         // Récupère les valeur des caractéristiques du produit à vérifier pour la caractéristique spécifiée
                         $valeursCaracteristiquesTechniques = [];
                         foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
