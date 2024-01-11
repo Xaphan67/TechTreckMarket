@@ -178,7 +178,7 @@ class CommandeController extends AbstractController
         }
 
         // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur');
+        return $this->redirectToRoute('recapitulatif_configuration');
     }
 
     #[Route('/commande/delete/{id}', name: 'supprimer_produit_commande')]

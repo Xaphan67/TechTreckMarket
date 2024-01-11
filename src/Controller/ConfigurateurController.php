@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\ProduitCaracteristiqueTechniqueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+const MAX_ETAPES = 8;
+
 class ConfigurateurController extends AbstractController
 {
     #[Route('/configurateur/creer', name: 'configurateur')]
@@ -55,7 +57,7 @@ class ConfigurateurController extends AbstractController
         }
 
         // Redirige vers le récapitulatif si toutes les étapes sont complétées
-        if ($etape > 8) { // 8 est la dernière étape
+        if ($etape > MAX_ETAPES) {
             return $this->redirectToRoute('recapitulatif_configuration');
         }
 
@@ -251,7 +253,7 @@ class ConfigurateurController extends AbstractController
         $request->getSession()->set('configuration', $configuration);
 
         // Redirige vers l'étape suivante, ou vers le résumé de la configuration
-        if ($etape != 8) { // 8 est la dernière étape
+        if ($etape != MAX_ETAPES) {
             return $this->redirectToRoute('configurateur');
         } else {
             return $this->redirectToRoute('recapitulatif_configuration');
@@ -283,8 +285,36 @@ class ConfigurateurController extends AbstractController
         return $this->redirectToRoute('configurateur');
     }
 
+    #[Route('/configurateur/terminer', name: 'terminer_configurateur')]
+    public function finish(Request $request)
+    {
+        // Récupère la configuration stockée en session
+        $configurationSession = $request->getSession()->get('configuration');
+
+        // Si aucune configuration, créer une configuration vide;
+        if (!$configurationSession) {
+            $configurationSession = [];
+        }
+
+        // Ajoute des produits vides pour les étapes non effectuées
+        for ($i = 1; $i <= MAX_ETAPES; $i++) {
+            if (!array_key_exists($i, $configurationSession)) {
+                $configurationSession[$i] = null;
+            }
+        }
+
+        // Enregistre la configuration en session
+        $request->getSession()->set('configuration', $configurationSession);
+
+        // Redirige vers le récapitulatif
+        return $this->redirectToRoute('recapitulatif_configuration');
+    }
+
     #[Route('/configurateur/sauvegarder/', name: 'sauvegarder_configuration')]
     public function save(ProduitRepository $produitRepository, ConfigurationPCRepository $configurationPCRepository, ProduitConfigRepository $produitConfigRepository, EntityManagerInterface $entityManager, Request $request) {
+        // Enregistre l'url d'entrée dans une variable en session
+        $request->getSession()->set('urlFrom', $request->headers->get('referer'));
+
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             // Récupère la configuration stockée en session
@@ -299,9 +329,6 @@ class ConfigurateurController extends AbstractController
                 if ($form->isSubmitted()) {
                     // Vérifie que le formulaire est valide
                     if ($form->isValid()) {
-                        // Enregistre l'url d'entrée dans une variable en session
-                        $request->getSession()->set('urlFrom', $request->headers->get('referer'));
-
                         // Récupère le nom de la confiration à partir du formulaire
                         $nomConfiguration = $form->getData()['nom'];
 
@@ -354,8 +381,10 @@ class ConfigurateurController extends AbstractController
             $this->addFlash('danger', 'Vous devez être connecté pour sauvegarder une configuration !');
         }
 
-        // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur');
+        // Redirige vers l'url d'entrée
+        $url = $request->getSession()->get('urlFrom');
+        $request->getSession()->remove('urlFrom');
+        return $this->redirect($url);
     }
 
     #[Route('/configurateur/charger/{id}', name: 'charger_configuration')]
@@ -399,7 +428,7 @@ class ConfigurateurController extends AbstractController
         }
 
          // Redirige vers l'étape suivante, ou vers le résumé de la configuration
-         if ($etape != 8) { // 8 est la dernière étape
+         if ($etape != MAX_ETAPES) {
             return $this->redirectToRoute('configurateur');
         } else {
             return $this->redirectToRoute('recapitulatif_configuration');
@@ -408,10 +437,7 @@ class ConfigurateurController extends AbstractController
 
     #[Route('/configurateur/reset', name: 'reset_configuration')]
     public function reset(Request $request) {
-        // Vérifie qu'un utilisateur est connecté
-        if ($this->getUser()) {
-            $request->getSession()->remove('configuration');
-        }
+        $request->getSession()->remove('configuration');
 
         // Redirige vers le configurateur
         return $this->redirectToRoute('configurateur');
@@ -419,18 +445,25 @@ class ConfigurateurController extends AbstractController
 
     #[Route('/configurateur/recapitulatif', name: 'recapitulatif_configuration')]
     public function summary(CommandeRepository $commandeRepository, Request $request){
-        // Vérifie qu'un utilisateur est connecté
-        if ($this->getUser()) {
-            // Récupère la configuration stockée en session
-            $configuration = $request->getSession()->get('configuration');
+        // Initialisation des variables
+        $composants = [];
+        $panierVide = true;
 
-            // Récupère le total de la configuration
-            $totalConfiguration = 0;
+        // Récupère la configuration stockée en session
+        $configuration = $request->getSession()->get('configuration');
+
+        // Récupère le total de la configuration
+        $totalConfiguration = 0;
+        if ($configuration) {
             foreach ($request->getSession()->get('configuration') as $produit) {
                 if ($produit != null) {
                     $totalConfiguration += $produit->getprix();
                 }
             }
+        }
+
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
 
             // Récupère la commande active de l'utilisateur.
             $utilisateur = $this->getUser();
@@ -440,35 +473,29 @@ class ConfigurateurController extends AbstractController
             ]);
 
             // Vérifie si la commande en cours est vide
-            $panierVide = true;
             if ($commande && count($commande->getProduitCommandes()) > 0) {
                 $panierVide = false;
             }
+        }
 
-            // Vérifie si il y à au moins un composant dans la configuration
-            $composants = [];
+        // Vérifie si il y à au moins un composant dans la configuration
+        if ($configuration) {
             foreach (array_slice($configuration, 0, 8) as $composant) {
                 if ($composant != null) {
                     $composants[] = $composant;
                 }
             }
-
-            // Instancie un formulaire de type ConfigurationPCType
-            $form = $this->createForm(ConfigurationPCType::class, null);
-
-            return $this->render('configurateur/summary.html.twig', [
-                'composants' => $composants,
-                'totalConfiguration' => $totalConfiguration,
-                'panierVide' => $panierVide,
-                'formulaire' => $form
-            ]);
-        } else {
-            // Ajoute un message flash
-            $this->addFlash('danger', 'Vous devez être connecté pour voir une configuration !');
         }
 
-        // Redirige vers la page du configurateur
-        return $this->redirectToRoute('configurateur');
+        // Instancie un formulaire de type ConfigurationPCType
+        $form = $this->createForm(ConfigurationPCType::class, null);
+
+        return $this->render('configurateur/summary.html.twig', [
+            'composants' => $composants,
+            'totalConfiguration' => $totalConfiguration,
+            'panierVide' => $panierVide,
+            'formulaire' => $form
+        ]);
     }
 
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques

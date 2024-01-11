@@ -106,21 +106,22 @@
             <div class="infos-recapitulatif">
                 <h2>Total de la config</h2>
                 <span class="fiche-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
-                <a class="bouton-lien bouton-passer-etape bouton-150" href="{{ path('passer_configurateur', {'etape': etape }) }}">Passer cette étape</a>
+                <div class="actions-recapitulatif">
+                    <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('passer_configurateur', {'etape': etape }) }}">Passer cette étape</a>
+                    <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('terminer_configurateur') }}">Terminer</a>
+                </div>
             </div>
         </section>
 
-        {% if app.user %}
-            <section class="conteneur conteneur-padding-complet">
-                <div class="actions-recapitulatif">
-                    {% if configurations | length > 0 %}
-                        <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
-                    {% endif %}
-                    <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
-                    <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
-                </div>
-            </section>
-        {% endif %}
+        <section class="conteneur conteneur-padding-complet">
+            <div class="actions-recapitulatif">
+                {% if configurations | length > 0 %}
+                    <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
+                {% endif %}
+                <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
+            </div>
+        </section>
 
         <section class="liste-produits">
             {# Affiche la pagination et le tri #}
