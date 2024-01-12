@@ -21,12 +21,14 @@ class AdresseLivraisonRepository extends ServiceEntityRepository
         parent::__construct($registry, AdresseLivraison::class);
     }
 
-    public function setOthersAsNotFavorite($currentId): int
+    public function setOthersAsNotFavorite($user, $currentId): int
     {
        return $this->createQueryBuilder('al')
             ->update()
             ->set('al.preferee', '0')
-            ->where('al.id != :currentId')
+            ->where('al.utilisateur = :user')
+            ->andWhere('al.id != :currentId')
+            ->setParameter('user', $user)
             ->setParameter('currentId', $currentId)
             ->getQuery()
             ->execute();

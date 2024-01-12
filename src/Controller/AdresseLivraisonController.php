@@ -50,7 +50,7 @@ class AdresseLivraisonController extends AbstractController
 
                     // Marque les autres adresses comme non préférées si celle-çi est marquée comme préférée
                     if ($adresseLivraison->isPreferee()) {
-                        $adresseLivraisonRepository->setOthersAsNotFavorite($adresseLivraison);
+                        $adresseLivraisonRepository->setOthersAsNotFavorite($this->getUser(), $adresseLivraison);
                     }
 
                     // Ajoute un message flash

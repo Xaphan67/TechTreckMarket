@@ -50,7 +50,7 @@ class AdresseFacturationController extends AbstractController
 
                     // Marque les autres adresses comme non préférées si celle-çi est marquée comme préférée
                     if ($adresseFacturation->isPreferee()) {
-                        $adresseFacturationonRepository->setOthersAsNotFavorite($adresseFacturation);
+                        $adresseFacturationonRepository->setOthersAsNotFavorite($this->getUser(), $adresseFacturation);
                     }
 
                     // Ajoute un message flash
