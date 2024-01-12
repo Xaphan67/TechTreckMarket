@@ -385,6 +385,7 @@ class ConfigurateurController extends AbstractController
     #[Route('/configurateur/charger/{id}', name: 'charger_configuration')]
     public function load(ConfigurationPC $configurationPC, ConfigurationPCRepository $configurationPCRepository, Request $request) {
         // Vérifie qu'un utilisateur est connecté
+        
         if ($this->getUser()) {
             // Vérifie que la configuration appartient bien à l'utilisateur connecté
             if ($configurationPC->getUtilisateur() == $this->getUser()) {
@@ -397,10 +398,10 @@ class ConfigurateurController extends AbstractController
                 if ($configuration) {
                     // Récupère les produits correspondant à la configuration
                     $configurationSession = [];
-                    foreach ($configuration->getProduitConfigs() as $produit) {
-                        $fix = $produit->getProduit()->getDesignation(); // Produit non initialisé si je n'accède pas a un des ses attributs
-                        $etape = $produit->getEtape();
-                        $configurationSession[$etape] = $produit->getProduit();
+                    foreach ($configuration->getProduitConfigs() as $produitConfig) {
+                        $produitConfig->getProduit()->getDesignation(); // Produit non initialisé si je n'accède pas a un des ses attributs (Symfony Lazy mode)
+                        $etape = $produitConfig->getEtape();
+                        $configurationSession[$etape] = $produitConfig->getProduit();
                     }
 
                     // Stocke la configuration en session
