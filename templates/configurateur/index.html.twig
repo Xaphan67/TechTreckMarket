@@ -73,23 +73,28 @@
                             <div class="liste-recapitulatif">
                                 {% for etape, produit in configuration %}
                                     {% if produit is not null %}
-                                        <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
-                                            <article class="produit-configuration">
-                                                <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
-                                                alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
-                                                <div class="produit-configuration-infos">
-                                                    <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
-                                                    <div class="produit-prix-configuration">
-                                                        {% if produit.stock > 0 %}
-                                                            <span class="stock-oui">EN STOCK</span>
-                                                        {% else %}
-                                                            <span class="stock-non">RUPTURE</span>
-                                                        {% endif %}
-                                                        <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                        <article class="produit-configuration">
+                                            <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
+                                                <div  class="produit-configuration-principal">
+                                                    <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
+                                                    alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
+                                                    <div class="produit-configuration-infos">
+                                                        <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
+                                                        <div class="produit-prix-configuration">
+                                                            {% if produit.stock > 0 %}
+                                                                <span class="stock-oui">EN STOCK</span>
+                                                            {% else %}
+                                                                <span class="stock-non">RUPTURE</span>
+                                                            {% endif %}
+                                                            <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </a>
+                                            <a class="bouton-lien boutton-icone" href="{{ path('supprimer_configurateur', { 'etape': etape }) }}">
+                                                <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                                            </a>
                                             </article>
-                                        </a>
                                     {% endif %}
                                 {% endfor %}
                             </div>

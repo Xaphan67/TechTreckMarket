@@ -255,6 +255,22 @@ class ConfigurateurController extends AbstractController
         }
     }
 
+    #[Route('/configurateur/supprimer/{etape}', name: 'supprimer_configurateur')]
+    public function remove(int $etape, Request $request)
+    {
+        // Récupère la configuration stockée en session
+        $configuration = $request->getSession()->get('configuration');
+
+        // Supprime le produit de la configuration
+        $configuration[$etape] = null;
+
+        // Stocke la configuration en session
+        $request->getSession()->set('configuration', $configuration);
+
+        // Redirige vers l'étape en cours
+        return $this->redirectToRoute('configurateur');
+    }
+
     #[Route('/configurateur/passer/{etape}', name: 'passer_configurateur')]
     public function skip(int $etape, Request $request)
     {
