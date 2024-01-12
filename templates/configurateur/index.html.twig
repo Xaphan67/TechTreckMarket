@@ -21,154 +21,230 @@
             <h2 class="configurateur-etape">Etape {{ etape }} : Choix {{ (etape == 2 or etape == 5 or etape == 6 ? "de la " : (etape == 8 ? "de l'" : "du ")) ~ titreEtape }}</h2>
             <hr>
             <div class="etapes">
-                <div class="etape {{ etape == 1 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/1.svg') }}" alt="Boîtier">
+                <div class="etape {{ etape == 1 ? 'etape-actuelle-premier' }}">
+                    {% if configuration[1] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[1] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[1].photo ) }}" alt="Boîtier : {{ configuration[1].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/1.svg') }}" alt="Boîtier">
+                    {% endif %}
                     <span class="etape-nom">Boîtier</span>
                 </div>
                 <div class="etape {{ etape == 2 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/2.svg') }}" alt="Carte mère">
+                    {% if configuration[2] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[2] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[2].photo ) }}" alt="Carte mère : {{ configuration[2].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/2.svg') }}" alt="Carte mère">
+                    {% endif %}
                     <span class="etape-nom">Carte mère</span>
                 </div>
                 <div class="etape {{ etape == 3 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/3.svg') }}" alt="Processeur">
+                    {% if configuration[3] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[3] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[3].photo ) }}" alt="Processeur : {{ configuration[3].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/3.svg') }}" alt="Processeur">  
+                    {% endif %}
                     <span class="etape-nom">Processeur</span>
                 </div>
                 <div class="etape {{ etape == 4 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/4.svg') }}" alt="Ventirad">
+                    {% if configuration[4] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[4] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[4].photo ) }}" alt="Ventirad : {{ configuration[4].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/4.svg') }}" alt="Ventirad">  
+                    {% endif %}
                     <span class="etape-nom">Ventirad</span>
                 </div>
                 <div class="etape {{ etape == 5 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/5.svg') }}" alt="Mémoire">
+                    {% if configuration[5] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[5] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[5].photo ) }}" alt="Mémoire : {{ configuration[5].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/5.svg') }}" alt="Mémoire">  
+                    {% endif %}
                     <span class="etape-nom">Mémoire</span>
                 </div>
                 <div class="etape {{ etape == 6 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/6.svg') }}" alt="Carte graphique">
+                    {% if configuration[6] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[6] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[6].photo ) }}" alt="Carte graphique : {{ configuration[6].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/6.svg') }}" alt="Carte graphique"> 
+                    {% endif %}
                     <span class="etape-nom">Carte graphique</span>
                 </div>
                 <div class="etape {{ etape == 7 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/7.svg') }}" alt="Stockage">
+                    {% if configuration[7] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[7] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[7].photo ) }}" alt="Stockage : {{ configuration[7].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/7.svg') }}" alt="Stockage">
+                    {% endif %}
                     <span class="etape-nom">Stockage</span>
                 </div>
                 <div class="etape {{ etape == 8 ? 'etape-actuelle' }}">
-                    <img class="etape-image" src="{{ asset('svg/configurateur/8.svg') }}" alt="Alimentation">
+                    {% if configuration[8] is defined and not null %}
+                        <div class="infobule-produit">
+                            <span class="produit-designation-ellipses">{{ configuration[8] }}</span>
+                        </div>
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[8].photo ) }}" alt="Alimentation : {{ configuration[8].designation }}">
+                        </div>
+                    {% else %}
+                        <img class="etape-image" src="{{ asset('svg/configurateur/8.svg') }}" alt="Alimentation">
+                    {% endif %}
                     <span class="etape-nom">Alimentation</span>
                 </div>
             </div>
         </section>
 
         {# Récapitulatif #}
-        {% if configuration | length > 0 %}
-            <section class="conteneur">
-                <div id="recapitulatif-titre">
-                    <h2>Récapitulatif</h2>
-                    <div id="chevron" class="chevron">
-                        <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
-                </div>
-                <div id="recapitulatif" class="filtres-recherche formulaire-invisible">
-                    <hr>
-                    <div class="contenu-recapitulatif">
-                            <div class="liste-recapitulatif">
-                                {% for etape, produit in configuration %}
-                                    {% if produit is not null %}
-                                        <article class="produit-configuration">
-                                            <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
-                                                <div  class="produit-configuration-principal">
-                                                    <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
-                                                    alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
-                                                    <div class="produit-configuration-infos">
-                                                        <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
-                                                        <div class="produit-prix-configuration">
-                                                            {% if produit.stock > 0 %}
-                                                                <span class="stock-oui">EN STOCK</span>
-                                                            {% else %}
-                                                                <span class="stock-non">RUPTURE</span>
-                                                            {% endif %}
-                                                            <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+        <div class="conteneur-conteneurs">
+            <section class="conteneurs-recap">
+                {% if configuration | length > 0 %}
+                    <section class="conteneur recapitulatif">
+                        <div id="recapitulatif-titre">
+                            <h2>Récapitulatif</h2>
+                            <div id="chevron" class="chevron">
+                                <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24.75 20.625L16.5 12.375L8.25 20.625" stroke="#5B5656" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div id="recapitulatif" class="filtres-recherche formulaire-invisible">
+                            <hr>
+                            <div class="contenu-recapitulatif">
+                                    <div class="liste-recapitulatif">
+                                        {% for etape, produit in configuration %}
+                                            {% if produit is not null %}
+                                                <article class="produit-configuration">
+                                                    <a class="lien-produit" href="{{ path('voir_produit', {'id': produit.id }) }}">
+                                                        <div  class="produit-configuration-principal">
+                                                            <img class="produit-configuration-image" src="{{ asset('svg/configurateur/' ~ etape ~ '.svg') }}"
+                                                            alt="{{ etape == 1 ? "Boîtier" : (etape == 2 ? "Carte mère" : (etape == 3 ? "Processeur" : (etape == 4 ? "Ventirad" : (etape == 5 ? "Mémoire" : (etape == 6 ? "Carte Graphique" : (etape == 7 ? "Stockage" : "Alimentation")))))) }}">
+                                                            <div class="produit-configuration-infos">
+                                                                <span class="produit-designation produit-designation-ellipses">{{ produit }}</span>
+                                                                <div class="produit-prix-configuration">
+                                                                    {% if produit.stock > 0 %}
+                                                                        <span class="stock-oui">EN STOCK</span>
+                                                                    {% else %}
+                                                                        <span class="stock-non">RUPTURE</span>
+                                                                    {% endif %}
+                                                                    <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                            <a class="bouton-lien boutton-icone" href="{{ path('supprimer_configurateur', { 'etape': etape }) }}">
-                                                <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
-                                            </a>
-                                            </article>
-                                    {% endif %}
-                                {% endfor %}
+                                                    </a>
+                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_configurateur', { 'etape': etape }) }}">
+                                                        <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                                                    </a>
+                                                    </article>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                <span class="recapitulatif-info">
+                                    Cliquez sur un élément<br>
+                                    pour voir sa fiche produit
+                                </span>
                             </div>
-                        <span class="recapitulatif-info">
-                            Cliquez sur un élément<br>
-                            pour voir sa fiche produit
-                        </span>
+                        </div>
+                    </section>
+                {% endif %}
+
+                <section class="conteneur conteneur-padding recapitulatif">
+                    <div class="infos-recapitulatif">
+                        <h2>Total de la config</h2>
+                        <span class="fiche-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
+                        <div class="actions-recapitulatif">
+                            <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('passer_configurateur', {'etape': etape }) }}">Passer cette étape</a>
+                            <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('terminer_configurateur') }}">Terminer</a>
+                        </div>
+                        <div class="actions-recapitulatif">
+                            {% if app.user %}
+                                {% if configurations | length > 0 %}
+                                    <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
+                                {% endif %}
+                                {% if configurations | length < 6 %}
+                                    <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                                {% endif %}
+                            {% endif %}
+                            <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
+                        </div>
                     </div>
-                </div>
+                </section>
             </section>
-        {% endif %}
+            
+            <section class="liste-produits">
+                {# Affiche la pagination et le tri #}
+                {% if produits.pageCount > 1 %}
+                    <section class="conteneur pagination-haut">
+                        {{ knp_pagination_render(produits) }}
+                    </section>
+                {% endif %}
 
-        <section class="conteneur conteneur-padding">
-            <div class="infos-recapitulatif">
-                <h2>Total de la config</h2>
-                <span class="fiche-prix">{{ totalConfiguration | number_format(2, ',', ' ') }} €</span>
-                <div class="actions-recapitulatif">
-                    <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('passer_configurateur', {'etape': etape }) }}">Passer cette étape</a>
-                    <a class="bouton-lien bouton-passer-etape bouton-140" href="{{ path('terminer_configurateur') }}">Terminer</a>
-                </div>
-                <div class="actions-recapitulatif">
-                    {% if app.user %}
-                        {% if configurations | length > 0 %}
-                            <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
-                        {% endif %}
-                        {% if configurations | length < 6 %}
-                            <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
-                        {% endif %}
-                    {% endif %}
-                    <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
-                </div>
-            </div>
-        </section>
-
-        <section class="liste-produits">
-            {# Affiche la pagination et le tri #}
-            {% if produits.pageCount > 1 %}
-                <section class="conteneur pagination-haut">
-                    {{ knp_pagination_render(produits) }}
-                </section>
-            {% endif %}
-
-            {# Affiche les produits #}
-            <div class="conteneur">
-                {% for produit in produits %}
-                    <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape }) }}">
-                        <article class="produit">
-                            <div class="produit-image">
-                                <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
-                            </div>
-                            <div class="produit-infos">
-                                <span class="produit-designation produit-designation-ellipses">{{ produit.designation }}</span>
-                                <span class="produit-resume">{{ produit.resume }}</span>
-                                <div class="produit-prix">
-                                    {% if produit.stock > 0 %}
-                                        <span class="stock-oui">EN STOCK</span>
-                                    {% else %}
-                                        <span class="stock-non">RUPTURE</span>
-                                    {% endif %}
-                                    <span class="produit-achat prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                {# Affiche les produits #}
+                <div class="conteneur">
+                    {% for produit in produits %}
+                        <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape }) }}">
+                            <article class="produit">
+                                <div class="produit-image">
+                                    <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
                                 </div>
-                            </div>
-                        </article>
-                    </a>
-                {% endfor %}
-            </div>
+                                <div class="produit-infos">
+                                    <span class="produit-designation produit-designation-ellipses">{{ produit.designation }}</span>
+                                    <span class="produit-resume">{{ produit.resume }}</span>
+                                    <div class="produit-prix">
+                                        {% if produit.stock > 0 %}
+                                            <span class="stock-oui">EN STOCK</span>
+                                        {% else %}
+                                            <span class="stock-non">RUPTURE</span>
+                                        {% endif %}
+                                        <span class="produit-achat prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </a>
+                    {% endfor %}
+                </div>
 
-            {# Affiche la pagination #}
-            {% if produits.pageCount > 1 %}
-                <section class="conteneur">
-                    {{ knp_pagination_render(produits) }}
-                </section>
-            {% endif %}
-        </section>
+                {# Affiche la pagination #}
+                {% if produits.pageCount > 1 %}
+                    <section class="conteneur">
+                        {{ knp_pagination_render(produits) }}
+                    </section>
+                {% endif %}
+            </section>
+        </div>
     </div>
 
     {# Modales #}

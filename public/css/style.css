@@ -1459,13 +1459,20 @@ border: 1px solid var(--borderFavoriteAdress);
     height: 85px;
 }
 
-.etape-actuelle {
+.etape-actuelle,
+.etape-actuelle-premier {
     border-radius: 10px;
     background-color: var(--border);
 }
 
 .etape-image {
     width: 50px;
+}
+
+.conteneur-etape-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 50px;
 }
 
@@ -1613,6 +1620,22 @@ border: 1px solid var(--borderFavoriteAdress);
     width: 100%;
     gap: 20px;
     height: fit-content;
+}
+
+.etape:hover > .infobule-produit {
+    display: flex;
+}
+
+.infobule-produit {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    border-radius: 10px;
+    max-width: 300px;
+    padding: 10px;
+    height: 40px;
+    background-color: white;
+    top: -40px;
 }
 
 /* Modales */
@@ -2032,6 +2055,53 @@ border: 1px solid var(--borderFavoriteAdress);
         width: 280px;
     }
 
+    .conteneurs-recap {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .produit-configuration {
+        width: 260px;
+    }
+
+    .lien-produit {
+        width: 220px;
+    }
+
+    .produit-configuration-principal {
+        width: 210px;
+    }
+
+    .produit-configuration-infos {
+        width: 160px;
+    }
+
+    .recapitulatif {
+        width: 280px;
+    }
+
+    .etape {
+        position: relative;
+    }
+
+    .etape-actuelle:after {
+        display: block;
+        position: absolute;
+        background: url(../img/configurateur/fleche-etape.gif) no-repeat center;
+        background-size: 50px;
+        transform: translateY(-50%);
+        left: -25px;
+        top: 50%;
+        content: "";
+        height: 25px;
+        width: 50px;
+    }
+
+    .etape-nom {
+        font-size: 12px;
+    }
+
     /* Modales */
 
     .conteneur-modal {
@@ -2294,6 +2364,22 @@ border: 1px solid var(--borderFavoriteAdress);
         width: 25%;
     }
 
+    .etapes {
+        flex-wrap: nowrap;
+    }
+    
+    .etape {
+        height: 130px;
+    }
+
+    .etape-image {
+        width: 80px;
+    }
+
+    .conteneur-etape-image {
+        height: 80px;
+    }
+
     /* Modales */
 }
 
@@ -2331,6 +2417,24 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .footerHaut {
         padding-inline: calc((100vw - 1020px) / 2);
+    }
+
+    /* Configurateur */
+
+    .etape {
+        height: 150px;
+    }
+
+    .etape-image {
+        width: 100px;
+    }
+
+    .conteneur-etape-image {
+        height: 100px;
+    }
+
+    .etape-nom {
+        font-size: 15px;
     }
 }
 
