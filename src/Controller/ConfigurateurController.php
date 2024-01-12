@@ -62,43 +62,20 @@ class ConfigurateurController extends AbstractController
         }
 
         // Séléctionne la catégorie des produits qui seront proposés en fonction de l'étape actuelle
-        switch ($etape) {
-            case 1:
-                $nomCategorie = "Boîtiers";
-                $titreEtape = "boîtier";
-                break;
-            case 2:
-                $nomCategorie = "Cartes mère";
-                $titreEtape = "carte mère";
-                break;
-            case 3:
-                $nomCategorie = "Processeurs";
-                $titreEtape = "processeur";
-                break;
-            case 4:
-                $nomCategorie = "Refroidissement";
-                $titreEtape = "ventirad";
-                break;
-            case 5:
-                $nomCategorie = "Mémoire";
-                $titreEtape = "mémoire";
-                break;
-            case 6:
-                $nomCategorie = "Cartes graphique";
-                $titreEtape = "carte graphique";
-                break;
-            case 7:
-                $nomCategorie = "Stockage";
-                $titreEtape = "stockage";
-                break;
-            case 8:
-                $nomCategorie = "Alimentations";
-                $titreEtape = "alimentation";
-                break;
-        }
+        // Etape => [Nom catégorie => Titre étape]
+        $infosEtapes = [
+            1 => ["Boîtiers" => "boîtier"],
+            2 => ["Cartes mère" => "carte mère"],
+            3 => ["Processeurs" => "processeur"],
+            4 => ["Refroidissement" => "ventirad"],
+            5 => ["Mémoire" => "mémoire"],
+            6 => ["Cartes graphique" => "carte graphique"],
+            7 => ["Stockage" => "stockage"],
+            8 => ["Alimentations" => "alimentation"],
+        ];
 
         // Récupère la catégorie correspondante à l'étape
-        $categorie = $categorieRepository->findOneBy(['nom' => $nomCategorie]);
+        $categorie = $categorieRepository->findOneBy(['nom' => key($infosEtapes[$etape])]);
 
         // Vérifie s'il y a des sous-catégories
         if (count($categorie->getSousCategories()) > 0) {
@@ -216,7 +193,7 @@ class ConfigurateurController extends AbstractController
 
         return $this->render('configurateur/index.html.twig', [
             'etape' => $etape,
-            'titreEtape' => $titreEtape,
+            'infosEtapes' => $infosEtapes,
             'produits' => $produits,
             'configuration' => $produitsConfiguration,
             'totalConfiguration' => $totalConfiguration,

@@ -18,113 +18,24 @@
 
         {# Etapes #}
         <section>
-            <h2 class="configurateur-etape">Etape {{ etape }} : Choix {{ (etape == 2 or etape == 5 or etape == 6 ? "de la " : (etape == 8 ? "de l'" : "du ")) ~ titreEtape }}</h2>
+            <h2 class="configurateur-etape">Etape {{ etape }} : Choix {{ (etape == 2 or etape == 5 or etape == 6 ? "de la " : (etape == 8 ? "de l'" : "du ")) ~ infosEtapes[etape] | first }}</h2>
             <hr>
             <div class="etapes">
-                <div class="etape {{ etape == 1 ? 'etape-actuelle-premier' }}">
-                    {% if configuration[1] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[1] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[1].photo ) }}" alt="Boîtier : {{ configuration[1].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/1.svg') }}" alt="Boîtier">
-                    {% endif %}
-                    <span class="etape-nom">Boîtier</span>
-                </div>
-                <div class="etape {{ etape == 2 ? 'etape-actuelle' }}">
-                    {% if configuration[2] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[2] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[2].photo ) }}" alt="Carte mère : {{ configuration[2].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/2.svg') }}" alt="Carte mère">
-                    {% endif %}
-                    <span class="etape-nom">Carte mère</span>
-                </div>
-                <div class="etape {{ etape == 3 ? 'etape-actuelle' }}">
-                    {% if configuration[3] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[3] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[3].photo ) }}" alt="Processeur : {{ configuration[3].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/3.svg') }}" alt="Processeur">  
-                    {% endif %}
-                    <span class="etape-nom">Processeur</span>
-                </div>
-                <div class="etape {{ etape == 4 ? 'etape-actuelle' }}">
-                    {% if configuration[4] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[4] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[4].photo ) }}" alt="Ventirad : {{ configuration[4].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/4.svg') }}" alt="Ventirad">  
-                    {% endif %}
-                    <span class="etape-nom">Ventirad</span>
-                </div>
-                <div class="etape {{ etape == 5 ? 'etape-actuelle' }}">
-                    {% if configuration[5] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[5] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[5].photo ) }}" alt="Mémoire : {{ configuration[5].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/5.svg') }}" alt="Mémoire">  
-                    {% endif %}
-                    <span class="etape-nom">Mémoire</span>
-                </div>
-                <div class="etape {{ etape == 6 ? 'etape-actuelle' }}">
-                    {% if configuration[6] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[6] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[6].photo ) }}" alt="Carte graphique : {{ configuration[6].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/6.svg') }}" alt="Carte graphique"> 
-                    {% endif %}
-                    <span class="etape-nom">Carte graphique</span>
-                </div>
-                <div class="etape {{ etape == 7 ? 'etape-actuelle' }}">
-                    {% if configuration[7] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[7] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[7].photo ) }}" alt="Stockage : {{ configuration[7].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/7.svg') }}" alt="Stockage">
-                    {% endif %}
-                    <span class="etape-nom">Stockage</span>
-                </div>
-                <div class="etape {{ etape == 8 ? 'etape-actuelle' }}">
-                    {% if configuration[8] is defined and not null %}
-                        <div class="infobule-produit">
-                            <span class="produit-designation-ellipses">{{ configuration[8] }}</span>
-                        </div>
-                        <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[8].photo ) }}" alt="Alimentation : {{ configuration[8].designation }}">
-                        </div>
-                    {% else %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/8.svg') }}" alt="Alimentation">
-                    {% endif %}
-                    <span class="etape-nom">Alimentation</span>
-                </div>
+                {% for e in 1..8 %}
+                    <div class="etape {{ etape == e ? 'etape-actuelle-premier' }}">
+                        {% if configuration[e] is defined and not null %}
+                            <div class="infobule-produit">
+                                <span class="produit-designation-ellipses">{{ configuration[e] }}</span>
+                            </div>
+                            <div class="conteneur-etape-image">
+                                <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[e].photo ) }}" alt="Boîtier : {{ configuration[e].designation }}">
+                            </div>
+                        {% else %}
+                            <img class="etape-image" src="{{ asset('svg/configurateur/' ~ e ~ '.svg') }}" alt="{{ infosEtapes[e] | first }}">
+                        {% endif %}
+                        <span class="etape-nom">{{ infosEtapes[e] | first }}</span>
+                    </div>
+                {% endfor %}
             </div>
         </section>
 
