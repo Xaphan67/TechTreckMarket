@@ -1567,13 +1567,21 @@ border: 1px solid var(--borderFavoriteAdress);
 
 .configuration {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
     border: 1px solid var(--border);
     padding: 10px;
 }
 
 .configuration:hover {
     background-color: var(--tabBg);
+}
+
+.configuration-principal {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .configuration-infos {

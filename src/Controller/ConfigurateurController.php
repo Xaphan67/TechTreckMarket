@@ -410,7 +410,6 @@ class ConfigurateurController extends AbstractController
     #[Route('/configurateur/charger/{id}', name: 'charger_configuration')]
     public function load(ConfigurationPC $configurationPC, ConfigurationPCRepository $configurationPCRepository, Request $request) {
         // Vérifie qu'un utilisateur est connecté
-        
         if ($this->getUser()) {
             // Vérifie que la configuration appartient bien à l'utilisateur connecté
             if ($configurationPC->getUtilisateur() == $this->getUser()) {
@@ -440,7 +439,7 @@ class ConfigurateurController extends AbstractController
                 }
             } else {
                 // Ajoute un message flash
-                $this->addFlash('danger', 'Vous ne pouvez pas charcher une configuration qui ne vous appartient pas !');
+                $this->addFlash('danger', 'Vous ne pouvez pas charger une configuration qui ne vous appartient pas !');
             }
 
         } else {
@@ -454,6 +453,36 @@ class ConfigurateurController extends AbstractController
         } else {
             return $this->redirectToRoute('recapitulatif_configuration');
         }
+    }
+
+    #[Route('/configurateur/supprimerConfig/{id}', name: 'supprimer_configuration')]
+    public function delete(ConfigurationPC $configurationPC, ConfigurationPCRepository $configurationPCRepository, EntityManagerInterface $entityManager, Request $request) {
+        // Vérifie qu'un utilisateur est connecté
+        if ($this->getUser()) {
+            // Vérifie que la configuration appartient bien à l'utilisateur connecté
+            if ($configurationPC->getUtilisateur() == $this->getUser()) {
+                // Récupère le nom de la configuration
+                $nom = $configurationPC->getNom();
+
+                // Supprime la configuration
+                $entityManager->remove($configurationPC);
+                $entityManager->flush();
+
+                // Ajoute un message flash
+                $this->addFlash('success', 'La configuration ' . mb_strtoupper($nom) . ' à bien étée supprimée !');
+
+            } else {
+                // Ajoute un message flash
+                $this->addFlash('danger', 'Vous ne pouvez pas supprimer une configuration qui ne vous appartient pas !');
+            }
+
+        } else {
+            // Ajoute un message flash
+            $this->addFlash('danger', 'Vous devez être connecté pour supprimer une configuration !');
+        }
+
+        // Redirige vers le configurateur
+        return $this->redirectToRoute('configurateur');
     }
 
     #[Route('/configurateur/reset', name: 'reset_configuration')]

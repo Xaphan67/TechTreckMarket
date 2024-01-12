@@ -201,13 +201,18 @@
             </p>
             <div class="configurations">
                 {% for configuration in configurations %}
-                    <a class="configuration" href="{{ path('charger_configuration', {'id': configuration.id}) }}">
-                        <span class="produit-designation">{{ configuration.nom }}</span>
-                        <div class="configuration-infos">
-                            <span>{{ configuration.produitConfigs | length }} produit{{ configuration.produitConfigs | length > 1 ? "s" }}</span>
-                            <span class="prix">{{ configurationsPrixTotal[configuration.id] | number_format(2, ',', ' ') }} €</span>
-                        </div>
-                    </a>
+                    <div class="configuration">
+                        <a class="configuration-principal" href="{{ path('charger_configuration', {'id': configuration.id}) }}">
+                            <span class="produit-designation">{{ configuration.nom }}</span>
+                            <div class="configuration-infos">
+                                <span>{{ configuration.produitConfigs | length }} produit{{ configuration.produitConfigs | length > 1 ? "s" }}</span>
+                                <span class="prix">{{ configurationsPrixTotal[configuration.id] | number_format(2, ',', ' ') }} €</span>
+                            </div>
+                        </a>
+                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_configuration', { 'id': configuration.id }) }}">
+                            <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
+                        </a>
+                    </div>
                 {% endfor %}
             </div>
         </section>
