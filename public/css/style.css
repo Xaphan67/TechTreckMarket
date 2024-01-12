@@ -1319,7 +1319,7 @@ border: 1px solid var(--borderFavoriteAdress);
     display: flex;
     align-items: center;
     gap: 5px;
-    height: 122px;
+    padding: 5px;
 }
 
 .panier-produit:hover {
@@ -2211,7 +2211,6 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .panier-produit {
         border-top: 1px solid var(--border);
-        height: 82px;
     }
 
     .panier-header-image {
