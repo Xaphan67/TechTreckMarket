@@ -328,65 +328,74 @@ class ConfigurateurController extends AbstractController
 
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
-            // Récupère la configuration stockée en session
-            $configurationSession = $request->getSession()->get('configuration');
+            // Vérifie le nombre de configurations déja enregistrées
+            $configurations = $configurationPCRepository->findBy(['utilisateur' => $this->getUser()]);
 
-            if ($configurationSession) {
-                // Récupère le formulaire
-                $form = $this->createForm(ConfigurationPCType::class);
-                $form->handleRequest($request);
+            if (count($configurations) < 6) {
+                // Récupère la configuration stockée en session
+                $configurationSession = $request->getSession()->get('configuration');
 
-                // Vérifie que le formulaire est soumis
-                if ($form->isSubmitted()) {
-                    // Vérifie que le formulaire est valide
-                    if ($form->isValid()) {
-                        // Récupère le nom de la confiration à partir du formulaire
-                        $nomConfiguration = $form->getData()['nom'];
+                if ($configurationSession) {
+                    // Récupère le formulaire
+                    $form = $this->createForm(ConfigurationPCType::class);
+                    $form->handleRequest($request);
 
-                        // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
-                        $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
+                    // Vérifie que le formulaire est soumis
+                    if ($form->isSubmitted()) {
+                        // Vérifie que le formulaire est valide
+                        if ($form->isValid()) {
+                            // Récupère le nom de la confiration à partir du formulaire
+                            $nomConfiguration = $form->getData()['nom'];
 
-                        // Crée une nouvelle configuration si l'utilisateur n'a aucune configuration enregistrée avec ce nom
-                        if (!$configuration) {
-                            $configuration = new ConfigurationPC($nomConfiguration);
-                            $this->getUser()->addConfiguration($configuration);
-                        }
+                            // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
+                            $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
 
-                        // Récupère et supprime les produits de la configuration correspondante de l'utilisateur
-                        $produitsConfiguration = $produitConfigRepository->findBy(['configurationPC' => $configuration]);
-
-                        foreach ($produitsConfiguration as $produitConfiguration) {
-                            $configuration->removeProduitsConfig($produitConfiguration);
-                        }
-
-                        // Ajoute les nouveaux produits
-                        foreach ($configurationSession as $etape => $nouveauProduit) {
-                            if ($nouveauProduit != null) {
-                                $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
-                                $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
+                            // Crée une nouvelle configuration si l'utilisateur n'a aucune configuration enregistrée avec ce nom
+                            if (!$configuration) {
+                                $configuration = new ConfigurationPC($nomConfiguration);
+                                $this->getUser()->addConfiguration($configuration);
                             }
+
+                            // Récupère et supprime les produits de la configuration correspondante de l'utilisateur
+                            $produitsConfiguration = $produitConfigRepository->findBy(['configurationPC' => $configuration]);
+
+                            foreach ($produitsConfiguration as $produitConfiguration) {
+                                $configuration->removeProduitsConfig($produitConfiguration);
+                            }
+
+                            // Ajoute les nouveaux produits
+                            foreach ($configurationSession as $etape => $nouveauProduit) {
+                                if ($nouveauProduit != null) {
+                                    $prod = $produitRepository->findOneBy(['id' => $nouveauProduit->getId()]);
+                                    $configuration->addProduitConfig(new ProduitConfig($prod, 1, $etape));
+                                }
+                            }
+
+                            // Stocke la configuration dans la base de données
+                            $entityManager->persist($configuration);
+                            $entityManager->flush($configuration);
+
+                            // Ajoute un message flash
+                            $this->addFlash('success', 'Votre configuration à bien été sauvegardée !');
+                        } else {
+                            // Ajoute un message flash
+                            $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
                         }
 
-                        // Stocke la configuration dans la base de données
-                        $entityManager->persist($configuration);
-                        $entityManager->flush($configuration);
-
-                        // Ajoute un message flash
-                        $this->addFlash('success', 'Votre configuration à bien été sauvegardée !');
-                    } else {
-                        // Ajoute un message flash
-                        $this->addFlash('danger', 'Le formulaire n\'est pas valide !');
+                        // Redirige vers l'url d'entrée
+                        $url = $request->getSession()->get('urlFrom');
+                        $request->getSession()->remove('urlFrom');
+                        return $this->redirect($url);
                     }
-
-                    // Redirige vers l'url d'entrée
-                    $url = $request->getSession()->get('urlFrom');
-                    $request->getSession()->remove('urlFrom');
-                    return $this->redirect($url);
+                } else {
+                    // Ajoute un message flash
+                    $this->addFlash('danger', 'Votre configuration est vide !');
                 }
             } else {
                 // Ajoute un message flash
-                $this->addFlash('danger', 'Votre configuration est vide !');
+                $this->addFlash('danger', 'Vous ne pouvez pas enregistrer plus de 6 configurations !');
             }
+            
         } else {
             // Ajoute un message flash
             $this->addFlash('danger', 'Vous devez être connecté pour sauvegarder une configuration !');

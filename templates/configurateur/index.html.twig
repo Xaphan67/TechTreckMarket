@@ -120,7 +120,9 @@
                         {% if configurations | length > 0 %}
                             <div class="bouton-lien bouton-110" onclick="displaySavedBuildsSelection()">Charger</div>
                         {% endif %}
-                        <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                        {% if configurations | length < 6 %}
+                            <div class="bouton-lien bouton-110" onclick="displaySaveBuildForm()">Sauvegarder</div>
+                        {% endif %}
                     {% endif %}
                     <div class="bouton-lien bouton-150" onclick="displayResetWarning()">Réinitialiser</div>
                 </div>
@@ -178,6 +180,9 @@
             </div>
             <p>
                 Entrez un nom pour la configuration. Vous pourrez la charger à tout moment en cliquant sur le bouton "Charger" du configurateur.
+            </p>
+            <p>
+                Vous pouvez encore enregistrer {{ 6 - configurations | length }} configuration{{ 6 - configurations | length > 1 ? "s" }}.
             </p>
             {{ form_start(formulaire, {'action': path('sauvegarder_configuration'), 'method': 'POST'}) }}
                 <div class="formulaire-champ">
