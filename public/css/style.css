@@ -1463,12 +1463,12 @@ border: 1px solid var(--borderFavoriteAdress);
     gap: 10px;
     width: 25%;
     height: 85px;
+    border: 1px solid transparent;
 }
 
 .etape:hover:not(.etape-actuelle) {
     border-radius: 10px;
     background-color: var(--border);
-    border: 1px solid(transparent);
 }
 
 .etape-actuelle,

@@ -236,8 +236,14 @@ class ConfigurateurController extends AbstractController
         // Stocke la configuration en session
         $request->getSession()->set('configuration', $configuration);
 
-        // Redirige vers l'étape en cours
-        return $this->redirectToRoute('configurateur', ['etape' => $etape + 1]);
+        // Redirige vers la prochaine étape non complète
+        $prochaineEtape = $etape;
+        foreach (array_keys($configuration) as $etapeConfiguration) {
+            if ($etapeConfiguration >= $etape && $etapeConfiguration <= $prochaineEtape) {
+                $prochaineEtape += 1;
+            }
+        }
+        return $this->redirectToRoute('configurateur', ['etape' => $prochaineEtape]);
     }
 
     #[Route('/configurateur/supprimer/{etape}', name: 'supprimer_configurateur')]
@@ -489,7 +495,8 @@ class ConfigurateurController extends AbstractController
 
         // Pour chaque étape...
         $ListesProduitsCompatibles = [];
-        foreach($caracteristiquesAVerifier as $etape => $correspondanceCaracterstique) {
+        foreach(array_keys($caracteristiquesAVerifier) as $etape) {
+            // Vérifie que la clé correspondant à l'étape existe
             if (array_key_exists($etape, $request->getSession()->get('configuration'))) {
                 // Récupère les caractèristiques techniques du produit à vérifier de la configuration
                 $produitSource = $request->getSession()->get('configuration')[$etape];

@@ -44,7 +44,9 @@
                                 <p class="paragraphe-centre">Cliquez pour en ajouter un{{e == 2 or e == 5 or e == 6 or e == 8 ? "e" }} !</p>
                             </div>
                         {% endif %}
-                        <img class="etape-image" src="{{ asset('svg/configurateur/' ~ e ~ '.svg') }}" alt="{{ infosEtapes[e] | first }}">
+                        <div class="conteneur-etape-image">
+                            <img class="etape-image" src="{{ asset('svg/configurateur/' ~ e ~ '.svg') }}" alt="{{ infosEtapes[e] | first }}">
+                        </div>
                     {% endif %}
                         <span class="etape-nom">{{ infosEtapes[e] | first }}</span>
                     {% if e != etape %}
