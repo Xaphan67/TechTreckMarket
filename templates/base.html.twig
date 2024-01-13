@@ -43,8 +43,12 @@
         {# Masquer les messages après 4 secondes (3 secondes d'attente + 1 seconde d'animation) #}
         <script>
             setTimeout(function() {
-                document.querySelector('.message').style.display = 'none';
-            }, 4000);
+                // Récupère le 1er élément ayant la classe message
+                message = document.getElementsByClassName('message')[0]
+                if (message != undefined) {
+                    message.style.display = 'none';
+                }
+            }, 3975); // 3975 au lieu de 4000 pour faire disparaître l'élément juste avant la fin de l'animation
         </script>
     </body>
 </html>
