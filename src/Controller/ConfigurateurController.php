@@ -290,11 +290,14 @@ class ConfigurateurController extends AbstractController
                     if ($form->isSubmitted()) {
                         // Vérifie que le formulaire est valide
                         if ($form->isValid()) {
-                            // Récupère le nom de la confiration à partir du formulaire
+                            // Récupère le nom de la configuration à partir du formulaire
                             $nomConfiguration = $form->getData()['nom'];
 
                             // Récupère la configuration de l'utilisateur ayant le même nom, si elle existe
-                            $configuration = $configurationPCRepository->findOneBy(['nom' => $nomConfiguration]);
+                            $configuration = $configurationPCRepository->findOneBy([
+                                'utilisateur' => $this->getUser(),
+                                'nom' => $nomConfiguration
+                            ]);
 
                             // Crée une nouvelle configuration si l'utilisateur n'a aucune configuration enregistrée avec ce nom
                             if (!$configuration) {
