@@ -39,8 +39,8 @@
                         <td>{{ ref }}</td>
                         <td>{{ produit.quantite }}</td>
                         <td>{{ produit.designation }}</td>
-                        <td>{{ produit.prixHT }} €</td>
-                        <td>{{ produit.prixHT * produit.quantite }} €</td>
+                        <td>{{ produit.prixHT | number_format(2, ',', ' ') }} €</td>
+                        <td>{{ produit.prixHT * produit.quantite | number_format(2, ',', ' ') }} €</td>
                     </tr>
                 {% endfor %}
             </table>
