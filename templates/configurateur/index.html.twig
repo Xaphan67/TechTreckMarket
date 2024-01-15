@@ -134,43 +134,49 @@
             </section>
 
             <section class="liste-produits">
-                {# Affiche la pagination #}
-                {% if produits.pageCount > 1 %}
-                    <section class="conteneur pagination-haut">
-                        {{ knp_pagination_render(produits) }}
-                    </section>
-                {% endif %}
-
-                {# Affiche les produits #}
-                <div class="conteneur">
-                    {% for produit in produits %}
-                        <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape }) }}">
-                            <article class="produit">
-                                <div class="produit-image">
-                                    <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
-                                </div>
-                                <div class="produit-infos">
-                                    <span class="produit-designation">{{ produit.designation }}</span>
-                                    <span class="produit-resume">{{ produit.resume }}</span>
-                                    <div class="produit-prix">
-                                        {% if produit.stock > 0 %}
-                                            <span class="stock-oui">EN STOCK</span>
-                                        {% else %}
-                                            <span class="stock-non">RUPTURE</span>
-                                        {% endif %}
-                                        <span class="produit-achat prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
-                                    </div>
-                                </div>
-                            </article>
-                        </a>
-                    {% endfor %}
-                </div>
-
-                {# Affiche la pagination #}
-                {% if produits.pageCount > 1 %}
+                {% if produits | length == 0 %}
                     <section class="conteneur">
-                        {{ knp_pagination_render(produits) }}
+                        <p class="aucunProduit">Désolé, il n'y à aucun produit compatible avec les autres produits que vous avez séléctionné</p>
                     </section>
+                {% else %}
+                    {# Affiche la pagination #}
+                    {% if produits.pageCount > 1 %}
+                        <section class="conteneur pagination-haut">
+                            {{ knp_pagination_render(produits) }}
+                        </section>
+                    {% endif %}
+
+                    {# Affiche les produits #}
+                    <div class="conteneur">
+                        {% for produit in produits %}
+                            <a href="{{ path('ajout_configurateur', {'id': produit.id, 'etape': etape }) }}">
+                                <article class="produit">
+                                    <div class="produit-image">
+                                        <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit.designation }}">
+                                    </div>
+                                    <div class="produit-infos">
+                                        <span class="produit-designation">{{ produit.designation }}</span>
+                                        <span class="produit-resume">{{ produit.resume }}</span>
+                                        <div class="produit-prix">
+                                            {% if produit.stock > 0 %}
+                                                <span class="stock-oui">EN STOCK</span>
+                                            {% else %}
+                                                <span class="stock-non">RUPTURE</span>
+                                            {% endif %}
+                                            <span class="produit-achat prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </a>
+                        {% endfor %}
+                    </div>
+
+                    {# Affiche la pagination #}
+                    {% if produits.pageCount > 1 %}
+                        <section class="conteneur">
+                            {{ knp_pagination_render(produits) }}
+                        </section>
+                    {% endif %}
                 {% endif %}
             </section>
         </div>
