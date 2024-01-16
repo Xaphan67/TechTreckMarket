@@ -23,9 +23,9 @@
             <div class="etapes">
                 {% for e in 1..8 %}
                     {% if e != etape %}
-                        <a class="etape {{ etape == e ? 'etape-actuelle' ~ (e == 1 ? '-premier') }}" href="{{ path('configurateur', {'etape': e }) }}">
+                        <a class="etape{{ etape == e ? ' etape-actuelle' ~ (e == 1 ? ' etape-actuelle-premier') }}" href="{{ path('configurateur', {'etape': e }) }}">
                     {% else %}
-                        <div class="etape {{ etape == e ? 'etape-actuelle' ~ (e == 1 ? '-premier') }}">
+                        <div class="etape{{ etape == e ? ' etape-actuelle' ~ (e == 1 ? ' etape-actuelle-premier') }}">
                     {% endif %}
                     {% if configuration[e] is defined %}
                         {% if e != etape %}

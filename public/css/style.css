@@ -85,33 +85,33 @@ table td:not(:first-child) {
 /* Couleurs */
 
 :root {
-    --modal: rgba(0, 0, 0, 0.25);
+    --arianeBg: #D9D9D9;
+    --border: #D3D3D3;
+    --borderFavoriteAdress: rgba(40, 167, 69, 0.35);
+    --button:#F8894B;
+    --buttonBuy: #73B43E;
+    --buttonBuyHover: #7DC047;
+    --buttonCurrent: #490D0D;
+    --buttonHover: #F99560;
+    --buttonText: #FFFFFF;
+    --favoriteAdress: rgba(40, 167, 69, 0.15);
+    --footerBgDark: #360000;
+    --footerBgLight: #500202;
+    --lightText: #5B5656;
+    --lightTextB: #919191;
     --links: #000000;
     --linksFooter: #FFFFFF;
-    --text: #2F2E2E;
-    --lightText: #5B5656;
-    --mainBg: #F3F3F3;
-    --footerBgLight: #500202;
-    --footerBgDark: #360000;
-    --tabBg: #ECECEC;
-    --sectionBg: #FFFFFF;
-    --arianeBg: #D9D9D9;
-    --mainDark: #820F0F;
-    --border: #D3D3D3;
-    --bouton:#F8894B;
-    --boutonHover: #F99560;
-    --boutonText: #FFFFFF;
-    --lightTextB: #919191;
-    --textGreen: #00B22E;
-    --textRed: #D71010;
-    --boutonBuy: #73B43E;
-    --boutonBuyHover: #7DC047;
-    --boutonCurrent: #490D0D;
     --listBg: #F7F7F7;
-    --textOrange: #B25500;
-    --favoriteAdress: rgba(40, 167, 69, 0.15);
-    --borderFavoriteAdress: rgba(40, 167, 69, 0.35);
+    --mainBg: #F3F3F3;
+    --mainDark: #820F0F;
+    --modal: rgba(0, 0, 0, 0.25);
+    --sectionBg: #FFFFFF;
     --stockBg: #F1F1F1;
+    --tabBg: #ECECEC;
+    --text: #2F2E2E;
+    --textGreen: #00B22E;
+    --textOrange: #B25500;
+    --textRed: #D71010;
     --textTab: #585050;
 }
 
@@ -216,7 +216,7 @@ header {
     width: 25px;
     background-color: #FF0000;
     border-radius: 25px;
-    color: var(--boutonText);
+    color: var(--buttonText);
 }
 
 ul {
@@ -235,10 +235,10 @@ li {
     height: 50px;
     width: 250px;
     padding-left: 10px;
-    background-color: var(--boutonCurrent);
+    background-color: var(--buttonCurrent);
     align-items: center;
     gap: 10px;
-    color: var(--boutonText);
+    color: var(--buttonText);
 }
 
 .menuOption:hover {
@@ -504,15 +504,15 @@ button,
     height: 35px;
     border-radius: 5px;
     border: 0px;
-    background-color: var(--bouton);
-    color: var(--boutonText);
+    background-color: var(--button);
+    color: var(--buttonText);
     cursor: pointer;
     font-size: 14px;
 }
 
 button:hover,
 .bouton-lien:hover {
-    background-color: var(--boutonHover);
+    background-color: var(--buttonHover);
 }
 
 .bouton-centre {
@@ -540,7 +540,7 @@ button:hover,
 }
 
 .bouton-valider-commande {
-    background-color: var(--boutonBuy);
+    background-color: var(--buttonBuy);
 }
 
 label,
@@ -635,8 +635,8 @@ label,
     justify-content: center;
     min-width: 35px;
     height: 35px;
-    background-color: var(--bouton);
-    color: var(--boutonText);
+    background-color: var(--button);
+    color: var(--buttonText);
     border-radius: 5px;
     cursor: pointer;
 }
@@ -648,11 +648,11 @@ label,
     gap: 5px;
     justify-content: center;
     padding: 7px 0px;
-    color: var(--boutonText);
+    color: var(--buttonText);
 }
 
 .pagination a {
-    color: var(--boutonText);
+    color: var(--buttonText);
 }
 
 .pagination .page-actuelle {
@@ -661,7 +661,7 @@ label,
     height: 35px;
     justify-content: center;
     align-items: center;
-    background-color: var(--boutonCurrent);
+    background-color: var(--buttonCurrent);
     border-radius: 5px;;
 }
 
@@ -673,7 +673,7 @@ label,
     height: 35px;
     justify-content: center;
     align-items: center;
-    background-color: var(--bouton);
+    background-color: var(--button);
     border-radius: 5px;;
 }
 
@@ -1000,14 +1000,14 @@ label,
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: var(--boutonBuy);
+    background-color: var(--buttonBuy);
     border-radius: 5px;
 }
 
 .bouton-achat:hover,
 .bouton-valider-commande:hover,
 .bouton-passer-etape:hover {
-    background-color: var(--boutonBuyHover);
+    background-color: var(--buttonBuyHover);
 }
 
 .bouton-achat-large {
@@ -1315,8 +1315,8 @@ border: 1px solid var(--borderFavoriteAdress);
 }
 
 .type-facture-selected {
-    background: var(--bouton);
-    color: var(--boutonText);
+    background: var(--button);
+    color: var(--buttonText);
     cursor: default;
 }
 
@@ -1384,7 +1384,7 @@ border: 1px solid var(--borderFavoriteAdress);
 .bouton-commander {
     width: 240px;
     height: 50px;
-    color: var(--boutonText);
+    color: var(--buttonText);
     cursor: pointer;
     margin-inline: auto;
 }
@@ -1798,7 +1798,7 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .headerIcone-texte {
         display: contents;
-        color: var(--boutonText);
+        color: var(--buttonText);
         text-transform: uppercase;
     }
 
@@ -2123,7 +2123,7 @@ border: 1px solid var(--borderFavoriteAdress);
         position: relative;
     }
 
-    .etape-actuelle:after {
+    .etape-actuelle:not(.etape-actuelle-premier):after {
         display: block;
         position: absolute;
         background: url(../img/configurateur/fleche-etape.gif) no-repeat center;
