@@ -20,10 +20,20 @@
             </p>
         </section>
 
-        <section class="conteneur conteneur-padding conteneur-login">
+        <section class="conteneur conteneur-login">
+            {# Onglets #}
+            <div class="onglets">
+                <div class="onglet-section-login">
+                    <a class="lien-onglet" href="{{ path('app_login') }}">Déja client ?</a>
+                </div>
+                <div class="onglet-section-login onglet-actif">
+                    Nouveau client ?
+                </div>
+            </div>
+
+            {# Formulaire d'inscription #}
+            {{ form_start(registrationForm, {'attr': {'class': 'conteneur-padding'} }) }}
             {{ form_errors(registrationForm) }}
-        
-            {{ form_start(registrationForm) }}
                 <div class="formulaire-champ">
                     {{ form_row(registrationForm.email) }}
                 </div>
@@ -40,5 +50,4 @@
             {{ form_end(registrationForm) }}
         </section>
     </div>
-
 {% endblock %}

@@ -1,31 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}E-Commerce - Se connecter{% endblock %}
+
+{% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
 
 {% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="conteneur-principal">
+        {# Nom et description de la page #}
+        <section>
+            <h1>Connexion</h1>
+            <hr>
+            <p>
+                Bienvenue sur Tech Treck Market !<br>
+                Remplissez le formulaire çi-dessous pour vous connetcer et accéder à votre espace personnel.
+            </p>
+        </section>
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+        <section class="conteneur conteneur-login">
+            {# Onglets #}
+            <div class="onglets">
+                <div class="onglet-section-login onglet-actif">
+                    Déja client ?
+                </div>
+                <div class="onglet-section-login">
+                    <a class="lien-onglet" href="{{ path('app_register') }}">Nouveau client ?</a>
+                </div>
             </div>
-        {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+            {# Formulaire de connexion #}
+            <form method="post" class="conteneur-padding">
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
+        
+                {% if app.user %}
+                    <div class="mb-3">
+                        Vous êtes déjà connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                    </div>
+                {% endif %}
 
-        <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-        >
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
+                <div class="formulaire-champ">
+                    <label for="inputEmail">Email *</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                </div>
+                <div class="formulaire-champ">
+                    <label for="inputPassword">Mot de passe *</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                <button class="bouton-centre bouton-150" type="submit">
+                    Connexion
+                </button>
+            </form>
+        </section>
+    </div>
 {% endblock %}
