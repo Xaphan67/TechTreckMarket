@@ -52,14 +52,16 @@
                 <p class="produit-descriptif">{{ produit.descriptif | slice(5, -6) | raw }}</p>
                 <div class="produit-achat-fiche">
                     <div class="produit-achat-infos">
-                        <div class="stock">
-                            {% if produit.stock > 0 %}
-                                <span class="stock-oui">EN STOCK</span>
-                            {% else %}
-                                <span class="stock-non">RUPTURE</span>
-                            {% endif %}
-                        </div>
-                        <span class="fiche-prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                        {% if not produit.archive %}
+                            <div class="stock">
+                                {% if produit.stock > 0 %}
+                                    <span class="stock-oui">EN STOCK</span>
+                                {% else %}
+                                    <span class="stock-non">RUPTURE</span>
+                                {% endif %}
+                            </div>
+                            <span class="fiche-prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                        {% endif %}
                     </div>
                     {% if not produit.archive %}
                         {{ form_start(quantiteFormulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}

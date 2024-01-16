@@ -34,15 +34,6 @@ class Produit
     #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2)]
     private ?string $prix = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2, nullable: true)]
-    private ?string $promotion = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
-    private ?string $ancienPrix = null;
-
-    #[ORM\Column(type: Types::DECIMAL, precision: 10, scale: 2, nullable: true)]
-    private ?string $nouveauPrix = null;
-
     #[ORM\Column]
     private ?int $stock = null;
 
@@ -150,42 +141,6 @@ class Produit
         return $this;
     }
 
-    public function getPromotion(): ?string
-    {
-        return $this->promotion;
-    }
-
-    public function setPromotion(?string $promotion): static
-    {
-        $this->promotion = $promotion;
-
-        return $this;
-    }
-
-    public function getAncienPrix(): ?string
-    {
-        return $this->ancienPrix;
-    }
-
-    public function setAncienPrix(?string $ancienPrix): static
-    {
-        $this->ancienPrix = $ancienPrix;
-
-        return $this;
-    }
-
-    public function getNouveauPrix(): ?string
-    {
-        return $this->nouveauPrix;
-    }
-
-    public function setNouveauPrix(?string $nouveauPrix): static
-    {
-        $this->nouveauPrix = $nouveauPrix;
-
-        return $this;
-    }
-
     public function getStock(): ?int
     {
         return $this->stock;
@@ -264,11 +219,6 @@ class Produit
         return $this;
     }
 
-    public function __toString()
-    {
-        return $this->designation;
-    }
-
     /**
      * @return Collection<int, ProduitCaracteristiqueTechnique>
      */
@@ -309,5 +259,10 @@ class Produit
         $this->archive = $archive;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->designation;
     }
 }
