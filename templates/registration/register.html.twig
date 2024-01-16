@@ -1,23 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}E-Commerce - S'enregistrer{% endblock %}
+
+{% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h1>Register</h1>
+    <div class="conteneur-principal">
+        {# Nom et description de la page #}
+        <section>
+            <h1>S'enregistrer</h1>
+            <hr>
+            <p>
+                Bienvenue sur Tech Treck Market !<br>
+                Pour vous inscrire, remplissez le formulaire çi-dessous. Vous aurez ainsi accès à un espace personnel dédié et pourrez passer vos premères commandes.
+            </p>
+        </section>
 
-    {{ form_errors(registrationForm) }}
+        <section class="conteneur conteneur-padding conteneur-login">
+            {{ form_errors(registrationForm) }}
+        
+            {{ form_start(registrationForm) }}
+                <div class="formulaire-champ">
+                    {{ form_row(registrationForm.email) }}
+                </div>
+                <div class="formulaire-champ formulaire-champ-mdp">
+                    {{ form_row(registrationForm.plainPassword) }}
+                </div>
+                <div class="formulaire-champ">
+                    <div class="formulaire-champ-horizontal">
+                        {{ form_label(registrationForm.agreeTerms) }}
+                        {{ form_widget(registrationForm.agreeTerms) }}
+                    </div>
+                </div>
+                {{ form_row(registrationForm.Valider) }}
+            {{ form_end(registrationForm) }}
+        </section>
+    </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
 {% endblock %}

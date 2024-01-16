@@ -1735,6 +1735,11 @@ border: 1px solid var(--borderFavoriteAdress);
         width: 200px;
     }
 
+    .conteneur-login {
+        max-width: 400px;
+        margin-inline: auto;
+    }
+
     /* Header */
 
     header {
@@ -2134,6 +2139,10 @@ border: 1px solid var(--borderFavoriteAdress);
     .ordinateur-uniquement {
         display: flex;
         width: 100%;
+    }
+
+    .conteneur-login {
+        max-width: 500px;
     }
 
     /* Header */
