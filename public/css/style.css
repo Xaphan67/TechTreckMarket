@@ -86,6 +86,7 @@ table td:not(:first-child) {
 
 :root {
     --arianeBg: #D9D9D9;
+    --barketInfo: #FF0000;
     --border: #D3D3D3;
     --borderFavoriteAdress: rgba(40, 167, 69, 0.35);
     --button:#F8894B;
@@ -105,6 +106,7 @@ table td:not(:first-child) {
     --mainBg: #F3F3F3;
     --mainDark: #820F0F;
     --modal: rgba(0, 0, 0, 0.25);
+    --searchFieldBorder: #000000;
     --sectionBg: #FFFFFF;
     --stockBg: #F1F1F1;
     --tabBg: #ECECEC;
@@ -171,9 +173,9 @@ header {
 .recherchePrincipale {
     height: 50px !important;
     width: 246px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
+    border-top: 1px solid var(--searchFieldBorder);
+    border-bottom: 1px solid var(--searchFieldBorder);
+    border-left: 1px solid var(--searchFieldBorder);
     border-right: none;
     background-color: var(--mainBg);
 }
@@ -181,10 +183,10 @@ header {
 .bouton-recherche-principale {
     height: 50px;
     width: 44px;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    border-top: 1px solid var(--searchFieldBorder);
+    border-bottom: 1px solid var(--searchFieldBorder);
     border-left: none;
-    border-right: 1px solid black;
+    border-right: 1px solid var(--searchFieldBorder);
     border-radius: 0px;
     background-color: var(--mainBg);
 }
@@ -214,7 +216,7 @@ header {
     right: 0px;
     height: 25px;
     width: 25px;
-    background-color: #FF0000;
+    background-color: var(--barketInfo);
     border-radius: 25px;
     color: var(--buttonText);
 }
@@ -362,7 +364,7 @@ a {
 .conteneur {
     position: relative;
     background-color: var(--sectionBg);
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 2px 4px var(--modal);
     width: 100%;
     height: fit-content;
 }
