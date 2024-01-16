@@ -32,6 +32,8 @@ class ProduitRepository extends ServiceEntityRepository
                 ->setParameter('word', '%' . $word . '%');
             };
 
+            $query->andWhere('p.archive = false');
+
             $query->getQuery()->getResult();
             return $query;
        ;
@@ -74,6 +76,8 @@ class ProduitRepository extends ServiceEntityRepository
                 $orderDir = strtoupper($orderDir) === Criteria::ASC ? Criteria::ASC : Criteria::DESC;
                 $query->addOrderBy('p.' . $orderCol, $orderDir, 'p');
             }
+
+            $query->andWhere('p.archive = false');
 
             $query->getQuery()->getResult();
             return $query;

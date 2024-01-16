@@ -994,6 +994,10 @@ label,
     color: var(--textRed);
 }
 
+.produit-archive {
+    height: 50px;
+}
+
 .bouton-achat {
     display: flex;
     align-items: center;
@@ -1979,6 +1983,9 @@ border: 1px solid var(--borderFavoriteAdress);
     }
 
     .produit-descriptif-achat {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
         margin-top: 0px;
         width: 50%;
     }

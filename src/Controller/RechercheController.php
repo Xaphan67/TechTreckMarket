@@ -77,7 +77,12 @@ class RechercheController extends AbstractController
     public function trademarkSearch(Marque $marque, Produit $produit, ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
     {
         // Récupère tout les produits dont la marque équivant à celle passée en paramettre
-        $produits = $produitRepository->findBy(['marque' => $marque], ["designation" => "ASC"]);
+        $produits = $produitRepository->findBy([
+            'marque' => $marque,
+            "archive" => false
+        ], [
+            "designation" => "ASC"
+        ]);
 
         // Crée la pagination pour la liste des produits
         $produitsPagination = $paginator->paginate(
@@ -101,7 +106,8 @@ class RechercheController extends AbstractController
         // Récupère tout les produits dont la marque équivant à celle passée en paramettre
         $produits = $produitRepository->findBy([
             'marque' => $marque,
-            'categorie' => $categorie],
+            'categorie' => $categorie,
+            "archive" => false],
             ["designation" => "ASC"]);
 
         // Crée la pagination pour la liste des produits

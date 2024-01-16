@@ -20,9 +20,24 @@ class AccueilController extends AbstractController
         $categoriePeripheriques = $categorieRepository->findOneBy(['nom' => "Peripheriques"]);
 
         // On récupère la liste des 3 derniers produits de chaque catégorie principale
-        $ordinateurs = $produitRepository->findBy(['categoriePrincipale' => $categorieOrdinateurs], ["dateLancement" => "DESC"], 3);
-        $composants = $produitRepository->findBy(['categoriePrincipale' => $categorieComposants], ["dateLancement" => "DESC"], 3);
-        $peripheriques = $produitRepository->findBy(['categoriePrincipale' => $categoriePeripheriques], ["dateLancement" => "DESC"], 3);
+        $ordinateurs = $produitRepository->findBy([
+            'categoriePrincipale' => $categorieOrdinateurs,
+            "archive" => false
+        ], [
+            "dateLancement" => "DESC"
+        ], 3);
+        $composants = $produitRepository->findBy([
+            'categoriePrincipale' => $categorieComposants,
+            "archive" => false
+        ], [
+            "dateLancement" => "DESC"
+        ], 3);
+        $peripheriques = $produitRepository->findBy([
+            'categoriePrincipale' => $categoriePeripheriques,
+            "archive" => false
+        ], [
+            "dateLancement" => "DESC"
+        ], 3);
 
         // On récupère la liste de toutes les catégories qui doivent s'afficher sur la page d'accueil
         $categories = $categorieRepository->findBy([

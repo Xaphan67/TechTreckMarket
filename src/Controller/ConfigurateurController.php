@@ -62,11 +62,17 @@ class ConfigurateurController extends AbstractController
         if (count($categorie->getSousCategories()) > 0) {
             // Si oui, ajoute tout les produit de chaque sous-catégorie
             foreach ($categorie->getSousCategories() as $sousCategorie) {
-                $produits += $produitRepository->findBy(['categorie' => $sousCategorie]);
+                $produits += $produitRepository->findBy([
+                        'categorie' => $sousCategorie,
+                        "archive" => false
+                    ]);
             }
         } else {
             // Récupère les produits correspondant à la catégorie
-            $produits = $produitRepository->findBy(['categorie' => $categorie]);
+            $produits = $produitRepository->findBy([
+                    'categorie' => $categorie,
+                    "archive" => false
+                ]);
         }
 
         // Vérifications à chaque étape

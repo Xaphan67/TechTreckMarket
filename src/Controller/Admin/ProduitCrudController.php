@@ -7,11 +7,14 @@ use App\Form\JsonCodeEditorType;
 use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CodeEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -24,6 +27,13 @@ class ProduitCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Produit::class;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->disable(Action::DELETE)
+        ;
     }
 
     public function configureFields(string $pageName): iterable
@@ -57,7 +67,8 @@ class ProduitCrudController extends AbstractCrudController
             ->setUploadDir('public/img/produits')
             ->setRequired($pageName !== Crud::PAGE_EDIT),
             MoneyField::new('prix')->setCurrency('EUR')->setStoredAsCents(false),
-            IntegerField::new('stock')
+            IntegerField::new('stock'),
+            BooleanField::new('archive', 'Archivé')
         ];
     }
 

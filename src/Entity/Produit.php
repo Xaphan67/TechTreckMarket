@@ -64,6 +64,9 @@ class Produit
     #[ORM\OneToMany(mappedBy: 'produit', targetEntity: ProduitCaracteristiqueTechnique::class)]
     private Collection $caracteristiquesTechniques;
 
+    #[ORM\Column]
+    private ?bool $archive = null;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
@@ -292,6 +295,18 @@ class Produit
                 $caracteristiquesTechnique->setProduit(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isArchive(): ?bool
+    {
+        return $this->archive;
+    }
+
+    public function setArchive(bool $archive): static
+    {
+        $this->archive = $archive;
 
         return $this;
     }

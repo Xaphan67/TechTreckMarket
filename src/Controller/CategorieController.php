@@ -27,7 +27,12 @@ class CategorieController extends AbstractController
         // Si la catégorie n'a pas de sous catégories, on récupère
         // la liste des produits appartenant à la catégorie
         if (count($categorie->getSousCategories()) == 0) {
-            $produits = $produitRepository->findBy(['categorie' => $categorie], ["designation" => "ASC"]);
+            $produits = $produitRepository->findBy([
+                    'categorie' => $categorie,
+                    "archive" => false
+                ], [
+                    "designation" => "ASC"
+                ]);
             foreach ($produits as $produit) {
                 if (array_key_exists($produit->getMarque()->getNom(), $produitsParMarque)) {
                     $produitsParMarque[$produit->getMarque()->getNom()]++;

@@ -49,7 +49,7 @@
                 <img src="{{ asset('img/produits/' ~ produit.photo) }}" alt="{{ produit }}">
             </div>
             <div class="produit-descriptif-achat">
-                <p class="produit-descriptif">{{ produit.descriptif | raw }}</p>
+                <p class="produit-descriptif">{{ produit.descriptif | slice(5, -6) | raw }}</p>
                 <div class="produit-achat-fiche">
                     <div class="produit-achat-infos">
                         <div class="stock">
@@ -61,10 +61,16 @@
                         </div>
                         <span class="fiche-prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
                     </div>
-                    {{ form_start(quantiteFormulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
-                    {{ form_row(quantiteFormulaire.quantite) }}
-                    {{ form_row(quantiteFormulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
-                    {{ form_end(quantiteFormulaire) }}
+                    {% if not produit.archive %}
+                        {{ form_start(quantiteFormulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
+                        {{ form_row(quantiteFormulaire.quantite) }}
+                        {{ form_row(quantiteFormulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
+                        {{ form_end(quantiteFormulaire) }}
+                    {% else %}
+                        <div class="produit-archive">
+                            Ce produit n'est plus disponible.
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -84,7 +90,7 @@
             </div>
             <section id="sectionDescriptif" class="conteneur-padding-produits">
                 {% if produit.descriptif %}
-                    {{ produit.descriptif | raw }}
+                    {{ produit.descriptif | slice(5, -6) | raw }}
                 {% else %}
                     <p>Aucun descriptif pour ce produit.</p>
                 {% endif %}
