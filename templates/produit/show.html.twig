@@ -51,8 +51,8 @@
             <div class="produit-descriptif-achat">
                 <p class="produit-descriptif">{{ produit.descriptif | slice(5, -6) | raw }}</p>
                 <div class="produit-achat-fiche">
-                    <div class="produit-achat-infos">
-                        {% if not produit.archive %}
+                    {% if not produit.archive %}
+                        <div class="produit-achat-infos">
                             <div class="stock">
                                 {% if produit.stock > 0 %}
                                     <span class="stock-oui">EN STOCK</span>
@@ -61,9 +61,7 @@
                                 {% endif %}
                             </div>
                             <span class="fiche-prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
-                        {% endif %}
-                    </div>
-                    {% if not produit.archive %}
+                        </div>
                         {{ form_start(quantiteFormulaire, { 'attr': { 'class': 'produit-achat-infos' }, 'action': path('ajout_produit_commande', {'id': produit.id }), 'method': 'POST' }) }}
                         {{ form_row(quantiteFormulaire.quantite) }}
                         {{ form_row(quantiteFormulaire.Valider, { 'label': '<img src="/svg/produits/panier.svg" alt="Ajouter au panier"> Ajouter au panier', 'label_html' : true }) }}
