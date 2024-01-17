@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
@@ -26,6 +27,10 @@ class ProduitType extends AbstractType
                     new NotBlank([
                         'message' => 'Veuillez entrer une quantité.',
                     ]),
+                    new Range([
+                        'min' => 1,
+                        'minMessage' => 'Vous nepouvez pas ajouter moins d\'un article'
+                    ])
                 ]
             ])
             ->add('Valider', SubmitType::class, [
