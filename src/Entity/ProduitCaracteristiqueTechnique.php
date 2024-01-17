@@ -13,7 +13,7 @@ class ProduitCaracteristiqueTechnique
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 255)]
     private ?string $valeur = null;
 
     #[ORM\ManyToOne(inversedBy: 'caracteristiquesTechniques')]

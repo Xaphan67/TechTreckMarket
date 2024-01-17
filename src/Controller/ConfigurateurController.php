@@ -536,7 +536,7 @@ class ConfigurateurController extends AbstractController
                                             $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
                                         }
                                     } else {
-                                        if ($valeur == $produitCaracteristique->getValeur()) { // Vérifie que la valeur est compatible
+                                        if (strpos($produitCaracteristique->getValeur(), $valeur) >= 0) { // Vérifie que la valeur est compatible (strpos retourne la position de $valeur dans $produitCaracteristique->getValeur())
                                             $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
                                         }
                                     }
