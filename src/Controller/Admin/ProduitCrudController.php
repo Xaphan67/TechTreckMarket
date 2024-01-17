@@ -62,6 +62,7 @@ class ProduitCrudController extends AbstractCrudController
             TextField::new('designation', 'Désignation'),
             TextField::new('resume', 'Résumé')->hideOnIndex(),
             TextEditorField::new('descriptif', 'Déscriptif')->hideOnIndex(),
+            TextEditorField::new('descriptifDetaille', 'Descriptif détaillé')->hideOnIndex(),
             ImageField::new('photo')
             ->setBasePath('img/produits/')
             ->setUploadDir('public/img/produits')

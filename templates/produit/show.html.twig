@@ -89,10 +89,14 @@
                 </div>
             </div>
             <section id="sectionDescriptif" class="conteneur-padding-produits">
-                {% if produit.descriptif %}
-                    {{ produit.descriptif | slice(5, -6) | raw }}
+                {% if produit.descriptifDetaille %}
+                    {{ produit.descriptifDetaille | slice(5, -6) | raw }}
                 {% else %}
-                    <p>Aucun descriptif pour ce produit.</p>
+                    {% if produit.descriptif %}
+                        {{ produit.descriptif | slice(5, -6) | raw }}
+                    {% else %}
+                        <p>Aucun descriptif pour ce produit.</p>
+                    {% endif %}
                 {% endif %}
                 <div class="produit-actions">
                     <a class="bouton-lien bouton-centre bouton-250" href="{{ path('recherche_marque', {'marque': produit.marque.id, 'produit': produit.id}) }}">Voir les produits {{ produit.marque }}</a>

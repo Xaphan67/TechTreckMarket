@@ -58,6 +58,9 @@ class Produit
     #[ORM\Column]
     private ?bool $archive = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descriptifDetaille = null;
+
     public function __construct()
     {
         $this->avis = new ArrayCollection();
@@ -260,7 +263,19 @@ class Produit
 
         return $this;
     }
-
+  
+    public function getDescriptifDetaille(): ?string
+    {
+        return $this->descriptifDetaille;
+    }
+    
+    public function setDescriptifDetaille(?string $descriptifDetaille): static
+    {
+        $this->descriptifDetaille = $descriptifDetaille;
+        
+        return $this;
+    }
+    
     public function __toString()
     {
         return $this->designation;
