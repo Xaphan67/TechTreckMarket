@@ -5,27 +5,37 @@
         <title>E-Commerce - Facture n° {{ numeroFacture }}</title>
         <link type="text/css" rel="stylesheet" href="{{ asset('css/style.css')}}">
         <style>
-            h1 { color: red;}
+            h1 {
+                color: red;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+            td, tr {
+                border: 1px solid black;
+                padding: 5px;
+            }
+            
+            .adresse {
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
         <div>
-            <h1>Facture</h1>
-            Numéro de commande / facture : {{ numeroFacture }}<br>
-            Numéro client : {{ numeroClient }}<br>
-            Civilité : {{ civilite }}<br>
+            <h1>Facture n° {{ numeroFacture }} - Client n° {{ numeroClient }}</h1>
+            <p>Civilité : {{ civilite | capitalize }}<br>
             Prenom : {{ prenom }}<br>
-            Nom : {{ nom }}<br>
-            Date de la commande : {{ dateCommande | date("d/m/Y") }}<br>
-            <br>
-            Adresse de facturation :<br>
-            {{ adresseFacturation | split('-')[0] }}<br>
-            {{ adresseFacturation | split('-')[1] }}<br>
-            <br>
-            Adresse de livraison :<br>
-            {{ adresseLivraison | split('-')[0] }}<br>
-            {{ adresseLivraison | split('-')[1] }}<br>
-            <br>
+            Nom : {{ nom | upper }}<br>
+            Date de la commande : {{ dateCommande | date("d/m/Y") }}</p>
+            <span class="adresse">Adresse de facturation :</span>
+            <p>{{ adresseFacturation | split('-')[0] }}<br>
+            {{ adresseFacturation | split('-')[1] }}</p>
+            <span class="adresse">Adresse de livraison :</span>
+            <p>{{ adresseLivraison | split('-')[0] }}<br>
+            {{ adresseLivraison | split('-')[1] }}</p>
             <table>
                 <tr>
                     <td>Référence</td>
