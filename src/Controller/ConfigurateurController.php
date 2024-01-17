@@ -496,13 +496,16 @@ class ConfigurateurController extends AbstractController
     // Retourne la liste des produits compatible avec ceux de l'étape spécifiée en comparant une ou plusieurs caractéristiques techniques
     // spécifique du produit de la configuration de l'étape spécifiée à une ou plusieurs caractéristiques des produits de l'étape en cours
     public function checkCompatibility(Request $request, ProduitCaracteristiqueTechniqueRepository $produitCtRepository, $produits, $etapeActuelle, array $caracteristiquesAVerifier) {
+        // Récupère la configuration stockée en session
+        $configSession = $request->getSession()->get('configuration');
+
         // Pour chaque étape...
         $ListesProduitsCompatibles = [];
         foreach(array_keys($caracteristiquesAVerifier) as $etape) {
-            // Vérifie que la clé correspondant à l'étape existe
-            if (array_key_exists($etape, $request->getSession()->get('configuration'))) {
+            // Vérifie que la clé correspondant à l'étape existe dans la configuration
+            if ($configSession != null && array_key_exists($etape, $configSession)) {
                 // Récupère les caractèristiques techniques du produit à vérifier de la configuration
-                $produitSource = $request->getSession()->get('configuration')[$etape];
+                $produitSource = $configSession[$etape];
                 $produitSourceCt = $produitCtRepository->findBy(['produit' => $produitSource]);
 
                 // Vérifie chaque caractéristique spécifiée

@@ -20,7 +20,7 @@ class ProduitConfig
     #[ORM\JoinColumn(nullable: false)]
     private ?Produit $produit = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produitsConfig')]
+    #[ORM\ManyToOne(inversedBy: 'produitConfigs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?ConfigurationPC $configurationPC = null;
 
