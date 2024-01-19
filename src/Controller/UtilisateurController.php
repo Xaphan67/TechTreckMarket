@@ -58,8 +58,8 @@ class UtilisateurController extends AbstractController
             $adressesFacturation = $utilisateur->getAdressesFacturation();
             $adressesLivraison = $utilisateur->getAdressesLivraison();
 
+            // Appel à la vue
             return $this->render('utilisateur/index.html.twig', [
-                'utilisateur' => $utilisateur,
                 'infosUtilisateur' => $infosForm,
                 'mdpUtilisateur' => $mdpForm,
                 'adresseFacturationFormulaire' => $adresseFacturationForm,

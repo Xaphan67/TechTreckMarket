@@ -12,8 +12,8 @@
                 {# Menu #}
                 <section class="conteneur profil">
                     <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
-                    {% if utilisateur.nom and utilisateur.prenom %}
-                        <p>{{ utilisateur.nom }} {{ utilisateur.prenom }}</p>
+                    {% if app.user.nom and app.user.prenom %}
+                        <p>{{ app.user.nom }} {{ app.user.prenom }}</p>
                     {% endif %}
                     <a class="bouton-lien bouton-200" href="{{ path('app_logout') }}"><img src="{{ asset('svg/utilisateurs/logout.svg') }}" alt="Se déconnecter">Se déconnecter</a>
                     <nav class="profil-categories">

@@ -10,11 +10,7 @@
     </nav>
     <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="Logo"></a>
     <nav class="headerIcones">
-        {% if app.user %}
-            <a href="{{ path('profil_utilisateur') }}">
-        {% else %}
-            <a href="{{ path('app_login') }}">
-        {% endif %}
+        <a href="{{ app.user ? path('profil_utilisateur') : path('app_login') }}">
             <div class="headerIcone">
                 <img src="{{ asset('svg/header/compte.svg') }}" alt="Compte">
                 <span class="headerIcone-texte">Mon compte</span>

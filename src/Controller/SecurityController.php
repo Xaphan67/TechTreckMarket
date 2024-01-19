@@ -66,10 +66,12 @@ class SecurityController extends AbstractController
         }
 
         // Ajoute tous les produits du panier à la commande
-        foreach ($panier as $produitPanier) {
-            if ($produitPanier != null) {
-                $prod = $produitRepository->findOneBy(['id' => $produitPanier['produit']->getId()]);
-                $commande->addProduitCommande(new ProduitCommande($prod, $produitPanier['quantite']));
+        if ($panier) {
+            foreach ($panier as $produitPanier) {
+                if ($produitPanier != null) {
+                    $prod = $produitRepository->findOneBy(['id' => $produitPanier['produit']->getId()]);
+                    $commande->addProduitCommande(new ProduitCommande($prod, $produitPanier['quantite']));
+                }
             }
         }
 
