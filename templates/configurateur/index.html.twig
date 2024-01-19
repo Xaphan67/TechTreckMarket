@@ -96,7 +96,7 @@
                                                         </div>
                                                     </div>
                                                 </a>
-                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_configurateur', { 'etape': etape }) }}">
+                                                <a class="bouton-lien bouton-icone" href="{{ path('supprimer_configurateur', { 'etape': etape }) }}">
                                                     <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                                                 </a>
                                                 </article>
@@ -220,7 +220,7 @@
                                 <span class="prix">{{ configurationsPrixTotal[configuration.id] | number_format(2, ',', ' ') }} €</span>
                             </div>
                         </a>
-                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_configuration', { 'id': configuration.id }) }}">
+                        <a class="bouton-lien bouton-icone" href="{{ path('supprimer_configuration', { 'id': configuration.id }) }}">
                             <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                         </a>
                     </div>

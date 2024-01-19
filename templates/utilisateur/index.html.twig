@@ -217,10 +217,14 @@
                                                 {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                                 {{ adresse.codePostal }} {{ adresse.ville }}
                                                 <div class="adresse-actions">
-                                                    <div class="bouton-lien boutton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')" title="Modifier l'adresse">
+                                                    <div class="bouton-lien bouton-icone" onclick="displayEditFacturationForm('{{ adresse.id }}')" title="Modifier l'adresse">
                                                         <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
                                                     </div>
-                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}" title="Supprimer l'adresse">
+                                                    <a 
+                                                        class="bouton-lien bouton-icone" 
+                                                        href="{{ path('supprimer_adresse_facturation', {'id': adresse.id})}}" 
+                                                        title="Supprimer l'adresse"
+                                                    >
                                                         <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                                                     </a>
                                                 </div>
@@ -237,10 +241,10 @@
                                                 {{ adresse.numero }}, {{ adresse.typeRue }} {{ adresse.rue }}<br>
                                                 {{ adresse.codePostal }} {{ adresse.ville }}
                                                 <div class="adresse-actions">
-                                                    <div class="bouton-lien boutton-icone" onclick="displayEditLivraisonForm('{{ adresse.id }}')" title="Modifier l'adresse">
+                                                    <div class="bouton-lien bouton-icone" onclick="displayEditLivraisonForm('{{ adresse.id }}')" title="Modifier l'adresse">
                                                         <img src="{{ asset('svg/utilisateurs/modifier.svg') }}" alt="Modifier">
                                                     </div>
-                                                    <a class="bouton-lien boutton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}" title="Supprimer l'adresse">
+                                                    <a class="bouton-lien bouton-icone" href="{{ path('supprimer_adresse_livraison', {'id': adresse.id})}}" title="Supprimer l'adresse">
                                                         <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer">
                                                     </a>
                                                 </div>

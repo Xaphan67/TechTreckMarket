@@ -45,7 +45,7 @@
                                                     <div class="panier-actions">
                                                         <span>Quantité : {{ produitCommande.quantite }}</span>
                                                         <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
-                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
+                                                        <a class="bouton-lien bouton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
                                                             <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                         </a>
                                                     </div>
@@ -70,7 +70,7 @@
                                                     <span class="panier-header-quantite">{{ produitCommande.quantite }}</span>
                                                     <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
                                                     <span class="panier-header-action">
-                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
+                                                        <a class="bouton-lien bouton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
                                                             <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                         </a>
                                                     </span>
@@ -116,7 +116,7 @@
                                                     <div class="panier-actions">
                                                         <span>Quantité : {{ produitPanier['quantite'] }}</span>
                                                         <span class="prix">{{ (produitPanier['produit'].prix * produitPanier['quantite'])  | number_format(2, ',', ' ') }} €</span>
-                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitPanier['produit'].id }) }}" title="Supprimer le produit">
+                                                        <a class="bouton-lien bouton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitPanier['produit'].id }) }}" title="Supprimer le produit">
                                                             <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                         </a>
                                                     </div>
@@ -141,7 +141,7 @@
                                                     <span class="panier-header-quantite">{{ produitPanier['quantite'] }}</span>
                                                     <span class="panier-header-prix prix">{{ (produitPanier['produit'].prix * produitPanier['quantite'])  | number_format(2, ',', ' ') }} €</span>
                                                     <span class="panier-header-action">
-                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitPanier['produit'].id }) }}" title="Supprimer le produit">
+                                                        <a class="bouton-lien bouton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitPanier['produit'].id }) }}" title="Supprimer le produit">
                                                             <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
                                                         </a>
                                                     </span>
