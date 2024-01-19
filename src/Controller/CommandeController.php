@@ -54,8 +54,10 @@ class CommandeController extends AbstractController
 
             // Récupère le prix total du panier
             $total = 0;
-            foreach ($panier as $produitPanier) {
-                $total += $produitPanier['produit']->getPrix() * $produitPanier['quantite'];
+            if ($panier) {
+                foreach ($panier as $produitPanier) {
+                    $total += $produitPanier['produit']->getPrix() * $produitPanier['quantite'];
+                }
             }
         }
 
