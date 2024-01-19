@@ -9,8 +9,8 @@
         <section class="categories">
             <h2>Votre panier</h2>
             <div class="conteneur-conteneurs">
-                {% if commande or panier %}
-                    {% if commande %}
+                {% if (app.user and commande.produitCommandes | length > 0) or (not app.user and panier | length > 0) %}
+                    {% if app.user and commande %}
                         {% if commande.produitCommandes | length > 0 %}
                             <section class="conteneur conteneur-padding">
                                 <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }}</h2>
@@ -82,7 +82,7 @@
                             </section>
                         {% endif %}
                     {% else %}
-                        {% if panier |length > 0 %}
+                        {% if not app.user and panier |length > 0 %}
                             <section class="conteneur conteneur-padding">
                                 <h2>Votre panier contient {{ panier | length }} produit{{ panier | length != 1 ? "s" }}</h2>
                                 <div class="liste">
@@ -154,10 +154,10 @@
                         {% endif %}
                     {% endif %}
                 {% else %}
-                <section class="conteneur conteneur-padding">
-                    <h2>Votre panier est vide</h2>
-                    <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="Votre panier est vide">
-                </section>
+                    <section class="conteneur conteneur-padding">
+                        <h2>Votre panier est vide</h2>
+                        <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="Votre panier est vide">
+                    </section>
                 {% endif %}
                 <section class="conteneur conteneur-padding conteneur-total-panier">
                     <div class="panier-total">
