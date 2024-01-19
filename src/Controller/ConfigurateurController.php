@@ -473,6 +473,11 @@ class ConfigurateurController extends AbstractController
             if ($commande && count($commande->getProduitCommandes()) > 0) {
                 $panierVide = false;
             }
+        } else {
+            // Vérifie s'il y à un panier en session
+            if ($request->getSession()->get('panier')) {
+                $panierVide = false;
+            }
         }
 
         // Récupère les composants de la configuration

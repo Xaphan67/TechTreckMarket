@@ -72,12 +72,10 @@
                             <div class="bouton-lien bouton-commander" onclick="displaySaveBuildForm()">Sauvegarder la configuration</div>
                         {% endif %}
                         <div class="bouton-lien bouton-commander" onclick="displayResetWarning()">Créer une nouvelle configuration</div>
-                        {% if app.user %}
-                            {% if panierVide %}
-                                <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
-                            {% else %}
-                                <div class="bouton-achat bouton-commander" onclick="displayBarketWarning()">Ajouter au panier</div>
-                            {% endif %}
+                        {% if panierVide %}
+                            <a class="bouton-achat bouton-commander" href="{{ path('ajout_config_commande') }}">Ajouter au panier</a>
+                        {% else %}
+                            <div class="bouton-achat bouton-commander" onclick="displayBarketWarning()">Ajouter au panier</div>
                         {% endif %}
                     </div>
                 </section>

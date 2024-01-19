@@ -9,248 +9,329 @@
         <section class="categories">
             <h2>Votre panier</h2>
             <div class="conteneur-conteneurs">
-                {% if commande and commande.produitCommandes | length > 0 %}
-                    <section class="conteneur conteneur-padding">
-                        <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }}</h2>
-                        <div class="liste">
-                            <div class="ordinateur-uniquement commande-header">
-                                <div class="commande-header-info">
-                                    <span class="panier-header-image"></span>
-                                    <span class="panier-header-designation">Désignation</span>
-                                    <span class="panier-header-quantite">Quantité</span>
-                                    <span class="panier-header-prix">Prix</span>
-                                    <span class="panier-header-action"></span>
-                                </div>
-                            </div>
-                            {% for produitCommande in commande.produitCommandes %}
-                                <article class="panier-produit">
-                                    <div class="produit-image-mini mobile-tablette-uniquement">
-                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
-                                    </div>
-                                    <div class="panier-infos">
-                                        <div class="mobile-tablette-uniquement">
-                                            <span class="produit-designation">
-                                                <a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a>
-                                            </span>
-                                            <span>
-                                                Disponibilité :
-                                                {% if produitCommande.produit.stock > 0 %}
-                                                    <span class="stock-oui">EN STOCK</span>
-                                                {% else %}
-                                                    <span class="stock-non">RUPTURE</span>
-                                                {% endif %}
-                                            </span>
-                                            <div class="panier-actions">
-                                                <span>Quantité : {{ produitCommande.quantite }}</span>
-                                                <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
-                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
-                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
-                                                </a>
-                                            </div>
+                {% if commande or panier %}
+                    {% if commande %}
+                        {% if commande.produitCommandes | length > 0 %}
+                            <section class="conteneur conteneur-padding">
+                                <h2>Votre panier contient {{ commande.produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }}</h2>
+                                <div class="liste">
+                                    <div class="ordinateur-uniquement commande-header">
+                                        <div class="commande-header-info">
+                                            <span class="panier-header-image"></span>
+                                            <span class="panier-header-designation">Désignation</span>
+                                            <span class="panier-header-quantite">Quantité</span>
+                                            <span class="panier-header-prix">Prix</span>
+                                            <span class="panier-header-action"></span>
                                         </div>
-                                        <div class="ordinateur-uniquement">
-                                            <div class="produit-image-mini panier-header-image">
+                                    </div>
+                                    {% for produitCommande in commande.produitCommandes %}
+                                        <article class="panier-produit">
+                                            <div class="produit-image-mini mobile-tablette-uniquement">
                                                 <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
                                             </div>
-                                            <div class="panier-header-designation">
-                                                <span class="produit-designation">
-                                                    <a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a>
-                                                </span>
-                                                <span>
-                                                    Disponibilité :
-                                                    {% if produitCommande.produit.stock > 0 %}
-                                                        <span class="stock-oui">EN STOCK</span>
-                                                    {% else %}
-                                                        <span class="stock-non">RUPTURE</span>
-                                                    {% endif %}
-                                                </span>
+                                            <div class="panier-infos">
+                                                <div class="mobile-tablette-uniquement">
+                                                    <span class="produit-designation">
+                                                        <a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a>
+                                                    </span>
+                                                    <span>
+                                                        Disponibilité :
+                                                        {% if produitCommande.produit.stock > 0 %}
+                                                            <span class="stock-oui">EN STOCK</span>
+                                                        {% else %}
+                                                            <span class="stock-non">RUPTURE</span>
+                                                        {% endif %}
+                                                    </span>
+                                                    <div class="panier-actions">
+                                                        <span>Quantité : {{ produitCommande.quantite }}</span>
+                                                        <span class="prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
+                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
+                                                            <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="ordinateur-uniquement">
+                                                    <div class="produit-image-mini panier-header-image">
+                                                        <img src="{{ asset('img/produits/' ~ produitCommande.produit.photo) }}" alt="{{ produitCommande.produit.designation }}">
+                                                    </div>
+                                                    <div class="panier-header-designation">
+                                                        <span class="produit-designation">
+                                                            <a href="{{ path('voir_produit', {'id': produitCommande.produit.id}) }}">{{ produitCommande.produit.designation }}</a>
+                                                        </span>
+                                                        <span>
+                                                            Disponibilité :
+                                                            {% if produitCommande.produit.stock > 0 %}
+                                                                <span class="stock-oui">EN STOCK</span>
+                                                            {% else %}
+                                                                <span class="stock-non">RUPTURE</span>
+                                                            {% endif %}
+                                                        </span>
+                                                    </div>
+                                                    <span class="panier-header-quantite">{{ produitCommande.quantite }}</span>
+                                                    <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
+                                                    <span class="panier-header-action">
+                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
+                                                            <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
+                                                        </a>
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <span class="panier-header-quantite">{{ produitCommande.quantite }}</span>
-                                            <span class="panier-header-prix prix">{{ (produitCommande.produit.prix * produitCommande.quantite)  | number_format(2, ',', ' ') }} €</span>
-                                            <span class="panier-header-action">
-                                                <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitCommande.produit.id }) }}" title="Supprimer le produit">
-                                                    <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
-                                                </a>
-                                            </span>
+                                        </article>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% else %}
+                        {% if panier |length > 0 %}
+                            <section class="conteneur conteneur-padding">
+                                <h2>Votre panier contient {{ panier | length }} produit{{ panier | length != 1 ? "s" }}</h2>
+                                <div class="liste">
+                                    <div class="ordinateur-uniquement commande-header">
+                                        <div class="commande-header-info">
+                                            <span class="panier-header-image"></span>
+                                            <span class="panier-header-designation">Désignation</span>
+                                            <span class="panier-header-quantite">Quantité</span>
+                                            <span class="panier-header-prix">Prix</span>
+                                            <span class="panier-header-action"></span>
                                         </div>
                                     </div>
-                                </article>
-                            {% endfor %}
-                        </div>
-                    </section>
-                    <section class="conteneur conteneur-padding conteneur-total-panier">
-                        <div class="panier-total">
-                            <h2>Montant total de vos produits</h2>
-                            <span class="panier-prix">{{ total | number_format(2, ',', ' ') }} €</span>
-                        </div>
-                        <div class="bouton-achat bouton-commander" onclick="displayValidateForm()">Passer commande</div>
-                    </section>
+                                    {% for produitPanier in panier %}
+                                        <article class="panier-produit">
+                                            <div class="produit-image-mini mobile-tablette-uniquement">
+                                                <img src="{{ asset('img/produits/' ~ produitPanier['produit'].photo) }}" alt="{{ produitPanier['produit'].designation }}">
+                                            </div>
+                                            <div class="panier-infos">
+                                                <div class="mobile-tablette-uniquement">
+                                                    <span class="produit-designation">
+                                                        <a href="{{ path('voir_produit', {'id': produitPanier['produit'].id}) }}">{{ produitPanier['produit'].designation }}</a>
+                                                    </span>
+                                                    <span>
+                                                        Disponibilité :
+                                                        {% if produitPanier['produit'].stock > 0 %}
+                                                            <span class="stock-oui">EN STOCK</span>
+                                                        {% else %}
+                                                            <span class="stock-non">RUPTURE</span>
+                                                        {% endif %}
+                                                    </span>
+                                                    <div class="panier-actions">
+                                                        <span>Quantité : {{ produitPanier['quantite'] }}</span>
+                                                        <span class="prix">{{ (produitPanier['produit'].prix * produitPanier['quantite'])  | number_format(2, ',', ' ') }} €</span>
+                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitPanier['produit'].id }) }}" title="Supprimer le produit">
+                                                            <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="ordinateur-uniquement">
+                                                    <div class="produit-image-mini panier-header-image">
+                                                        <img src="{{ asset('img/produits/' ~ produitPanier['produit'].photo) }}" alt="{{ produitPanier['produit'].designation }}">
+                                                    </div>
+                                                    <div class="panier-header-designation">
+                                                        <span class="produit-designation">
+                                                            <a href="{{ path('voir_produit', {'id': produitPanier['produit'].id}) }}">{{ produitPanier['produit'].designation }}</a>
+                                                        </span>
+                                                        <span>
+                                                            Disponibilité :
+                                                            {% if produitPanier['produit'].stock > 0 %}
+                                                                <span class="stock-oui">EN STOCK</span>
+                                                            {% else %}
+                                                                <span class="stock-non">RUPTURE</span>
+                                                            {% endif %}
+                                                        </span>
+                                                    </div>
+                                                    <span class="panier-header-quantite">{{ produitPanier['quantite'] }}</span>
+                                                    <span class="panier-header-prix prix">{{ (produitPanier['produit'].prix * produitPanier['quantite'])  | number_format(2, ',', ' ') }} €</span>
+                                                    <span class="panier-header-action">
+                                                        <a class="bouton-lien boutton-icone" href="{{ path('supprimer_produit_commande', { 'id': produitPanier['produit'].id }) }}" title="Supprimer le produit">
+                                                            <img src="{{ asset('svg/commandes/supprimer.svg') }}" alt="Supprimer le produit">
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    {% endfor %}
+                                </div>
+                            </section>
+                        {% endif %}
+                    {% endif %}
                 {% else %}
-                    <section class="conteneur conteneur-padding">
-                        <h2>Votre panier est vide</h2>
-                        <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="Votre panier est vide">
-                    </section>
+                <section class="conteneur conteneur-padding">
+                    <h2>Votre panier est vide</h2>
+                    <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="Votre panier est vide">
+                </section>
                 {% endif %}
+                <section class="conteneur conteneur-padding conteneur-total-panier">
+                    <div class="panier-total">
+                        <h2>Montant total de vos produits</h2>
+                        <span class="panier-prix">{{ total | number_format(2, ',', ' ') }} €</span>
+                    </div>
+                    {% if app.user %}
+                        <div class="bouton-achat bouton-commander" onclick="displayValidateForm()">Passer commande</div>
+                    {% else %}
+                        <p class="paragraphe-centre">Connecez-vous pour pouvoir passer commande</p>
+                    {% endif %}
+                </section>
             </div>
         </section>
     </div>
 
-    <div id="modal" class="modal">
-        <section id="formulaire-commande" class="conteneur-modal">
-            <h3>Passer commande</h3>
-            <div class="fermer-modal" onclick="closeModale()">
-                <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
-            </div>
-            {{ form_start(formulaire, {'action': path('valider_commande'), 'method': 'POST'}) }}
-                <section id="commander-page-1" class="commander-page-1">
-                    <p>Remplissez les champs çi-dessous pour passer la commande.</p>
-                    <p>Si vous avez pré-remplis les champs dans votre profil, vous avez simplement besoin de vérifier les informations.</p>
-                    <span class="formulaire-sections">Informations personnelles</span>
-                    <div class="formulaire-champ">
-                        {{ form_row(formulaire.civilite) }}
-                    </div>
-                    <div class="formulaire-champ">
-                        {{ form_row(formulaire.nom) }}
-                    </div>
-                    <div class="formulaire-champ">
-                        {{ form_row(formulaire.prenom) }}
-                    </div>
-                    <div class="commande-suivant">
-                        <div class="bouton-lien bouton-100" onclick="displayNextPage(1, 2)">Suivant</div>
-                    </div>
-                </section>
-                <section id="commander-page-2" class="commander-page-2">
-                    {% if formulaire.adresseFacturation.vars.choices | length > 0 %}
-                        <div id="choix-ajout-facturation">
-                            <p>Séléctionnez votre adresse de facturation, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
-                            <span class="formulaire-sections">Adresse de facturation</span>
-                            <div class="formulaire-champ-bouton">
-                                {{ form_row(formulaire.adresseFacturation) }}
-                                <div class="bouton-lien bouton-ajout" onclick="showFormFacturation()" title="Ajouter une adresse de facturation">
-                                    <img src="{{ asset('svg/commandes/ajouter.svg') }}" alt="Ajouter une adresse de facturation">
+    {% if formulaire is not null %}
+        <div id="modal" class="modal">
+            <section id="formulaire-commande" class="conteneur-modal">
+                <h3>Passer commande</h3>
+                <div class="fermer-modal" onclick="closeModale()">
+                    <img class="modal-fermer" src="{{ asset('svg/fermer.svg') }}" alt="Fermer">
+                </div>
+                {{ form_start(formulaire, {'action': path('valider_commande'), 'method': 'POST'}) }}
+                    <section id="commander-page-1" class="commander-page-1">
+                        <p>Remplissez les champs çi-dessous pour passer la commande.</p>
+                        <p>Si vous avez pré-remplis les champs dans votre profil, vous avez simplement besoin de vérifier les informations.</p>
+                        <span class="formulaire-sections">Informations personnelles</span>
+                        <div class="formulaire-champ">
+                            {{ form_row(formulaire.civilite) }}
+                        </div>
+                        <div class="formulaire-champ">
+                            {{ form_row(formulaire.nom) }}
+                        </div>
+                        <div class="formulaire-champ">
+                            {{ form_row(formulaire.prenom) }}
+                        </div>
+                        <div class="commande-suivant">
+                            <div class="bouton-lien bouton-100" onclick="displayNextPage(1, 2)">Suivant</div>
+                        </div>
+                    </section>
+                    <section id="commander-page-2" class="commander-page-2">
+                        {% if formulaire.adresseFacturation.vars.choices | length > 0 %}
+                            <div id="choix-ajout-facturation">
+                                <p>Séléctionnez votre adresse de facturation, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
+                                <span class="formulaire-sections">Adresse de facturation</span>
+                                <div class="formulaire-champ-bouton">
+                                    {{ form_row(formulaire.adresseFacturation) }}
+                                    <div class="bouton-lien bouton-ajout" onclick="showFormFacturation()" title="Ajouter une adresse de facturation">
+                                        <img src="{{ asset('svg/commandes/ajouter.svg') }}" alt="Ajouter une adresse de facturation">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endif %}
-                    <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-modal-invisible" }}">
-                        <p>Remplissez les champs pour créer une nouvelle adresse de facturation, ou cliquez sur la croix pour annuler.</p>
-                        <div class="formulaire-sections-haut">
-                            <span class="formulaire-sections">Adresse de facturation</span>
-                            <div class="bouton-lien bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormFacturation()">
-                                <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
-                            </div>
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.numeroFacturation) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.typeRueFacturation) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.rueFacturation) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.codePostalFacturation) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.villeFacturation) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.enregistrerFacturation) }}
-                        </div>
-                    </div>
-                    <div class="commande-suivant">
-                        <div class="bouton-lien bouton-100" onclick="displayNextPage(2, 1)" alt="Etape suivante">Précédent</div>
-                        <div class="bouton-lien bouton-100" onclick="displayNextPage(2, 3)" alt="Etape suivante">Suivant</div>
-                    </div>
-                </section>
-                <section id="commander-page-3" class="commander-page-3">
-                    {% if formulaire.adresseLivraison.vars.choices | length > 0 %}
-                        <div id="choix-ajout-livraison">
-                            <p>Séléctionnez votre adresse de livraison, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
-                            <span class="formulaire-sections">Adresse de livraison</span>
-                            <div class="formulaire-champ-bouton">
-                                {{ form_row(formulaire.adresseLivraison) }}
-                                <div class="bouton-lien bouton-ajout" onclick="showFormLivraison()" title="Ajouter une adresse de livraison">
-                                    <img src="{{ asset('svg/commandes/ajouter.svg') }}" alt="Ajouter une adresse de livraison">
-                                </div>
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-modal-invisible" }}">
-                        <p>Remplissez les champs pour créer une nouvelle adresse de livraison, ou cliquez sur la croix pour annuler.</p>
-                        <div class="formulaire-sections-haut">
-                            <span class="formulaire-sections">Adresse de livraison</span>
-                            <div class="bouton-lien bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormLivraison()">
-                                <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
-                            </div>
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.numeroLivraison) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.typeRueLivraison) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.rueLivraison) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.codePostalLivraison) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.villeLivraison) }}
-                        </div>
-                        <div class="formulaire-champ">
-                            {{ form_row(formulaire.enregistrerLivraison) }}
-                        </div>
-                    </div>
-                    <div class="commande-suivant">
-                        <div class="bouton-lien bouton-100" onclick="displayNextPage(3, 2)">Précédent</div>
-                        <div class="bouton-lien bouton-100" onclick="displayNextPage(3, 4)">Suivant</div>
-                    </div>
-                </section>
-                <section id="commander-page-4" class="commander-page-4">
-                    <p>Veuillez vérifier que les informations çi-dessous sont correctes, puis cliquez sur Commander pour valider votre commande.</p>
-                    <div class="commande-resume">
-                        <p>
-                            Client :<br>
-                            <span id="commande-resume-civilite"></span> <span id="commande-resume-prenom"></span> <span id="commande-resume-nom"></span>
-                        </p>
-                        <p>
-                            Adresse de facturation :<br>
-                            <span id="commande-resume-adresseFacturation-choix">
-                                <span id="commande-resume-adresseFacturation-0"></span><br>
-                                <span id="commande-resume-adresseFacturation-1"></span>
-                            </span>
-                            <span id="commande-resume-adresseFacturation-nouveau">
-                                <span id="commande-resume-adresseFacturation-numero"></span> <span id="commande-resume-adresseFacturation-typerue"></span> <span id="commande-resume-adresseFacturation-rue"></span><br>
-                                <span id="commande-resume-adresseFacturation-codepostal"></span> <span id="commande-resume-adresseFacturation-ville"></span>
-                            </span>
-                        </p>
-                        <p>
-                            Adresse de livraison :<br>
-                            <span id="commande-resume-adresseLivraison-choix">
-                                <span id="commande-resume-adresseLivraison-0"></span><br>
-                                <span id="commande-resume-adresseLivraison-1"></span>
-                            </span>
-                            <span id="commande-resume-adresseLivraison-nouveau">
-                                <span id="commande-resume-adresseLivraison-numero"></span> <span id="commande-resume-adresseLivraison-typerue"></span> <span id="commande-resume-adresseLivraison-rue"></span><br>
-                                <span id="commande-resume-adresseLivraison-codepostal"></span> <span id="commande-resume-adresseLivraison-ville"></span>
-                            </span>
-                        </p>
-                        {% if commande %}
-                            <p>Votre commande contient {{ commande. produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }} pour un total de {{ total | number_format(2, ',', ' ')}} €</p>
                         {% endif %}
-                    </div>
-                    <div class="commande-suivant">
-                        <div class="bouton-lien bouton-100" onclick="displayNextPage(4, 3)">Précédent</div>
-                        {{ form_row(formulaire.Commander) }}
-                    </div>
-                </section>
-                {{ form_widget(formulaire._token) }}
-                {{ form_end(formulaire, {'render_rest': false}) }}
-        </section>
-    </div>
+                        <div id="formulaire-ajout-facturation" class="{{ formulaire.adresseFacturation.vars.choices | length > 0 ? "formulaire-modal-invisible" }}">
+                            <p>Remplissez les champs pour créer une nouvelle adresse de facturation, ou cliquez sur la croix pour annuler.</p>
+                            <div class="formulaire-sections-haut">
+                                <span class="formulaire-sections">Adresse de facturation</span>
+                                <div class="bouton-lien bouton-ajout {{ formulaire.adresseFacturation.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormFacturation()">
+                                    <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
+                                </div>
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.numeroFacturation) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.typeRueFacturation) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.rueFacturation) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.codePostalFacturation) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.villeFacturation) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.enregistrerFacturation) }}
+                            </div>
+                        </div>
+                        <div class="commande-suivant">
+                            <div class="bouton-lien bouton-100" onclick="displayNextPage(2, 1)" alt="Etape suivante">Précédent</div>
+                            <div class="bouton-lien bouton-100" onclick="displayNextPage(2, 3)" alt="Etape suivante">Suivant</div>
+                        </div>
+                    </section>
+                    <section id="commander-page-3" class="commander-page-3">
+                        {% if formulaire.adresseLivraison.vars.choices | length > 0 %}
+                            <div id="choix-ajout-livraison">
+                                <p>Séléctionnez votre adresse de livraison, ou créez-en une nouvelle en cliquant sur le bouton +.</p>
+                                <span class="formulaire-sections">Adresse de livraison</span>
+                                <div class="formulaire-champ-bouton">
+                                    {{ form_row(formulaire.adresseLivraison) }}
+                                    <div class="bouton-lien bouton-ajout" onclick="showFormLivraison()" title="Ajouter une adresse de livraison">
+                                        <img src="{{ asset('svg/commandes/ajouter.svg') }}" alt="Ajouter une adresse de livraison">
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <div id="formulaire-ajout-livraison" class="{{ formulaire.adresseLivraison.vars.choices | length > 0 ? "formulaire-modal-invisible" }}">
+                            <p>Remplissez les champs pour créer une nouvelle adresse de livraison, ou cliquez sur la croix pour annuler.</p>
+                            <div class="formulaire-sections-haut">
+                                <span class="formulaire-sections">Adresse de livraison</span>
+                                <div class="bouton-lien bouton-ajout {{ formulaire.adresseLivraison.vars.choices | length > 0 ? "" : "formulaire-modal-invisible" }}" onclick="hideFormLivraison()">
+                                    <img class="modal-fermer" src="{{ asset('svg/fermer-blanc.svg') }}" alt="Annuler">
+                                </div>
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.numeroLivraison) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.typeRueLivraison) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.rueLivraison) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.codePostalLivraison) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.villeLivraison) }}
+                            </div>
+                            <div class="formulaire-champ">
+                                {{ form_row(formulaire.enregistrerLivraison) }}
+                            </div>
+                        </div>
+                        <div class="commande-suivant">
+                            <div class="bouton-lien bouton-100" onclick="displayNextPage(3, 2)">Précédent</div>
+                            <div class="bouton-lien bouton-100" onclick="displayNextPage(3, 4)">Suivant</div>
+                        </div>
+                    </section>
+                    <section id="commander-page-4" class="commander-page-4">
+                        <p>Veuillez vérifier que les informations çi-dessous sont correctes, puis cliquez sur Commander pour valider votre commande.</p>
+                        <div class="commande-resume">
+                            <p>
+                                Client :<br>
+                                <span id="commande-resume-civilite"></span> <span id="commande-resume-prenom"></span> <span id="commande-resume-nom"></span>
+                            </p>
+                            <p>
+                                Adresse de facturation :<br>
+                                <span id="commande-resume-adresseFacturation-choix">
+                                    <span id="commande-resume-adresseFacturation-0"></span><br>
+                                    <span id="commande-resume-adresseFacturation-1"></span>
+                                </span>
+                                <span id="commande-resume-adresseFacturation-nouveau">
+                                    <span id="commande-resume-adresseFacturation-numero"></span> <span id="commande-resume-adresseFacturation-typerue"></span> <span id="commande-resume-adresseFacturation-rue"></span><br>
+                                    <span id="commande-resume-adresseFacturation-codepostal"></span> <span id="commande-resume-adresseFacturation-ville"></span>
+                                </span>
+                            </p>
+                            <p>
+                                Adresse de livraison :<br>
+                                <span id="commande-resume-adresseLivraison-choix">
+                                    <span id="commande-resume-adresseLivraison-0"></span><br>
+                                    <span id="commande-resume-adresseLivraison-1"></span>
+                                </span>
+                                <span id="commande-resume-adresseLivraison-nouveau">
+                                    <span id="commande-resume-adresseLivraison-numero"></span> <span id="commande-resume-adresseLivraison-typerue"></span> <span id="commande-resume-adresseLivraison-rue"></span><br>
+                                    <span id="commande-resume-adresseLivraison-codepostal"></span> <span id="commande-resume-adresseLivraison-ville"></span>
+                                </span>
+                            </p>
+                            {% if commande %}
+                                <p>Votre commande contient {{ commande. produitCommandes | length }} produit{{ commande.produitCommandes | length != 1 ? "s" }} pour un total de {{ total | number_format(2, ',', ' ')}} €</p>
+                            {% endif %}
+                        </div>
+                        <div class="commande-suivant">
+                            <div class="bouton-lien bouton-100" onclick="displayNextPage(4, 3)">Précédent</div>
+                            {{ form_row(formulaire.Commander) }}
+                        </div>
+                    </section>
+                    {{ form_widget(formulaire._token) }}
+                    {{ form_end(formulaire, {'render_rest': false}) }}
+            </section>
+        </div>
+    {% endif %}
 
     <script>
         const adresseFacturation = document.getElementById("commande_adresseFacturation");

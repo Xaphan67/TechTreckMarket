@@ -21,8 +21,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CommandeController extends AbstractController
 {
     #[Route('/commande/panier', name: 'afficher_panier')]
-    public function showBarket(CommandeRepository $commandeRepository): Response
+    public function showBarket(CommandeRepository $commandeRepository, Request $request): Response
     {
+        // initialise les variables
+        $form = null;
+        $commande = []; // Commande avec état panier stockée en BDD si l'utilisateur est connecté
+        $panier = []; // Panier stocké en session si l'utilisateur n'est pas connecté
+
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             // Récupère la commande active de l'utilisateur
@@ -42,17 +47,25 @@ class CommandeController extends AbstractController
 
             // Génération du formulaire pour valider la commande
             $form = $this->createForm(CommandeType::class, $utilisateur);
+        }
+        else {
+            // Récupère le panier en session
+            $panier = $request->getSession()->get('panier');
 
-            // Appel à la vue
-            return $this->render('commande/showBarket.html.twig', [
-                'commande' => $commande,
-                'total' => $total,
-                'formulaire' => $form,
-            ]);
+            // Récupère le prix total du panier
+            $total = 0;
+            foreach ($panier as $produitPanier) {
+                $total += $produitPanier['produit']->getPrix() * $produitPanier['quantite'];
+            }
         }
 
-        // Redirige vers la page d'accueil
-        return $this->redirectToRoute('app_accueil');
+        // Appel à la vue
+        return $this->render('commande/showBarket.html.twig', [
+            'commande' => $commande,
+            'panier' => $panier,
+            'total' => $total,
+            'formulaire' => $form,
+        ]);
     }
 
     #[Route('/commande/add/{id}/{recherche?}', name: 'ajout_produit_commande')]
@@ -78,25 +91,30 @@ class CommandeController extends AbstractController
                 'commande' => $commande,
                 'produit' => $produit
             ]);
+        } else {
+            // Récupère le panier en session
+            $panier = $request->getSession()->get('panier');
+        }
 
-            // Récupère les informations envoyés via le formulaire lors d'un ajout de produit via la fiche produit
-            $form = $this->createForm(ProduitType::class);
-            $form->handleRequest($request);
+        // Récupère les informations envoyés via le formulaire lors d'un ajout de produit via la fiche produit
+        $form = $this->createForm(ProduitType::class);
+        $form->handleRequest($request);
 
-            // Enregistre l'url d'entrée dans une variable en session
-            $request->getSession()->set('urlFrom', $request->headers->get('referer'));
+        // Enregistre l'url d'entrée dans une variable en session
+        $request->getSession()->set('urlFrom', $request->headers->get('referer'));
 
-            // Ajoute un produit, ou plus si le formulaire est soumis et est valide
-            $quantite = 1;
+        // Ajoute un produit, ou plus si le formulaire est soumis et est valide
+        $quantite = 1;
 
-            // Vérifie que le formulaire est soumis et est valide
-            if ($form->isSubmitted() && $form->isValid()) {
-                // Récupère les informations du formulaire
-                $quantite = $form->getData()["quantite"];
-            }
+        // Vérifie que le formulaire est soumis et est valide
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupère les informations du formulaire
+            $quantite = $form->getData()["quantite"];
+        }
 
-            // Si le formulaire et soumis et est valide, ou qu'on ajoute un produit sans passer par un formulaire
-            if (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()) {
+        // Si le formulaire et soumis et est valide, ou qu'on ajoute un produit sans passer par un formulaire
+        if (($form->isSubmitted() && $form->isValid()) || !$form->isSubmitted()) {
+            if ($this->getUser()) {
                 // Ajoute le produit à la commande s'il n'existe pas déjà
                 if (!$produitActuel) {
                     $commande->addProduitCommande(new ProduitCommande($produit, $quantite));
@@ -109,27 +127,31 @@ class CommandeController extends AbstractController
                     $entityManager->persist($produitActuel);
                     $entityManager->flush($produitActuel);
                 }
-
-                // Ajoute un message flash
-                $this->addFlash('success', ($quantite > 1 ? $quantite . 'x ' : '') . $produit->getDesignation() .' ' . ($quantite > 1 ? 'ont' : 'à') . ' bien été' . ($quantite > 1 ? 's' : '') . ' ajouté' . ($quantite > 1 ? 's' : '') . ' au panier !');
+            } else {
+                // Stoke le produit dans le panier en session
+                $panier[$produit->getId()] = ['produit' => $produit, 'quantite' => $quantite];
+                $request->getSession()->set('panier', $panier);
             }
 
-            // En cas de provenance de la page de recherche principale, redirige vers celle çi
-            if ($recherche) {
-                return $this->redirectToRoute('recherche_principale', ['recherche' => $recherche]);
-            } else { // Sinon, redirige vers la fiche du produit, ou la catégorie du produit
-                $url = $request->getSession()->get('urlFrom');
-                $request->getSession()->remove('urlFrom');
-                return $this->redirect($url);
-            }
+            // Ajoute un message flash
+            $this->addFlash('success', ($quantite > 1 ? $quantite . 'x ' : '') . $produit->getDesignation() .' ' . ($quantite > 1 ? 'ont' : 'à') . ' bien été' . ($quantite > 1 ? 's' : '') . ' ajouté' . ($quantite > 1 ? 's' : '') . ' au panier !');
         }
 
-        // Redirige vers la page d'accueil
-        return $this->redirectToRoute('app_accueil');
+        // En cas de provenance de la page de recherche principale, redirige vers celle çi
+        if ($recherche) {
+            return $this->redirectToRoute('recherche_principale', ['recherche' => $recherche]);
+        } else { // Sinon, redirige vers la fiche du produit, ou la catégorie du produit
+            $url = $request->getSession()->get('urlFrom');
+            $request->getSession()->remove('urlFrom');
+            return $this->redirect($url);
+        }
     }
 
     #[Route('commande/add_build', name: 'ajout_config_commande')]
     public function addBuildToBarket(ProduitRepository $produitRepository, CommandeRepository $commandeRepository, EntityManagerInterface $entityManager, Request $request) {
+        // Récupère la configuration stockée en session
+        $configuration = $request->getSession()->get('configuration');
+
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
             // Récupère la commande active de l'utilisateur.
@@ -151,9 +173,6 @@ class CommandeController extends AbstractController
                 $entityManager->flush();
             }
 
-            // Récupère la configuration stockée en session
-            $configuration = $request->getSession()->get('configuration');
-
             // Ajoute tout les produits de la configuration à la commande
             foreach ($configuration as $produit) {
                 if ($produit != null) {
@@ -166,23 +185,29 @@ class CommandeController extends AbstractController
             $entityManager->persist($commande);
             $entityManager->flush($commande);
 
-            // Ajoute un message flash
-            $this->addFlash('success', 'La configuration à été ajoutée au panier !');
-
-            // Redirige vers le panier
-            return $this->redirectToRoute('afficher_panier');
-
         } else {
-            // Ajoute un message flash
-            $this->addFlash('danger', 'Vous devez être connecté pour ajouter une configuration au panier !');
+            // Récupère le panier en session
+            $panier = $request->getSession()->get('panier');
+
+            // Supprime tout les produits du panier
+            $request->getSession()->remove('panier');
+
+            // Ajoute tout les produits de la configuration au panier
+            foreach ($configuration as $produit) {
+                $panier[$produit->getId()] = ['produit' => $produit, 'quantite' => 1];
+            }
+            $request->getSession()->set('panier', $panier);
         }
 
-        // Redirige vers la page du configurateur
-        return $this->redirectToRoute('recapitulatif_configuration');
+        // Ajoute un message flash
+        $this->addFlash('success', 'La configuration à été ajoutée au panier !');
+
+        // Redirige vers le panier
+        return $this->redirectToRoute('afficher_panier');
     }
 
     #[Route('/commande/delete/{id}', name: 'supprimer_produit_commande')]
-    public function removeProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager)
+    public function removeProduct(Produit $produit, CommandeRepository $commandeRepository, ProduitCommandeRepository $produitCommandeRepository, EntityManagerInterface $entityManager, Request $request)
     {
         // Vérifie qu'un utilisateur est connecté
         if ($this->getUser()) {
@@ -205,18 +230,25 @@ class CommandeController extends AbstractController
                 $entityManager->flush();
 
                 // Ajoute un message flash
-                $this->addFlash('success', 'Le produit à bien été supprimé de la commande !');
+                $this->addFlash('success', 'Le produit à bien été supprimé du panier !');
             } else {
                 // Ajoute un message flash
-                $this->addFlash('danger', 'Le produit n\'a pas pu être supprimé  de la commande !');
+                $this->addFlash('danger', 'Le produit n\'a pas pu être supprimé du panier !');
             }
+        } else {
+            // Récupère le panier en session
+            $panier = $request->getSession()->get('panier');
 
-            // Redirige vers le panier
-            return $this->redirectToRoute('afficher_panier');
+            // Supprime le produit
+            unset($panier[$produit->getId()]);
+            $request->getSession()->set('panier', $panier);
+
+            // Ajoute un message flash
+            $this->addFlash('success', 'Le produit à bien été supprimé du panier !');
         }
 
-        // Redirige vers la page d'accueil
-        return $this->redirectToRoute('app_accueil');
+        // Redirige vers le panier
+        return $this->redirectToRoute('afficher_panier');
     }
 
     #[Route('/commande/validate', name: 'valider_commande')]

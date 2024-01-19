@@ -19,9 +19,9 @@
                 <img src="{{ asset('svg/header/compte.svg') }}" alt="Compte">
                 <span class="headerIcone-texte">Mon compte</span>
             </div>
-        </a>
-        {% if app.user %}
-            <a id="panier" href="{{ path('afficher_panier') }}">
+        </a>       
+        <a id="panier" href="{{ path('afficher_panier') }}">
+            {% if app.user %}
                 {% for commande in app.user.commandes %}
                     {% if commande.etat == "panier" and commande.produitCommandes | length > 0 %}
                         <div class="panier-nbr-produits">
@@ -29,9 +29,13 @@
                         </div>
                     {% endif %}
                 {% endfor %}
-        {% else %}
-            <a href="{{ path('app_login') }}">
-        {% endif %}
+            {% else %}
+                {% if app.session.get('panier') and app.session.get('panier') | length > 0 %}
+                    <div class="panier-nbr-produits">
+                        {{ app.session.get('panier') | length }}
+                    </div>
+                {% endif %}
+            {% endif %}
             <div class="headerIcone">
                 <img src="{{ asset('svg/header/panier.svg') }}" alt="Panier">
                 <span class="headerIcone-texte">Mon panier</span>
