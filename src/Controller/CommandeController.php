@@ -163,7 +163,7 @@ class CommandeController extends AbstractController
                 'etat' => "panier"
             ]);
 
-            // Crée une nouvelle commande si l'utilisateur n'en à aucune à l'était "panier"
+            // Crée une nouvelle commande si l'utilisateur n'en à aucune à l'état "panier"
             if (!$commande) {
                 $commande = new Commande($utilisateur);
                 $utilisateur->addCommande($commande);
