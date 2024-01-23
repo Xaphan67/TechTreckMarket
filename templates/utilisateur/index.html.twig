@@ -11,7 +11,7 @@
             <div class="conteneur-conteneurs">
                 {# Menu #}
                 <section class="conteneur profil">
-                    <img src="{{ asset('img/utilisateurs/avatar.png') }}" alt="Avatar de l'utilisateur">
+                    <img src="{{ asset('img/utilisateurs/avatar' ~ (app.user.civilite == 'madame' ? '-femme') ~ '.png') }}" alt="Avatar de l'utilisateur">
                     {% if app.user.nom and app.user.prenom %}
                         <p>{{ app.user.nom }} {{ app.user.prenom }}</p>
                     {% endif %}
