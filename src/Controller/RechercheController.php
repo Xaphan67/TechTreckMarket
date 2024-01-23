@@ -68,7 +68,7 @@ class RechercheController extends AbstractController
         // Instancie un formulaire de type RecherchePrincipale
         $form = $this->createForm(RecherchePrincipaleType::class);
 
-        return $this->render('recherche/mainSearchForm.html.twig', [
+        return $this->render('recherche/_mainSearchForm.html.twig', [
             'formulaire' => $form
         ]);
     }

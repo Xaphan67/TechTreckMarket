@@ -1,0 +1,14 @@
+{% for categorie in categories %}
+    <li>
+        <a 
+            class="menuOption"
+            href="{{ path('afficher_categorie',{ 'id':categorie.id }) }}"
+        >
+            <img
+                src="{{ asset('svg/header/' ~ categorie.nom ~ '.svg') | replace({ 'á':'a', 'é':'e', 'í':'i', 'ó':'o', 'ú':'u'}) }}"
+                alt="{{ categorie.nom }}"
+            >
+            {{ categorie.nom }}
+        </a>
+    </li>
+{% endfor %}

@@ -20,13 +20,6 @@ class CategorieCrudController extends AbstractCrudController
         return Categorie::class;
     }
 
-    public function configureFilters(Filters $filters): Filters
-    {
-        return $filters
-            ->add('id')
-        ;
-    }
-
     public function configureFields(string $pageName): iterable
     {
         return [

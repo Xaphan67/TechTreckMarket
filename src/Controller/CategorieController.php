@@ -6,6 +6,7 @@ use App\Entity\Categorie;
 use App\Form\FiltresType;
 use App\Form\SortProductsType;
 use App\Repository\ProduitRepository;
+use App\Repository\CategorieRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -113,6 +114,12 @@ class CategorieController extends AbstractController
             'marques' => $produitsParMarque,
             'filtresFormulaire' => $filtreForm,
             'filtres' => $filtres
+        ]);
+    }
+
+    public function generateNavbar(CategorieRepository $categorieRepository) {
+        return $this->render('_navbar.html.twig', [
+            'categories' => $categorieRepository->findBy(['categorieParent' => null])
         ]);
     }
 }

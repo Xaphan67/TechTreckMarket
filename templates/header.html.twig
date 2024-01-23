@@ -3,9 +3,7 @@
     <nav aria-label="menu principal" id="headerNavigation" class="headerNavigation">
         <ul>
             <li><a class="menuOption" href="{{ path('configurateur') }}"><img src="{{ asset('svg/header/config.svg') }}" alt="Configurateur PC">Configurateur PC</a></li>
-            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':1 }) }}"><img src="{{ asset('svg/header/ordinateurs.svg') }}" alt="Ordinateurs">Ordinateurs</a></li>
-            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':2 }) }}"><img src="{{ asset('svg/header/composants.svg') }}" alt="Composants">Composants</a></li>
-            <li><a class="menuOption" href="{{ path('afficher_categorie',{ 'id':3 }) }}"><img src="{{ asset('svg/header/peripheriques.svg') }}" alt="Peripheriques">Périphériques</a></li> 
+            {{ render(controller('App\\Controller\\CategorieController::generateNavbar')) }}
         </ul>
     </nav>
     <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="Logo"></a>

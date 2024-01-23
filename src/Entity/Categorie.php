@@ -32,7 +32,7 @@ class Categorie
     #[ORM\OneToMany(mappedBy: 'categorieParent', targetEntity: self::class, orphanRemoval: true)]
     private Collection $sousCategories;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 150, nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column]
