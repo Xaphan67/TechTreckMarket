@@ -172,30 +172,22 @@
     </section>
 
     {# Catégories #}
-    {% set nbrSections = 0 %}
-    {% for section in sections %}
-        {% if section.accueil %}
-            {% set nbrSections = nbrSections + 1 %}
-        {% endif %}
-    {% endfor %}
-    {% if nbrSections > 0 %}
+    {% if sections | length > 0 %}
         <section class="categories">
             <h2>Catégories</h2>
             <div class="conteneur-conteneurs">
                 {% for section in sections %}
-                    {% if section.accueil %}
-                        <section class="conteneur accueil-conteneur">
-                            <img class="accueil-conteneur-image" src="{{ asset('img/\categories/' ~ section.image) }}" alt="{{ section.nom }}">
-                            <h3 class="accueil-nom-categorie" >{{ section.nom }}</h3>
-                            <ul>
-                                {% for categorie in categories %}
-                                    {% if categorie.categorieParent is not null and categorie.categorieParent.id == section.id %}
-                                        <li class="menu-categorie"><a href="{{ path('afficher_categorie', {'id': categorie.id }) }}">{{ categorie }}</a></li>
-                                    {% endif %}
-                                {% endfor %}
-                            </ul>
-                        </section>
-                    {% endif %}
+                    <section class="conteneur accueil-conteneur">
+                        <img class="accueil-conteneur-image" src="{{ asset('img/\categories/' ~ section.image) }}" alt="{{ section.nom }}">
+                        <h3 class="accueil-nom-categorie" >{{ section.nom }}</h3>
+                        <ul>
+                            {% for categorie in categories %}
+                                {% if categorie.categorieParent is not null and categorie.categorieParent.id == section.id %}
+                                    <li class="menu-categorie"><a href="{{ path('afficher_categorie', {'id': categorie.id }) }}">{{ categorie }}</a></li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </section>
                 {% endfor %}
             </div>
         </section>

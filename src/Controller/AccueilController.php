@@ -40,10 +40,10 @@ class AccueilController extends AbstractController
         ], 3);
 
         // On récupère les sections qui doivent s'afficher sur la page d'accueil
-        $sections = [];
-        foreach ($categorieRepository->findBy(['categorieParent' => null]) as $categorie) {
-            $sections[] = $categorie; 
-        }
+        $sections = $categorieRepository->findBy([
+            'categorieParent' => null,
+            'accueil' => true
+        ]);
 
         // On récupère la liste de toutes les catégories qui doivent s'afficher sur la page d'accueil
         $categories = $categorieRepository->findBy([
