@@ -541,9 +541,17 @@ class ConfigurateurController extends AbstractController
                                             $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
                                         }
                                     } else {
-                                        $valeurs = explode(', ', $produitCaracteristique->getValeur()); // Récupère un tableau contenant les valeurs de la caractéristique technique
-                                        if (in_array($valeur, $valeurs)) { // Vérifie que la valeur est compatible (strpos retourne la position de $valeur dans $produitCaracteristique->getValeur())
-                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                        $valeurs = [];
+                                        if ($etape > $etapeActuelle) {
+                                            $valeurs = explode(', ', $produitCaracteristique->getValeur()); // Récupère un tableau contenant les valeurs de la caractéristique technique
+                                            if (in_array($valeur, $valeurs)) { // Vérifie que la valeur est compatible
+                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                            }
+                                        } else {
+                                            $valeurs = explode(', ', $valeur); // Récupère un tableau contenant les valeurs de la caractéristique technique
+                                            if (in_array($produitCaracteristique->getValeur(), $valeurs)) { // Vérifie que la valeur est compatible
+                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                            }
                                         }
                                     }
                                 }
