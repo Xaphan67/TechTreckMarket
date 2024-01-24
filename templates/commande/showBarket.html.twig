@@ -9,7 +9,7 @@
         <section class="categories">
             <h2>Votre panier</h2>
             <div class="conteneur-conteneurs">
-                {% if (app.user and commande.produitCommandes | length > 0) or (not app.user and panier | length > 0) %}
+                {% if (app.user and commande and commande.produitCommandes | length > 0) or (not app.user and panier | length > 0) %}
                     {% if app.user and commande %}
                         {% if commande.produitCommandes | length > 0 %}
                             <section class="conteneur conteneur-padding">
