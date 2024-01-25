@@ -60,6 +60,30 @@
                     <p class="aucunProduit">Désolé, pour le moment il n'y à aucun produit dans cette catégorie</p>
                 </section>
             {% else %}
+                {# Affiche les nouveautés #}
+                {% if nouveautes | length > 0 %}
+                    <section class="categories">
+                        <h2>Nouveautés</h2>
+                        <section class="section-nouveautes">
+                            {% for nouveaute in nouveautes %}
+                                <article class="conteneur conteneur-nouveautes">
+                                    <a href="{{ path('voir_produit', {'id': nouveaute.id}) }}">
+                                        <div class="nouveaute-image">
+                                            <img src="{{ asset('img/produits/' ~ nouveaute.photo) }}" alt="{{ nouveaute.designation }}">
+                                        </div>
+                                        <div class="nouveaute-infos">
+                                            <span class="produit-designation">{{ nouveaute.designation }}</span>
+                                            <div class="nouveaute-sub-infos">
+                                                <span class="produit-resume">{{ nouveaute.resume }}</span>
+                                                <span class="nouveaute-prix prix">{{ nouveaute.prix }} €</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </article>
+                            {% endfor %}
+                        </section>
+                    </section>
+                {% endif %}
                 <div class="conteneur-conteneurs">
                     {# Affiche les options de filtre des résultats #}
                     <section class="conteneur filtres">

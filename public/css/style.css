@@ -1902,6 +1902,53 @@ border: 1px solid var(--borderFavoriteAdress);
         width: 713px;
     }
 
+    .section-nouveautes {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .conteneur-nouveautes {
+        width: calc((100% - 30px) / 4);
+    }
+    
+    .conteneur-nouveautes:hover {
+        background-color: var(--listBg);
+    }
+
+    .nouveaute-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 250px;
+        background-color: var(--listBg);
+    }
+
+    .nouveaute-image img {
+        max-width: calc(100% - 20px);
+    }
+
+    .nouveaute-infos {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        padding: 20px 0px;
+        height: 200px;
+    }
+
+    .nouveaute-sub-infos {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100px;
+    }
+
+    .nouveaute-prix {
+        font-size: 16px;
+    }
+
     /* Filtres */
 
     .filtres {

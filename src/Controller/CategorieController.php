@@ -20,6 +20,7 @@ class CategorieController extends AbstractController
     {
         // Initialisation des variables
         $produits = null;
+        $nouveautes = null;
         $produitsParMarque = [];
         $marques = [];
         $filtreForm = null;
@@ -29,8 +30,8 @@ class CategorieController extends AbstractController
         // la liste des produits appartenant à la catégorie
         if (count($categorie->getSousCategories()) == 0) {
             $produits = $produitRepository->findBy([
-                    'categorie' => $categorie,
-                    "archive" => false
+                'categorie' => $categorie,
+                "archive" => false
                 ], [
                     "designation" => "ASC"
                 ]);
@@ -42,6 +43,14 @@ class CategorieController extends AbstractController
                     $marques[$produit->getMarque()->getNom()] = $produit->getMarque()->getNom();
                 }
             }
+
+            // Récupère les 4 derniers produits ajoutés
+            $nouveautes = $produitRepository->findBy([
+                'categorie' => $categorie,
+                "archive" => false
+                ], [
+                    "dateLancement" => "DESC"
+            ], 4);
 
             // Instancie les formulaires
             $filtreForm = $this->createForm(FiltresType::class, null, ['marques' => $marques]);
@@ -111,6 +120,7 @@ class CategorieController extends AbstractController
             'categoriesParent' => $categoriesParent,
             'categorie' => $categorie,
             'produits' => $produits,
+            'nouveautes' => $nouveautes,
             'marques' => $produitsParMarque,
             'filtresFormulaire' => $filtreForm,
             'filtres' => $filtres
