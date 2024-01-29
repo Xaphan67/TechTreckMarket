@@ -34,7 +34,7 @@ body {
     justify-content: end;
     gap: 10px;
     top: 0px;
-    Right: 0px;
+    left: 0px;
     height: 50px;
     padding: 10px;
     border-left: 1px solid var(--border);
