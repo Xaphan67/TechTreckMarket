@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Traitement de vos données personnelles{% endblock %}
+
+{% block meta %}E-Commerce, découvrez comment sont traitées vos données personnelles !{% endblock %}
+
+{% block body %}
+    <div class="conteneur-principal">
+        <section>
+            <h1>Traitement de vos données personnelles</h1>
+            <hr>
+            <div class="conteneur conteneur-padding">
+                <h2>Gestion des cookies</h2>
+                <p>Notre politique de gestion des cookies est disponible ici.<br>
+                Vous pouvez choisir quels cookies utiliser sur notre site en cliquant sur le lien suivant, <span class="rgpd" onclick="tarteaucitron.userInterface.openPanel()">gérer mes cookies</span> (vous devrez peut-être désactiver votre bloqueur de publicité pour que le lien fonctionne). Ce lien est également accessible en bas de toutes les pages du site.</p>
+                <h2>Questions relatives à vos données personnelles</h2>
+                <p>Notre politique de protection des données personnelles est disponible ici.<br>
+                Le formulaire ci-dessous vous permet de transmettre une demande en lien avec vos droits d'accès, de rectification, d'opposition, de limitation de traitement ou de portabilité des données.</p>
+                <h2>Supprimer mon compte Client</h2>
+                <p>Si vous souhaitez supprimer votre compte Client, vous pouvez le faire directement depuis votre espace personnel, à la rubrique Mes informations.<br>
+                Si nous avons des doutes sur l'émetteur de la demande (par exemple, nous suspections que le compte a été piraté et que le pirate en question veut récupérer plus d'informations sur le compte), nous pourrons demande des informations supplémentaires pour confirmer votre identité.<br>
+                Si nous ne recevons pas de réponse dans les 30 jours, la demande sera classée sans suite.<br>
+                Conformément à la règlementation, votre demande sera traitée dans un délai maximum d’un mois. Toutes les demandes sont conservées pendant une durée de 3 ans.</p>
+            </div>
+        </section>
+    </div>
+{% endblock %}

@@ -68,4 +68,19 @@ class AccueilController extends AbstractController
             'marques' => $marques
         ]);
     }
+
+    #[route('/cgdv', name: 'app_cgdv')]
+    public function cgv() {
+        return $this->render('rgpd/cgdv.html.twig');
+    }
+
+    #[route('/mentionsLegales', name: 'app_mentions_legales')]
+    public function legalInformations() {
+        return $this->render('rgpd/mentionsLegales.html.twig');
+    }
+
+    #[route('/donnesPersonnelles', name: 'app_donnees_personnelles')]
+    public function personal() {
+        return $this->render('rgpd/donneesPersonnelles.html.twig');
+    }
 }
