@@ -59,7 +59,7 @@
                 "cookieslist": false, /* Show the cookie list */
                 
                 "showIcon": true, /* Show cookie icon to manage cookies */
-                // "iconSrc": "", /* Optional: URL or base64 encoded image */
+                "iconSrc": "{{ asset('svg/cookies.svg') }}", /* Optional: URL or base64 encoded image */
                 "iconPosition": "BottomRight", /* Position of the icon between BottomRight, BottomLeft, TopRight and TopLeft */
             
                 "adblocker": false, /* Show a Warning if an adblocker is detected */
@@ -70,7 +70,7 @@
             
                 "handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
             
-                "removeCredit": false, /* Remove credit link */
+                "removeCredit": true, /* Remove credit link */
                 "moreInfoLink": true, /* Show more info link */
                 "useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
                 "useExternalJs": false, /* If false, the tarteaucitron.services.js file will be loaded */
@@ -79,8 +79,8 @@
             
                 "readmoreLink": "", /* Change the default readmore link pointing to tarteaucitron.io */
                 
-                "mandatory": true, /* Show a message about mandatory cookies */
-                "mandatoryCta": true, /* Show the disabled accept button when mandatory on */
+                "mandatory": false, /* Show a message about mandatory cookies */
+                "mandatoryCta": false, /* Show the disabled accept button when mandatory on */
                 
                 // "customCloserId": "" /* Optional a11y: Custom element ID used to open the panel */
             });

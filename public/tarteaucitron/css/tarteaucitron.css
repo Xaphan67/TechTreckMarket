@@ -34,6 +34,8 @@ div#tarteaucitronServices {
 button#tarteaucitronClosePanel {
     border-radius: 5px 5px 0 0;
     right: 15px!important;
+    z-index: 1;
+    margin-top: 30px;
 }
 button.tarteaucitron-toggle-group {
     background: transparent!important;
@@ -303,10 +305,17 @@ div#tarteaucitronServices {
         height: 100% !important;
         left: 0 !important;
         margin: 0 !important;
-        max-height: 100% !important;
+        max-height: 437px !important;
         max-width: 100% !important;
         top: 0 !important;
         width: 100% !important;
+    }
+
+    button#tarteaucitronClosePanel {
+        border-radius: 0px;
+        right: 15px!important;
+        z-index: 1;
+        margin-top: 15px;
     }
 
     #tarteaucitron .tarteaucitronBorder {
@@ -450,7 +459,7 @@ div#tarteaucitronServices {
 
 #tarteaucitron {
     display: none;
-    max-height: 80%;
+    height: 352px;
     left: 50%;
     margin: 0 auto 0 -430px;
     padding: 0;
@@ -470,7 +479,7 @@ div#tarteaucitronServices {
 
 #tarteaucitronAlertSmall #tarteaucitronCookiesListContainer #tarteaucitronClosePanelCookie,
 #tarteaucitron #tarteaucitronClosePanel {
-    background: #333333;
+    
     color: #fff;
     cursor: pointer;
     font-size: 12px;
