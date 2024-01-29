@@ -16,7 +16,7 @@ body {
 .mobile-invisible,
 .tablette-uniquement,
 .ordinateur-uniquement {
-    display: none;
+    display: none !important;
 }
 
 .mobile-uniquement,
@@ -1741,7 +1741,7 @@ border: 1px solid var(--borderFavoriteAdress);
 @media only screen and (min-width: 768px) {
 
     .mobile-invisible {
-        display: contents;
+        display: contents !important;
     }
 
     img.mobile-invisible {
@@ -1943,7 +1943,7 @@ border: 1px solid var(--borderFavoriteAdress);
         justify-content: space-between;
         align-items: center;
         text-align: center;
-        padding: 20px 0px;
+        padding: 20px 10px;
         height: 200px;
     }
 
