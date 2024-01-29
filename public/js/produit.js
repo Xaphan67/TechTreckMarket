@@ -1,13 +1,13 @@
+const ongletDescriptif = document.getElementById("ongletDescriptif");
+const sectionDescriptif = document.getElementById("sectionDescriptif");
+const ongletFiche = document.getElementById("ongletFiche");
+const sectionFiche = document.getElementById("sectionFiche");
+const ongletAvis = document.getElementById("ongletAvis");
+const sectionAvis = document.getElementById("sectionAvis");
+const classMenu = "onglet-actif";
+
 // Affiche l'onglet "Descriptif"
 function showDescription() {
-    const ongletDescriptif = document.getElementById("ongletDescriptif");
-    const sectionDescriptif = document.getElementById("sectionDescriptif");
-    const ongletFiche = document.getElementById("ongletFiche");
-    const sectionFiche = document.getElementById("sectionFiche");
-    const ongletAvis = document.getElementById("ongletAvis");
-    const sectionAvis = document.getElementById("sectionAvis");
-    const classMenu = "onglet-actif";
-
     ongletDescriptif.classList.add(classMenu);
     ongletFiche.classList.remove(classMenu);
     ongletAvis.classList.remove(classMenu);
@@ -21,14 +21,6 @@ function showDescription() {
 
 // Affiche l'onglet "Fiche technique"
 function showTechnical() {
-    const ongletDescriptif = document.getElementById("ongletDescriptif");
-    const sectionDescriptif = document.getElementById("sectionDescriptif");
-    const ongletFiche = document.getElementById("ongletFiche");
-    const sectionFiche = document.getElementById("sectionFiche");
-    const ongletAvis = document.getElementById("ongletAvis");
-    const sectionAvis = document.getElementById("sectionAvis");
-    const classMenu = "onglet-actif";
-
     ongletDescriptif.classList.remove(classMenu);
     ongletFiche.classList.add(classMenu);
     ongletAvis.classList.remove(classMenu);
@@ -42,14 +34,6 @@ function showTechnical() {
 
 // Action lorsqu'on clique sur "Avis clients"
 function showComments() {
-    const ongletDescriptif = document.getElementById("ongletDescriptif");
-    const sectionDescriptif = document.getElementById("sectionDescriptif");
-    const ongletFiche = document.getElementById("ongletFiche");
-    const sectionFiche = document.getElementById("sectionFiche");
-    const ongletAvis = document.getElementById("ongletAvis");
-    const sectionAvis = document.getElementById("sectionAvis");
-    const classMenu = "onglet-actif";
-
     ongletDescriptif.classList.remove(classMenu);
     ongletFiche.classList.remove(classMenu);
     ongletAvis.classList.add(classMenu);
