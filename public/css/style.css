@@ -14,9 +14,12 @@ body {
 }
 
 .mobile-invisible,
-.tablette-uniquement,
-.ordinateur-uniquement {
+.tablette-uniquement {
     display: none !important;
+}
+
+.ordinateur-uniquement {
+    display: none;
 }
 
 .mobile-uniquement,
@@ -790,6 +793,7 @@ label,
 
 .filtres {
     padding: 0px 35px 0px 35px;
+    cursor: pointer;
 }
 
 /* Nouveautés */
@@ -1963,6 +1967,7 @@ border: 1px solid var(--borderFavoriteAdress);
     .filtres {
         width: 280px;
         padding-inline: 0px;
+        cursor: auto;
     }
 
     .formulaire-filtres>div {
