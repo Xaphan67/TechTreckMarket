@@ -4,6 +4,8 @@
 
 {% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
 
+{% block javascripts %}<script src="{{ asset('js/configurateur.js')}}"></script>{% endblock %}
+
 {% block body %}
     <div class="conteneur-principal">
         <section class="categories">
@@ -130,51 +132,4 @@
             </div>
         </section>
     </div>
-
-    <script>
-        // Afficher le formulaire de sauvegarde de configuration
-        function displaySaveBuildForm()
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById("sauvegarder-configuration")
-            const stylesModal = window.getComputedStyle(modal)
-            if (stylesModal.getPropertyValue("display") == "none") {
-                element.style.display = "block";
-                modal.style.display = "flex";
-            }
-        }
-
-        // Afficher l'avertissement de panier non vide
-        function displayBarketWarning()
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById("panier-non-vide")
-            const stylesModal = window.getComputedStyle(modal)
-            if (stylesModal.getPropertyValue("display") == "none") {
-                element.style.display = "block";
-                modal.style.display = "flex";
-            }
-        }
-
-        // Afiche l'avertissement de réinitialisation
-        function displayResetWarning()
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById("reset-configuration")
-            const stylesModal = window.getComputedStyle(modal)
-            if (stylesModal.getPropertyValue("display") == "none") {
-                element.style.display = "block";
-                modal.style.display = "flex";
-            }
-        }
-
-        // ferme les modales
-        function closeModale(id)
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById(id)
-            element.style.display = "none";
-            modal.style.display = "none";
-        }
-    </script>
 {% endblock %}

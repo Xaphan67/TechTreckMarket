@@ -38,15 +38,3 @@
     </nav>
 </div>
 {{ render(path('recherche_principale_formulaire')) }}
-
-<script>
-    function interactMenu() {
-        const menu = document.getElementById("headerNavigation");
-        const styles = window.getComputedStyle(menu)
-        if (styles.getPropertyValue("display") == "none") {
-            menu.style.display = "block";
-        } else {
-            menu.style.display = "none";
-        }
-    }
-</script>

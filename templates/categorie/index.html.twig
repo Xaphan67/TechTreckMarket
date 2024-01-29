@@ -4,6 +4,8 @@
 
 {% block meta %}E-Commerce, achetez tout vos {{ categorie | lower }} au meilleur pix !{% endblock %}
 
+{% block javascripts %}<script src="{{ asset('js/categorie.js')}}"></script>{% endblock %}
+
 {% block body %}
     {# Fil d'ariane #}
     <div class="ariane">
@@ -62,7 +64,7 @@
             {% else %}
                 {# Affiche les nouveautés #}
                 {% if nouveautes | length > 0 %}
-                    <section class="categories">
+                    <section class="categories mobile-invisible">
                         <h2>Nouveautés</h2>
                         <section class="section-nouveautes">
                             {% for nouveaute in nouveautes %}
@@ -87,7 +89,7 @@
                 <div class="conteneur-conteneurs">
                     {# Affiche les options de filtre des résultats #}
                     <section class="conteneur filtres">
-                        <div id="filtres-titre">
+                        <div id="filtres-titre" onclick="showFilters()">
                             <h2>Filtrez votre recherche</h2>
                             <div id="chevron" class="chevron">
                                 <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -184,24 +186,4 @@
             {% endif %}
         {% endif %}
     </div>
-
-    <script>
-        const filtresTitre = document.getElementById("filtres-titre");
-        const filtresRecherche = document.getElementById("filtres-recherche");
-        const chevron = document.getElementById("chevron");
-        const styles = window.getComputedStyle(filtresRecherche)
-
-        filtresTitre.addEventListener("click", function()
-        {
-            if (styles.getPropertyValue("display") == "none") {
-                filtresRecherche.classList.add("sub-conteneur-visible-filtres");
-                chevron.classList.add("chevron-fermer");
-                filtresRecherche.classList.remove("formulaire-invisible");
-            } else {
-                filtresRecherche.classList.remove("sub-conteneur-visible-filtres");
-                chevron.classList.remove("chevron-fermer");
-                filtresRecherche.classList.add("formulaire-invisible");
-            }
-        })
-    </script>
 {% endblock %}

@@ -4,6 +4,8 @@
 
 {% block meta %}E-Commerce, achetez tout votre matériel informatique au meilleur pix !{% endblock %}
 
+{% block javascripts %}<script src="{{ asset('js/configurateur.js')}}"></script>{% endblock %}
+
 {% block body %}
     <div class="conteneur-principal">
         {# Nom et description de la page #}
@@ -64,7 +66,7 @@
                 {# Récapitulatif #}
                 {% if configuration | length > 0 %}
                     <section class="conteneur recapitulatif">
-                        <div id="recapitulatif-titre">
+                        <div id="recapitulatif-titre" onclick="showSummary()">
                             <h2>Récapitulatif</h2>
                             <div id="chevron" class="chevron">
                                 <svg width="33" height="33" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -242,69 +244,4 @@
             </div>
         </section>
     </div>
-
-    <script>
-        const recapitulatifTitre = document.getElementById("recapitulatif-titre");
-        const recapitulatif = document.getElementById("recapitulatif");
-        const chevron = document.getElementById("chevron");
-        const styles = window.getComputedStyle(recapitulatif)
-
-        recapitulatifTitre.addEventListener("click", function()
-        {
-            if (styles.getPropertyValue("display") == "none") {
-                recapitulatif.classList.add("sub-conteneur-visible-filtres");
-                chevron.classList.add("chevron-fermer");
-                recapitulatif.classList.remove("formulaire-invisible");
-            } else {
-                recapitulatif.classList.remove("sub-conteneur-visible-filtres");
-                chevron.classList.remove("chevron-fermer");
-                recapitulatif.classList.add("formulaire-invisible");
-            }
-        })
-
-        // Afficher le formulaire de sauvegarde de configuration
-        function displaySaveBuildForm()
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById("sauvegarder-configuration")
-            const stylesModal = window.getComputedStyle(modal)
-            if (stylesModal.getPropertyValue("display") == "none") {
-                element.style.display = "block";
-                modal.style.display = "flex";
-            }
-        }
-
-        // Afficher la selection de configurations
-        function displaySavedBuildsSelection()
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById("charger-configuration")
-            const stylesModal = window.getComputedStyle(modal)
-            if (stylesModal.getPropertyValue("display") == "none") {
-                element.style.display = "block";
-                modal.style.display = "flex";
-            }
-        }
-
-        // Afiche l'avertissement de réinitialisation
-        function displayResetWarning()
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById("reset-configuration")
-            const stylesModal = window.getComputedStyle(modal)
-            if (stylesModal.getPropertyValue("display") == "none") {
-                element.style.display = "block";
-                modal.style.display = "flex";
-            }
-        }
-
-        // ferme les modales
-        function closeModale(id)
-        {
-            const modal = document.getElementById("modal")
-            const element = document.getElementById(id)
-            element.style.display = "none";
-            modal.style.display = "none";
-        }
-    </script>
 {% endblock %}
