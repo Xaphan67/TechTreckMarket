@@ -1087,6 +1087,15 @@ label,
     border-top: 1px solid var(--tabBg);
 }
 
+#sectionDescriptif img {
+    display: block;
+    margin-inline: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 100%;
+    height: auto;
+}
+
 .section-titre {
     display: block;
     margin: 0px;
