@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-Commerce - Plan du site{% endblock %}
+
+{% block meta %}E-Commerce, découvrez le plan de notre site !{% endblock %}
+
+{% block body %}
+    <div class="conteneur-principal">
+        <section>
+            <h1>Plan du site</h1>
+            <hr>
+            <div class="conteneur conteneur-padding">
+                {% for categoriePrincipale in categoriesPrincipales %}
+                    <h2>{{ categoriePrincipale.nom }}</h2>
+                    <div class="liens-plan-site">
+                        {% for categorie in categories %}
+                            {% if categorie.categorieParent is not null and categorie.categorieParent.id == categoriePrincipale.id %}
+                                <a class="lien-plan-site" href="{{ path('afficher_categorie', { 'id':categorie.id }) }}">{{ categorie.nom }}</a>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+{% endblock %}

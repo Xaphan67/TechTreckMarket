@@ -32,6 +32,18 @@ body {
     cursor: pointer;
 }
 
+.liens-plan-site {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.lien-plan-site {
+    display: flex;
+    align-items: center;
+    width: 33%;
+    height: 40px;
+}
+
 /* Messages flash */
 
 .message {

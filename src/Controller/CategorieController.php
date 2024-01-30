@@ -127,6 +127,20 @@ class CategorieController extends AbstractController
         ]);
     }
 
+    #[route('/planSite', name: 'app_plan_du_site')]
+    public function sitemap(CategorieRepository $categorieRepository) {
+        // Récupère les catégories de chaque catégorie principale
+        $categoriesPrincipales = $categorieRepository->findBy(['categorieParent' => null]);
+        
+        // Récupère les catégories
+        $categories = $categorieRepository->findAll(['nom' => 'ASC']);
+
+        return $this->render('plan_site.html.twig', [
+            'categoriesPrincipales' => $categoriesPrincipales,
+            'categories' => $categories
+        ]);
+    }
+
     public function generateNavbar(CategorieRepository $categorieRepository) {
         return $this->render('_navbar.html.twig', [
             'categories' => $categorieRepository->findBy(['categorieParent' => null])
