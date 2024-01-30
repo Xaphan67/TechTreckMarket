@@ -155,23 +155,23 @@
                             </section>
                         {% endif %}
                     {% endif %}
+                    <section class="conteneur conteneur-padding conteneur-total-panier">
+                        <div class="panier-total">
+                            <h2>Montant total de vos produits</h2>
+                            <span class="panier-prix">{{ total | number_format(2, ',', ' ') }} €</span>
+                        </div>
+                        {% if app.user %}
+                            <div class="bouton-achat bouton-commander" onclick="displayValidateForm()">Passer commande</div>
+                        {% else %}
+                            <p class="paragraphe-centre">Connecez-vous pour pouvoir passer commande</p>
+                        {% endif %}
+                    </section>
                 {% else %}
                     <section class="conteneur conteneur-padding">
                         <h2>Votre panier est vide</h2>
                         <img class="panier-vide" src="{{ asset('img/commandes/panier_vide.webp') }}" alt="Votre panier est vide">
                     </section>
                 {% endif %}
-                <section class="conteneur conteneur-padding conteneur-total-panier">
-                    <div class="panier-total">
-                        <h2>Montant total de vos produits</h2>
-                        <span class="panier-prix">{{ total | number_format(2, ',', ' ') }} €</span>
-                    </div>
-                    {% if app.user %}
-                        <div class="bouton-achat bouton-commander" onclick="displayValidateForm()">Passer commande</div>
-                    {% else %}
-                        <p class="paragraphe-centre">Connecez-vous pour pouvoir passer commande</p>
-                    {% endif %}
-                </section>
             </div>
         </section>
     </div>
