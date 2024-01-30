@@ -900,6 +900,7 @@ label,
 .produit-descriptif-image img {
     max-width: 100%;
     max-height: 100%;
+    border-radius: 10px;
 }
 
 .produit-infos {
@@ -1950,6 +1951,8 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .nouveaute-image img {
         max-width: calc(100% - 20px);
+        max-height: calc(100% - 20px);
+        border-radius: 10px;
     }
 
     .nouveaute-infos {
@@ -2460,6 +2463,11 @@ border: 1px solid var(--borderFavoriteAdress);
 
     .prix {
         font-size: 20px;
+        color: var(--textRed);
+    }
+
+    .prix-min {
+        line-height: 24px;
         color: var(--textRed);
     }
 

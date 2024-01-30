@@ -16,7 +16,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class RechercheController extends AbstractController
 {
     #[Route('recherche/{recherche?}', name: 'recherche_principale')]
-    public function mainSearch(?string $recherche = "", ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request): Response
+    public function mainSearch(ProduitRepository $produitRepository, PaginatorInterface $paginator, Request $request, ?string $recherche = ""): Response
     {
         // Instancie un formulaire de type RecherchePrincipale
         $form = $this->createForm(RecherchePrincipaleType::class);

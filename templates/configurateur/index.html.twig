@@ -93,7 +93,7 @@
                                                                 {% else %}
                                                                     <span class="stock-non">RUPTURE</span>
                                                                 {% endif %}
-                                                                <span class="produit-achat produit-prix-configuration prix">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
+                                                                <span class="produit-achat produit-prix-configuration prix{{ produit.prix | number_format(2, ',', ' ') | length > 6 ? "-min" : ""}}">{{ produit.prix | number_format(2, ',', ' ') }} €</span>
                                                             </div>
                                                         </div>
                                                     </div>
