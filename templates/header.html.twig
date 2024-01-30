@@ -6,7 +6,7 @@
             {{ render(controller('App\\Controller\\CategorieController::generateNavbar')) }}
         </ul>
     </nav>
-    <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.png') }}" alt="Logo"></a>
+    <a href="{{ path('app_accueil') }}"><img class="headerLogo" src="{{ asset('img/logo.webp') }}" alt="Logo"></a>
     <nav class="headerIcones">
         <a href="{{ app.user ? path('profil_utilisateur') : path('app_login') }}">
             <div class="headerIcone">

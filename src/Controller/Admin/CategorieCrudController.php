@@ -26,11 +26,12 @@ class CategorieCrudController extends AbstractCrudController
             IdField::new('id')->hideOnIndex()->hideOnForm(),
             TextField::new('nom'),
             TextEditorField::new('description'),
-            AssociationField::new('categorieParent')->setRequired(true),
+            AssociationField::new('categorieParent')->setRequired($pageName !== Crud::PAGE_EDIT),
             ImageField::new('image')
             ->setBasePath('img/categories/')
             ->setUploadDir('public/img/categories')
-            ->setRequired($pageName !== Crud::PAGE_EDIT),
+            ->setRequired($pageName !== Crud::PAGE_EDIT)
+            ->setUploadedFileNamePattern('[ulid].[extension]'),
             BooleanField::new('accueil', 'Afficher sur la page d\'accueil')
         ];
     }

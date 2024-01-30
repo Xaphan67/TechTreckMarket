@@ -66,7 +66,8 @@ class ProduitCrudController extends AbstractCrudController
             ImageField::new('photo')
             ->setBasePath('img/produits/')
             ->setUploadDir('public/img/produits')
-            ->setRequired($pageName !== Crud::PAGE_EDIT),
+            ->setRequired($pageName !== Crud::PAGE_EDIT)
+            ->setUploadedFileNamePattern('[ulid].[extension]'),
             MoneyField::new('prix')->setCurrency('EUR')->setStoredAsCents(false),
             IntegerField::new('stock'),
             BooleanField::new('archive', 'Archivé')
