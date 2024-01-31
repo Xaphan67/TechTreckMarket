@@ -72,6 +72,8 @@ class ConfigurateurController extends AbstractController
             $produits = $produitRepository->findBy([
                     'categorie' => $categorie,
                     "archive" => false
+                ], [
+                    'designation' => 'ASC'
                 ]);
         }
 
