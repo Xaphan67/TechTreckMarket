@@ -531,9 +531,25 @@ class ConfigurateurController extends AbstractController
 
                     // Crée la liste des produits compatibles avec cette caractéristique
                     $produitsCompatibles = [];
+
+                    // // Stocke les noms des caractéristiques du produit source
+                    $nomsCaracteristiquesProduitSource = [];
+                    foreach($produitSourceCt as $produitCaracteristiqueTechnique) {
+                        $nomsCaracteristiquesProduitSource[] = $produitCaracteristiqueTechnique->getCaracteristiqueTechnique()->getNom();
+                    }
+                    
+                    // Vérifie cette caractéristique source existe sur le produit source
+                    $caracteristiqueExisteSurProduitSource = false;
+                    if (in_array($caracteristiqueSource, $nomsCaracteristiquesProduitSource)) {
+                        $caracteristiqueExisteSurProduitSource = true;
+                    }
+
                     foreach ($produits as $produit) { // Itère chaque produit
                         foreach ($produit->getCaracteristiquesTechniques() as $produitCaracteristique) { // Itère chaque caractéristique technique de chaque produit
-                            if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueCible) { // Si son nom est celui spécifié...
+                            // Si le produit source ne contient pas cette caractéristique source
+                            if (!$caracteristiqueExisteSurProduitSource) {
+                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                            } else if ($produitCaracteristique->getCaracteristiqueTechnique()->getNom() == $caracteristiqueCible) { // Sinon, si la caratéristique existe et si son nom est celui spécifié...
                                 foreach ($valeursCaracteristiquesTechniques as $valeur) { // Itère les valeurs des caractéristiques compatibles...
                                     if (ctype_digit($valeur)) { // Si la valeur est une chaîne de caractères uniquement constituée de nombres
                                         $valeurInt = intval($valeur); // Converti la chaîne de caractère en nombre entier
@@ -547,16 +563,23 @@ class ConfigurateurController extends AbstractController
                                         }
                                     } else {
                                         $valeurs = [];
-                                        if ($etape < $etapeActuelle) {
-                                            $valeurs = explode(', ', $produitCaracteristique->getValeur()); // Récupère un tableau contenant les valeurs de la caractéristique technique
-                                            if (in_array($valeur, $valeurs)) { // Vérifie que la valeur est compatible
-                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
-                                            }
-                                        } else {
-                                            $valeurs = explode(', ', $valeur); // Récupère un tableau contenant les valeurs de la caractéristique technique
-                                            if (in_array($produitCaracteristique->getValeur(), $valeurs)) { // Vérifie que la valeur est compatible
-                                                $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
-                                            }
+                                        // if ($etape > $etapeActuelle) {
+                                        //     $valeurs = explode(', ', $produitCaracteristique->getValeur()); // Récupère un tableau contenant les valeurs de la caractéristique technique
+                                        //     if (in_array($valeur, $valeurs)) { // Vérifie que la valeur est compatible
+                                        //         $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                        //     }
+                                        // } else {
+                                        //     $valeurs = explode(', ', $valeur); // Récupère un tableau contenant les valeurs de la caractéristique technique
+                                        //     if (in_array($produitCaracteristique->getValeur(), $valeurs)) { // Vérifie que la valeur est compatible
+                                        //         $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
+                                        //     }
+                                        // }
+                                        $valeurs = explode(', ', $produitCaracteristique->getValeur()); // Récupère un tableau contenant les valeurs de la caractéristique technique
+                                        var_dump($valeur);
+                                        
+                                        
+                                        if (in_array($valeur, $valeurs)) { // Vérifie que la valeur est compatible
+                                            $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
                                         }
                                     }
                                 }
