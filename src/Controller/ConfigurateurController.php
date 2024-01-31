@@ -72,7 +72,7 @@ class ConfigurateurController extends AbstractController
                 }
         } else {
             // Récupère les produits correspondant à la catégorie
-            $produits[] = $produitRepository->findBy([
+            $produits = $produitRepository->findBy([
                     'categorie' => $categorie,
                     "archive" => false
                 ], [
