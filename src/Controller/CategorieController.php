@@ -116,6 +116,9 @@ class CategorieController extends AbstractController
             $parent = $parent->getCategorieParent();
         }
 
+        // Trie les catégories par ordre de clé descendant
+        krsort($categoriesParent);
+
         return $this->render('categorie/index.html.twig', [
             'categoriesParent' => $categoriesParent,
             'categorie' => $categorie,

@@ -16,7 +16,7 @@ class Produit
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $dateLancement = null;
 
     #[ORM\Column(length: 150)]
@@ -60,6 +60,7 @@ class Produit
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $descriptifDetaille = null;
+
 
     public function __construct()
     {
