@@ -547,7 +547,7 @@ class ConfigurateurController extends AbstractController
                                         }
                                     } else {
                                         $valeurs = [];
-                                        if ($etape > $etapeActuelle) {
+                                        if ($etape < $etapeActuelle) {
                                             $valeurs = explode(', ', $produitCaracteristique->getValeur()); // Récupère un tableau contenant les valeurs de la caractéristique technique
                                             if (in_array($valeur, $valeurs)) { // Vérifie que la valeur est compatible
                                                 $produitsCompatibles[] = $produit; // Ajoute le produit en tant que produit compatible
