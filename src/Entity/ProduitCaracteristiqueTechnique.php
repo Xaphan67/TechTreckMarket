@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\ProduitCaracteristiqueTechniqueRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ProduitCaracteristiqueTechniqueRepository;
 
 #[ORM\Entity(repositoryClass: ProduitCaracteristiqueTechniqueRepository::class)]
 class ProduitCaracteristiqueTechnique
@@ -13,7 +14,7 @@ class ProduitCaracteristiqueTechnique
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $valeur = null;
 
     #[ORM\ManyToOne(inversedBy: 'caracteristiquesTechniques')]
