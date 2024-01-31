@@ -45,7 +45,7 @@
 
         {# Vérifie si la catégorie à des sous-catégories ou non #}
         {% if categorie.sousCategories |length > 0 %} {# Si oui, on affiche les sous-catégories #}
-            <section class="categories">
+            <section>
                 <h2>Catégories {{ categorie }}</h2>
                 <div class="liste-categories">
                     {% for sousCategorie in categorie.sousCategories %}
@@ -64,7 +64,7 @@
             {% else %}
                 {# Affiche les nouveautés #}
                 {% if nouveautes | length > 0 %}
-                    <section class="categories mobile-invisible">
+                    <section class="mobile-invisible nouveaute-liste">
                         <h2>Nouveautés</h2>
                         <section class="section-nouveautes">
                             {% for nouveaute in nouveautes %}

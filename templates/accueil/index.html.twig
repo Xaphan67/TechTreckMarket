@@ -6,7 +6,7 @@
 
 {% block body %}
     {# Nouveautés #}
-    <section class="categories">
+    <section>
         <h2>Nouveautés</h2>
         <div class="mobile-uniquement">
             <section class="conteneur nouveautes">
@@ -173,7 +173,7 @@
 
     {# Catégories #}
     {% if sections | length > 0 %}
-        <section class="categories">
+        <section>
             <h2>Catégories</h2>
             <div class="conteneur-conteneurs">
                 {% for section in sections %}
@@ -194,7 +194,7 @@
     {% endif %}
 
     {# Marques #}
-    <section class="categories">
+    <section>
         <h2>Nos Marques</h2>
         <div class="conteneur marques">
             {% for marque in marques %}

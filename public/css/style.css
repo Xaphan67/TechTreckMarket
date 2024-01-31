@@ -1976,6 +1976,10 @@ border: 1px solid var(--borderFavoriteAdress);
         font-size: 16px;
     }
 
+    .nouveaute-liste {
+        display: block;
+    }
+
     /* Filtres */
 
     .filtres {
