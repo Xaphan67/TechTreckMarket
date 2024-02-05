@@ -57,3 +57,6 @@ Ce prjet à été réalisé dans le cadre de ma formation de développeur Web et
 
 ### Panier
 ![Image représentant le panier](/doc/Panier.png)
+
+### Configurateur
+![Image représentant le configurateur](/doc/Configurateur.png)
