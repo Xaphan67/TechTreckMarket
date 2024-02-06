@@ -772,6 +772,7 @@ label,
     flex-wrap: wrap;
     gap: 13px;
     width: 350px;
+    margin-inline: auto;
 }
 
 .sous-categorie {
@@ -1932,11 +1933,11 @@ border: 1px solid var(--borderFavoriteAdress);
         gap: 10px;
         justify-content: center;
     }
-    
+
     .conteneur-nouveautes {
         width: calc((100% - 30px) / 4);
     }
-    
+
     .conteneur-nouveautes:hover {
         background-color: var(--listBg);
     }
