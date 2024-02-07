@@ -40,7 +40,7 @@
     header {
         height: 158px;
         padding-bottom: 25px;
-        padding-inline: calc((100vw - 703px) / 2);
+        padding-inline: calc((100% - 703px) / 2);
     }
 
     .headerHaut {
@@ -81,7 +81,7 @@
         display: block;
         top: 133px;
         border: none;
-        left: calc((100vw - 743px) / 2);
+        left: calc((100% - 743px) / 2);
     }
 
     .headerNavigation ul {
@@ -124,7 +124,7 @@
 
     .formulaire-recherche {
         position: absolute;
-        left: calc((100vw - 350px) / 2);
+        left: calc((100% - 350px) / 2);
         width: 250px;
     }
 
@@ -411,7 +411,7 @@
         flex-direction: row;
         justify-content: space-around;
         height: 80px;
-        padding-inline: calc((100vw - 703px) / 2);
+        padding-inline: calc((100% - 703px) / 2);
     }
 
     .footerBas {
@@ -500,7 +500,7 @@
     /* Header */
 
     header {
-        padding-inline: calc((100vw - 824px) / 2);
+        padding-inline: calc((100% - 824px) / 2);
     }
 
     .headerLogo {
@@ -509,7 +509,7 @@
     }
 
     .headerNavigation {
-        left: calc((100vw - 959px) / 2);
+        left: calc((100% - 959px) / 2);
     }
 
     .menuOption{
@@ -521,7 +521,7 @@
     /* Formulaires */
 
     .formulaire-recherche {
-        left: calc((100vw - 350px) / 2);
+        left: calc((100% - 350px) / 2);
         width: 320px;
     }
 
@@ -723,7 +723,7 @@
     /* Footer */
 
     .footerHaut {
-        padding-inline: calc((100vw - 824px) / 2);
+        padding-inline: calc((100% - 824px) / 2);
     }
 
     /* Configurateur */
@@ -766,13 +766,13 @@
 @media only screen and (min-width: 1220px) {
 
     main {
-        margin-inline: calc((100vw - 1220px) / 2);
+        margin-inline: calc((100% - 1220px) / 2);
     }
 
     /* Header */
 
     header {
-        padding-inline: calc((100vw - 1020px) / 2);
+        padding-inline: calc((100% - 1020px) / 2);
     }
 
     /* Formulaires */
@@ -795,7 +795,7 @@
     /* Footer */
 
     .footerHaut {
-        padding-inline: calc((100vw - 1020px) / 2);
+        padding-inline: calc((100% - 1020px) / 2);
     }
 
     /* Configurateur */
@@ -837,6 +837,6 @@
     /* Footer */
 
     .footerHaut {
-        padding-inline: calc((100vw - 1020px) / 2);
+        padding-inline: calc((100% - 1020px) / 2);
     }
 }
