@@ -14,36 +14,22 @@ class AccueilController extends AbstractController
     #[Route('/', name: 'app_accueil')]
     public function index(CategorieRepository $categorieRepository, ProduitRepository $produitRepository, MarqueRepository $marqueRepository): Response
     {
-        // On récupère les 3 catégories principales : Ordinateurs, Composants et Périphériques
-        $categorieOrdinateurs = $categorieRepository->findOneBy(['nom' => "Ordinateurs"]);
-        $categorieComposants = $categorieRepository->findOneBy(['nom' => "Composants"]);
-        $categoriePeripheriques = $categorieRepository->findOneBy(['nom' => "Peripheriques"]);
-
-        // On récupère la liste des 3 derniers produits de chaque catégorie principale
-        $ordinateurs = $produitRepository->findBy([
-            'categoriePrincipale' => $categorieOrdinateurs,
-            "archive" => false
-        ], [
-            "dateLancement" => "DESC"
-        ], 3);
-        $composants = $produitRepository->findBy([
-            'categoriePrincipale' => $categorieComposants,
-            "archive" => false
-        ], [
-            "dateLancement" => "DESC"
-        ], 3);
-        $peripheriques = $produitRepository->findBy([
-            'categoriePrincipale' => $categoriePeripheriques,
-            "archive" => false
-        ], [
-            "dateLancement" => "DESC"
-        ], 3);
-
         // On récupère les sections qui doivent s'afficher sur la page d'accueil
         $sections = $categorieRepository->findBy([
             'categorieParent' => null,
             'accueil' => true
         ]);
+
+        // On récupère les nouveaux produits pour chaque section
+        $nouveautes = [];
+        foreach ($sections as $section) {
+            $nouveautes[$section->getNom()] = $produitRepository->findBy([
+                'categoriePrincipale' => $section,
+                "archive" => false
+            ], [
+                "dateLancement" => "DESC"
+            ], 3);
+        };
 
         // On récupère la liste de toutes les catégories qui doivent s'afficher sur la page d'accueil
         $categories = $categorieRepository->findBy([
@@ -60,10 +46,8 @@ class AccueilController extends AbstractController
         $marques = array_slice($marques, 0, 9);
 
         return $this->render('accueil/index.html.twig', [
-            'ordinateurs' => $ordinateurs,
-            'composants' => $composants,
-            'peripheriques' => $peripheriques,
             'sections' => $sections,
+            'nouveautes' => $nouveautes,
             'categories' => $categories,
             'marques' => $marques
         ]);
