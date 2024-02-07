@@ -1535,6 +1535,9 @@ border: 1px solid var(--borderFavoriteAdress);
 
 .etape-image {
     width: 50px;
+}
+
+.etape-image-produit {
     border-radius: 10px;
 }
 

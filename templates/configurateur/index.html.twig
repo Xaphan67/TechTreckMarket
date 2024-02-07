@@ -37,7 +37,7 @@
                             </div>
                         {% endif %}
                         <div class="conteneur-etape-image">
-                            <img class="etape-image" src="{{ asset('img/produits/' ~ configuration[e].photo ) }}" alt="Boîtier : {{ configuration[e].designation }}">
+                            <img class="etape-image etape-image-produit" src="{{ asset('img/produits/' ~ configuration[e].photo ) }}" alt="Boîtier : {{ configuration[e].designation }}">
                         </div>
                     {% else %}
                         {% if e != etape %}
